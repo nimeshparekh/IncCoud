@@ -1,0 +1,354 @@
+<div class="page-maindiv warap-height members">
+    <div class="brand-head">
+        <div class="d-flex container-fluid">
+            <div class="flex-fill">
+                <p class="brand-head-text"><button mat-flat-button routerLink="/lms" class="mr-2 mt-2 head-color">
+                    <span class="material-icons">
+                        keyboard_backspace
+                    </span>
+                    
+                </button>
+                
+                    Lead Integration</p>
+            </div>
+            <!-- <div class="flex-row-reverse">
+                <button mat-flat-button color="accent" routerLink="/leads-generation"><span class="btn-icon"><i class="fi-rr-add"></i></span>Create Campaign</button>
+            </div> -->
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row mt-4">
+            <div class="col-sm-12">
+                <div class="card">
+                    <mat-tab-group>
+                        <mat-tab label="First">
+                            <ng-template mat-tab-label>
+                                <div class="table-thumnail">
+                                    <img class="table-thum-channel-img" src="assets/images/icon/profile.png">
+                                    <img class="tablesocial-img" src="assets/images/icon/3.png">
+                                </div>
+                                <div class="ml-2">Facebook</div>
+                            </ng-template>
+                            <div class="">
+                                <div class="my">
+                                    <div class="table-responsive">
+                                        <div class="brand-head">
+                                            <div class="d-flex container-fluid">
+                                                <div class="flex-fill">
+                                                    <p class="brand-head-text"></p>
+                                                </div>
+                                                <div class="flex-row-reverse">
+                                                    <!-- <button mat-flat-button color="accent" routerLink="/leads-generation"><span class="btn-icon"><i class="fi-rr-add"></i></span> Create Ads</button>&nbsp; -->
+                                                    <!-- <button mat-flat-button color="accent" routerLink="/lead-manual"><span class="btn-icon"><i class="fi-rr-add"></i></span>Set Manully Lead-Ads</button>&nbsp; -->
+                                                    <button mat-flat-button color="accent" routerLink="/async-cam"><span class="btn-icon"><i class="fi-rr-arrow-down"></i></span>Get Lead-Ads</button>&nbsp;
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>       
+                                        <table mat-table [dataSource]="dataSource">
+                    
+                                            <!--- Note that these columns can be defined in any order.
+                                                The actual rendered columns are set as a property on the row definition" -->
+                                        
+                                            <!-- published-on Column -->
+                                            <ng-container matColumnDef="no">
+                                                <th mat-header-cell *matHeaderCellDef> Sr No .</th>
+                                                <td mat-cell *matCellDef="let element;let i = index;">{{i+1+(interestpaginator.pageIndex * interestpaginator.pageSize)}}</td>
+                                                <td mat-footer-cell *matFooterCellDef></td>
+                                            </ng-container>
+                    
+                                            <!-- <ng-container matColumnDef="campaign_status">
+                                                <th mat-header-cell *matHeaderCellDef> Campaign Status </th>
+                                                <td mat-cell *matCellDef="let element;let i = index"> 
+                                                    <section class="example-section">
+                                                        <mat-slide-toggle class="example-margin" (change)="onChange($event,element)" [checked]="element.campaign_status=='ACTIVE'"></mat-slide-toggle>
+                                                    </section>
+                                                </td>
+                                            </ng-container> -->
+                    
+                                            <ng-container matColumnDef="ads_name">
+                                                <th mat-header-cell *matHeaderCellDef> Ads Name </th>
+                                                <td mat-cell (click)='nextAdset(i)' *matCellDef="let element;let i = index"> {{element.ads_name}} </td>
+                                                <td mat-footer-cell *matFooterCellDef></td>
+                                            </ng-container>
+                                        
+                                            <!-- post-content Column -->
+                                            <ng-container matColumnDef="ads_id">
+                                                <th mat-header-cell *matHeaderCellDef> Ads ID </th>
+                                                <td mat-cell *matCellDef="let element"> 
+                                                    <span class="tbl-post-text">{{element.ads_id}}</span>
+                                                </td>
+                                                <td mat-footer-cell *matFooterCellDef></td>
+                                            </ng-container>
+                    
+                    
+                                            <ng-container matColumnDef="ads_status">
+                                                <th mat-header-cell *matHeaderCellDef> Ads Status </th>
+                                                <td mat-cell *matCellDef="let element"> 
+                                                    <span class="tbl-post-text">{{element.ads_status}}</span>
+                                                </td>
+                                                <th mat-footer-cell *matFooterCellDef>Total</th>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="total_leads">
+                                                <th mat-header-cell *matHeaderCellDef> Total Lead </th>
+                                                <td mat-cell *matCellDef="let element"> 
+                                                    <span class="tbl-post-text">{{element.total_leads}}</span>
+                                                </td>
+                                                <th mat-footer-cell *matFooterCellDef>
+                                                  {{getTotalLead()}}
+                                                </th>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="today_leads">
+                                                <th mat-header-cell *matHeaderCellDef> Today Lead </th>
+                                                <td mat-cell *matCellDef="let element"> 
+                                                    <span class="tbl-post-text">{{element.today_leads}}</span>
+                                                </td>
+                                                <th mat-footer-cell *matFooterCellDef>
+                                                    {{getTodayTotalLead()}}
+                                                </th>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="duplicate_leads">
+                                                <th mat-header-cell *matHeaderCellDef> Duplicate Lead </th>
+                                                <td mat-cell *matCellDef="let element"> 
+                                                    <span class="tbl-post-text">{{element.duplicate_leads}}</span>
+                                                </td>
+                                                <th mat-footer-cell *matFooterCellDef>
+                                                    {{getDuplicateTotalLead()}}
+                                                </th>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="automation">
+                                                <th mat-header-cell *matHeaderCellDef> Automation </th>
+                                                <td mat-cell *matCellDef="let element"> 
+                                                    <a class="action">
+                                                        <span class="material-icons" (click)="showautomation(element)"  *ngIf="element.is_automation == 'yes'">
+                                                            done
+                                                        </span>    
+                                                    </a>
+                                                    <a class="action">
+                                                        <span class="material-icons" *ngIf="element.is_automation == 'no'">
+                                                            close
+                                                        </span>    
+                                                    </a>
+                                                </td>
+                                                <td mat-footer-cell *matFooterCellDef></td>
+                                            </ng-container>
+                                        
+                                            <!-- action Column -->
+                                            <ng-container matColumnDef="action">
+                                                <th mat-header-cell *matHeaderCellDef> Action </th>
+                                                <td mat-cell *matCellDef="let element;let i = index"> 
+                                                    <a class="action" title="Reload lead" (click)='syncfblead(element.Ad_id,element.leadgen_form_page)'><i class="fa fa-history" aria-hidden="true"></i></a>
+                                                    &nbsp;&nbsp;
+                                                    <a class="action">
+                                                        <span class="action" (click)="openDialog(i)"><i class="fi-rr-stats"></i></span>
+                                                    </a>
+                                                    &nbsp;&nbsp;
+                                                    <a class="action" (click)="deleteRequest(element.Ad_id)">
+                                                        <i class="fa fa-trash" aria-hidden="true"></i></a>
+                                                    &nbsp;&nbsp;
+                                                </td>
+                                                <td mat-footer-cell *matFooterCellDef></td>
+                                            </ng-container>
+                                            
+                                        
+                                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                            <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+                                        </table>
+                                    </div>
+                                    <mat-paginator #interestpaginator [length]="interestLength" [pageSize]="50"
+                                    [pageSizeOptions]="[50,100,500]"></mat-paginator>
+                                </div>
+                            </div>
+                        </mat-tab>
+                        <mat-tab> 
+                            <ng-template mat-tab-label>
+                                <div class="table-thumnail">
+                                    <img class="table-thum-channel-img" src="assets/images/icon/profile.png">
+                                    <img class="tablesocial-img" src="assets/images/icon/google.png">
+                                </div>
+                                <div class="ml-2">Google</div>
+                            </ng-template>
+                            <div class="my">
+                                <div class="table-responsive">
+                                    <div class="brand-head">
+                                        <div class="d-flex container-fluid">
+                                            <div class="flex-fill">
+                                                <p class="brand-head-text"></p>
+                                            </div>
+                                            <div class="flex-row-reverse">
+                                                <button mat-flat-button color="accent" (click)="openDialog_g()"><span class="btn-icon"><i class="fi-rr-arrow-down"></i></span>Lead Campaign & Automation</button>&nbsp;
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>       
+                                    <table mat-table [dataSource]="dataSource_google">
+                    
+                                        <!--- Note that these columns can be defined in any order.
+                                            The actual rendered columns are set as a property on the row definition" -->
+                                    
+                                        <!-- published-on Column -->
+                                        <ng-container matColumnDef="no">
+                                            <th mat-header-cell *matHeaderCellDef> Sr No .</th>
+                                            <td mat-cell *matCellDef="let element;let i = index;">{{i+1+(interestpaginator_google.pageIndex * interestpaginator_google.pageSize)}}</td>
+                                            <td mat-footer-cell *matFooterCellDef></td>
+                                        </ng-container>
+                
+                                        <!-- <ng-container matColumnDef="campaign_status">
+                                            <th mat-header-cell *matHeaderCellDef> Campaign Status </th>
+                                            <td mat-cell *matCellDef="let element;let i = index"> 
+                                                <section class="example-section">
+                                                    <mat-slide-toggle class="example-margin" (change)="onChange($event,element)" [checked]="element.campaign_status=='ACTIVE'"></mat-slide-toggle>
+                                                </section>
+                                            </td>
+                                        </ng-container> -->
+                
+                                        <ng-container matColumnDef="ads_name">
+                                            <th mat-header-cell *matHeaderCellDef> Ads Name </th>
+                                            <td mat-cell *matCellDef="let element;let i = index"> {{element.ads_name}} </td>
+                                            <td mat-footer-cell *matFooterCellDef></td>
+                                        </ng-container>
+                                    
+                                        <!-- post-content Column -->
+                                        <ng-container matColumnDef="ads_id">
+                                            <th mat-header-cell *matHeaderCellDef> Ads ID </th>
+                                            <td mat-cell *matCellDef="let element"> 
+                                                <span class="tbl-post-text">{{element.ads_id}}</span>
+                                            </td>
+                                            <td mat-footer-cell *matFooterCellDef></td>
+                                        </ng-container>
+                
+                
+                                        <ng-container matColumnDef="ads_status">
+                                            <th mat-header-cell *matHeaderCellDef> Ads Status </th>
+                                            <td mat-cell *matCellDef="let element"> 
+                                                <span class="tbl-post-text">{{element.ads_status}}</span>
+                                            </td>
+                                            <th mat-footer-cell *matFooterCellDef>Total</th>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="total_leads">
+                                            <th mat-header-cell *matHeaderCellDef> Total Lead </th>
+                                            <td mat-cell *matCellDef="let element"> 
+                                                <span class="tbl-post-text">{{element.total_leads}}</span>
+                                            </td>
+                                            <th mat-footer-cell *matFooterCellDef>
+                                                {{getTotalLead_google()}}
+                                            </th>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="today_leads">
+                                            <th mat-header-cell *matHeaderCellDef> Today Lead </th>
+                                            <td mat-cell *matCellDef="let element"> 
+                                                <span class="tbl-post-text">{{element.today_leads}}</span>
+                                            </td>
+                                            <th mat-footer-cell *matFooterCellDef>
+                                                {{getTodayTotalLead_google()}}
+                                            </th>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="duplicate_leads">
+                                            <th mat-header-cell *matHeaderCellDef> Duplicate Lead </th>
+                                            <td mat-cell *matCellDef="let element"> 
+                                                <span class="tbl-post-text">{{element.duplicate_leads}}</span>
+                                            </td>
+                                            <th mat-footer-cell *matFooterCellDef>
+                                                {{getDuplicateTotalLead_google()}}
+                                            </th>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="automation">
+                                            <th mat-header-cell *matHeaderCellDef> Automation </th>
+                                            <td mat-cell *matCellDef="let element"> 
+                                                <a class="action">
+                                                    <span class="material-icons" (click)="showautomation_google(element)"  *ngIf="element.is_automation == 'yes'">
+                                                        done
+                                                    </span>    
+                                                </a>
+                                                <a class="action">
+                                                    <span class="material-icons" *ngIf="element.is_automation == 'no'">
+                                                        close
+                                                    </span>    
+                                                </a>
+                                            </td>
+                                            <td mat-footer-cell *matFooterCellDef></td>
+                                        </ng-container>
+                                    
+                                        <!-- action Column -->
+                                        <ng-container matColumnDef="action">
+                                            <th mat-header-cell *matHeaderCellDef> Action </th>
+                                            <td mat-cell *matCellDef="let element;let i = index"> 
+                                                <a class="action">
+                                                    <span class="action"><i class="fi-rr-stats"></i></span>
+                                                </a>
+                                                <!-- <a class="pencil" (click)='nextAdset(i)'><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                                &nbsp;&nbsp; -->
+                                            </td>
+                                            <td mat-footer-cell *matFooterCellDef></td>
+                                        </ng-container>
+                                        
+                                    
+                                        <tr mat-header-row *matHeaderRowDef="displayedColumns_google"></tr>
+                                        <tr mat-row *matRowDef="let row; columns: displayedColumns_google;"></tr>
+                                        <tr mat-footer-row *matFooterRowDef="displayedColumns_google"></tr>
+                                    </table>
+                                </div>
+                                <mat-paginator #interestpaginator_google [length]="interestLength_google" [pageSize]="50"
+                                    [pageSizeOptions]="[50,100,500]"></mat-paginator>
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="Just Dail">
+                            <ng-template mat-tab-label>
+                                <div class="table-thumnail">
+                                    <img class="table-thum-channel-img" src="assets/images/icon/profile.png">
+                                    <img class="tablesocial-img" src="assets/images/icon/hd.png">
+                                </div>
+                                <div class="ml-2">Just Dail</div>
+                            </ng-template>
+                            <div class="">
+                                <div class="my">
+                                    <div class="table-responsive">
+                                        <div class="brand-head">
+                                            <div class="d-flex container-fluid">
+                                                <div class="flex-fill">
+                                                    <p class="brand-head-text"></p>
+                                                </div>
+                                                <div class="flex-row-reverse">
+                                                    <!-- <button mat-flat-button color="accent" routerLink="/leads-generation"><span class="btn-icon"><i class="fi-rr-add"></i></span> Create Ads</button>&nbsp; -->
+                                                    <!-- <button mat-flat-button color="accent" routerLink="/lead-manual"><span class="btn-icon"><i class="fi-rr-add"></i></span>Set Manully Lead-Ads</button>&nbsp; -->
+                                                    <!-- <button mat-flat-button color="accent" routerLink="/async-cam"><span class="btn-icon"><i class="fi-rr-arrow-down"></i></span>Get Lead-Ads</button>&nbsp; -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card shadow mb-4">
+                                            <div class="card-body">
+                                               
+                                                <p><b>You need to send to the JustDial team, just copy this mail and send it.</b><br><br></p>
+                                                   <p> Hello Justdail Team,<br></p>
+                                                   <p>I would like to integrate leads provided by <b>Justdail</b>,with my CRM. Please enable the push API integration on my account with below URL-<br> </p>
+                                                   <p> {{justdailwebhook}}<br></p>
+                                                   <p> My Justdail account details are-<br></p>
+                                                   <p>.........&lt;&lt;&lt;&lt;&lt;&lt;Please provide your <b>Justdail</b> account details here &gt;&gt;&gt;&gt;&gt;&gt;........<br><br></p>
+                                                   <p>Your integration will be activated by the JustDial team within a week's time   <br></p>
+                                                   <p>Once they activate the subscription, leads will start coming to the campaign selected by you<br></p>
+                                                   <p><b>Note:</b>Please provide your JustDial account details in your mail so that the JustDial team can activate your integration</p>
+                                                
+                                            </div>
+                                        </div>
+                                
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </mat-tab>
+
+                    </mat-tab-group>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

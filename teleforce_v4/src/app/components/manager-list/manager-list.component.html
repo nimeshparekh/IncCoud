@@ -1,0 +1,236 @@
+<div class="warap-height pt-4"> 
+  <!-- Begin Page Content -->
+  <div class="container-fluid manager">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Managers</h1>
+    <form [formGroup]="searchform" (ngSubmit)="searchData()">
+      <div class="row">
+        <div class="col-12 col-md-3 col-lg-2 col-xl-2 col-sm-6">
+          <mat-form-field appearance="outline">
+            <mat-label>User Name</mat-label>
+            <input matInput placeholder="User Name" formControlName="agentname">    
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-3 col-lg-2 col-xl-2 col-sm-6">
+          <mat-form-field appearance="outline">
+            <mat-label>User ID</mat-label>
+            <input matInput placeholder="User ID" formControlName="userid">    
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-3 col-lg-2 col-xl-2 col-sm-6">
+          <mat-form-field appearance="outline">
+            <mat-label> Mobile No</mat-label>
+            <input matInput placeholder="Mobile No" formControlName="agentnumber">
+          </mat-form-field>    
+        </div>
+        <div class="col-12 col-md-3 col-lg-2 col-xl-2 col-sm-6">
+          <mat-form-field appearance="outline">
+            <mat-label> Email</mat-label>
+            <input matInput placeholder="Mobile No" formControlName="email">
+          </mat-form-field>    
+        </div>
+         <div class="col-12 col-md-3 col-lg-2 col-xl-2 col-sm-6">
+          <mat-form-field appearance="outline">
+            <mat-label>Demo Account</mat-label>
+            <mat-select formControlName="its_demo">
+
+              <mat-option value="0">No</mat-option>
+              <mat-option value="1">Yes</mat-option>
+
+            </mat-select>
+          </mat-form-field>
+        </div>                 
+                            
+          <div class="col-12 col-md-4 col-lg-3 col-xl-2 col-sm-6 ">
+              <mat-form-field appearance="outline">
+                  <mat-label>Created start    </mat-label>
+                  <input matInput placeholder="Create Date" [matDatepicker]="createdstartpicker"
+                      formControlName="createdstart">
+                      <mat-error *ngIf="searchform.controls.createdstart.hasError('required')">
+                          Please enter Create Start date
+                      </mat-error>
+                  <mat-datepicker-toggle matSuffix [for]="createdstartpicker"></mat-datepicker-toggle>
+                  <mat-datepicker #createdstartpicker tpicker></mat-datepicker>
+              </mat-form-field>
+          </div>
+          <div class="col-12 col-md-4 col-lg-3 col-xl-2 col-sm-6 ">
+            <mat-form-field appearance="outline">
+                <mat-label>Create End </mat-label>
+                <input matInput placeholder="Create End " [matDatepicker]="createdendpicker"
+                    formControlName="createdend">
+                    <mat-error *ngIf="searchform.controls.createdend.hasError('required')">
+                        Please enter Create End date
+                    </mat-error>
+                <mat-datepicker-toggle matSuffix [for]="createdendpicker"></mat-datepicker-toggle>
+                <mat-datepicker #createdendpicker tpicker></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="col-12 col-md-4 col-lg-3 col-xl-2 col-sm-6 ">
+          <mat-form-field appearance="outline">
+              <mat-label>Expiry  Start </mat-label>
+              <input matInput placeholder="Expiry start " [matDatepicker]="expirystartpicker" formControlName="startdate">
+              <mat-error *ngIf="searchform.controls.startdate.hasError('required')">
+                  Please enter Start date
+              </mat-error>
+              <mat-datepicker-toggle matSuffix [for]="expirystartpicker"></mat-datepicker-toggle>
+              <mat-datepicker #expirystartpicker tpicker></mat-datepicker>
+          </mat-form-field>
+      </div>
+          <div class="col-12 col-md-4 col-lg-3 col-xl-2 col-sm-6 ">
+              <mat-form-field appearance="outline">
+                  <mat-label>Expiry End  </mat-label>
+                  <input matInput placeholder="Expiry  End " [matDatepicker]="endpicker" formControlName="enddate">
+                  <mat-error *ngIf="searchform.controls.enddate.hasError('required')">
+                      Please enter Expiry date
+                  </mat-error>
+                  <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
+                  <mat-datepicker #endpicker tpicker></mat-datepicker>
+              </mat-form-field>
+          </div>
+          <div class="col-12 col-md-4 col-lg-3 col-xl-2 col-sm-6 ">
+              <button mat-raised-button type="submit" color="primary"
+                  class="Update-btn mt-2" [disabled]="isDisabled">Search</button>&nbsp;
+              <button title="refresh" class="mt-2" (click)="resetform()" mat-mini-fab color="warn"
+                  aria-label="Example icon button with a plus one icon">
+                  <span class="material-icons">refresh</span>
+              </button>&nbsp;
+              <button mat-raised-button class="mt-2" color="primary" (click)="exporter.exportTable('csv', {fileName:'managerlist', sheet: 'sheet_name'})">CSV</button>
+          </div>
+      </div>
+  </form>
+     <div class="row">
+      <div class="col-sm-2">
+        <mat-form-field appearance="outline">
+          <mat-label>Filter</mat-label>
+          <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Type here to filter">
+        </mat-form-field>
+      </div>
+     
+    </div> 
+
+    <!-- DataTales Example -->
+    <div class="card mb-4">
+
+      <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+
+      <div class="card-body">
+        
+        <button mat-raised-button color="accent" class="mt-2"  (click)="Createdialog()" title="Add">Add Manager</button>
+
+        <div class="table-responsive mt-2">
+        
+          <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" matTableExporter #exporter="matTableExporter">
+                    
+            <!-- Position Column -->
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef> Sr. No. </th>
+                <td mat-cell *matCellDef="let row;let i = index;" data-label="id">
+                  {{i+1+(paginator.pageIndex * paginator.pageSize)}}
+                </td>
+            </ng-container>
+        
+            <!-- name Column -->
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef  mat-sort-header>  Username </th>
+                <td mat-cell *matCellDef="let row">
+                  {{row.account_name}}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="userid">
+              <th mat-header-cell *matHeaderCellDef  mat-sort-header>  UserId </th>
+              <td mat-cell *matCellDef="let row">
+                {{row.account_id}}
+              </td>
+          </ng-container>
+        
+            <!-- email Column -->
+            <ng-container matColumnDef="email">
+                <th mat-header-cell *matHeaderCellDef> Email </th>
+                <td mat-cell *matCellDef="let row"> 
+                  {{row.email}}
+                </td>
+            </ng-container>
+        
+            <!-- mobile Column -->
+            <ng-container matColumnDef="mobile">
+                <th mat-header-cell *matHeaderCellDef> Mobile </th>
+                <td mat-cell *matCellDef="let row">
+                  {{row.mobile}}
+                </td>
+            </ng-container>
+
+            <!-- channel Column -->
+            <ng-container matColumnDef="channel">
+                <th mat-header-cell *matHeaderCellDef> Channels </th>
+                <td mat-cell *matCellDef="let row">
+                  {{row.channels}}
+                </td>
+            </ng-container>
+
+            <!-- users Column -->
+            <ng-container matColumnDef="users">
+                <th mat-header-cell *matHeaderCellDef> Users </th>
+                <td mat-cell *matCellDef="let row">
+                  {{row.user_limit}}
+                </td>
+            </ng-container>
+
+            <!-- expirydate Column -->
+            <ng-container matColumnDef="created_date">
+              <th mat-header-cell *matHeaderCellDef> Create Date </th>
+              <td mat-cell *matCellDef="let row">
+                {{row.create_date | date:'dd-MM-yyyy HH:mm:ss'}}
+              </td>
+          </ng-container>
+            <ng-container matColumnDef="expirydate">
+                <th mat-header-cell *matHeaderCellDef> Expiry Date </th>
+                <td mat-cell *matCellDef="let row">
+                  {{row.expiry_date | date:'dd-MM-yyyy HH:mm:ss'}}
+                </td>
+            </ng-container>
+
+            <!-- action Column -->
+            <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef> Action </th>
+                <td mat-cell *matCellDef="let row">
+                  <button routerLink="/manager-details/{{row.account_id}}" mat-icon-button color="accent" title="View Detail"
+                  aria-label="Example icon button with a menu icon">
+                  <mat-icon>view_list</mat-icon>
+                  </button>
+                  <button mat-icon-button color="primary" aria-label="Example icon button with a home icon" title="Edit Detail">
+                    <mat-icon (click)="updatedialog(row.account_id)">edit</mat-icon>
+                  </button>
+                  <!-- <button mat-icon-button color="warn" aria-label="Example icon button with a heart icon" title="Delete Detail">
+                    <mat-icon (click)="deleteData(row.account_id)">delete</mat-icon>
+                  </button> -->
+                  <button mat-icon-button color="info" aria-label="Example icon button with a heart icon" title="Renew Plan">
+                    <mat-icon (click)="renewplandialog(row.account_id)">update</mat-icon>
+                  </button>
+                  <button routerLink="/manager-channel-list/{{row.account_id}}" mat-icon-button color="info" title="Assign DID">
+                    <mat-icon>add_ic_call</mat-icon>
+                  </button>
+                  <button routerLink="/manager-sms-server/{{row.account_id}}" mat-icon-button color="info" title="Assign SMS Server">
+                    <mat-icon>perm_phone_msg</mat-icon>
+                  </button>
+                  <button  mat-icon-button color="info" title="Direct Login">
+                    <mat-icon (click)="directlogin(row.account_name)" >login</mat-icon>
+                  </button>
+                  <!--<button  mat-icon-button color="info" title="Generate API Key">
+                    <mat-icon (click)="getAuthKey(row.account_id)" >enhanced_encryption</mat-icon>
+                  </button>-->
+                </td>
+            </ng-container>
+        
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        </div>
+        <mat-paginator #paginator [length]="Length" [pageSize]="50" [pageSizeOptions]="[50,100,500]"></mat-paginator>
+      </div>
+    </div>
+
+  </div>
+  <!-- /.container-fluid -->
+</div>

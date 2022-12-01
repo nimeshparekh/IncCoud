@@ -1,0 +1,41 @@
+.hitnumber
+{
+    padding: 6px 10px 6px 10px;
+    border: 1px solid #ccc;
+    background: rgb(10 129 252 / 80%);
+    font-weight: bold;
+    border-radius: 3px;
+}
+
+
+
+  .width-100
+  {
+      width: 100%;
+  }
+  mat-cell, mat-header-cell, mat-footer-cell 
+{
+    /* flex: none; */
+    display: table-caption;
+    align-items: center;
+    overflow: hidden;
+    word-wrap: break-word;
+    min-height: inherit;
+    /* width: 12%; */
+    padding: 5px 4px 5px 4px;
+}
+table 
+{
+    width: 100%;
+}
+.material-icons
+{
+    cursor: pointer;
+}
+@media (max-width: 1190px)
+{
+    table 
+    {
+        width: 1300px;
+    }
+}

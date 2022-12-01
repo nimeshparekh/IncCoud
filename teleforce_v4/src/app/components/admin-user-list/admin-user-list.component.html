@@ -1,0 +1,90 @@
+<div class="warap-height pt-4"> 
+  <!-- Begin Page Content -->
+  <div class="container-fluid">
+
+      <!-- Page Heading -->
+      <h1 class="h3 mb-2 text-gray-800">Admin Users</h1>
+
+      <!-- DataTales Example -->
+      <div class="card mb-4">
+        
+        <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+
+        <div class="card-body">
+
+          <button mat-raised-button color="accent" (click)="Createdialog()" title="Add">Add Admin User</button>
+
+          <div class="table-responsive">   
+            
+            <table mat-table class="lessons-table mat-elevation-z8" matSort [dataSource]="dataSource">
+              <ng-container matColumnDef="id">
+      
+                <mat-header-cell *matHeaderCellDef>Sr. No</mat-header-cell>
+      
+                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" data-label="id">
+                  {{i+1+(paginator.pageIndex * paginator.pageSize)}}</mat-cell>
+      
+              </ng-container>
+              <ng-container matColumnDef="account_name">
+      
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Username </mat-header-cell>
+      
+                <mat-cell class="description-cell" *matCellDef="let row">{{row.account_name}}
+                </mat-cell>
+      
+              </ng-container>
+      
+              <ng-container matColumnDef="email">
+      
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Email </mat-header-cell>
+      
+                <mat-cell class="description-cell" *matCellDef="let row">
+                  {{row.email}}
+                </mat-cell>
+      
+              </ng-container>
+
+              <ng-container matColumnDef="mobile">
+      
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> Mobile </mat-header-cell>
+        
+                  <mat-cell class="description-cell" *matCellDef="let row">
+                    {{row.mobile}}
+                  </mat-cell>
+        
+                </ng-container>
+
+                <ng-container matColumnDef="action">
+      
+                  <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+        
+                  <mat-cell class="description-cell" *matCellDef="let row">
+                      <button mat-icon-button  (click)="updatedialog(row.account_id)"  color="primary" aria-label="Example icon button with a menu icon">
+                        <mat-icon>edit</mat-icon>
+                      </button>
+                      <button mat-icon-button (click)="deleteData(row.account_id)" color="warn" aria-label="Example icon button with a heart icon">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                      <button mat-icon-button  (click)="changepassword(row.account_id)" color="axxent" aria-label="Example icon button with a menu icon">
+                        <mat-icon>settings</mat-icon>
+                      </button>
+                  </mat-cell>
+        
+                </ng-container>
+      
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      
+              <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+      
+            </table>
+
+          </div>
+
+          <mat-paginator #paginator [length]="Length" [pageSize]="50" [pageSizeOptions]="[50,100,500]"></mat-paginator>
+
+        </div>
+      </div>
+
+  </div>
+  <!-- /.container-fluid -->
+</div> 

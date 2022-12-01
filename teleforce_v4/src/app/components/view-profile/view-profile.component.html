@@ -1,0 +1,374 @@
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">View Profile</h1>
+    <p class="mb-4"></p>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+
+        <div class="card-body">
+            <div class="table-card sms-history m-t-30">
+                <mat-tab-group>
+                    <mat-tab label="User Detail">
+                        <div class="history-details-head">
+
+                        </div>
+                        <div class="history-table table-responsive">
+                            <div class="example-table-container">
+                                <div fxLayout fxLayoutAlign="center center">
+                                    <div *ngIf="editmode">
+                                        <form [formGroup]="agentform" (ngSubmit)="updateProfile()">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <br>
+                                                    <mat-label><b>Username:</b> </mat-label>
+                                                    {{username}}
+                                                    <br>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6" *ngIf="UserData.role !=1">
+                                                    <br>
+                                                    <mat-label> <b>Register Date:</b></mat-label>
+                                                    {{create_date | date:'dd-MM-yyyy HH:mm:ss'}}
+                                                    <br>
+                                                </div>
+                                                <div class="col-md-6" *ngIf="UserData.role !=1">
+                                                    <br>
+                                                    <mat-label><b>Expiry Date:</b> </mat-label>
+                                                    {{expiry_date | date:'dd-MM-yyyy HH:mm:ss'}}
+                                                    <br>
+                                                </div>
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6" *ngIf="UserData.role !=1">
+                                                    <br>
+                                                    <mat-label> <b>API Key:</b></mat-label>
+                                                    {{AccessKey}}
+                                                    <br>
+                                                </div>
+                                                <div class="col-md-6" *ngIf="UserData.role !=1">
+                                                    <br>
+                                                    <mat-label><b> Services:</b></mat-label>
+                                                    <mat-label *ngFor="let service of serviceList">{{service}} ,
+                                                    </mat-label>
+
+                                                    <!-- <div *ngFor="let service of serviceList">
+                                                {{service}}
+                                            </div>  -->
+
+
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6" *ngIf="editmode">
+                                                    <br>
+                                                    <div *ngIf="UserData.role ==1">
+                                                        <mat-form-field fxFlex="40%">
+                                                            <input matInput placeholder="Mobile"
+                                                                formControlName="mobile" readonly>
+                                                            <mat-error
+                                                                *ngIf="agentform.controls.mobile.hasError('required')">
+                                                                Please enter Mobile
+                                                            </mat-error>
+                                                        </mat-form-field>
+                                                    </div>
+                                                    <div *ngIf="UserData.role !=1">
+                                                        <mat-form-field fxFlex="40%">
+                                                            <input matInput placeholder="Mobile"
+                                                                formControlName="mobile">
+                                                            <mat-error
+                                                                *ngIf="agentform.controls.mobile.hasError('required')">
+                                                                Please enter Mobile
+                                                            </mat-error>
+                                                        </mat-form-field>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="col-md-6" *ngIf="editmode">
+                                                    <br>
+                                                    <mat-form-field fxFlex="40%">
+                                                        <input matInput placeholder="Email" formControlName="email">
+                                                        <mat-error
+                                                            *ngIf="agentform.controls.email.hasError('required')">
+                                                            Please enter Email
+                                                        </mat-error>
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6" *ngIf="editmode">
+                                                    <br>
+                                                    <div *ngIf="UserData.role !=1">
+                                                        <mat-form-field fxFlex="40%">
+                                                            <input matInput placeholder="Company name"
+                                                                formControlName="company_name">
+                                                            <mat-error
+                                                                *ngIf="agentform.controls.company_name.hasError('required')">
+                                                                Please enter Company Address
+                                                            </mat-error>
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6" *ngIf="editmode">
+                                                    <br>
+                                                    <div *ngIf="UserData.role !=1">
+                                                        <mat-form-field fxFlex="40%">
+                                                            <input matInput placeholder="Authorised Person Name "
+                                                                formControlName="authorised_person_name">
+                                                            <mat-error
+                                                                *ngIf="agentform.controls.authorised_person_name.hasError('required')">
+                                                                Please enter Authorised Person Name
+                                                            </mat-error>
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6" *ngIf="editmode">
+                                                    <br>
+                                                    <div *ngIf="UserData.role !=1">
+                                                        <mat-form-field fxFlex="40%">
+                                                            <textarea matInput placeholder="Company Address"
+                                                                formControlName="company_address"></textarea>
+                                                            <mat-error
+                                                                *ngIf="agentform.controls.company_address.hasError('required')">
+                                                                Please enter Company Address
+                                                            </mat-error>
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <br>
+
+                                                </div>
+
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="btn-sec col-md-12 right"><br>
+                                                        <button mat-raised-button type="submit" color="primary"
+                                                            class="Update-btn ">Update</button><br>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-tab>
+                    <mat-tab label="Change Password">
+                        <div class="history-details-head">
+
+                        </div>
+                        <div class="history-table table-responsive">
+                            <div class="example-table-container">
+                                <div fxLayout fxLayoutAlign="center center">
+                                    <form [formGroup]="changepasswordform" (ngSubmit)="changePassword()">
+
+                                        <mat-form-field fxFlex="40%">
+                                            <input type="password" matInput placeholder="New Password"
+                                                formControlName="newpassword">
+                                            <mat-error
+                                                *ngIf="changepasswordform.controls.newpassword.hasError('required')">
+                                                Please enter New Password
+                                            </mat-error>
+                                        </mat-form-field><br>
+                                        <mat-form-field fxFlex="40%">
+                                            <input type="password" matInput placeholder="Confirm New Password"
+                                                formControlName="confirmpassword">
+                                            <mat-error
+                                                *ngIf="changepasswordform.controls.confirmpassword.hasError('required')">
+                                                Please enter Confirm Password
+                                            </mat-error>
+                                        </mat-form-field><br>
+                                        <button mat-raised-button type="submit" color="primary"
+                                            class="Update-btn ">Change Password</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-tab>
+
+                    <mat-tab label="Current Plan" *ngIf="UserData.role !='1'">
+                        <div *ngIf="!plandetail.package && !plandetail.smspackage && !plandetail.mailpackage && !plandetail.meetpackage && !plandetail.digitalpackage">
+                            <h3 style="text-align: center;color:red"><br>Currently no Plan available</h3>
+                        </div>
+                        <mat-card *ngIf="plandetail.package">Best Package</mat-card>
+                        <div class="container mt-2" *ngIf="plandetail.package">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <br>
+                                    <mat-label>Best Package Name: </mat-label>
+                                    {{plandetail.package}}
+                                    <br>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <br>
+                                    <mat-label>Best Package Price: </mat-label>
+                                    {{plandetail.packageprice}}
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container mt-2" *ngIf="plandetail.package">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <br>
+                                    <mat-label> User Limit: </mat-label>
+                                    {{plandetail.Plan_user}}
+                                    <br>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <br>
+                                    <mat-label>Package Channels: </mat-label>
+                                    {{plandetail.Plan_channel}}
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                        <mat-card *ngIf="plandetail.smspackage">Tele SMS Package</mat-card>
+                        <div class="container mt-2" *ngIf="plandetail.smspackage">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <br>
+                                    <mat-label>SMS Package Name: </mat-label>
+                                    {{plandetail.smspackage}}
+                                    <br>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <br>
+                                    <mat-label>SMS Package Price: </mat-label>
+                                    {{plandetail.smsvalue}}
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                        <mat-card *ngIf="plandetail.mailpackage">Tele Email Package</mat-card>
+                        <div class="container mt-2" *ngIf="plandetail.mailpackage">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <br>
+                                    <mat-label>Email Package Name: </mat-label>
+                                    {{plandetail.mailpackage}}
+                                    <br>
+                                </div>
+                                <div class="col-md-6">
+                                    <br>
+                                    <mat-label>Email Package Price: </mat-label>
+                                    {{plandetail.mailvalue}}
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container mt-2" *ngIf="plandetail.mailpackage">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <br>
+                                    <mat-label>Expiry Date: </mat-label>
+                                    {{plandetail.mailexpiry | date:'dd-MM-yyyy'}}
+                                    <br>
+                                </div>                               
+                            </div>
+                        </div>
+                        <mat-card *ngIf="plandetail.meetpackage">Tele Meet Package</mat-card>
+                        <div class="container mt-2" *ngIf="plandetail.meetpackage">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <br>
+                                    <mat-label>Meet Package Name: </mat-label>
+                                    {{plandetail.meetpackage}}
+                                    <br>
+                                </div>
+                                <div class="col-md-6">
+                                    <br>
+                                    <mat-label>Meet Package Price: </mat-label>
+                                    {{plandetail.meetvalue}}
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container mt-2" *ngIf="plandetail.meetpackage">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <br>
+                                    <mat-label>Expiry Date: </mat-label>
+
+                                    {{plandetail.meetexpiry | date:'dd-MM-yyyy'}}
+                                    <br>
+                                </div>
+                               
+                            </div>
+                        </div>
+                        <mat-card *ngIf="plandetail.digitalexpiry">Tele Digital Package</mat-card>
+                        <div class="container mt-2" *ngIf="plandetail.digitalexpiry">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <br>
+                                    <mat-label>Digital Package Name: </mat-label>
+
+                                    {{plandetail.digitalpackage}}
+                                    <br>
+                                </div>
+                                <div class="col-md-6">
+                                    <br>
+                                    <mat-label>Digital Package Price: </mat-label>
+                                    {{plandetail.digitalvalue}}
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container mt-2" *ngIf="plandetail.digitalexpiry">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <br>
+                                    <mat-label>Expiry Date: </mat-label>
+                                    {{plandetail.digitalexpiry | date:'dd-MM-yyyy'}}
+                                    <br>
+                                </div>                               
+                            </div>
+                        </div>                       
+                    </mat-tab>
+
+                    <mat-tab label="Webhook">
+                        <div class="history-details-head">
+
+                        </div>
+                        <div class="history-table table-responsive">
+                            <div class="example-table-container">
+                                <div fxLayout fxLayoutAlign="center center">
+                                    <form [formGroup]="webhookform" (ngSubmit)="updatewebhook()">
+
+                                        <mat-form-field fxFlex="40%">
+                                            <input matInput placeholder="Webhook URL"
+                                                formControlName="webhookurl">
+                                            <!-- <mat-error
+                                                *ngIf="agentform.controls.mobile.hasError('required')">
+                                                Please enter Mobile
+                                            </mat-error> -->
+                                        </mat-form-field>
+
+                                        <button mat-raised-button type="submit" color="primary"
+                                            class="Update-btn ">Update</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-tab>
+
+                </mat-tab-group>
+            </div>
+        </div>
+    </div>
+
+</div>

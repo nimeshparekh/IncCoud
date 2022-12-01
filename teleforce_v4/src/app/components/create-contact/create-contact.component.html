@@ -1,0 +1,156 @@
+<div mat-dialog-head class="dilog-head d-flex justify-content-between">
+  <h3 class="primary" *ngIf="addmode">Add Contact</h3>
+  <h3 class="primary" *ngIf="editmode">Edit Contact</h3>
+  <h3 class="primary" *ngIf="deletemode">Delete Contact</h3>
+  <div class="d-inline-block">
+      <a class="close" (click)="openDialog()"><i class="fi-rr-cross-small"></i></a>
+  </div>
+</div>
+<div *ngIf="addmode || editmode">
+  <form [formGroup]="addConForm" (change)="formChanged()" (ngSubmit)="contactsubmit()">
+      <div mat-dialog-content>
+        <div class="row mt-2">
+          <div class="col-sm-6 col-12">
+            <mat-form-field appearance="outline">
+                <mat-label>Full Name</mat-label>
+                <input matInput placeholder="Full Name" formControlName="name" required>
+                <mat-error *ngIf="addConForm.controls.name.hasError('required')">
+                Please enter full name
+                </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-6 col-12">
+            <mat-form-field appearance="outline">
+                <mat-label>Email address</mat-label>
+                <input matInput placeholder="Email address" formControlName="email">
+                <mat-error *ngIf="addConForm.controls.email.hasError('required')">
+                Please enter email id
+                </mat-error>
+                <mat-error *ngIf="addConForm.controls.email.hasError('email')">
+                Please enter valid email id
+                </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-6 col-12">
+            <mat-form-field appearance="outline">
+                <mat-label>Mobile</mat-label>
+                <input matInput placeholder="Mobile" formControlName="mobile" required>
+                <mat-error *ngIf="addConForm.controls.mobile.hasError('required')">
+                Please enter mobile
+                </mat-error>
+                <mat-error *ngIf="addConForm.controls.mobile.hasError('pattern')">
+                Please enter valid 10 digit mobile number
+                </mat-error>
+                <mat-error *ngIf="invalidMobile()">
+                  Mobile No. already exists. please try other
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-6 col-12">
+            <mat-radio-group class="gender" formControlName="is_mobile_dnd">
+                <div style="color:grey;">Is Mobile number DND ?</div>
+                <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" value="no">No</mat-radio-button>
+                <mat-radio-button color="primary" style="padding:4px 0px 0px 24px;" value="yes">Yes</mat-radio-button>
+            </mat-radio-group>
+          </div>
+          <div class="col-sm-6 col-12">
+            <mat-radio-group class="gender" formControlName="is_lead">
+                <div style="color:grey;">Converted to Lead ?</div>
+                <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" value="no">No</mat-radio-button>
+                <mat-radio-button color="primary" style="padding:4px 0px 0px 24px;" value="yes">Yes</mat-radio-button>
+                &nbsp;&nbsp;&nbsp;
+                <a mat-raised-button (click)="leaddetailpage(leadid)"  *ngIf="leadid>0">View Detail</a>
+            </mat-radio-group>
+          </div>
+          <div class="col-sm-6 col-12">
+            <mat-form-field appearance="outline">
+                <mat-label>Address</mat-label>
+                <textarea matInput placeholder="Address" formControlName="address"></textarea>
+                <mat-error *ngIf="addConForm.controls.address.hasError('required')">
+                Please enter address
+                </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-6 col-12">
+            <mat-form-field appearance="outline">
+                <mat-label>City</mat-label>
+                <input matInput placeholder="City" formControlName="city">
+                <mat-error *ngIf="addConForm.controls.city.hasError('required')">
+                Please enter city
+                </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-6 col-12">
+            <mat-form-field appearance="outline">
+                <mat-label>State</mat-label>
+                <mat-select formControlName="state">
+                <mat-option value="">All</mat-option>
+                <mat-option *ngFor="let type of state" value="{{type.state_name}}">
+                    {{type.state_name}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="addConForm.controls.state.hasError('required')">
+                Please enter state
+                </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-sm-6 col-12">
+            <mat-form-field appearance="outline">
+                <mat-label>Select Segment</mat-label>
+                <mat-select matInput placeholder="Segment" formControlName="category" required>
+                <mat-option *ngFor="let cat of category" [value]="cat.cont_id">
+                    {{cat.name}}
+                </mat-option>
+                </mat-select>
+                <mat-error *ngIf="addConForm.controls.category.hasError('required')">
+                Please select segment
+                </mat-error>
+            </mat-form-field>      
+          </div>
+        </div>
+        <h4>Other Information &nbsp;&nbsp;&nbsp; 
+          <a mat-icon-button color="primary">
+              <span (click)="addItem()" title="Add filed">
+                  <mat-icon>add</mat-icon>
+              </span>
+          </a>
+        </h4>
+        <div formArrayName="items" *ngFor="let item of addConForm.get('items').controls; let i = index;">
+          <div class="row mt-2" [formGroupName]="i">
+            <div class="col-sm-5 col-12">
+              <mat-form-field appearance="outline">
+                <mat-label>Field Name</mat-label>
+                <input matInput placeholder="Field Name" formControlName="otherkey">
+              </mat-form-field>
+            </div>
+            <div class="col-sm-5 col-12">
+              <mat-form-field appearance="outline">
+                <mat-label>Field Value</mat-label>
+                <input matInput placeholder="Field Value" formControlName="othervalue">
+              </mat-form-field>
+            </div>
+            <div class="col-sm-1 col-12">
+              <a mat-icon-button color="primary">
+                <span (click)="removetem(i)" title="Add filed">
+                    <mat-icon>remove</mat-icon>
+                </span>
+            </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="btn-sec" mat-dialog-actions>
+        <button mat-raised-button type="submit" color="primary" class="Update-btn" [disabled]="isDisabled">Save</button>
+        <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+      </div>
+  </form>
+</div>
+<div *ngIf="deletemode">
+  <h4 mat-dialog-content>
+      Are you sure to delete <b>{{delagentname}}</b>?
+  </h4>
+  <div class="btn-sec" mat-dialog-actions>
+      <button mat-raised-button type="button" color="primary" class="Update-btn"
+      (click)="contactdelete(delagentid,delagentname)">Delete</button>
+      <button mat-raised-button type="button" class="Discard-btn" (click)="openDialog()">Cancel</button>
+  </div>
+</div>

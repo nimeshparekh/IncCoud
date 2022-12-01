@@ -1,0 +1,283 @@
+<div class="warap-height pt-4">
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <h1 class="h3 mb-2 text-gray-800">Agent Hourly Report</h1>
+        <p class="mb-2"></p>
+
+        <form [formGroup]="searchform">
+            <div class="row">
+                <div class="col-sm-3">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Choose a date</mat-label>
+                        <input matInput placeholder="Select Date" [matDatepicker]="startpicker" formControlName="startdate" required>
+                        <mat-datepicker-toggle matSuffix [for]="startpicker"></mat-datepicker-toggle>
+                        <mat-datepicker #startpicker tpicker></mat-datepicker>
+                        <mat-error *ngIf="searchform.controls.startdate.hasError('required')">
+                            Please Select Date
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-3">
+                    <button mat-raised-button class="mt-2" type="submit" (click)="searchData()">Search</button>&nbsp;
+                </div>
+            </div>
+        </form>
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4 mt-3">
+
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table width="100%">
+                        <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+                        <div fxLayout fxLayoutAlign="center center" class="mt-2">
+                            <button mat-raised-button color="primary"
+                                (click)="exporter.exportTable('xlsx', {fileName:'Agent-Hourly-Report', sheet: 'sheet_name'})">Excel</button>
+                        </div><br>
+                        <mat-table class="lessons-table mat-elevation-z8" matTableExporter #exporter="matTableExporter" [dataSource]="dataSource">
+                            
+                            <ng-container matColumnDef="id">
+        
+                                <mat-header-cell *matHeaderCellDef >Sr. No</mat-header-cell>
+                    
+                                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" data-label="id">
+                                {{i+1+(paginator.pageIndex * paginator.pageSize)}}</mat-cell>
+                    
+                            </ng-container>
+                            
+                            <ng-container matColumnDef="agentname">
+
+                                <mat-header-cell *matHeaderCellDef > Agent Name </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" maxlength="10">
+                                    <label >{{row.AgentName}}</label>
+                                </mat-cell>
+
+                        </ng-container> 
+                        
+                        <ng-container matColumnDef="11">
+                            <mat-header-cell *matHeaderCellDef > 12AM - 1AM   </mat-header-cell>
+                            <mat-cell class="description-cell" *matCellDef="let row">
+                                {{row.count11}}
+                            </mat-cell>
+                        </ng-container> 
+
+                        <ng-container matColumnDef="12">
+                            <mat-header-cell *matHeaderCellDef > 1AM - 2AM   </mat-header-cell>
+                            <mat-cell class="description-cell" *matCellDef="let row">
+                                {{row.count12}}
+                            </mat-cell>
+                        </ng-container> 
+
+                        <ng-container matColumnDef="13">
+                            <mat-header-cell *matHeaderCellDef > 2AM - 3AM   </mat-header-cell>
+                            <mat-cell class="description-cell" *matCellDef="let row">
+                                {{row.count13}}
+                            </mat-cell>
+                        </ng-container> 
+
+                        <ng-container matColumnDef="14">
+                            <mat-header-cell *matHeaderCellDef > 3AM - 4AM   </mat-header-cell>
+                            <mat-cell class="description-cell" *matCellDef="let row">
+                                {{row.count14}}
+                            </mat-cell>
+                        </ng-container> 
+
+                        <ng-container matColumnDef="15">
+                            <mat-header-cell *matHeaderCellDef > 4AM - 5AM   </mat-header-cell>
+                            <mat-cell class="description-cell" *matCellDef="let row">
+                                {{row.count15}}
+                            </mat-cell>
+                        </ng-container> 
+
+                        <ng-container matColumnDef="16">
+                            <mat-header-cell *matHeaderCellDef > 5AM - 6AM   </mat-header-cell>
+                            <mat-cell class="description-cell" *matCellDef="let row">
+                                {{row.count16}}
+                            </mat-cell>
+                        </ng-container> 
+
+                        <ng-container matColumnDef="17">
+                            <mat-header-cell *matHeaderCellDef > 6AM - 7AM   </mat-header-cell>
+                            <mat-cell class="description-cell" *matCellDef="let row">
+                                {{row.count17}}
+                            </mat-cell>
+                        </ng-container> 
+
+                        <ng-container matColumnDef="18">
+                            <mat-header-cell *matHeaderCellDef > 7AM - 8AM   </mat-header-cell>
+                            <mat-cell class="description-cell" *matCellDef="let row">
+                                {{row.count18}}
+                            </mat-cell>
+                        </ng-container> 
+
+                        <ng-container matColumnDef="19">
+                            <mat-header-cell *matHeaderCellDef > 8AM - 9AM   </mat-header-cell>
+                            <mat-cell class="description-cell" *matCellDef="let row">
+                                {{row.count19}}
+                            </mat-cell>
+                        </ng-container>                       
+                        <ng-container matColumnDef="1">
+
+                            <mat-header-cell *matHeaderCellDef > 9AM - 10AM   </mat-header-cell>
+
+                            <mat-cell class="description-cell" *matCellDef="let row">
+                                {{row.count1}}
+                            </mat-cell>
+
+                        </ng-container>
+                        <ng-container matColumnDef="2">
+
+                                <mat-header-cell *matHeaderCellDef > 10AM - 11AM   </mat-header-cell>
+
+                            <mat-cell class="description-cell" *matCellDef="let row">
+                                {{row.count2}}
+                            </mat-cell>
+
+                            </ng-container>
+
+                        <ng-container matColumnDef="3">
+
+                                <mat-header-cell *matHeaderCellDef > 11AM - 12AM    </mat-header-cell>
+
+                            <mat-cell class="description-cell" *matCellDef="let row">
+                               {{row.count3}}
+                            </mat-cell>
+
+                            </ng-container>
+
+                        <ng-container matColumnDef="4">
+
+                                <mat-header-cell *matHeaderCellDef> 12AM - 1PM    </mat-header-cell>
+
+                            <mat-cell class="description-cell" *matCellDef="let row">
+                                {{row.count4}}
+                            </mat-cell>
+
+                            </ng-container>
+
+                        <ng-container matColumnDef="5">
+
+                            <mat-header-cell *matHeaderCellDef> 1PM - 2PM    </mat-header-cell>
+
+                            <mat-cell class="description-cell" *matCellDef="let row">
+                                {{row.count5}}
+                            </mat-cell>
+
+                        </ng-container>
+
+                        <ng-container matColumnDef="6">
+
+                                <mat-header-cell *matHeaderCellDef> 2PM - 3PM    </mat-header-cell>
+
+                            <mat-cell class="description-cell" *matCellDef="let row">
+                                {{row.count6}}
+                            </mat-cell>
+
+                            </ng-container>
+
+                        <ng-container matColumnDef="7">
+
+                                <mat-header-cell *matHeaderCellDef> 3PM - 4PM </mat-header-cell>
+
+                            <mat-cell class="description-cell" *matCellDef="let row">
+                                {{row.count7}}
+                            </mat-cell>
+
+                            </ng-container>
+
+                        <ng-container matColumnDef="8">
+
+                                <mat-header-cell *matHeaderCellDef> 4PM - 5PM   </mat-header-cell>
+
+                            <mat-cell class="description-cell" *matCellDef="let row">
+                                {{row.count8}}
+                            </mat-cell>
+
+                            </ng-container>
+
+                        <ng-container matColumnDef="9">
+
+                                <mat-header-cell *matHeaderCellDef> 5PM - 6PM   </mat-header-cell>
+
+                            <mat-cell class="description-cell" *matCellDef="let row">
+                                {{row.count9}}
+                            </mat-cell>
+
+                        </ng-container>
+                        <ng-container matColumnDef="10">
+
+                            <mat-header-cell *matHeaderCellDef> 6PM - 7PM   </mat-header-cell>
+
+                            <mat-cell class="description-cell" *matCellDef="let row">
+                                {{row.count10}}
+                            </mat-cell>
+
+                        </ng-container>
+
+                        <ng-container matColumnDef="20">
+
+                            <mat-header-cell *matHeaderCellDef> 7PM - 8PM   </mat-header-cell>
+
+                            <mat-cell class="description-cell" *matCellDef="let row">
+                                {{row.count20}}
+                            </mat-cell>
+
+                        </ng-container>
+
+                        <ng-container matColumnDef="21">
+
+                            <mat-header-cell *matHeaderCellDef> 8PM - 9PM   </mat-header-cell>
+
+                            <mat-cell class="description-cell" *matCellDef="let row">
+                                {{row.count21}}
+                            </mat-cell>
+
+                        </ng-container>
+
+                        <ng-container matColumnDef="22">
+
+                            <mat-header-cell *matHeaderCellDef> 9PM - 10PM   </mat-header-cell>
+
+                            <mat-cell class="description-cell" *matCellDef="let row">
+                                {{row.count22}}
+                            </mat-cell>
+
+                        </ng-container>
+
+                        <ng-container matColumnDef="23">
+
+                            <mat-header-cell *matHeaderCellDef> 10PM - 11PM   </mat-header-cell>
+
+                            <mat-cell class="description-cell" *matCellDef="let row">
+                                {{row.count23}}
+                            </mat-cell>
+
+                        </ng-container>
+
+                        <ng-container matColumnDef="24">
+
+                            <mat-header-cell *matHeaderCellDef> 11PM - 12AM   </mat-header-cell>
+
+                            <mat-cell class="description-cell" *matCellDef="let row">
+                                {{row.count24}}
+                            </mat-cell>
+
+                        </ng-container>
+                        
+                        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+                            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+                        </mat-table>
+                        <mat-paginator #paginator [length]="Length" [pageSize]="50" [pageSizeOptions]="[50,100,500]">
+                        </mat-paginator>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /.container-fluid -->
+</div>

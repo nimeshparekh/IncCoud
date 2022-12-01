@@ -1,0 +1,12 @@
+
+
+<div mat-dialog-head class="dilog-head d-flex justify-content-between">
+    <h2 class="dialog-head-h">Are you sure ?</h2>
+  </div>
+  <div mat-dialog-content>
+    <p>Are you sure you delete {{num_of_media.file_name}} file?</p>
+  </div>
+  <div class="btn-sec" mat-dialog-actions>
+    <button mat-flat-button color="accent" [mat-dialog-close]="data" (click)="onNoClick()">No</button>
+    <button mat-flat-button color="warn" (click)="delete_file(num_of_media)" >Yes</button>
+</div>

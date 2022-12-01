@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charest="utf-8" />
+</head>
+
+<body>
+    <p style="text-align: center;font-size:14px">
+        <img src="https://app.cloudX.in/assets/img/Garuda_logo.png" width="370" height="65"
+            alt="Garuda Advertising Pvt Ltd" />
+        <br>
+        ADVERTISING PVT. LTD.
+        <br>
+        (Formerly Garuda Advertising)
+        <br>
+        {{detail.cmpaddress}}        
+    </p>
+    <h2 style="text-align: center;">Invoice</h2>
+    <table style="border:1px solid;font-size:14px" width="100%" cellspacing="0" cellpadding="0">
+        <tr>
+            <td colspan="3" style="border-bottom:1px solid;border-right:1px solid">Bill To,</td>
+            <td colspan="2" style="border-bottom:1px solid">&nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan="3" style="border-bottom:1px solid;border-right:1px solid;font-size:16px">
+                <b>{{detail.company_name}}</b></td>
+            <td colspan="2" style="border-bottom:1px solid">Invoice : {{detail.Bill_ID}}</td>
+        </tr>
+        <tr>
+            <td colspan="3" style="border-bottom:1px solid;border-right:1px solid">{{detail.Account_Address}} </td>
+            <td colspan="2" style="border-bottom:1px solid">Date : {{detail.Bill_Date}}</td>
+        </tr>
+        {{#if detail.Account_GST_NO}}
+        <tr>
+            <td colspan="3" style="border-bottom:1px solid;border-right:1px solid">GST No. {{detail.Account_GST_NO}}
+            </td>
+            <td colspan="2" style="border-bottom:1px solid">&nbsp;</td>
+        </tr>
+        {{/if}}
+        <tr style="text-align:center;font-size:16px">
+            <td style="border-bottom:1px solid;border-right:1px solid;width:10%"><b>SN</b> </td>
+            <td style="border-bottom:1px solid;border-right:1px solid;width:50%"><b>Particulars</b></td>
+            <td style="border-bottom:1px solid;border-right:1px solid;width:10%"><b>Quantity</b></td>
+            <td style="border-bottom:1px solid;border-right:1px solid;width:15%"><b>Rate</b></td>
+            <td style="border-bottom:1px solid;width:15%"><b>Amount(RS)</b></td>
+        </tr>
+        <tr>
+            <td style="border-bottom:1px solid;border-right:1px solid;width:10%;text-align:center">1 </td>
+            <td style="border-bottom:1px solid;border-right:1px solid;width:50%">{{detail.package_name}}</td>
+            <td style="border-bottom:1px solid;border-right:1px solid;width:10%;text-align:center">{{detail.Plan_user}}
+            </td>
+            <td style="border-bottom:1px solid;border-right:1px solid;width:15%;text-align:center">{{detail.Plan_Value}}
+            </td>
+            <td style="border-bottom:1px solid;width:15%;text-align:center">{{detail.Plan_TotalValue}}</td>
+        </tr>
+        <tr>
+            <td style="border-bottom:1px solid;border-right:1px solid;width:10%;text-align:center">&nbsp; </td>
+            <td style="border-bottom:1px solid;border-right:1px solid;width:50%">&nbsp;</td>
+            <td style="border-bottom:1px solid;border-right:1px solid;width:10%;text-align:center">&nbsp;</td>
+            <td style="border-bottom:1px solid;border-right:1px solid;width:15%;text-align:center">&nbsp;</td>
+            <td style="border-bottom:1px solid;width:15%;text-align:center">&nbsp;</td>
+        </tr>
+       
+        {{#if detail.discountmode}}
+        <tr>
+            <td style="border-bottom:1px solid;border-right:1px solid;width:10%;text-align:center">&nbsp; </td>
+            <td style="border-bottom:1px solid;border-right:1px solid;width:50%">&nbsp;</td>
+            <td style="border-bottom:1px solid;border-right:1px solid;width:10%;text-align:center">&nbsp;</td>
+            <td style="border-bottom:1px solid;border-right:1px solid;width:15%;text-align:center">Discount</td>
+            <td style="border-bottom:1px solid;width:15%;text-align:center">{{detail.Plan_discount}}</td>
+        </tr>
+        {{/if}}
+        <tr>
+            <td style="border-bottom:1px solid;border-right:1px solid;width:10%;text-align:center">&nbsp; </td>
+            <td style="border-bottom:1px solid;border-right:1px solid;width:50%">&nbsp;</td>
+            <td style="border-bottom:1px solid;border-right:1px solid;width:10%;text-align:center">&nbsp;</td>
+            <td style="border-bottom:1px solid;border-right:1px solid;width:15%;text-align:center">Total</td>
+            <td style="border-bottom:1px solid;width:15%;text-align:center">{{detail.plan_total}}</td>
+        </tr>
+        {{#if detail.cgstmode}}
+        <tr>
+            <td colspan="2" rowspan="3" style="border-bottom:1px solid;border-right:1px solid">In Word :
+                {{detail.inwords}} Only </td>
+            <td colspan="2" style="border-bottom:1px solid;border-right:1px solid;text-align:center">CGST @ 9%</td>
+            <td style="border-bottom:1px solid;text-align:center">{{detail.Plan_CGST}}</td>
+        </tr>
+        <tr>
+            <td colspan="2" style="border-bottom:1px solid;border-right:1px solid;text-align:center">SGST @ 9%</td>
+            <td style="border-bottom:1px solid;text-align:center">{{detail.Plan_SGST}}</td>
+        </tr>
+        {{/if}}
+        {{#if detail.igstmode}}
+        <tr>
+            <td colspan="2" rowspan="2" style="border-bottom:1px solid;border-right:1px solid">In Word :
+                {{detail.inwords}} Only </td>
+            <td colspan="2" style="border-bottom:1px solid;border-right:1px solid;text-align:center">IGST @ 18%</td>
+            <td style="border-bottom:1px solid;text-align:center">{{detail.Total_GST}}</td>
+        </tr>
+        {{/if}}
+        <tr>
+            <td colspan="2" style="border-bottom:1px solid;border-right:1px solid;text-align:center">Grand Total</td>
+            <td style="border-bottom:1px solid;text-align:center">{{detail.Final_amount}}</td>
+        </tr>
+        <tr>
+            <td colspan="5" style="border-bottom:1px solid;font-size:15px;">Note : </td>
+        </tr>
+        <tr>
+            <td colspan="5" style="font-size:14px;">NEFT / RTGS Details </td>
+        </tr>
+        <tr>
+            <td colspan="5" style="font-size:13px;">Cheque in favour: Garuda Advertising Pvt. Ltd. </td>
+        </tr>
+        <tr>
+            <td colspan="5">
+                <table width="100%;" style="text-align:left;font-size:13px;">
+                    <tr>
+                        <td width="20%;"> Bank : Axis Bank Ltd. </td>
+                        <td width="20%;"> Branch: Chawri Bazar, New Delhi </td>
+                    </tr>
+                    <tr>
+                        <td width="20%;"> Account No. :920020047980803 </td>
+                        <td width="20%;"> IFSC/RTGS : UTIB0001548</td>
+                    </tr>
+                    <tr>
+                        <td width="20%;"> (i) PAN: {{detail.panno}} </td>
+                        <td width="20%;"> (ii) GST No. {{detail.Company_GST_ID}}</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>   
+        
+        <tr>
+            <td colspan="5" style="font-size:14px;">Terms & Conditions </td>
+        </tr>
+        <tr>
+            <td colspan="5" style="font-size:13px;">1.&nbsp;&nbsp; Payment within a week from the receipt of
+                this bill. </td>
+        </tr>
+        <tr>
+            <td colspan="5" style="font-size:13px;">2.&nbsp;&nbsp; All payment should be made by Online Payment Gateway or NEFT/RTGS only. </td>
+        </tr>
+        <tr>
+            <td colspan="5" style="font-size:13px;">3.&nbsp;&nbsp; Interest will be charged at the rate of 18%
+                p.a. if the bill is not paid on due date. </td>
+        </tr>
+        <tr>
+            <td colspan="5" style="font-size:13px;">4.&nbsp;&nbsp; All disputes are subject to jurisdiction of
+                Delhi Courts only. </td>
+        </tr>
+        <tr>
+            <td colspan="5" style="border-bottom:1px solid;font-size:13px;">E. & O. E. </td>
+        </tr>
+        <tr>
+            <td colspan="5" style="text-align: right;font-size:14px;">For GARUDA ADVERTISING PVT. LTD</td>
+        </tr>
+    </table>
+    <p style="font-size:12px;">(NOTE: This is a computer generated invoice and does not require authorised signatory and company Seal )</p>
+</body>
+
+</html>

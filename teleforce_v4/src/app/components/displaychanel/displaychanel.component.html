@@ -1,0 +1,134 @@
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+  <!-- Page Heading -->
+  <h1 class="h3 mb-2 text-gray-800">Channel List</h1>
+  <p class="mb-4"></p>
+
+  <div class="row">
+    <div>
+      <div>
+        <form [formGroup]="addCusForm">
+          <mat-form-field>
+            <mat-select placeholder="Asterisk Server" formControlName="server_id"
+              (ngModelChange)="getServerChannels($event)">
+              <mat-option *ngFor="let server of serverdata" [value]="server.server_id">{{server.server_name}}
+              </mat-option>
+            </mat-select>
+
+          </mat-form-field>
+        </form>
+      </div>
+    </div>
+    <!--<div class="col-md-2">
+      <div class="text-inside">
+        <!--<mat-select placeholder="Asterisk Server"  (ngModelChange)="getServerChannels($event)">
+          <mat-option *ngFor="let server of serverdata" [value]="server.server_id">{{server.server_name}}
+          </mat-option>
+        </mat-select>-->
+    <!--<select mat-select placeholder="Asterisk Server" (change)='getServerChannels($event)'>
+          <option *ngFor="let server of serverdata" [value]="server.server_id">
+              {{server.server_name}}</option>
+      </select>
+      </div>
+    </div>-->
+  </div><br>
+
+
+
+  <div class="row">
+    <div class="col-md-10">
+      <button mat-raised-button color="accent" (click)="Createdialog()" title="Add">Add Channel</button>
+    </div>
+    <div class="col-md-2">
+      <button mat-raised-button color="primary" (click)="CreateNewdialog()" title="New">New Channel</button>
+    </div>
+  </div>
+
+
+  <br><br>
+  <!-- DataTales Example -->
+  <div class="card shadow mb-4">
+
+    <div class="card-body">
+      <div class="table-responsive">
+        <table>
+          <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+          <mat-table class="lessons-table mat-elevation-z8" matSort [dataSource]="dataSource">
+            <ng-container matColumnDef="id">
+
+              <mat-header-cell *matHeaderCellDef>Sr. No</mat-header-cell>
+
+              <mat-cell class="description-cell" *matCellDef="let row;let i = index;" data-label="id">
+                {{i+1+(paginator.pageIndex * paginator.pageSize)}}</mat-cell>
+
+            </ng-container>
+            <ng-container matColumnDef="channelname">
+
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Channel Name</mat-header-cell>
+
+              <mat-cell class="description-cell" *matCellDef="let row">{{row.id}}
+              </mat-cell>
+
+            </ng-container>
+            <ng-container matColumnDef="server_uri">
+
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Aors </mat-header-cell>
+
+              <mat-cell class="description-cell" *matCellDef="let row">{{row.aors}}
+              </mat-cell>
+
+            </ng-container>
+
+            <ng-container matColumnDef="client_uri">
+
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Outbound Auth </mat-header-cell>
+
+              <mat-cell class="description-cell" *matCellDef="let row">
+                {{row.outbound_auth}}
+              </mat-cell>
+
+            </ng-container>
+
+            <ng-container matColumnDef="contact_user">
+
+              <mat-header-cell *matHeaderCellDef>Context </mat-header-cell>
+
+              <mat-cell class="description-cell" *matCellDef="let row">
+                {{row.context}}
+              </mat-cell>
+
+            </ng-container>
+
+            <ng-container matColumnDef="action">
+
+              <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+
+              <mat-cell class="description-cell" *matCellDef="let row">
+                <button mat-mini-fab color="primary">
+                  <span (click)="updatechanneldialog(row.id)" title="Edit">
+                    <mat-icon>edit</mat-icon>
+                  </span>
+                </button>&nbsp;
+                <button mat-mini-fab color="warn">
+                  <span (click)="deletechanneldialog(row.id,row.username)" title="Delete">
+                    <mat-icon>delete</mat-icon>
+                  </span>
+                </button>
+              </mat-cell>
+
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+          </mat-table>
+          <mat-paginator #paginator [length]="Length" [pageSize]="50" [pageSizeOptions]="[50,100,500]"></mat-paginator>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+<!-- /.container-fluid -->

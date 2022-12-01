@@ -1,0 +1,33 @@
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">KYC Approval</h1>
+    <p class="mb-4"></p>
+  
+    <!-- DataTales Example -->
+  
+                <form [formGroup]="form" (ngSubmit)="approve()">
+  
+                  <mat-radio-group formControlName="status">
+                    <div style="color:grey;">Status</div>
+                    <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;"  [value]="1">Approve
+                    </mat-radio-button>
+                    <mat-radio-button color="primary" style="padding:4px 0px 0px 24px;" [value]="2">Reject
+                    </mat-radio-button>
+                </mat-radio-group>  
+                <mat-error *ngIf="form.controls.status.hasError('required')">
+                    Please select status
+                </mat-error>  
+                    <br>
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Note</mat-label>
+                        <textarea matInput placeholder="note" formControlName="note" id="note" name="note"></textarea>
+                      </mat-form-field>
+                      <br>
+                    <button mat-raised-button color="primary">Submit</button>
+                    <button mat-button mat-dialog-close>Cancel</button>
+                    
+                  </form>
+
+  </div>
+

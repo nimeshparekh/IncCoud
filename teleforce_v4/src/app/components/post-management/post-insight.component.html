@@ -1,0 +1,95 @@
+<div class="pb-2">
+    <h1 mat-dialog-title>Post Insights</h1>
+    <div class="post-management-insight">
+        <mat-tab-group>
+            <mat-tab> 
+                <ng-template mat-tab-label>
+                    <span class="color-fb"><i class="fa fa-facebook-square" aria-hidden="true"></i></span>
+                    Facebook
+                </ng-template>
+                <div class="container-fluid mt-3">
+                    <div class="row">
+                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                            <div class="insights-box">
+                                <h2 *ngIf='like'>{{like}}</h2>
+                                <h2 *ngIf='!like'>-</h2>
+                                <p>Like</p>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                            <div class="insights-box">
+                                <h2 *ngIf='comment_count'>{{comment_count}}</h2>
+                                <h2 *ngIf='!comment_count'>-</h2>
+                                <p>Comments</p>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                            <div class="insights-box">
+                                <h2 *ngIf='reach'>{{reach}}</h2>
+                                <h2 *ngIf='!reach'>-</h2>
+                                <p>Reach</p>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div class="insights-box">
+                                <h2 *ngIf='engagement'>{{engagement}}</h2>
+                                <h2 *ngIf='!engagement'>-</h2>
+                                <p>Engagements</p>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div class="insights-box">
+                                <h2 *ngIf='share_count'>{{share_count.count}}</h2>
+                                <h2 *ngIf='!share_count'>-</h2>
+                                <p>Share</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>  
+            </mat-tab>
+            <mat-tab label="Second" *ngIf='false'> 
+                <ng-template mat-tab-label>
+                    <span class="color-twitter"><i class="fa fa-twitter-square" aria-hidden="true"></i></span>
+                    Twitter
+                </ng-template>
+                <div class="container-fluid mt-3">
+                    <div class="row">
+                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                            <div class="insights-box">
+                                <h2>2</h2>
+                                <p>Likes</p>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                            <div class="insights-box">
+                                <h2>2</h2>
+                                <p>Comments</p>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12">
+                            <div class="insights-box">
+                                <h2>2</h2>
+                                <p>Reach</p>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div class="insights-box">
+                                <h2>2</h2>
+                                <p>engagements</p>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <div class="insights-box">
+                                <h2>2</h2>
+                                <p>Share</p>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+    <div mat-dialog-actions class="text-right">
+        <button mat-button (click)="onNoClick()">Close</button>
+    </div>
+</div>

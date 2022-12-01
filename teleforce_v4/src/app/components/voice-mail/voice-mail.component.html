@@ -1,0 +1,232 @@
+<div class="warap-height pt-4">
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <h1 class="h3 mb-2 text-gray-800">Voice Mail</h1>
+
+        <!--heading filter form-->
+        <form class="mt-3" [formGroup]="searchform" (ngSubmit)="searchData()">
+            <div class="row">
+                <div class="col-12 col-md-4 col-lg-3 col-xl-2 col-sm-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Start Date</mat-label>
+                        <input matInput placeholder="Start Date" [matDatepicker]="startpicker"
+                            formControlName="startdate">
+                        <mat-datepicker-toggle matSuffix [for]="startpicker"></mat-datepicker-toggle>
+                        <mat-datepicker #startpicker tpicker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-3 col-xl-2 col-sm-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>End Date</mat-label>
+                        <input matInput placeholder="End Date" [matDatepicker]="endpicker" formControlName="enddate">
+                        <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
+                        <mat-datepicker #endpicker tpicker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-3 col-lg-2 col-xl-2 col-sm-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>DID</mat-label>
+                        <mat-select formControlName="did">
+                            <mat-option value="">All</mat-option>
+                            <mat-option *ngFor="let arr of didarr" value="{{arr.did}}">
+                                {{arr.did}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-3 col-lg-2 col-xl-2 col-sm-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Agent</mat-label>
+                        <mat-select formControlName="agentid">
+                            <mat-option value="">All</mat-option>
+                            <mat-option *ngFor="let agent of agents" value="{{agent.account_id}}">
+                                {{agent.account_name | titlecase}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-3 col-lg-2 col-xl-2 col-sm-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Caller Number</mat-label>
+                        <input matInput placeholder="Caller Number" formControlName="callerno">
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-3 col-xl-3 col-sm-6 mt-2">
+                    <!-- <button mat-raised-button type="submit" color="primary" class="Update-btn">Search</button>&nbsp; -->
+                    <button mat-raised-button type="submit" class="mt-2" (click)="Filtercontact()">Search</button>&nbsp;
+                    <button mat-raised-button color="warn" class="mt-2" (click)="resetform()">Reset</button>&nbsp;
+                    <button (click)="resetform()" class="mt-2" mat-mini-fab color="primary"
+                        aria-label="Example icon button with a plus one icon">
+                        <span class="material-icons">refresh</span>
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4 mt-3">
+
+            <ng-template [ngIf]="dataSource.loading$ | async">
+                <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+            </ng-template>
+
+            <div class="card-body">
+
+                <div fxLayout fxLayoutAlign="center center">
+                    <button mat-raised-button color="primary" (click)="createExcel()">CSV</button>&nbsp;
+                    <button mat-raised-button color="accent" (click)="assignLead()" *ngIf="logidArr.length>0">Assign
+                        Lead</button>
+                </div>
+
+                <!--Table Data-->
+                <div class="table-responsive mt-2">
+
+                    <table mat-table matTableExporter #exporter="matTableExporter" [dataSource]="dataSource" matSort
+                        (matSortChange)="sortData($event)" class="mat-elevation-z8">
+
+                        <!-- assignlead Column -->
+                        <ng-container matColumnDef="assignlead">
+                            <th mat-header-cell *matHeaderCellDef> </th>
+                            <td mat-cell *matCellDef="let row;let i = index;" data-label="id">
+                                <input type="checkbox" name="" class="checkbox" data-parent="1" value="{{row.id}}"
+                                    (click)="clickAssignLead(row.id)">
+                            </td>
+                        </ng-container>
+
+                        <!-- Position Column -->
+                        <ng-container matColumnDef="id">
+                            <th mat-header-cell *matHeaderCellDef> Sr. No. </th>
+                            <td mat-cell *matCellDef="let row;let i = index;" data-label="id">
+                                {{i+1+(contactpaginator.pageIndex * contactpaginator.pageSize)}}
+                            </td>
+                        </ng-container>
+
+                        <!-- DID Column -->
+                        <ng-container matColumnDef="DID">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> DID </th>
+                            <td mat-cell *matCellDef="let row">
+                                {{row.DID}}
+                            </td>
+                        </ng-container>
+
+                        <!-- AgentName Column -->
+                        <ng-container matColumnDef="AgentName">
+                            <th mat-header-cell *matHeaderCellDef> Agent Name </th>
+                            <td mat-cell *matCellDef="let row">
+                                {{row.AgentName}}
+                            </td>
+                        </ng-container>
+
+                        <!-- CallStartTime Column -->
+                        <ng-container matColumnDef="CallStartTime">
+                            <th mat-header-cell *matHeaderCellDef>Call Time</th>
+                            <td mat-cell *matCellDef="let row">
+                                {{row.CallStartTime | date: 'dd-MM-yyyy H:mm:s'}}
+                            </td>
+                        </ng-container>
+
+                        <!-- CallerName Column -->
+                        <ng-container matColumnDef="CallerName">
+                            <th mat-header-cell *matHeaderCellDef> Caller Name </th>
+                            <td mat-cell *matCellDef="let row">
+                                {{row.CallerName}}
+                            </td>
+                        </ng-container>
+
+                        <!-- CallerNumber Column -->
+                        <ng-container matColumnDef="CallerNumber">
+                            <th mat-header-cell *matHeaderCellDef> Caller Number </th>
+                            <td mat-cell *matCellDef="let row">
+                                {{row.CallerNumber}}
+                            </td>
+                        </ng-container>
+
+                        <!-- CallTalkTime Column -->
+                        <ng-container matColumnDef="CallTalkTime">
+                            <th mat-header-cell *matHeaderCellDef> Duration </th>
+                            <td mat-cell *matCellDef="let row">
+                                {{row.CallTalkTime}}
+                            </td>
+                        </ng-container>
+
+                        <!-- CallStatus Column -->
+                        <ng-container matColumnDef="CallStatus">
+                            <th mat-header-cell *matHeaderCellDef> Status </th>
+                            <td mat-cell *matCellDef="let row">
+                                {{row.CallStatus}}
+                            </td>
+                        </ng-container>
+
+                        <!-- AgentStatus Column -->
+                        <ng-container matColumnDef="AgentStatus">
+                            <th mat-header-cell *matHeaderCellDef> Agent Status </th>
+                            <td mat-cell *matCellDef="let row">
+                                {{row.AgentStatus}}
+                            </td>
+                        </ng-container>
+
+                        <!-- CallType Column -->
+                        <ng-container matColumnDef="CallType">
+                            <th mat-header-cell *matHeaderCellDef>Call Type </th>
+                            <td mat-cell *matCellDef="let row">
+                                {{row.CallType | titlecase}}
+                            </td>
+                        </ng-container>
+
+                        <!-- Disconnected By Column -->
+                        <ng-container matColumnDef="DisconnectedBy">
+                            <th mat-header-cell *matHeaderCellDef>Disconnected By </th>
+                            <td mat-cell *matCellDef="let row">
+                                {{row.DisconnectedBy | titlecase}}
+                            </td>
+                        </ng-container>
+
+                        <!-- recording Column -->
+                        <ng-container matColumnDef="recording">
+                            <th mat-header-cell *matHeaderCellDef> Recording </th>
+                            <td mat-cell *matCellDef="let row">
+                                <a href="javascript:void(0)" class="cursor-pointer">
+                                    <span (click)="openrecording(row.RecPath)" title="Listen Audio">
+                                        <mat-icon>headset</mat-icon>
+                                    </span>
+                                </a>
+                            </td>
+                        </ng-container>
+
+                        <!-- Action Column -->
+                        <ng-container matColumnDef="action">
+                            <th mat-header-cell *matHeaderCellDef> Action </th>
+                            <td mat-cell *matCellDef="let row">
+                                <button (click)="feedbackdialog(row.id)" title="feedback" mat-icon-button
+                                    color="primary" aria-label="Example icon button with a home icon">
+                                    <mat-icon>feedback</mat-icon>
+                                </button>
+                                <button (click)="contactdialog(row.id,row.CallerNumber)" title="" mat-icon-button
+                                    color="accent" aria-label="Example icon button with a home icon">
+                                    <mat-icon>contact_mail</mat-icon>
+                                </button>
+                                <button (click)="contacthistorydialog(row.id,row.CallerNumber)" title="history"
+                                    mat-icon-button style="color: darkcyan;"
+                                    aria-label="Example icon button with a menu icon">
+                                    <mat-icon>history</mat-icon>
+                                </button>
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+
+                </div>
+
+                <mat-paginator #contactpaginator [length]="Length" [pageSize]="50" [pageSizeOptions]="[50,100,500]"
+                    showFirstLastButtons="true">
+                </mat-paginator>
+
+            </div>
+
+        </div>
+
+    </div>
+    <!-- /.container-fluid -->
+</div>

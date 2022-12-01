@@ -1,0 +1,186 @@
+<div class="warap-height pt-4">
+  <!-- Begin Page Content -->
+  <div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Conference</h1>
+    
+    <div class="call-analytics">
+      <div class="row">
+          <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 mt-3">
+              <div class="mycard">
+                  <div class="mycard-body">
+                      <div class="d-flex flex-row">
+                          <div class="flex-fill">
+                              <div class="name-count">
+                                  <p>
+                                      Active
+                                  </p>
+                                  <label class="clr-fdb65e">{{activecnt >0 ? activecnt : '0'}} </label>
+                              </div>
+                          </div>
+                          <div class="flex-row-reverse mt-4 ng-star-inserted">
+                              <b><i class="mycard-icon fi-rr-time-check text-large clr-fdb65e"></i></b>
+                          </div>
+                      </div>
+                      <div class="flex-row-reverse mycard-info mt-3">
+                          <div class="d-flex dashboard-text">
+                              <i class="fi-rr-info my-auto mr-1"></i>
+                              <p class="mb-0">Active Conference</p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 mt-3">
+              <div class="mycard">
+                  <div class="mycard-body">
+                      <div class="d-flex flex-row">
+                          <div class="flex-fill">
+                              <div class="name-count">
+                                  <p>
+                                      Live
+                                  </p>
+                                  <label class="clr-ff7b7b">{{livecnt > 0 ? livecnt : '0'}}</label>
+                              </div>
+                          </div>
+                          <div class="flex-row-reverse mt-4 ng-star-inserted">
+                              <b><i class="mycard-icon fi-rr-time-check text-large clr-ff7b7b"></i></b>
+                          </div>
+                      </div>
+                      <div class="flex-row-reverse mycard-info mt-3">
+                          <div class="d-flex dashboard-text">
+                              <i class="fi-rr-info my-auto mr-1"></i>
+                              <p class="mb-0">Live Conference</p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 mt-3">
+            <div class="mycard">
+                <div class="mycard-body">
+                    <div class="d-flex flex-row">
+                        <div class="flex-fill">
+                            <div class="name-count">
+                                <p>
+                                   Complete Conference
+                                </p>
+                                <label class="clr-e090da">{{completedcnt > 0 ? completedcnt : '0'}}</label>
+                            </div>
+                        </div>
+                        <div class="flex-row-reverse mt-4 ng-star-inserted">
+                            <b><i class="mycard-icon fi-rr-time-check text-large clr-e090da"></i></b>
+                        </div>
+                    </div>
+                    <div class="flex-row-reverse mycard-info mt-3">
+                        <div class="d-flex dashboard-text">
+                            <i class="fi-rr-info my-auto mr-1"></i>
+                            <p class="mb-0">Conference Call Duration</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+      </div>
+    </div>
+
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4 mt-4">
+      
+      <!--Progress Bar-->
+      <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+
+      <div class="card-body">
+
+        <!--Add Segment Btn-->
+        <button mat-raised-button color="accent" (click)="Createdialog()" title="Add">Create Conference </button>
+
+        <div class="table-responsive mt-2">
+
+          <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+                    
+            <!-- Position Column -->
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef> Sr. No. </th>
+                <td mat-cell *matCellDef="let row;let i = index;" data-label="id">
+                  {{i+1+(paginator.pageIndex * paginator.pageSize)}}
+                </td>
+            </ng-container>
+        
+            <!--  date Column -->
+            <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef  mat-sort-header> Date   </th>
+                <td mat-cell *matCellDef="let row">
+                  {{row.conf_date | date:'dd-MM-yyyy HH:mm:ss'}}
+                </td>
+            </ng-container>
+
+            <!--  name Column -->
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef  mat-sort-header> Conference Name  </th>
+              <td mat-cell *matCellDef="let row">
+                {{row.conf_name}}
+              </td>
+            </ng-container>
+
+            <!--  type Column -->
+            <ng-container matColumnDef="type">
+              <th mat-header-cell *matHeaderCellDef  mat-sort-header> Type  </th>
+              <td mat-cell *matCellDef="let row">
+                {{row.conf_type==0?'Inbound':'Outbound'}}
+              </td>
+            </ng-container>
+
+            <!--  membertype Column -->
+            <ng-container matColumnDef="membertype">
+              <th mat-header-cell *matHeaderCellDef  mat-sort-header> Member Type  </th>
+              <td mat-cell *matCellDef="let row">
+                {{row.conf_membertype==0?'Agent':'Contact'}}
+              </td>
+            </ng-container>
+
+            <!--  pin Column -->
+            <ng-container matColumnDef="pin">
+              <th mat-header-cell *matHeaderCellDef  mat-sort-header> PIN </th>
+              <td mat-cell *matCellDef="let row">
+                {{row.conf_pin}}
+              </td>
+            </ng-container>
+
+            <!-- Action Column -->
+            <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef> Action </th>
+                <td mat-cell *matCellDef="let row">         
+                  <button routerLink="/conference-details/{{row.conf_id}}" title="View Details" mat-icon-button color="primary" aria-label="Example icon button with a home icon">
+                    <mat-icon>info</mat-icon>
+                  </button>
+                </td>
+            </ng-container>
+
+            <!-- Action Column 
+            <ng-container matColumnDef="playpush">
+              <th mat-header-cell *matHeaderCellDef> Recording </th>
+              <td mat-cell *matCellDef="let row">         
+                <button title="View Details" mat-icon-button color="primary" aria-label="Example icon button with a home icon">
+                  <mat-icon>play_arrow</mat-icon>
+                </button>
+              </td>
+            </ng-container>-->
+        
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+
+        </div>
+
+        <mat-paginator #paginator [length]="Length" [pageSize]="50" [pageSizeOptions]="[50,100,500]"></mat-paginator>
+
+      </div>
+
+    </div>
+
+  </div>
+  <!-- /.container-fluid -->
+</div>  

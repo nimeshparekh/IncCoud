@@ -1,0 +1,99 @@
+<!-- Begin Page Content -->
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">       
+        Email & SMS Configuration
+    </h1>
+    <p class="mb-4"></p>
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <!-- <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar> -->
+            <form [formGroup]="addForm" (ngSubmit)="submit()">
+                <mat-grid-list [cols]="2" rowHeight="85px">                    
+                    <mat-grid-tile>
+                        <div class="text-inside">
+                            <mat-form-field class="example-full-width">
+                                <mat-label>SMS Server</mat-label>
+                                <mat-select formControlName="serverid" required>
+                                    <mat-option *ngFor="let server of smserver" [value]="server.sid">
+                                        {{server.server_name}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="addForm.controls.serverid.hasError('required')">
+                                    Please select sms server
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </mat-grid-tile>
+                    <mat-grid-tile>
+                        <div class="text-inside">
+                            <mat-form-field class="example-full-width">
+                                <mat-label>Email Server</mat-label>
+                                <mat-select formControlName="emailserverid" required>
+                                    <mat-option *ngFor="let server of emailserver" [value]="server.server_id">
+                                        {{server.smtp_server}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="addForm.controls.emailserverid.hasError('required')">
+                                    Please select email server
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </mat-grid-tile>
+                    
+                </mat-grid-list>
+
+                
+                <div >
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Event</th>
+                                <th>SMS Template</th>
+                                <th >Email Template</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr formArrayName="configDetail"
+                                *ngFor="let cd of configarr.controls ;let i=index;">
+                                <td formGroupName={{i}}>
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Event</mat-label>
+                                        <input matInput placeholder="Username" formControlName="event" readonly>
+                                    </mat-form-field>
+                                </td>
+                                <td formGroupName={{i}}>
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>SMS Template</mat-label>
+                                        <mat-select formControlName="smstempid">
+                                            <mat-option *ngFor="let temp of smstemp" [value]="temp.sms_id">
+                                                {{temp.sms_title}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </td>                               
+                                <td formGroupName={{i}}>
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Email Template</mat-label>
+                                        <mat-select formControlName="emailtempid">
+                                            <mat-option *ngFor="let temp of emailtemp" [value]="temp.email_id">
+                                                {{temp.email_title}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="btn-sec">
+                    <button mat-raised-button type="submit" color="primary" class="Update-btn">Save</button>
+                    &nbsp;
+                    <button mat-raised-button type="button" class="Discard-btn" (click)="openDialog()">Cancel</button>
+                </div>
+            </form>        
+        </div>
+    </div>
+
+</div>
+<!-- /.container-fluid -->

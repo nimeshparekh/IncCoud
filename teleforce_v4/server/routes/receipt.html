@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <mate charest="utf-8" />
+    </head>
+    <body>
+        <p style="text-align: center;">GARUDA ADVERTISING PVT. LTD.</p>
+        <h2 style="text-align: center;">Receipt Of Payment</h2>
+        <table style="border:1px solid" width="100%" cellspacing="0" cellpadding="0">
+            <tr>
+                <td colspan="2"  style="border-bottom:1px solid;border-right:1px solid;width:50%">Received From <br>
+                    {{detail.firstname}},<br>
+                    {{detail.address}}
+                </td>
+                <td  style="border-bottom:1px solid;border-right:1px solid;width:25%">Date : {{detail.date}}</td>
+                <td  style="border-bottom:1px solid;width:25%">Transaction ID : {{detail.txnid}} </td>
+            </tr> 
+            <tr>
+                <td  colspan="3"  style="border-bottom:1px solid;border-right:1px solid;width:10%;text-align:center;"> <b>Description</b> 	</td>
+                <td  style="border-bottom:1px solid;width:25%;text-align:center;"><b>Amount Rs.</b></td>
+            </tr>  
+            <tr>
+                <td  colspan="3"  style="border-bottom:1px solid;border-right:1px solid;width:10%;text-align:center;">  {{detail.productinfo}}</td>
+                <td  style="border-bottom:1px solid;width:25%;text-align:center;">{{detail.amount}}</td>
+            </tr>  
+            <tr>
+                <td  colspan="3"  style="border-bottom:1px solid;border-right:1px solid;width:10%;text-align:center;">&nbsp; </td>
+                <td  style="border-bottom:1px solid;width:25%;text-align:center;">&nbsp;</td>
+            </tr>  
+            <tr>
+                <td  colspan="3"  style="border-right:1px solid;width:10%;text-align:right;"> Net Received </td>
+                <td  style="width:25%;text-align:center;">{{detail.amount}}</td>
+            </tr>  
+        </table>
+        <p>(NOTE: This is a computer generated receipt and does not require authorised signatory and company Seal )</p>
+    </body>
+</html>

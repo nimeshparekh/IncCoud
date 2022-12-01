@@ -1,0 +1,298 @@
+<div class="warap-height pt-4">
+  <!-- Begin Page Content -->
+  <div class="container-fluid">
+
+      <!-- Page Heading -->
+      <h1 class="h3 mb-2 text-gray-800">Kyc Document</h1>
+
+      <!-- DataTales Example -->
+      <div class="card mb-4">
+
+        <mat-tab-group>
+          
+          <mat-tab label="Approve List">
+            <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table mat-table [dataSource]="dataSource">
+                  <ng-container matColumnDef="id">
+          
+                    <mat-header-cell *matHeaderCellDef>Sr. No</mat-header-cell>
+          
+                    <mat-cell class="description-cell" *matCellDef="let row;let i = index;" data-label="id">
+                      {{i+1+(paginator.pageIndex * paginator.pageSize)}}</mat-cell>
+          
+                  </ng-container>
+                  <ng-container matColumnDef="name">
+          
+                    <mat-header-cell *matHeaderCellDef> Account Name </mat-header-cell>
+          
+                    <mat-cell class="description-cell" *matCellDef="let row">
+                      {{row.account_name}}
+
+                    
+                    </mat-cell>
+          
+                  </ng-container>
+          
+                  <ng-container matColumnDef="registration">
+          
+                    <mat-header-cell *matHeaderCellDef> Registration </mat-header-cell>
+          
+                    <mat-cell class="description-cell" *matCellDef="let row">
+                      <div *ngIf="row.registration_certi">Uploaded
+                      <!-- <img src="api/kyc/{{row.registration_certi}}"   alt="Image not found" err-SRC="this.src=assets/img/notfound.jpeg" height="30px" width="30px" > -->
+
+                      <!-- <a [href]="'/api/kyc/'+row.registration_certi"   onerror="this.onerror=null;this.href='assets/img/notfound.jpeg'; alt='no image'" target="_blanck"> 
+                        <img src="api/kyc/{{row.registration_certi}}"   alt="Image not found"  onerror="this.onerror=null; this.src='assets/img/notfound.jpeg';" 
+                        height="30px" width="30px" >
+                      </a> -->
+                    
+                    </div>
+                    <div *ngIf="!row.registration_certi">Pending</div>                  
+                    </mat-cell>
+          
+                  </ng-container>
+
+                  <ng-container matColumnDef="gst">
+          
+                      <mat-header-cell *matHeaderCellDef> GST Certificate </mat-header-cell>
+                    
+                      <mat-cell class="description-cell" *matCellDef="let row">
+                        <div *ngIf="row.gst_certificate"> Uploaded</div>
+                        <!-- <a [href]="'/api/kyc/'+row.gst_certificate" target="_blanck">
+                          <img src="api/kyc/{{row.gst_certificate}}"  alt="no image" onerror="this.onerror=null; this.src='assets/img/notfound.jpeg'"  height="30px" width="30px" >
+                        </a> -->
+                        <div *ngIf="!row.gst_certificate">Pending</div>
+                        
+                      </mat-cell>
+            
+                    </ng-container>
+
+                    <ng-container matColumnDef="agreement">
+          
+                      <mat-header-cell *matHeaderCellDef> Agreement</mat-header-cell>
+                      <mat-cell class="description-cell" *matCellDef="let row">
+                        <div *ngIf="row.agreement">Uploaded</div>
+                        <!-- <a [href]="'/api/kyc/'+row.agreement" target="_blanck"> 
+                          <img src="api/kyc/{{row.agreement}}"   onerror="this.onerror=null; this.src='assets/img/notfound.jpeg'" alt="no image" height="30px" width="30px" >
+
+                        </a> -->
+                        <div *ngIf="!row.agreement">Pending</div>
+                      
+                        </mat-cell>
+            
+                    </ng-container>
+                    <ng-container matColumnDef="pancard">
+          
+                      <mat-header-cell *matHeaderCellDef> Pancard</mat-header-cell>
+                      <mat-cell class="description-cell" *matCellDef="let row">
+                        <div *ngIf="row.pan_card">Uploaded</div>
+                        <!-- <a  [href]="'api/kyc/'+row.pan_card" target="_blanck">
+                          <img src="api/kyc/{{row.pan_card}}"   onerror="this.onerror=null; this.src='assets/img/notfound.jpeg'" alt="no image" height="30px" width="30px">
+                        </a> -->
+                        <div *ngIf="!row.pan_card">Pending</div>
+
+                        </mat-cell>
+            
+                    </ng-container>
+                    <ng-container matColumnDef="authorized_person_proof">
+          
+                      <mat-header-cell *matHeaderCellDef> Authorized Person</mat-header-cell>
+                      <mat-cell class="description-cell" *matCellDef="let row">
+                        <div *ngIf="row.authorized_person_proof">Uploaded</div>
+                        <!-- <a [href]="'/api/kyc/'+row.authorized_person_proof" target="_blanck">
+                          <img src="api/kyc/{{row.authorized_person_proof}}"   onerror="this.onerror=null; this.src='assets/img/notfound.jpeg'" alt="no image" height="30px" width="30px" >
+                          </a> -->
+                          <div *ngIf="!row.authorized_person_proof">Pending</div>
+                        </mat-cell>
+            
+                    </ng-container>
+                    <ng-container matColumnDef="upload">
+                      <mat-header-cell *matHeaderCellDef>Upload Date</mat-header-cell>
+                      <mat-cell class="description-cell" *matCellDef="let row">{{row.uploaded_date |date: 'dd-MM-yyyy H:mm:s' }}</mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="approve">
+                    <mat-header-cell *matHeaderCellDef>Approve Date</mat-header-cell>
+                    <mat-cell class="description-cell" *matCellDef="let row">{{row.approve_date | date: 'dd-MM-yyyy H:mm:s'}}</mat-cell>
+                  </ng-container>
+                    <ng-container matColumnDef="note">
+                      <mat-header-cell *matHeaderCellDef>Note</mat-header-cell>
+                      <mat-cell class="description-cell" *matCellDef="let row">{{row.note}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="status">
+                      <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+                      <mat-cell class="description-cell" *matCellDef="let row" >
+                        {{row.status==0?'Pending':''}}{{row.status==1?'Approve':''}}{{row.status==2?'Reject':''}}
+                      </mat-cell>
+                    </ng-container>
+                  
+                    <ng-container matColumnDef="action">
+                      <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+      
+                      <mat-cell class="description-cell" *matCellDef="let row">
+                        
+                          <!-- <button (click)="approvedialoag(row.kyc_id)"  mat-flat-button color="primary">Status</button> -->
+                          <button (click)="viewdialoag(row.kyc_id)"  mat-flat-button color="accent">View</button>
+
+                        
+                      </mat-cell>
+            
+                    </ng-container>
+          
+                  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          
+                  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+          
+                </table> 
+              </div>
+              <mat-paginator #paginator [length]="Length" [pageSize]="50" [pageSizeOptions]="[50,100,500]"></mat-paginator>
+            </div>
+          </mat-tab> 
+
+          <mat-tab label="Pending List">
+            <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table mat-table class="lessons-table mat-elevation-z8" [dataSource]="pendingdataSource">
+                  <ng-container matColumnDef="id">
+          
+                    <mat-header-cell *matHeaderCellDef>Sr. No</mat-header-cell>
+          
+                    <mat-cell class="description-cell" *matCellDef="let row;let i = index;" data-label="id">
+                      {{i+1+(paginator.pageIndex * paginator.pageSize)}}</mat-cell>
+          
+                  </ng-container>
+                  <ng-container matColumnDef="name">
+          
+                    <mat-header-cell *matHeaderCellDef> Account Name </mat-header-cell>
+          
+                    <mat-cell class="description-cell" *matCellDef="let row">
+                      {{row.account_name}}
+
+                    
+                    </mat-cell>
+          
+                  </ng-container>
+          
+                  <ng-container matColumnDef="registration">
+          
+                    <mat-header-cell *matHeaderCellDef> Registration </mat-header-cell>
+          
+                    <mat-cell class="description-cell" *matCellDef="let row">
+                      <div *ngIf="row.registration_certi">Uploaded
+                      <!-- <img src="api/kyc/{{row.registration_certi}}"   alt="Image not found" err-SRC="this.src=assets/img/notfound.jpeg" height="30px" width="30px" > -->
+
+                      <!-- <a [href]="'/api/kyc/'+row.registration_certi"   onerror="this.onerror=null;this.href='assets/img/notfound.jpeg'; alt='no image'" target="_blanck"> 
+                        <img src="api/kyc/{{row.registration_certi}}"   alt="Image not found"  onerror="this.onerror=null; this.src='assets/img/notfound.jpeg';" 
+                        height="30px" width="30px" >
+                      </a> -->
+                    
+                    </div>
+                    <div *ngIf="!row.registration_certi">Pending</div>                  
+                    </mat-cell>
+          
+                  </ng-container>
+
+                  <ng-container matColumnDef="gst">
+          
+                      <mat-header-cell *matHeaderCellDef> GST Certificate </mat-header-cell>
+                    
+                      <mat-cell class="description-cell" *matCellDef="let row">
+                        <div *ngIf="row.gst_certificate"> Uploaded</div>
+                        <!-- <a [href]="'/api/kyc/'+row.gst_certificate" target="_blanck">
+                          <img src="api/kyc/{{row.gst_certificate}}"  alt="no image" onerror="this.onerror=null; this.src='assets/img/notfound.jpeg'"  height="30px" width="30px" >
+                        </a> -->
+                        <div *ngIf="!row.gst_certificate">Pending</div>
+                        
+                      </mat-cell>
+            
+                    </ng-container>
+
+                    <ng-container matColumnDef="agreement">
+          
+                      <mat-header-cell *matHeaderCellDef> Agreement</mat-header-cell>
+                      <mat-cell class="description-cell" *matCellDef="let row">
+                        <div *ngIf="row.agreement">Uploaded</div>
+                        <!-- <a [href]="'/api/kyc/'+row.agreement" target="_blanck"> 
+                          <img src="api/kyc/{{row.agreement}}"   onerror="this.onerror=null; this.src='assets/img/notfound.jpeg'" alt="no image" height="30px" width="30px" >
+
+                        </a> -->
+                        <div *ngIf="!row.agreement">Pending</div>
+                      
+                        </mat-cell>
+            
+                    </ng-container>
+                    <ng-container matColumnDef="pancard">
+          
+                      <mat-header-cell *matHeaderCellDef> Pancard</mat-header-cell>
+                      <mat-cell class="description-cell" *matCellDef="let row">
+                        <div *ngIf="row.pan_card">Uploaded</div>
+                        <!-- <a  [href]="'api/kyc/'+row.pan_card" target="_blanck">
+                          <img src="api/kyc/{{row.pan_card}}"   onerror="this.onerror=null; this.src='assets/img/notfound.jpeg'" alt="no image" height="30px" width="30px">
+                        </a> -->
+                        <div *ngIf="!row.pan_card">Pending</div>
+  
+                        </mat-cell>
+            
+                    </ng-container>
+                    <ng-container matColumnDef="authorized_person_proof">
+          
+                      <mat-header-cell *matHeaderCellDef> Authorized Person</mat-header-cell>
+                      <mat-cell class="description-cell" *matCellDef="let row">
+                        <div *ngIf="row.authorized_person_proof">Uploaded</div>
+                        <!-- <a [href]="'/api/kyc/'+row.authorized_person_proof" target="_blanck">
+                          <img src="api/kyc/{{row.authorized_person_proof}}"   onerror="this.onerror=null; this.src='assets/img/notfound.jpeg'" alt="no image" height="30px" width="30px" >
+                          </a> -->
+                          <div *ngIf="!row.authorized_person_proof">Pending</div>
+                        </mat-cell>
+            
+                    </ng-container>
+                    <ng-container matColumnDef="upload">
+                      <mat-header-cell *matHeaderCellDef>Upload Date</mat-header-cell>
+                      <mat-cell class="description-cell" *matCellDef="let row">{{row.uploaded_date |date: 'dd-MM-yyyy H:mm:s' }}</mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="approve">
+                    <mat-header-cell *matHeaderCellDef>Approve Date</mat-header-cell>
+                    <mat-cell class="description-cell" *matCellDef="let row">{{row.approve_date | date: 'dd-MM-yyyy H:mm:s'}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="note">
+                      <mat-header-cell *matHeaderCellDef>Note</mat-header-cell>
+                      <mat-cell class="description-cell" *matCellDef="let row">{{row.note}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="status">
+                      <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+                      <mat-cell class="description-cell" *matCellDef="let row" >
+                        {{row.status==0?'Pending':''}}{{row.status==1?'Approve':''}}{{row.status==2?'Reject':''}}
+                      </mat-cell>
+                    </ng-container>
+                  
+                    <ng-container matColumnDef="action">
+                      <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+      
+                      <mat-cell class="description-cell" *matCellDef="let row">
+                        
+                          <button (click)="approvedialoag(row.kyc_id)"  mat-flat-button color="primary">Status</button>
+                          <button (click)="viewdialoag(row.kyc_id)"  mat-flat-button color="accent">View</button>
+
+                        
+                      </mat-cell>
+            
+                    </ng-container>
+          
+                  <mat-header-row *matHeaderRowDef="pendingdisplayedColumns"></mat-header-row>
+          
+                  <mat-row *matRowDef="let row; columns: pendingdisplayedColumns"></mat-row>
+          
+                </table>
+              </div>
+              <mat-paginator #pendingpaginator [length]="pendingLength" [pageSize]="50" [pageSizeOptions]="[50,100,500]"></mat-paginator>
+            </div>
+          </mat-tab> 
+        </mat-tab-group> 
+       
+      </div>
+
+  </div>
+  <!-- /.container-fluid -->
+</div>  

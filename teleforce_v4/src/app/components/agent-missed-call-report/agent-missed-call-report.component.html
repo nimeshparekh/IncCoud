@@ -1,0 +1,146 @@
+<div class="warap-height pt-4">
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <h1 class="h3 mb-2 text-gray-800">Agent Missedcall Report</h1>
+
+        <form [formGroup]="searchform" (ngSubmit)="searchData()">
+            <div class="row">
+                <div class="col-12 col-md-4 col-lg-3 col-xl-2 col-sm-6 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Agent</mat-label>
+                        <mat-select formControlName="agentid">
+                            <mat-option value="">All</mat-option>
+                            <mat-option *ngFor="let agent of agents" value="{{agent.account_id}}">
+                                {{agent.account_name | titlecase}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-3 col-xl-2 col-sm-6 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Start Date</mat-label>
+                        <input matInput placeholder="Start Date" [matDatepicker]="startpicker"
+                            formControlName="startdate">
+                        <mat-datepicker-toggle matSuffix [for]="startpicker"></mat-datepicker-toggle>
+                        <mat-datepicker #startpicker tpicker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-4 col-lg-3 col-xl-2 col-sm-6 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>End Date</mat-label>
+                        <input matInput placeholder="End Date" [matDatepicker]="endpicker" formControlName="enddate">
+                        <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
+                        <mat-datepicker #endpicker tpicker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+
+            </div>
+            <div class="col-12 col-md-4 col-lg-3 col-xl-3 col-sm-6 mt-2">
+                <!-- <button mat-raised-button type="submit" color="primary" class="Update-btn">Search</button>&nbsp; -->
+                <button mat-raised-button type="submit" class="mt-2" [disabled]="isDisabled">Search</button>&nbsp;
+                <button mat-raised-button color="warn" class="mt-2" (click)="resetform()">Reset</button>&nbsp;
+                <button (click)="resetform()" class="mt-2" mat-mini-fab color="primary"
+                    aria-label="Example icon button with a plus one icon">
+                    <span class="material-icons">refresh</span>
+                </button>
+            </div>
+        </form>
+
+
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4 mt-3">
+
+            <!-- <ng-template [ngIf]="dataSource.loading$ | async">
+          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </ng-template> -->
+            <!-- <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar> -->
+            <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+            <div class="card-body">
+
+                <div fxLayout fxLayoutAlign="center center" class="mt-2">
+                    <button mat-raised-button color="primary"
+                        (click)="exporter2.exportTable('csv', {fileName:'agent-missedcall-report', sheet: 'sheet_name'})">CSV</button>&nbsp;&nbsp;
+                        <!-- <button mat-raised-button color="primary"
+                        (click)="audiodownloadzip();">Audio Download Zip</button> -->
+                </div>
+
+                <!--Table Data-->
+                <div class="table-responsive mt-2">
+
+                    <table mat-table matTableExporter #exporter2="matTableExporter" [dataSource]="dataSource"  class="mat-elevation-z8">
+
+                        <!-- Position Column -->
+                        <ng-container matColumnDef="id">
+                            <th mat-header-cell *matHeaderCellDef> Sr. No. </th>
+                            <td mat-cell *matCellDef="let row;let i = index;" data-label="id">
+                                {{i+1+(paginator.pageIndex * paginator.pageSize)}}
+                            </td>
+                        </ng-container>
+
+                        <!-- DID Column -->
+                        <ng-container matColumnDef="DID">
+                            <th mat-header-cell *matHeaderCellDef > DID </th>
+                            <td mat-cell *matCellDef="let row">
+                                {{row.DID}}
+                            </td>
+                        </ng-container>
+
+                        <!-- AgentName Column -->
+                        <ng-container matColumnDef="AgentName">
+                            <th mat-header-cell *matHeaderCellDef> Agent Name </th>
+                            <td mat-cell *matCellDef="let row">
+                                {{row.AgentName}}
+                            </td>
+                        </ng-container>
+
+                        <!-- CallStartTime Column -->
+                        <ng-container matColumnDef="missedtime">
+                            <th mat-header-cell *matHeaderCellDef>MissedCall Time</th>
+                            <td mat-cell *matCellDef="let row">
+                                {{row.missedtime | date: 'dd-MM-yyyy H:mm:s':timezone}}
+                            </td>
+                        </ng-container>
+
+                        <!-- CallerName Column -->
+                        <ng-container matColumnDef="CallerName">
+                            <th mat-header-cell *matHeaderCellDef> Caller Name </th>
+                            <td mat-cell *matCellDef="let row">
+                                {{row.CallerName}}
+                            </td>
+                        </ng-container>
+
+                        <!-- CallerNumber Column -->
+                        <ng-container matColumnDef="CallerNumber">
+                            <th mat-header-cell *matHeaderCellDef> Caller Number </th>
+                            <td mat-cell *matCellDef="let row">
+                                {{row.CallerNumber}}
+                            </td>
+                        </ng-container>
+
+                         <!-- CallerNumber Column -->
+                         <ng-container matColumnDef="callback">
+                            <th mat-header-cell *matHeaderCellDef> Callback</th>
+                            <td mat-cell *matCellDef="let row">
+                               {{row.callbackcount>0?'Yes':'No'}}
+                            </td>
+                        </ng-container>
+
+                        
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+
+                </div>
+
+                <mat-paginator #paginator [length]="Length" [pageSize]="50" [pageSizeOptions]="[50,100,500]"
+                    showFirstLastButtons="true">
+                </mat-paginator>
+
+            </div>
+
+        </div>
+
+    </div>
+    <!-- /.container-fluid -->
+</div>

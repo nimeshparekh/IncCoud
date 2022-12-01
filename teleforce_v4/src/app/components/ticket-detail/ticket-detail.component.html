@@ -1,0 +1,286 @@
+<div class="warap-height lead-detail">
+    <!-- Begin Page Content -->
+    <div class="leaddetails-header  pt-2">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-4">
+                    <!-- Page Heading -->
+                    <h1 class="h3 text-gray-800 d-flex">
+                        <button routerLink="/ticket-list" mat-icon-button title="Back" color="accent"
+                            aria-label="Example icon button with a menu icon">
+                            <mat-icon>keyboard_backspace</mat-icon>
+                        </button>
+                        <div class="rcc-profile-pic">
+                            <img src="assets/img/user.png" width="20px">
+                        </div>
+                        <div style="margin-top: 4px; margin-left: 6px;">
+                            <b>{{ticketdetail?.subject}}</b>
+                        </div>
+                    </h1>
+
+                    <p class="lead-header-status">
+                        Status : <b>{{ticketdetail?.status}}</b> <span> Created Date :
+                            <b>{{ticketdetail?.created_date | date:'medium'}}</b> </span>
+                    </p>
+                </div>
+                <div class="col-8">
+                    <div class="text-right">
+                        <button mat-flat-button color="primary" class="ml-2 mt-2" (click)="refresh()">
+                            <mat-icon>cached</mat-icon>
+                        </button> &nbsp;
+                        <button mat-flat-button class="mt-2 mr-2 call-btn-color" title="Call"
+                            (click)="clicktocall(ticketdetail?.contact_no)"
+                            *ngIf="managerid==48&&ticketdetail?.status!='Closed'">
+                            <span class="btn-icon">
+                                <i class="fas fa-phone-alt"></i>
+                            </span>
+                        </button>
+
+                        <!--for manager-->
+                        <button mat-flat-button class="mt-2 mr-2 sms-btn-color" title="SMS"
+                            *ngIf="managerid==48&&ticketdetail?.status!='Closed'" (click)="smsSend()">
+                            <span class="btn-icon">
+                                <i class="fa fa-sms" aria-hidden="true"></i>
+                            </span>
+                            <!-- SMS -->
+                        </button>
+                        <button mat-flat-button class="mt-2 mt-2 mail-btn-color" title="Mail"
+                            *ngIf="managerid==48&&ticketdetail?.status!='Closed'" (click)="emailSend()">
+                            <span class="btn-icon">
+                                <i class="fa fa-envelope" aria-hidden="true"></i>
+                            </span>
+                            <!-- Mail -->
+                        </button>
+                        <button mat-flat-button class="mt-2 ml-2 whatsapp-btn-color" title="Whatsapp"
+                            *ngIf="managerid==48&&ticketdetail?.status!='Closed'" (click)="sendwhatsapp()">
+                            <b><span class="btn-icon">
+                                    <i class="fab fa-whatsapp"></i>
+                                </span></b>
+                            <!-- Whatsapp -->
+                        </button>
+
+                        <button mat-flat-button color="primary" class="ml-2 mt-2" (click)="updatedialog()"
+                            *ngIf="managerid==48&&ticketdetail?.status!='Closed'">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+
+                        <!--<button mat-flat-button class="ml-2 mt-2 sms-btn-color" *ngIf="managerid==48">
+                            <span class="btn-icon">
+                                <i class="fa fa-calendar" aria-hidden="true"></i>
+                            </span>
+                            Schedule Meeting
+                        </button>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- /.container-fluid -->
+
+    <div class="leaddetails-body">
+        <div class="row m-0">
+            <div class="col-sm-4 p-0">
+                <div class="related-data">
+                    <div class="releted-contact">
+                        <h4>Ticket Detail</h4>
+                        <div class="d-flex mt-3 info-card" *ngIf="ticketdetail?.account_id">
+                            <div class="rcc-icon">
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                            </div>
+                            <div class="rcc-name">
+                                Manager: <b>{{ticketdetail?.account_name}}</b>
+                            </div>
+                        </div>
+                        <div class="d-flex mt-3 info-card" *ngIf="ticketdetail?.agent_id">
+                            <div class="rcc-icon">
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                            </div>
+                            <div class="rcc-name">
+                                Agent: <b>{{ticketdetail?.agentname}}</b>
+                            </div>
+                        </div>
+                        <div class="d-flex mt-3 info-card" *ngIf="ticketdetail?.email">
+                            <div class="rcc-icon">
+                                <i class="fa fa-envelope" aria-hidden="true"></i>
+                            </div>
+                            <div class="rcc-name">
+                                Email ID: <b>{{ticketdetail?.email}}</b>
+                            </div>
+                        </div>
+                        <div class="d-flex mt-2 info-card" *ngIf="ticketdetail?.contact_no">
+                            <div class="rcc-icon">
+                                <i class="fa fa-mobile" aria-hidden="true"></i>
+                            </div>
+                            <div class="rcc-name">
+                                Mobile No: <b>{{ticketdetail?.contact_no}}</b>
+                            </div>
+                        </div>
+                        <div class="d-flex mt-2 info-card" *ngIf="ticketdetail?.issue_name">
+                            <div class="rcc-icon">
+                                <i class="fa fa-cog" aria-hidden="true"></i>
+                            </div>
+                            <div class="rcc-name">
+                                Issue Type: <b>{{ticketdetail?.issue_name}}</b>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="releted-contact mt-3" *ngIf="ticketdetail?.assign_to&&ticketdetail?.assignagentname">
+                        <h4>Ticket Assign</h4>
+                        <!-- <div class="rc-contactname d-flex">
+                            <div class="rcc-profile-pic">
+                                W
+                            </div>
+                            <div class="rcc-profile-name">
+                                ABC
+                            </div>
+                        </div> -->
+                        <div class="d-flex mt-3 info-card">
+                            <div class="rcc-icon">
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                            </div>
+                            <div class="rcc-name">
+                                Assign Agent : <b>{{ticketdetail?.assignagentname}}
+                                    <button mat-icon-button color="primary"  (click)="assignagent()"
+                                    *ngIf="managerid==48&&ticketdetail?.status!='Closed'">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+                                </b>
+                                
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="releted-contact mt-3" *ngIf="ticketdetail?.description">
+                        <h4>Ticket Description</h4>
+                        <!-- <div class="rc-contactname d-flex">
+                            <div class="rcc-profile-pic">
+                                W
+                            </div>
+                            <div class="rcc-profile-name">
+                                ABC
+                            </div>
+                        </div> -->
+                        <div class="d-flex mt-3 info-card">
+                            <div class="rcc-icon">
+                                <i class="fa fa-address-card" aria-hidden="true"></i>
+                            </div>
+                            <div class="rcc-name">
+                                Description : <b>{{ticketdetail?.description}}</b><br><br>
+                            </div>
+                        </div><br>
+
+
+                    </div>
+
+
+
+
+                </div>
+            </div>
+            <div class="col-sm-8 p-0">
+
+                <div>
+                    <mat-tab-group>
+                        <mat-tab label="Timeline">
+                            <ng-template mat-tab-label>
+                                Timeline
+                            </ng-template>
+                            <div class="tab-inner">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <b>History</b>
+                                        <div class="float-right" *ngIf="ticketdetail?.status!='Closed'">
+                                            <div class="addnote-btn" (click)="NoteForm()">
+                                                Add Note
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <form *ngIf="commentform" class="note-add-form" [formGroup]="commentForm"
+                                        (ngSubmit)="commentsubmit()">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Note</mat-label>
+                                                    <textarea matInput placeholder="Note" formControlName="note"
+                                                        required></textarea>
+                                                    <mat-error *ngIf="commentForm.controls.note.hasError('required')">
+                                                        Please enter Title
+                                                    </mat-error>
+                                                    <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="text-right">
+                                                    <button mat-flat-button class="mt-2 my-btn" color="primary"
+                                                        type="submit">
+                                                        <span class="btn-icon">
+                                                            <i class="fas fa-save"></i>
+                                                        </span>
+                                                        Save
+                                                    </button>
+                                                    <button mat-flat-button class="mt-2 ml-2 my-btn" color="warn"
+                                                        (click)="closeTab()">
+                                                        <span class="btn-icon">
+                                                            <i class="fa fa-times" aria-hidden="true"></i>
+                                                        </span>
+                                                        Cancel
+                                                    </button>
+                                                    <!-- <button mat-flat-button class="mt-2 ml-2 my-btn" color="accent"> 
+                                                        <span class="btn-icon">
+                                                            <i class="fa fa-paperclip" aria-hidden="true"></i>
+                                                        </span>
+                                                        Attech file
+                                                    </button> -->
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <div class="card-body">
+
+
+                                        <div class="History-inner position-relative">
+
+                                            <ul class="timeLineHistDataList">
+                                                <li class="d-flex" *ngFor="let timeline of timeline">
+                                                    <span class="timeLineHistTime ">
+                                                        {{timeline.created_time | date : 'medium'}}
+                                                    </span>
+                                                    <p class="timeLineHistdataline">
+                                                        <label *ngIf="timeline.comment">Note:</label>
+                                                        <span class="timeLineHistInfo" *ngIf="timeline.comment">
+                                                            {{timeline.comment}}
+                                                        </span>
+                                                    </p>
+                                                    <p class="timeLineHistdataline">
+                                                        <label *ngIf="!timeline.comment">Current status :</label>
+                                                        <span class="timeLineHistInfo" *ngIf="!timeline.comment">
+                                                            {{timeline.current_status}}
+                                                        </span>
+                                                        <a href="{{baseUrl}}{{apiUrl}}/ticket/{{timeline.ticket_image}}"
+                                                            target="_blank" *ngIf="timeline.ticket_image">
+                                                            <i class="fa fa-image" style="font-size:30px"></i>
+                                                        </a>
+                                                    </p>
+                                                    <p>
+                                                        <br>{{timeline.notes | slice:0:70 }}..
+                                                    </p>
+                                                </li>
+                                            </ul>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-tab>
+
+
+                    </mat-tab-group>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

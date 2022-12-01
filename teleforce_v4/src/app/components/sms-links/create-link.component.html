@@ -1,0 +1,48 @@
+<div mat-dialog-head class="dilog-head d-flex justify-content-between">
+    <h3 class="primary" *ngIf="addmode">Add Link</h3>
+    <h3 class="primary" *ngIf="editmode">Edit Link</h3>
+    <h3 class="primary" *ngIf="deletemode">Delete Link</h3>
+    <div class="d-inline-block">
+        <a class="close" (click)="openDialog()"><i class="fi-rr-cross-small"></i></a>
+    </div>
+  </div>
+  <div *ngIf="addmode || editmode">
+    <form [formGroup]="addConForm" (ngSubmit)="contactsubmit()">
+        <div mat-dialog-content>
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Link Name</mat-label>
+                      <input matInput placeholder="Enter Link Name" formControlName="name" required>
+                      <mat-error *ngIf="addConForm.controls.name.hasError('required')">
+                        Please enter Link name
+                      </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-2">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Link URL</mat-label>
+                    <input matInput placeholder="Enter Link URL" formControlName="url" required>
+                    <mat-error *ngIf="addConForm.controls.url.hasError('required')">
+                      Please enter Link URL
+                    </mat-error>
+                  </mat-form-field>
+              </div>
+            </div>
+        </div>
+        <div class="btn-sec" mat-dialog-actions>
+            <button mat-raised-button type="submit" color="primary" class="Update-btn">Save</button>
+        </div>
+    </form>
+  </div>
+  <div *ngIf="deletemode">
+    <h3 style="margin-top: 10px; font-weight: 500;">
+        Are you sure to delete this link ?
+    </h3>
+    <div class="btn-sec">
+        <button mat-raised-button type="button" color="primary" class="Update-btn"
+        (click)="contactdelete(sl_id)">Delete</button>
+        &nbsp;
+        <button mat-raised-button type="button" class="Discard-btn" (click)="openDialog()">Cancel</button>
+    </div>
+  </div>

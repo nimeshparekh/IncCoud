@@ -1,0 +1,81 @@
+
+.mat-reset {
+    background-color: rgb(45, 187, 212);
+    color: rgb(255, 255, 255);
+}
+.head-color
+{
+    color: #828282 !important;
+}
+.filter-part
+{
+    border-bottom: 1px solid #ececec;
+    padding-bottom: 10px;
+}
+.filter-field
+{
+    float: left;
+    margin-left: 10px;
+}
+.dashboard-icon .text-primary 
+{
+    color: #005c8a !important;
+    font-size: 30px;
+    margin-top: 0px;
+}
+.text-primary 
+{
+    color: #005c8a !important;
+}
+.card {
+    border: initial !important;;
+    background: #fff !important;;
+    border-radius: .75rem !important;;
+    box-shadow: 0 1px 15px rgb(0 0 0 / 4%), 0 1px 6px rgb(0 0 0 / 4%) !important;;
+}
+.dashboard-text i
+{
+    font-size: 18px;
+}
+.dashboard-text p
+{
+    font-weight: 100;
+}
+.custom-button {
+    cursor: pointer;
+    flex: 1;
+}
+.card-top-btn
+{
+    font-size: 10px;
+    height: 18px;
+    line-height: 14px;
+}
+.campaing-details p
+{
+    margin-top: 18px;
+}
+.campaing-details-card
+{
+    background: #9a9a9a !important;
+    color: #fff;
+}
+table
+{
+    width: 100%;
+    min-width: 1000px;
+}.btn-head
+{
+    float: left;
+    border: none;
+    background: #00d2fc;
+    margin-left: 10px;
+    padding: 10px 14px 10px 14px;
+    border-radius: 27px;
+    color: #fff;
+    margin-top: 5px;
+}
+.btn-head:focus
+{
+    outline: none;
+}

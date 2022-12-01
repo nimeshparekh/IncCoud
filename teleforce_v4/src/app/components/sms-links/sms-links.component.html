@@ -1,0 +1,199 @@
+<div class="pt-4 warap-height">
+    <div class="links">
+        <div class="filter-part">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="page-head mb-2">
+                            <h4>
+                                Links
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <form [formGroup]="searchForm">
+                            <!-- <div class="filter-field">
+                              <mat-form-field  appearance="outline" class="outline-field">
+                                  <mat-label class="mat-label">Order By</mat-label>
+                                  <mat-select>
+                                      <mat-option>
+                                          None
+                                      </mat-option>
+                                      <mat-option>
+                                          Engagements
+                                      </mat-option>
+                                      <mat-option>
+                                          Dates
+                                      </mat-option>
+                                  </mat-select>
+                              </mat-form-field>
+                          </div> -->
+                            <div class="filter-field">
+
+                                <mat-form-field appearance="outline" class="outline-field">
+                                    <mat-label class="mat-label">Search</mat-label>
+                                    <input matInput placeholder="search" formControlName="name">
+                                    <!-- <mat-icon >sentiment_very_satisfied</mat-icon> -->
+                                    <span matSuffix class="material-icons" (click)="search()">
+                                        search
+                                    </span>
+                                </mat-form-field>
+                               
+                            </div>
+                        </form>&nbsp;&nbsp;
+                        <button (click)="resetform()" mat-mini-fab color="primary"
+                        >
+                         <span class="material-icons">refresh</span>
+                     </button>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <div class="head-buttons float-right">
+                            <div class="example-button-row">
+                                <button mat-flat-button (click)="Refresh()" class="mr-2 mt-2">
+                                    <span class="material-icons">
+                                        sync
+                                    </span>
+                                </button>
+                                <button mat-flat-button (click)="createcontactdialog()" class="mr-2 mt-2"
+                                    color="primary">Create New Link</button>
+                                <button mat-flat-button class="mt-2" color="accent">Total Link :
+                                    {{total>0?total:0}}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+        <div class="link-dashboard">
+            <div class="container-fluid">
+                <div class="row">
+
+                    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" *ngFor="let datasources of datasource ">
+                        <div class="card red-btn-bdr mb-4 h-100" *ngIf="datasources.status == 'inactive'">
+
+                            <div class="card-head">
+                                <div class="d-flex justify-content-between">
+                                    <strong class="mr-1">
+                                        {{datasources.sl_name}}
+                                        <small
+                                            class="d-block">{{datasources.created_at | date: 'MMM d, y, h:mm:ss a'}}</small>
+
+                                    </strong>
+                                    <div class="post-icon d-inline-block text-small pt-2">
+                                        <i class="fa fa-heart-o mr-1" aria-hidden="true"></i>
+                                        <small class="mr-1">100.00% Engagement</small>
+                                        <button class="btn btn-header-light icon-button card-btn"
+                                            (click)="setStatus(datasources.sl_id)"><i class="fa fa-times-circle-o"
+                                                aria-hidden="true"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body position-relative pt-0">
+                                <a class="pb-2 d-block">Link : {{datasources.sl_url}}</a>
+                                <div class="d-flex justify-content-between my-auto position-absolute mt-1" style="
+                              width: 87%;">
+                                    <!-- <small>
+                                      Used 2 times over 1 projects present year <br>
+                                      Used 2 times over 1 projects present month 
+                                  </small> -->
+                                    <div class="float-right pt-2">
+                                        <!--<button class="btn btn-xs btn-outline-primary ml-1 insight-btn">
+                                            <i class="fi-rr-signal-alt-2" aria-hidden="true"></i>
+                                        </button>-->
+                                        <button class="btn btn-xs btn-outline-primary ml-1 insight-btn"
+                                            (click)="updateagentdialog(datasources.sl_id)">
+                                            <i class=" fi-rr-pencil" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="card green-btn-bdr mb-4 h-100" *ngIf="datasources.status == 'active'">
+
+                            <div class="card-head">
+                                <div class="d-flex justify-content-between">
+                                    <strong class="mr-1">
+                                        {{datasources.sl_name}}
+                                        <small
+                                            class="d-block">{{datasources.created_at | date: 'MMM d, y, h:mm:ss a'}}</small>
+
+                                    </strong>
+                                    <div class="post-icon d-inline-block text-small pt-2">
+                                        <i class="fa fa-heart-o mr-1" aria-hidden="true"></i>
+                                        <small class="mr-1">100.00% Engagement</small>
+                                        <!-- <button class="btn btn-header-light icon-button card-btn" (click) = "setsStatus(datasources.sl_id)"><i class="fa fa-check-circle-o" aria-hidden="true"></i></button> -->
+                                        <button class="btn btn-header-light icon-button card-btn"
+                                            (click)="setsStatus(datasources.sl_id)"><i class="fa fa-check-circle-o"
+                                                aria-hidden="true"></i></button>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body position-relative pt-0">
+                                <a class="pb-2 d-block">Link : {{datasources.sl_url}}</a>
+                                <div class="d-flex justify-content-between my-auto position-absolute mt-1" style="
+                              width: 87%;">
+                                    <!-- <small>
+                                      Used 2 times over 1 projects present year <br>
+                                      Used 2 times over 1 projects present month 
+                                  </small> -->
+                                    <div class="float-right pt-2">
+                                        <!--<button class="btn btn-xs btn-outline-primary ml-1 insight-btn">
+                                            <i class="fi-rr-signal-alt-2" aria-hidden="true"></i>
+                                        </button>-->
+                                        <button class="btn btn-xs btn-outline-primary ml-1 insight-btn"
+                                            (click)="updateagentdialog(datasources)">
+                                            <i class=" fi-rr-pencil" aria-hidden="true"></i>
+                                        </button>
+                                        <button class="btn btn-xs btn-outline-primary ml-1 insight-btn"
+                                            (click)="deleteagentdialog(datasources)">
+                                            <i class=" fi-rr-trash" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--                
+                  <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                      <div class="card red-btn-bdr mb-4 h-100">
+                          <div class="card-head">
+                              <div class="d-flex justify-content-between">
+                                  <strong class="mr-1">
+                                      Demo Link 
+                                      <small class="d-block">Jan 12, 2021</small>
+                                  </strong>
+                                  <div class="post-icon d-inline-block text-small pt-2">
+                                      <i class="fa fa-heart-o mr-1" aria-hidden="true"></i>
+                                      <small class="mr-1">100.00% Engagement</small>
+                                      <button class="btn btn-header-light icon-button card-btn"><i class="fa fa-times-circle-o" aria-hidden="true"></i></button>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="card-body position-relative pt-0">
+                              <a class="pb-2 d-block">www.sms.com</a>
+                              <div class="d-flex justify-content-between my-auto position-absolute mt-1" style="
+                              width: 87%;">
+                                  <small>
+                                      Used 2 times over 1 projects present year <br>
+                                      Used 2 times over 1 projects present month 
+                                  </small>
+                                  <div class="float-right">
+                                      <button class="btn btn-xs btn-outline-primary ml-1">
+                                          <i class="fi-rr-signal-alt-2" aria-hidden="true"></i>  
+                                      </button>
+                                  </div>
+                              </div>
+
+                          </div>
+                      </div>
+                  </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

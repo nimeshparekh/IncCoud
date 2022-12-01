@@ -1,0 +1,100 @@
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Resources Availability - Trunk Utilization</h1>
+    <p class="mb-4"></p>
+
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4 mt-3">
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Total DID</th>
+                        <th>Total Allocated DID</th>
+                        <th>Reserved DID</th>
+                        <th> Current Total Use DID</th>
+                        <th> Current Utilization (%)</th>
+                    </tr>
+                    <tr>
+                        <td>{{showtotal.totaldid}}</td>
+                        <td>{{showtotal.totalallotdid}}</td>
+                        <td>{{(showtotal.totaldid-showtotal.totalallotdid)}}</td>
+                        <td>{{showtotal.totalusedid}}</td>
+                        <td>{{roundedPercentage(showtotal.totalusedid,showtotal.totaldid)+' %'}}</td>
+                    </tr>
+
+                </table>
+                <table width="100%">
+                    <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+                    <div fxLayout fxLayoutAlign="center center" class="mt-2">
+                        <button mat-raised-button color="primary"
+                            (click)="exporter.exportTable('csv', {fileName:'Resource-Availability-Report', sheet: 'sheet_name'})">CSV</button>
+                    </div><br>
+                    <mat-table class="lessons-table mat-elevation-z8" [dataSource]="dataSource" matTableExporter #exporter="matTableExporter">
+                        <ng-container matColumnDef="id">
+
+                            <mat-header-cell *matHeaderCellDef>Sr. No</mat-header-cell>
+
+                            <mat-cell class="description-cell" *matCellDef="let row;let i = index;" data-label="id">
+                                {{i+1+(paginator.pageIndex * paginator.pageSize)}}</mat-cell>
+
+                        </ng-container>
+                       
+                        <ng-container matColumnDef="client">
+
+                            <mat-header-cell *matHeaderCellDef> Manager Name </mat-header-cell>
+
+                            <mat-cell class="description-cell" *matCellDef="let row;let i = index;">
+                                {{row.account_name}}
+                            </mat-cell>
+
+                        </ng-container>
+
+                        <ng-container matColumnDef="allocateddid">
+
+                            <mat-header-cell *matHeaderCellDef> Allocated DID </mat-header-cell>
+
+                            <mat-cell class="description-cell" *matCellDef="let row;let i = index;" maxlength="10">
+                                {{row.allocateddid}}
+                            </mat-cell>
+
+                        </ng-container>
+
+                        <ng-container matColumnDef="useddid">
+
+                            <mat-header-cell *matHeaderCellDef> Current Use DID </mat-header-cell>
+
+                            <mat-cell class="description-cell" *matCellDef="let row">
+                                {{row.usedid}}
+                            </mat-cell>
+
+                        </ng-container>
+
+                        <ng-container matColumnDef="allocatedutilization">
+
+                            <mat-header-cell *matHeaderCellDef> Allocated DID Utilization(%) </mat-header-cell>
+
+                            <mat-cell class="description-cell" *matCellDef="let row">
+                                {{roundedPercentage(row.usedid,row.allocateddid)+' %'}}
+                            </mat-cell>
+
+                        </ng-container>                        
+
+                        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+                        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+                    </mat-table>
+                    <mat-paginator #paginator [length]="Length" [pageSize]="50" [pageSizeOptions]="[50,100,500]">
+                    </mat-paginator>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- /.container-fluid -->

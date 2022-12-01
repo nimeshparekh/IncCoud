@@ -1,0 +1,208 @@
+<div class="warap-height pt-4"> 
+  <!-- Begin Page Content -->
+  <div class="container-fluid">
+
+    <h1 class="h3 mb-2 text-gray-800">
+      <button routerLink="/settings" mat-icon-button title="Back" color="accent"
+        aria-label="Example icon button with a menu icon">
+        <mat-icon>keyboard_backspace</mat-icon>
+      </button>
+      Enabling/Disabling the Zoho Integration
+    </h1>
+
+    <div class="card mb-4">      
+      <div class="card-body">
+        <a mat-raised-button color="accent" target="_blank" href="https://app.cloudX.in/api/zoho/install/" *ngIf="dataSource.data.length<=0"  title="Add">Connect Zoho</a><br><br>
+        <div class="table-responsive">
+          <table mat-table [dataSource]="zohoSource" >
+
+            <!-- Position Column -->
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef> No. </th>
+              <td mat-cell *matCellDef="let element"> 1 </td>
+            </ng-container>
+          
+            <!-- Name Column -->
+            <ng-container matColumnDef="username">
+              <th mat-header-cell *matHeaderCellDef> Manager </th>
+              <td mat-cell *matCellDef="let element"> {{element.account_name}} </td>
+            </ng-container>
+          
+            <!-- Weight Column -->
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef> Status </th>
+              <td mat-cell *matCellDef="let element"> {{element.zoho_integration}} </td>
+            </ng-container>
+          
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="action">
+              <th mat-header-cell *matHeaderCellDef> Enable / Disable </th>
+              <td mat-cell *matCellDef="let element">  
+                <!-- <button mat-mini-fab color="accent" *ngIf="element.zoho_integration=='disable'">
+                  <span (click)="viewzohointedialog(element.accountid,'enable')" title="enable">
+                    <mat-icon>sync_enabled</mat-icon>
+                  </span>
+                </button> -->
+                <div *ngIf="element.zoho_integration=='disable'">
+                  <button mat-icon-button color="accent" (click)="viewzohointedialog(element.accountid,'enable')"  aria-label="Example icon button with a menu icon">
+                    <mat-icon>sync_enabled</mat-icon>
+                  </button>
+                </div>
+                <div *ngIf="element.zoho_integration=='enable'">
+                  <button mat-icon-button color="warn" (click)="viewzohointedialog(element.accountid,'disable')"  aria-label="Example icon button with a menu icon">
+                    <mat-icon>sync_disabled</mat-icon>
+                  </button>
+                </div>
+                <!-- <button mat-mini-fab color="warn" *ngIf="element.zoho_integration=='enable'">
+                  <span (click)="viewzohointedialog(element.accountid,'disable')" title="disable">
+                    <mat-icon>sync_disabled</mat-icon>
+                  </span>
+                </button> -->
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="zohoaction">
+              <th mat-header-cell *matHeaderCellDef> Action </th>
+              <td mat-cell *matCellDef="let element">  
+                <div *ngIf="element.zoho_integration=='disable'">
+                  <button mat-icon-button color="warn" (click)="deletezohointegration(element.accountid)" aria-label="Example icon button with a menu icon">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
+                <!-- <button mat-mini-fab color="warn" *ngIf="element.zoho_integration=='disable'">
+                  <span (click)="deletezohointegration(element.accountid)" title="delete">
+                    <mat-icon>delete</mat-icon>
+                  </span>
+                </button> -->
+              </td>
+            </ng-container>
+          
+            <tr mat-header-row *matHeaderRowDef="zohodisplayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: zohodisplayedColumns;"></tr>
+          </table>
+        </div>
+      </div>
+
+    </div>  
+    
+    
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Zoho Users (Map cloudX Agent and enable/disable the click to dial functionality)</h1>
+
+    <!-- DataTales Example -->
+    <div class="card mb-4">
+      
+      <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+
+      <div class="card-body">
+
+        <button mat-raised-button color="accent" (click)="ReloadZohoUser()" title="Add">Reload Users</button>
+        
+        <div class="table-responsive">
+            <mat-table class="lessons-table mat-elevation-z8" [dataSource]="dataSource">
+              <ng-container matColumnDef="id">
+      
+                <mat-header-cell *matHeaderCellDef>Sr. No</mat-header-cell>
+      
+                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" data-label="id">
+                  {{i+1+(paginator.pageIndex * paginator.pageSize)}}</mat-cell>
+      
+              </ng-container>
+              <ng-container matColumnDef="userid">
+      
+                <mat-header-cell *matHeaderCellDef> User ID </mat-header-cell>
+      
+                <mat-cell class="description-cell" *matCellDef="let row">{{row.zohouserid}}
+                </mat-cell>
+      
+              </ng-container>
+      
+              <ng-container matColumnDef="username">
+      
+                <mat-header-cell *matHeaderCellDef> User Name </mat-header-cell>
+                <mat-cell class="description-cell" *matCellDef="let row">{{row.zohousername}}
+                </mat-cell>
+                
+      
+              </ng-container>
+
+              <ng-container matColumnDef="email">
+      
+                <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+                <mat-cell class="description-cell" *matCellDef="let row">{{row.zohouseremail}}
+                </mat-cell>
+                
+      
+              </ng-container>
+              
+              <ng-container matColumnDef="mapuser">
+      
+                <mat-header-cell *matHeaderCellDef> cloudX Agent </mat-header-cell>
+                <mat-cell class="description-cell" *matCellDef="let row">{{row.account_name}}
+                </mat-cell>
+                
+      
+              </ng-container>
+
+              <ng-container matColumnDef="action">
+      
+                <mat-header-cell *matHeaderCellDef> Mapping </mat-header-cell>
+      
+                <mat-cell class="description-cell" *matCellDef="let row">
+                    <!-- <button mat-mini-fab color="primary">
+                        <span (click)="viewdialog(row.uid,row.zohousername)" title="Edit">
+                          <mat-icon>swap_calls</mat-icon>
+                        </span>
+                    </button> -->
+                    <button mat-icon-button color="primary" (click)="viewdialog(row.uid,row.zohousername)"  aria-label="Example icon button with a menu icon">
+                      <mat-icon>swap_calls</mat-icon>
+                    </button>
+                    <button (click)="deleteRequest(row.uid)" title="Edit" mat-icon-button color="warn" aria-label="Example icon button with a home icon">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                </mat-cell>
+      
+              </ng-container>
+              <ng-container matColumnDef="zohoaction">
+      
+                <mat-header-cell *matHeaderCellDef> Enable / Disabled  </mat-header-cell>
+      
+                <mat-cell class="description-cell" *matCellDef="let row" >
+                    <!-- <button mat-mini-fab color="accent" *ngIf="row.push_zoho=='no'">
+                        <span (click)="viewzohodialog(row.uid,'enable')" title="Push">
+                          <mat-icon>phone_enabled</mat-icon>
+                        </span>
+                    </button>
+                    <button mat-mini-fab color="warn" *ngIf="row.push_zoho=='yes'">
+                        <span (click)="viewzohodialog(row.uid,'disabled')" title="Push">
+                          <mat-icon>phone_disabled</mat-icon>
+                        </span>
+                    </button> -->
+                    <div *ngIf="row.push_zoho=='no'">
+                      <button mat-icon-button color="accent" (click)="viewzohodialog(row.uid,'enable')"  aria-label="Example icon button with a menu icon">
+                        <mat-icon>phone_enabled</mat-icon>
+                      </button>
+                    </div>
+                    <div *ngIf="row.push_zoho=='yes'">
+                      <button mat-icon-button color="warn" (click)="viewzohodialog(row.uid,'disabled')" aria-label="Example icon button with a menu icon">
+                        <mat-icon>phone_disabled</mat-icon>
+                      </button>
+                    </div>
+                </mat-cell>
+      
+              </ng-container>
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      
+              <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+      
+            </mat-table>
+        </div>
+
+        <mat-paginator #paginator [length]="Length" [pageSize]="50" [pageSizeOptions]="[50,100,500]"></mat-paginator>
+
+      </div>
+    </div>
+
+  </div>
+  <!-- /.container-fluid -->
+</div>

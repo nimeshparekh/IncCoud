@@ -1,0 +1,238 @@
+<!-- Manager Dashboard-->
+
+<div class="warap-height pt-2" *ngIf="UserData.role=='2' && isUser">
+    <div class="container-fluid mb-3">
+        <app-manager-reports-dashboard></app-manager-reports-dashboard>
+    </div>
+    <!-- Page Body -->
+    <div class="container-fluid mb-3">
+        <div class="call-analytics">           
+            <div class="row">                
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 mt-3">
+                    <div class="mycard">
+                        <div class="mycard-body">
+                            <div class="d-flex flex-row">
+                                <div class="flex-fill">
+                                    <div class="name-count">
+                                        <p>
+                                            Total Agent (in Break)
+                                        </p>
+                                        <label class="clr-87e0ab">{{this.totalbreakagents}}</label>
+                                    </div>
+                                </div>
+                                <div class="flex-row-reverse mt-4 ng-star-inserted">
+                                    <b><i class="mycard-icon fi-rr-smartphone text-large clr-87e0ab"></i></b>
+                                </div>
+                            </div>                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 mt-3">
+                    <div class="mycard">
+                        <div class="mycard-body">
+                            <div class="d-flex flex-row">
+                                <div class="flex-fill">
+                                    <div class="name-count">
+                                        <p>
+                                            Total Agent (Call Hold)
+                                        </p>
+                                        <label class="clr-87e0ab">{{this.totalholdagents}}</label>
+                                    </div>
+                                </div>
+                                <div class="flex-row-reverse mt-4 ng-star-inserted">
+                                    <b><i class="mycard-icon fi-rr-smartphone text-large clr-87e0ab"></i></b>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 mt-3">
+                    <div class="mycard">
+                        <div class="mycard-body">
+                            <div class="d-flex flex-row">
+                                <div class="flex-fill">
+                                    <div class="name-count">
+                                        <p>
+                                            Total Agent (On Call)
+                                        </p>
+                                        <label class="clr-87e0ab">{{this.totalcallagents}}</label>
+                                    </div>
+                                </div>
+                                <div class="flex-row-reverse mt-4 ng-star-inserted">
+                                    <b><i class="mycard-icon fi-rr-smartphone text-large clr-87e0ab"></i></b>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 mt-3">
+                    <div class="mycard">
+                        <div class="mycard-body">
+                            <div class="d-flex flex-row">
+                                <div class="flex-fill">
+                                    <div class="name-count">
+                                        <p>
+                                           Calls in Queue
+                                        </p>
+                                        <label class="clr-87e0ab">{{this.totalqueuecalls}}</label>
+                                    </div>
+                                </div>
+                                <div class="flex-row-reverse mt-4 ng-star-inserted">
+                                    <b><i class="mycard-icon fi-rr-smartphone text-large clr-87e0ab"></i></b>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 mt-3">
+                    <div class="mycard">
+                        <div class="mycard-body">
+                            <div class="d-flex flex-row">
+                                <div class="flex-fill">
+                                    <div class="name-count">
+                                        <p>
+                                            Total Miss Call
+                                        </p>
+                                        <label class="clr-87e0ab">{{totalmissedcaller}}</label>
+                                    </div>
+                                </div>
+                                <div class="flex-row-reverse mt-4 ng-star-inserted">
+                                    <b><i class="mycard-icon fi-rr-smartphone text-large clr-87e0ab"></i></b>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mt-3">                    
+                    <div class="mycard">
+                        <div class="mycard-body">
+                            <h3><b>Agent Live Status</b></h3>
+                            <div class="d-flex flex-row">
+                                
+                                    <div class="flex-fill">
+                                            <button mat-flat-button color="primary" class="bgclr-87e0ab">{{this.totalagents}}</button>
+                                            <!-- <label class="clr-87e0ab">{{this.totalagents}}</label> -->
+                                    </div>
+                                    <div class="flex-row-reverse mt-1">
+                                        <form [formGroup]="livestatusForm">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Agent Group</mat-label>
+                                                <mat-select formControlName="agentgroup" (ngModelChange)="filterlivestatus()">
+                                                    <mat-option value="0">All</mat-option>
+                                                    <mat-option *ngFor="let agent of agentgroup" [value]="agent.GroupID">
+                                                        {{agent.GroupName}}</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </form>
+                                    </div>
+                                    <div class="flex-row-reverse ng-star-inserted">
+                                        <button (click)="refresh()" class="bgclr-87e0ab" mat-flat-button color="primary">
+                                            <mat-icon>cached</mat-icon>
+                                        </button>
+                                        <!-- <a (click)="refresh()" ><i class="mycard-icon fi-rr-refresh text-large clr-87e0ab"></i></a> -->
+                                    </div>
+                            </div>
+                            <div class="mt-1">
+                                <mat-progress-bar mode="indeterminate" *ngIf="isAgentLoading"></mat-progress-bar>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Name</th>
+                                                <th>Login</th>
+                                                <th>VPN</th>
+                                                <th>Break</th>
+                                                <th>Call Hold</th>
+                                                <th>On Call</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let item of totalagentslist;let i = index" >
+                                                <td>{{i+1}}</td>
+                                                <td>{{item.account_name}}</td>
+                                                <td>{{item.is_loggedin | uppercase}}</td>
+                                                <td>{{item.voip | uppercase}}</td>
+                                                <td>
+                                                    <span *ngIf="item.break==null" >
+                                                        NO
+                                                    </span>
+                                                    <span *ngIf="item.break!=null" >
+                                                        YES
+                                                        <!--<span *ngIf="item.break" >
+                                                            <b>Duration :</b> {{item.break | duration}}
+                                                        </span>-->
+                                                        <span *ngIf="item.break&&countduration(item.break)<=1800"   >
+                                                            <b>Duration :</b> {{item.break | duration}}                                                        
+                                                        </span> 
+                                                        <span *ngIf="item.break&&countduration(item.break)>1800"  style="color:red" >
+                                                            <b>Duration :</b> {{item.break | duration}}                                                        
+                                                        </span>
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span *ngIf="item.callhold==null" >
+                                                        NO
+                                                    </span>
+                                                    <span *ngIf="item.callhold!=null" >
+                                                        YES
+                                                        <!--<span *ngIf="item.callhold" >
+                                                            <b>Duration :</b> {{item.callhold | duration}}
+                                                        </span>-->
+                                                        <span *ngIf="item.callhold&&countduration(item.callhold)>2700" style="color:red">
+                                                            <b>Duration :</b> {{item.callhold | duration}}
+                                                        </span>
+                                                        <span *ngIf="item.callhold&&countduration(item.callhold)<=2700" >
+                                                            <b>Duration :</b> {{item.callhold | duration}}
+                                                        </span>
+                                                        
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span *ngIf="item.cdrdata && item.cdrdata['lastdate']" >
+                                                        IDLE
+                                                        <b>Duration :</b> 
+                                                        <span *ngIf="item.cdrdata" > {{item.cdrdata['lastdate'] | duration}}</span>
+                                                        <span *ngIf="item.cdrdata==null" > Offline </span>
+                                                    </span>
+                                                    <span *ngIf="item.cdrdata &&  item.cdrdata['DID']" >
+                                                        <b>Type : </b> {{item.cdrdata['CallType'] | titlecase}}
+                                                        <b>DID :</b> {{item.cdrdata['DID']}}
+                                                        <b>Number :</b> {{item.cdrdata['CallerNumber']}}
+                                                        <b>Duration :</b> <span *ngIf="item.cdrdata['CallAnswerTime']!='0000-00-00 00:00:00'" > {{item.cdrdata['CallAnswerTime'] | duration}}</span> <span *ngIf="item.cdrdata['CallAnswerTime']=='0000-00-00 00:00:00'" > 00:00:00</span>
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Agent Dashboard -->
+<div *ngIf="UserData.role=='1' && isUser">
+    <app-agent-dialer></app-agent-dialer>
+</div>
+
+<!---- Admin Dashboard   -->
+<div class="warap-height pt-2" *ngIf="UserData.role=='3' && isUser">
+
+</div>
+
+<!----    Super Admin Dashboard   -->
+<div class="warap-height pt-2" *ngIf="UserData.role=='4' && isUser">
+
+</div>
+<app-verification-form *ngIf="!isUser"></app-verification-form>

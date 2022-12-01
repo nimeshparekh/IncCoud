@@ -1,0 +1,43 @@
+<div mat-dialog-head class="dilog-head d-flex justify-content-between">
+    <h3 class="primary">Get in touch with sales</h3>
+    <div class="d-inline-block">
+        <a class="close" (click)="onNoClick()"><i class="fi-rr-cross-small"></i></a>
+    </div>
+</div>
+<div>
+    <form [formGroup]="requestForm" (ngSubmit)="requestdemo()" >
+        <div mat-dialog-content>
+            <div class="row mb-2">
+                <div class="col-sm-6 mt-2">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>First Name</mat-label>
+                        <input matInput placeholder="Name" formControlName="name" required>
+                    </mat-form-field>
+                </div>
+               
+                <div class="col-sm-6 mt-2">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Work Email</mat-label>
+                        <input matInput placeholder="Work Email" formControlName="email" required>
+                    </mat-form-field>
+                </div>
+              
+                <div class="col-sm-12 mt-2">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Phone No</mat-label>
+                        <input matInput placeholder="Phone No" formControlName="mobile" required>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12 mt-2">
+                    <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Reason of contact</mat-label>
+                        <input matInput placeholder="Reason of contact" formControlName="intrest" required>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="btn-sec" mat-dialog-actions>
+            <button mat-raised-button type="submit" color="primary" class="Update-btn">Submit</button>
+        </div>
+    </form>
+</div>

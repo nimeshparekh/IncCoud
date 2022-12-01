@@ -1,0 +1,45 @@
+<div *ngIf="updatemode">
+    <div mat-dialog-head class="dilog-head d-flex justify-content-between">
+        <h3 class="primary">Upload Sound</h3>
+        <div class="d-inline-block">
+            <a class="close" (click)="openDialog()"><i class="fi-rr-cross-small"></i></a>
+        </div>
+    </div>
+    <mat-progress-bar mode="indeterminate" *ngIf="progressbar"></mat-progress-bar>
+    <form [formGroup]="form">
+        <!-- <mat-label>Upload Sound&nbsp;&nbsp;</mat-label><br>
+        <input type="file" name="uploadfile" formControlName="uploadfile" id="uploadfile"
+        accept="audio/mp3,audio/wav" (change)="readFile($event)"/> -->
+        <div mat-dialog-content>
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Sound File</mat-label>
+                        <ngx-mat-file-input #removableInput formControlName="audiofile" placeholder="Sound File" [accept]="'.wav'"></ngx-mat-file-input>
+                        <button mat-icon-button matSuffix *ngIf="!removableInput.empty" (click)="removableInput.clear($event)">
+                        <mat-icon>clear</mat-icon>
+                        </button>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+
+        <div class="btn-sec" mat-dialog-actions>
+            <button mat-raised-button color="primary" (click)="audiofileupload()">Upload</button>
+        </div>
+    </form>
+</div>
+
+<div *ngIf="deletemode">
+    <div class="add-title">
+        <h2 class="primary">Delete Sound </h2>
+    </div>
+    <h4>
+        Are you sure to delete this?
+    </h4>
+    <div class="btn-sec">
+        <button mat-raised-button type="button" color="primary" class="Update-btn"
+            (click)="deleteRequest(soundid)">Delete</button>&nbsp;
+        <button mat-raised-button type="button" class="Discard-btn" (click)="openDialog()">Cancel</button>
+    </div>
+</div>

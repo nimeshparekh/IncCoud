@@ -1,0 +1,11 @@
+.full-width{
+    width: 100%;
+}
+.dilog-head
+{
+    border-bottom: 1px solid #ccc;
+}
+.close
+{
+    position: relative;
+}

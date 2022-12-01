@@ -1,0 +1,27 @@
+/* .hi
+{
+    max-height: 500px !important;
+    overflow-y: scroll;
+    padding: 6px;
+}
+mat-dialog-container {
+    display: block;
+    padding: 24px;
+    border-radius: 4px;
+    box-sizing: border-box;
+    overflow: auto;
+    outline: 0;
+    width: 100%;
+    overflow-y: scroll;
+    height: 533px;
+    min-height: inherit;
+    max-height: inherit;
+} */
+.dilog-head
+{
+    border-bottom: 1px solid #ccc;
+}
+.close
+{
+    position: relative;
+}

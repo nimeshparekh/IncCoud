@@ -1,0 +1,68 @@
+<div class="warap-height pt-4"> 
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+  
+      <h1 class="h3 mb-2 text-gray-800">Enabling/Disabling the Zoho Integration</h1>
+  
+      <div class="card mb-4">
+        
+        <div class="card-body">
+          <a mat-raised-button color="accent" target="_blank" href="/api/zoho/getaccess/" *ngIf="dataSource.data.length<=0"  title="Add">Connect Zoho</a><br><br>
+          <div class="table-responsive">
+            <table mat-table [dataSource]="zohoSource" >
+  
+              <!-- Position Column -->
+              <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef> No. </th>
+                <td mat-cell *matCellDef="let element"> 1 </td>
+              </ng-container>
+            
+              <!-- Name Column -->
+              <ng-container matColumnDef="username">
+                <th mat-header-cell *matHeaderCellDef> Agent </th>
+                <td mat-cell *matCellDef="let element"> {{element.account_name}} </td>
+              </ng-container>
+            
+              <!-- Weight Column -->
+              <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef> Status </th>
+                <td mat-cell *matCellDef="let element"> {{element.zoho_integration}} </td>
+              </ng-container>
+            
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef> Enable / Disable </th>
+                <td mat-cell *matCellDef="let element">  
+                  <div *ngIf="element.zoho_integration=='disable'">
+                    <button mat-icon-button color="accent" (click)="viewzohointedialog(element.accountid,'enable')"  aria-label="Example icon button with a menu icon">
+                      <mat-icon>sync_enabled</mat-icon>
+                    </button>
+                  </div>
+                  <div *ngIf="element.zoho_integration=='enable'">
+                    <button mat-icon-button color="warn" (click)="viewzohointedialog(element.accountid,'disable')"  aria-label="Example icon button with a menu icon">
+                      <mat-icon>sync_disabled</mat-icon>
+                    </button>
+                  </div>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="zohoaction">
+                <th mat-header-cell *matHeaderCellDef> Action </th>
+                <td mat-cell *matCellDef="let element">  
+                  <div *ngIf="element.zoho_integration=='disable'">
+                    <button mat-icon-button color="warn" (click)="deletezohointegration(element.accountid)" aria-label="Example icon button with a menu icon">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </div>
+                </td>
+              </ng-container>
+            
+              <tr mat-header-row *matHeaderRowDef="zohodisplayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: zohodisplayedColumns;"></tr>
+            </table>
+          </div>
+        </div>
+  
+      </div>  
+    </div>
+    <!-- /.container-fluid -->
+  </div>

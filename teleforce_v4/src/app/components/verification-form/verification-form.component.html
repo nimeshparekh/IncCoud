@@ -1,0 +1,413 @@
+<div class="pt-4" style="height: 100vh;padding-bottom:30px;margin-left: -100px;">
+    <div class="container overflow-hidden mb-2">
+        <!--multisteps-form-->
+        <div class="text-center">
+            <a class="content__title">
+                <!-- <img src="assets/img/televoice-b.png" style=" width: 180px; margin-bottom: 25px;"> -->
+                <h3>For enjoying televoice's services, you have to complete few steps.</h3>
+            </a>
+            <!--progress bar-->
+            <div class="row">
+                <div class="col-12 col-lg-8 ml-auto mr-auto mb-4">
+                    <div class="multisteps-form__progress">
+                        <!-- <button class="multisteps-form__progress-btn js-active" type="button" title="Select Plan">Select Plan</button> -->
+                        <button class="multisteps-form__progress-btn js-active" type="button" title="Payment">Select
+                            Plan & Payment</button>
+                        <button class="multisteps-form__progress-btn" type="button" title="KYC">KYC</button>
+                        <button class="multisteps-form__progress-btn" type="button" title="Select DID">Select
+                            DID</button>
+                    </div>
+                </div>
+            </div>
+            <!--form panels-->
+            <div class="row mb-2">
+                <div class="col-12 col-lg-12 m-auto">
+                    <div class="multisteps-form__form">
+                        <!--single form panel-->
+
+                        <!--single form panel-->
+                        <div class="multisteps-form__panel p-4 rounded bg-white js-active" data-animation="scaleIn">
+                            <!-- <h3 class="multisteps-form__title">Online Payment</h3> -->
+                            <div class="multisteps-form__content">
+                                <div class="container-fluid">
+                                    <form [formGroup]="addForm" id="payment_form" (ngSubmit)="submit()">
+                                        <div class="row">
+                                            <div class="col-lg-4 col-md-4 col-sm-6">
+                                                <div class="card">
+                                                    <div class="card-head text-center">
+                                                        <h2>PLAN A</h2>
+                                                    </div>
+                                                    <div class="card-body text-center">
+                                                        <h2>Rs.1299</h2>
+                                                        <p class="m-0">Per agent/Per month</p>
+                                                        <p>( INBOUND CONTACT CENTER )</p>
+                                                    </div>
+                                                    <div class="card-footer theme-btn-alt text-center">
+                                                        <button class="btn btn-primary" type="button" title="Next"
+                                                            (click)="getPlan(1299);">Buy</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-4 col-md-4 col-sm-6">
+                                                <div class="card">
+                                                    <div class="card-head text-center">
+                                                        <h2>PLAN B</h2>
+                                                    </div>
+                                                    <div class="card-body text-center">
+                                                        <h2>Rs.1599</h2>
+                                                        <p class="m-0">Per agent/Per month</p>
+                                                        <p>( INBOUND & OUTBOUND CONTACT CENTER )</p>
+                                                    </div>
+                                                    <div class="card-footer theme-btn-alt text-center">
+                                                        <button class="btn btn-primary" type="button" title="Next"
+                                                            (click)="getPlan(1599);">Buy</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 col-sm-6">
+                                                <div class="card">
+                                                    <div class="card-head text-center">
+                                                        <h2>PLAN C</h2>
+                                                    </div>
+                                                    <div class="card-body text-center">
+                                                        <h2>Rs.2000</h2>
+                                                        <p class="m-0">Per Agent/Per Month</p>
+                                                        <p>( INBOUND & OUTBOUND CONTACT CENTER & PROGRESSIVE DIALER )
+                                                        </p>
+                                                    </div>
+                                                    <div class="card-footer theme-btn-alt text-center">
+                                                        <button class="btn btn-primary" type="button" title="Next"
+                                                            (click)="getPlan(2000);">Buy</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-4">
+                                            <div class="col-lg-6 col-md-6 col-sm-6 mb-2">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Customer Name</mat-label>
+                                                    <input matInput placeholder="Customer Name" id="fname" formControlName="name"
+                                                        required>
+                                                    <mat-icon matSuffix>account_circle</mat-icon>
+                                                    <mat-error *ngIf="addForm.controls.name.hasError('required')">
+                                                        Please enter name
+                                                    </mat-error>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-6 mb-2">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Mobile No</mat-label>
+                                                    <input matInput formControlName="mobile" id="mobile" placeholder="Mobile No"
+                                                        required>
+                                                    <mat-icon matSuffix>phone</mat-icon>
+                                                    <mat-error *ngIf="addForm.controls.mobile.hasError('required')">
+                                                        Please enter mobile no
+                                                    </mat-error>
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-6 mb-2">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Email</mat-label>
+                                                    <input matInput type="email" id="email"  formControlName="email"
+                                                        placeholder="Email" required>
+                                                    <mat-icon matSuffix>mail</mat-icon>
+                                                    <mat-error *ngIf="addForm.controls.email.hasError('required')">
+                                                        Please enter email
+                                                    </mat-error>
+                                                    <mat-error *ngIf="addForm.controls.email.hasError('email')">
+                                                        Please enter valid email id
+                                                    </mat-error>
+                                                </mat-form-field>
+                                            </div>
+
+                                            <div class="col-lg-6 col-md-6 col-sm-6 mb-2">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Address</mat-label>
+                                                    <textarea matInput placeholder="Address" id="address" rows="1"
+                                                        formControlName="address" required></textarea>
+                                                </mat-form-field>
+
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-6 mb-2">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>State</mat-label>
+                                                    <mat-select formControlName="state" id="state">
+                                                        <mat-option value="">All</mat-option>
+                                                        <mat-option *ngFor="let type of state"
+                                                            value="{{type.state_name}}">
+                                                            {{type.state_name}}</mat-option>
+                                                    </mat-select>
+                                                    <mat-error *ngIf="addForm.controls.state.hasError('required')">
+                                                        Please enter state
+                                                    </mat-error>
+
+                                                </mat-form-field>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-6 mb-2">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Amount</mat-label>
+                                                    <input matInput placeholder="Total Amount"   formControlName="amount"
+                                                        required>
+                                                    <mat-icon matSuffix>sell</mat-icon>
+                                                </mat-form-field>
+                                            </div>
+
+                                            <div class="col-lg-6 col-md-6 col-sm-6 mb-2">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>GST</mat-label>
+                                                    <input matInput placeholder="GST" formControlName="gst" readonly
+                                                        required>
+                                                    <mat-icon matSuffix>sell</mat-icon>
+                                                </mat-form-field>
+                                            </div>
+
+                                            <div class="col-lg-6 col-md-6 col-sm-6 mb-2">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Total Users</mat-label>
+                                                    <input matInput (blur)="getTotalAmount();" placeholder="Total Users"
+                                                        formControlName="totalusers" required>
+                                                    <mat-icon matSuffix>sell</mat-icon>
+                                                    <mat-error *ngIf="addForm.controls.totalusers.hasError('required')">
+                                                        Please enter No of Users
+                                                    </mat-error>
+                                                </mat-form-field>
+                                            </div>
+
+                                            <div class="col-lg-6 col-md-6 col-sm-6 mb-2">
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Total Amount</mat-label>
+                                                    <input matInput placeholder="Total Amount"
+                                                        formControlName="totalamount" id="amount" required>
+                                                    <mat-icon matSuffix>sell</mat-icon>
+                                                </mat-form-field>
+                                            </div>
+
+                                            <div class="col-lg-6 col-md-6 col-sm-6 mb-2">
+                                                <input type="hidden" id="txnid" [value]="transid" />
+                                                <input type="hidden" id="hash" />
+                                                <input type="hidden" id="pinfo" formControlName="pinfo" />
+                                                <input type="hidden" id="key" value="M9Gf1lTf" />
+                                                <input type="hidden" id="udf5" name="udf5" value="BOLT_KIT_NODE_JS" />
+                                                <input type="hidden" id="udf1" name="udf1" [value]="loggeduser" />
+                                                <input type="hidden" id="surl" name="surl" [value]="responseurl" />
+                                            </div>
+                                        </div>
+                                        <div class="button-row d-flex mt-4">
+                                            <!-- <button class="js-btn-next" type="submit" title="Next">Next</button> -->
+                                            <!--class="js-btn-next"-->
+                                            <button *ngIf="paystatus!='paid'"  class="btn btn-primary" onclick="launchBOLT(); return false;" type="submit" title="Next">Pay Now</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!--single form panel-->
+                        <div class="multisteps-form__panel p-4 rounded bg-white" data-animation="scaleIn">
+                            <!-- <h3 class="multisteps-form__title">KYC</h3> -->
+                            <div class="multisteps-form__content container">
+                                <form [formGroup]="kycform" (ngSubmit)="doc_submit()">
+                                    <div class="row justify-content-center">
+                                        <div class="col-lg-4 col-md-4 col-sm-6 mt-4">
+                                            <div class="">
+                                                <label for="Registration Certificate" class="KYC">
+                                                    KYC Document Status :
+                                                </label> 
+                                                <br>
+                                                <span style="color:blue">{{kycstatus=='0'?'Pending':''}}</span>
+                                                <span *ngIf="kycstatus!=''&& kycstatus=='1'"
+                                                    style="color:green">{{kycstatus=='1'?'Approve':''}}</span>
+                
+                                                <span *ngIf="kycstatus!=''&& kycstatus=='2'"
+                                                    style="color:red">{{kycstatus=='2'?'Reject':''}}</span>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-6 mt-4">
+                                            <div class="">
+                                                <label for="Registration Certificate" class="KYC">
+                                                    Registration Certificate
+                                                </label>
+                                                <input type="file" name="registration_certi"
+                                                    formControlName="registration_certi" id="registration_certi"
+                                                    accept="image/*,application/pdf" />
+                                                <br>
+                                                <mat-error *ngIf="requiredRegistration()">
+                                                    Please select Registration Certificate
+                                                </mat-error>
+                                                <br>
+                                                <div *ngIf="!registrationpdf">
+                                                    <img width="100px" height="100px"
+                                                        src="api/tmpkyc/{{registration_certiimg}}"
+                                                        *ngIf="registration_certiimg!=''">
+                                                    <img width="100px" height="100px" src="assets/img/no-image.jpg"
+                                                        *ngIf="registration_certiimg==''">
+                                                </div>
+                                                <div *ngIf="registrationpdf">
+                                                    <a href="api/tmpkyc/{{registration_certiimg}}" target="_blank">
+                                                        <img width="100px" height="100px" src="assets/img/pdf_icon.png">
+                                                    </a>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-lg-4 col-md-4 col-sm-6 mt-4">
+                                            <div class="">
+                                                <label for="GST Certificate" class="KYC">
+                                                    GST Certificate
+                                                </label>
+                                                <input type="file" class="form-control upload-btn"
+                                                    name="Upload_GST_Certificate" formControlName="gst_certificate"
+                                                    accept="image/*,application/pdf" id="gst_certificate">
+                                                <mat-error *ngIf="requiredGST()">
+                                                    Please select GST Certificate
+                                                </mat-error>
+                                                <br>
+                                                <div *ngIf="!gstpdf">
+                                                    <img width="100px" height="100px"
+                                                        src="api/tmpkyc/{{gst_certificateimg}}"
+                                                        *ngIf="gst_certificateimg!=''">
+                                                    <img width="100px" height="100px" src="assets/img/no-image.jpg"
+                                                        *ngIf="gst_certificateimg==''">
+                                                </div>
+                                                <div *ngIf="gstpdf">
+                                                    <a href="api/tmpkyc/{{gst_certificateimg}}" target="_blank">
+                                                        <img width="100px" height="100px" src="assets/img/pdf_icon.png">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4 col-md-4 col-sm-6 mt-4">
+                                            <div class="">
+                                                <label for="Agreement" class="KYC">
+                                                    Agreement
+                                                </label>
+                                                <input type="file" class="form-control upload-btn"
+                                                    name="Upload_Agreement" formControlName="agreement"
+                                                    accept="image/*,application/pdf" id="agreement">
+                                                <br>
+
+                                                <div *ngIf="!agreementpdf">
+                                                    <img width="100px" height="100px" src="api/tmpkyc/{{agreementimg}}"
+                                                        *ngIf="agreementimg!=''">
+                                                    <img width="100px" height="100px" src="assets/img/no-image.jpg"
+                                                        *ngIf="agreementimg==''">
+                                                </div>
+                                                <div *ngIf="agreementpdf">
+                                                    <a href="api/tmpkyc/{{agreementimg}}" target="_blank">
+                                                        <img width="100px" height="100px" src="assets/img/pdf_icon.png">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4 col-md-4 col-sm-6 mt-4">
+                                            <div class="">
+                                                <label for="Company PAN Card" class="KYC">
+                                                    Company PAN Card
+                                                </label>
+                                                <input type="file" class="form-control upload-btn" id="pan_card"
+                                                    name="Upload_Company_PAN_Card" formControlName="pan_card"
+                                                    accept="image/*,application/pdf">
+                                                <mat-error *ngIf="requiredPanCard()">
+                                                    Please select Company PAN Card
+                                                </mat-error>
+                                                <br>
+                                                <div *ngIf="!pancardpdf">
+                                                    <img width="100px" height="100px" src="api/tmpkyc/{{pan_cardimg}}"
+                                                        *ngIf="pan_cardimg!=''">
+                                                    <img width="100px" height="100px" src="assets/img/no-image.jpg"
+                                                        *ngIf="pan_cardimg==''">
+                                                </div>
+                                                <div *ngIf="pancardpdf">
+                                                    <a href="api/tmpkyc/{{pan_cardimg}}" target="_blank">
+                                                        <img width="100px" height="100px" src="assets/img/pdf_icon.png">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4 col-md-4 col-sm-6 mt-4">
+                                            <div class="">
+                                                <label for="Authorized Person Proof" class="KYC">
+                                                    Authorized Person Proof
+                                                </label>
+                                                <input type="file" id="authorized_person_proof"
+                                                    class="form-control upload-btn"
+                                                    name="Upload_Authorized_Person_Proof"
+                                                    formControlName="authorized_person_proof"
+                                                    accept="image/*,application/pdf">
+                                                <mat-error *ngIf="requiredPersonProof()">
+                                                    Please select Authorized Person Proof
+                                                </mat-error>
+                                                <br>
+                                                <div *ngIf="!personproofpdf">
+                                                    <img width="100px" height="100px"
+                                                        src="api/tmpkyc/{{authorized_person_proofimg}}"
+                                                        *ngIf="authorized_person_proofimg!=''">
+                                                    <img width="100px" height="100px" src="assets/img/no-image.jpg"
+                                                        *ngIf="authorized_person_proofimg==''">
+                                                </div>
+                                                <div *ngIf="personproofpdf">
+                                                    <a href="api/tmpkyc/{{authorized_person_proofimg}}" target="_blank">
+                                                        <img width="100px" height="100px" src="assets/img/pdf_icon.png">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="button-row d-flex mt-4">
+                                        <button class="js-btn-next" type="submit" [disabled]="validateKyc" title="Next">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <!--single form panel-->
+                        <div class="multisteps-form__panel p-4 rounded bg-white" data-animation="scaleIn">
+                            <!-- <h3 class="multisteps-form__title text-center">Select DID</h3> -->
+                            <div class="multisteps-form__content">
+                                <div class="container" *ngIf="paystatus=='paid'" >
+                                    <form>
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                                <table class="table table-striped text-center">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Sr. No.</th>
+                                                            <th>DID</th>
+                                                            <th>Select</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let didnum of didlist; let i=index">
+                                                            <td>{{i+1}}</td>
+                                                            <td><label for="did-one">{{didnum.did_number}}</label></td>
+                                                            <td>
+                                                                <mat-radio-button value="1"></mat-radio-button>
+                                                            </td>
+                                                        </tr>
+                                                        
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="button-row d-flex mt-4">
+                                            <button class="submit" type="submit" title="submit">Submit</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="container" *ngIf="paystatus!='paid'" >
+                                    <p>
+                                        After make payment you are able to see available DID.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

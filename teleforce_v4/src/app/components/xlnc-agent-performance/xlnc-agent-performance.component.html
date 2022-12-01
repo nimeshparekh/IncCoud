@@ -1,0 +1,223 @@
+<div class="warap-height pt-4">
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <h1 class="h3 mb-2 text-gray-800">Agent Performance Report</h1>
+        <p class="mb-2"></p>
+        <form [formGroup]="searchform">
+            <div class="row">
+                <div class="col-sm-3">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Choose a date</mat-label>
+                        <input matInput placeholder="From Date" [matDatepicker]="startpicker" formControlName="startdate" required>
+                        <mat-datepicker-toggle matSuffix [for]="startpicker"></mat-datepicker-toggle>
+                        <mat-datepicker #startpicker tpicker></mat-datepicker>
+                        <mat-error *ngIf="searchform.controls.startdate.hasError('required')">
+                            Please select From Date
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-3">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Choose a date</mat-label>
+                        <input matInput placeholder="To Date" [matDatepicker]="endpicker" formControlName="enddate" required>
+                        <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
+                        <mat-datepicker #endpicker tpicker></mat-datepicker>
+                        <mat-error *ngIf="searchform.controls.enddate.hasError('required')">
+                            Please select To Date
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-3">
+                    <button mat-raised-button class="mt-2" type="submit" (click)="searchData()" [disabled]="isDisabled">Search</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <button *ngIf="msg!=''" mat-raised-button class="mt-2" type="submit" (click)="requestData()">Request Report</button>
+
+                </div>
+            </div>
+        </form>
+
+        <p *ngIf="msg!=''" style="color:red">{{msg}}</p>
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4 mt-3">
+
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table width="100%">
+                        <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+                        <div fxLayout fxLayoutAlign="center center" class="mt-2">
+                            <button mat-raised-button color="primary"
+                                (click)="exporter.exportTable('csv', {fileName:'Agent-Performance-Report', sheet: 'sheet_name'})">CSV</button>
+                        </div><br>
+                        <mat-table class="lessons-table mat-elevation-z8" matTableExporter #exporter="matTableExporter" [dataSource]="dataSource">
+                            <ng-container matColumnDef="id">
+
+                                <mat-header-cell *matHeaderCellDef>Sr. No</mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" data-label="id">
+                                    {{i+1+(paginator.pageIndex * paginator.pageSize)}}</mat-cell>
+
+                            </ng-container>
+                            <ng-container matColumnDef="agentname">
+
+                                <mat-header-cell *matHeaderCellDef > Agent Name </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" maxlength="10">
+                                    <label>{{row.account_name}}</label>
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="logintime">
+
+                                <mat-header-cell *matHeaderCellDef > Logged Time </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{calulatesectomin(row.loggedtime)}}
+                                    <!--{{row.date!=null?(calculateDateTimeDiff(row.date,row.logout_time)):'00:00:00'}}-->
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="talktime">
+
+                                <mat-header-cell *matHeaderCellDef > Talktime </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{calulatesectomin(row.talktime)}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="wraptime">
+
+                                <mat-header-cell *matHeaderCellDef > Wrap Time </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{calulatemintosec(row.wrapuptime*row.totalcalls)}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="acw">
+
+                                <mat-header-cell *matHeaderCellDef> After Call Work </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{calulatesectomin(row.totalholdcalltime)}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="holdtime">
+
+                                <mat-header-cell *matHeaderCellDef> Hold Call Time </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{calulatesectomin(row.holdcalltime)}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="breaktime">
+
+                                <mat-header-cell *matHeaderCellDef> Break Time </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{calulatesectomin(row.breaktime)}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="totaltime">
+
+                                <mat-header-cell *matHeaderCellDef> Idle Time </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{calculateidealtime(row.loggedtime,row.talktime,row.wrapuptime*row.totalcalls*60,row.breaktime)}}
+                                    <!--{{calculateidealtime(row.date,row.logout_time,row.talktime,row.wrapuptime*row.totalcalls*60,row.breaktime)}}-->
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <!--<ng-container matColumnDef="performance">
+
+                                <mat-header-cell *matHeaderCellDef> Performance (%) </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{calculateperformancetime(row.loggedtime,row.talktime,row.wrapuptime*row.totalcalls*60,row.breaktime,row.totalholdcalltime)}}
+                                    <!--{{calculateperformancetime(row.date,row.logout_time,row.talktime,row.wrapuptime*row.totalcalls*60,row.breaktime,row.totalholdcalltime)}}-->
+                                <!--</mat-cell>
+
+                            </ng-container>-->
+
+                            <ng-container matColumnDef="AHT">
+
+                                <mat-header-cell *matHeaderCellDef> AHT </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{calculateAHT(row.talktime,(row.wrapuptime*row.totalcalls*60),row.answercalls)}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="inboundcall">
+
+                                <mat-header-cell *matHeaderCellDef> Inbound Calls </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.inboundcalls}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="outboundcall">
+
+                                <mat-header-cell *matHeaderCellDef> Outbound Calls </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.outboundcalls}}
+                                </mat-cell>
+
+                            </ng-container>
+<!-- 
+                            <ng-container matColumnDef="dailercalls">
+
+                                <mat-header-cell *matHeaderCellDef> Dailer Calls </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.dialercalls}}
+                                </mat-cell>
+                            </ng-container> -->
+
+                            <ng-container matColumnDef="outboundconnectcall">
+
+                                <mat-header-cell *matHeaderCellDef> Outbound Connected Calls </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.outboundconnectcalls}}
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="missedcall">
+                                <mat-header-cell *matHeaderCellDef> Missed Calls </mat-header-cell>
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.missedcalls}}
+                                </mat-cell>
+                            </ng-container>
+                            
+                            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+                            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+                        </mat-table>
+                        <mat-paginator #paginator [length]="Length" [pageSize]="50" [pageSizeOptions]="[50,100,500]">
+                        </mat-paginator>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /.container-fluid -->
+</div>

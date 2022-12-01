@@ -1,0 +1,41 @@
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Live Agent Location</h1>
+    <br>
+    <form [formGroup]="searchform">
+        <mat-form-field>
+            <mat-label>Agent</mat-label>
+            <mat-select formControlName="agentid">
+                <mat-option *ngFor="let agent of agents" [value]="agent.account_id">
+                    {{agent.account_name}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="searchform.controls.agentid.hasError('required')">
+                Please select Agent
+            </mat-error>
+        </mat-form-field>&nbsp;&nbsp;
+        <mat-form-field>
+            <input matInput placeholder="Date" [matDatepicker]="startpicker" formControlName="date">
+            <mat-datepicker-toggle matSuffix [for]="startpicker"></mat-datepicker-toggle>
+            <mat-datepicker #startpicker tpicker></mat-datepicker>           
+        </mat-form-field>&nbsp;&nbsp;
+        <button mat-raised-button type="submit" (click)="searchData()">Search</button>&nbsp;
+    </form>
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4 mt-3">
+
+        <div class="card-body">
+
+            <google-map height="650px" width="100%" [zoom]="5.5" [center]="center">
+                <map-marker #markerElem *ngFor="let marker of markers" [position]="marker.position"
+                    [label]="marker.label" [title]="marker.title" [options]="marker.options">
+                </map-marker>
+
+                <map-info-window>{{ infoContent }}</map-info-window>
+            </google-map>
+        </div>
+    </div>
+
+</div>
+<!-- /.container-fluid -->

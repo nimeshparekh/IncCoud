@@ -1,0 +1,134 @@
+<div mat-dialog-head class="dilog-head d-flex justify-content-between">
+    <h3 class="primary" *ngIf="addmode">Add Consultant</h3>
+    <h3 class="primary" *ngIf="editmode">Edit Consultant</h3>
+    <div class="d-inline-block">
+        <a class="close" (click)="onNoClick1()"><i class="fi-rr-cross-small"></i></a>
+    </div>
+</div>
+<div>
+    <form [formGroup]="addForm" (ngSubmit)="submit()">
+        <div mat-dialog-content>
+            <div class="row">
+                <div class="col-xl-3 col-md-3 col-sm-3 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Name</mat-label>
+                        <input matInput formControlName="name" required>
+                        <mat-error *ngIf="addForm.controls.name.hasError('required')">
+                            Please enter name
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-3 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Email</mat-label>
+                        <input matInput placeholder="Email" formControlName="email" required>
+                        <mat-error *ngIf="addForm.controls.email.hasError('required')">
+                            Please enter email
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-3 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Mobile Number</mat-label>
+                        <input matInput placeholder="Phone Number" formControlName="mobile" required>
+                        <mat-error *ngIf="addForm.controls.mobile.hasError('required')">
+                            Please enter mobile number
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-3 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Official Mobile</mat-label>
+                        <input matInput placeholder="Phone Number" formControlName="officialmobile">
+                    </mat-form-field>
+                </div>
+
+                <div class="col-xl-3 col-md-3 col-sm-3 col-12 mt-2">
+                    <mat-radio-group formControlName="gender">
+                        <div style="color:grey;">Gender</div>
+                        <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" value="Male">Male
+                        </mat-radio-button>
+                        <mat-radio-button color="primary" style="padding:4px 0px 0px 24px;" value="Female">Female
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-3 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Username</mat-label>
+                        <input matInput placeholder="Username" formControlName="username" required>
+                        <mat-error *ngIf="addForm.controls.username.hasError('required')">
+                            Please enter username
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-3 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Password</mat-label>
+                        <input matInput type="password" placeholder="Password" formControlName="password" required>
+                        <mat-error *ngIf="addForm.controls.password.hasError('required')">
+                            Please enter password
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-3 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Joining Date</mat-label>
+                        <input matInput formControlName="joiningdate" [matDatepicker]="picker">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                       
+                    </mat-form-field>
+                </div>
+
+                <div class="col-xl-3 col-md-3 col-sm-3 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Area</mat-label>
+                        <textarea matInput placeholder="Area" formControlName="area" ></textarea>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-3 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>City</mat-label>
+                        <input matInput placeholder="City" formControlName="city">
+                    </mat-form-field>
+                </div>
+
+                <div class="col-xl-3 col-md-3 col-sm-3 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>State</mat-label>
+                        <input matInput placeholder="State" formControlName="state">
+                    </mat-form-field>
+                </div>
+            </div>
+            <!--<h3>Document</h3>
+            <div class="row">
+
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <input type="file" id="uploadphoto" style="display:none;" accept="image/*" />
+                    <a mat-raised-button (click)="onUploadPhoto()" style="width:300px">Upload Photo Image</a>
+                    <div *ngIf="photoimage && photoimage !== ''" style="margin-left: 30px;">
+                        <img src="{{baseUrl}}{{apiUrl}}/consultant/photo/{{photoimage}}" >
+                    </div>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <input type="file" id="uploadpan" style="display:none;" accept="image/*" />
+                    <a mat-raised-button (click)="onUploadPan()" style="width:300px">Upload PAN Card Image</a>
+                </div>                
+            </div><br>
+            <div class="row">
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <input type="file" id="uploadadharfront" style="display:none;" accept="image/*" />
+                    <a mat-raised-button (click)="onUploadAdharFront()" style="width:300px">Upload Adharcard Front Image</a>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <input type="file" id="uploadadharback" style="display:none;" accept="image/*" />
+                    <a mat-raised-button (click)="onUploadAdharBack()" style="width:300px">Upload Adharcard Back Image</a>
+                </div>
+            </div>-->
+<br>
+        </div>
+        <div class="btn-sec" mat-dialog-actions>
+            <button mat-raised-button type="submit" color="primary" class="Update-btn">Save</button>
+        </div>
+    </form>
+</div>

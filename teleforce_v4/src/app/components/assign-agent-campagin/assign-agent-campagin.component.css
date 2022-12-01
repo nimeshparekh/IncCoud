@@ -1,0 +1,23 @@
+.cursor-pointer
+{
+    cursor: pointer;
+}
+button:focus
+{
+  outline: none;
+}
+
+table 
+{
+    width: 100%;
+    min-width: 700px;
+}
+.mat-form-field
+{
+    width: 100%;
+}
+.material-icons
+{
+    cursor: pointer;
+}
+

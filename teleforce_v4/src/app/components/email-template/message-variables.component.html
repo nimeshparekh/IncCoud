@@ -1,0 +1,85 @@
+<div>
+    <div mat-dialog-head class="dilog-head d-flex justify-content-between">
+        <h3 class="primary" >Replace Variables</h3>
+        <div class="d-inline-block">
+            <a class="close" (click)="openDialog()"><i class="fi-rr-cross-small"></i></a>
+        </div>
+    </div>
+    <div >
+        <form [formGroup]="addForm" (ngSubmit)="submit()">
+            <div mat-dialog-content>                
+                <div class="row">
+                    <div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-2">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Email Subject</mat-label>
+                            <input matInput placeholder="Sms Text" formControlName="email_subject" readonly>
+                        </mat-form-field>                                                
+                    </div>
+                </div>
+                <div class="row" *ngIf="!svariablemode">
+                    <h4 style="color:red">This Email Template Subject does not have any replace variables.</h4>
+                </div>
+                <div class="row" *ngIf="svariablemode">
+                    <div class="col-xl-6 col-md-6 col-sm-6 col-6 mt-2" *ngIf="svar1">
+                        <mat-form-field appearance="outline">
+                            <mat-label>var1</mat-label>
+                            <input matInput  formControlName="sub_var1" >
+                        </mat-form-field>
+                    </div>
+                    <div class="col-xl-6 col-md-6 col-sm-6 col-6 mt-2" *ngIf="svar2">
+                        <mat-form-field appearance="outline">
+                            <mat-label>var2</mat-label>
+                            <input matInput  formControlName="sub_var2" >
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <angular-editor [placeholder]="'Enter text here...'" formControlName="email_description" [config]="config" readonly>
+                    </angular-editor>
+                </div>
+                <div class="row" *ngIf="!dvariablemode">
+                    <h4 style="color:red">This Email Template Description does not have any replace variables.</h4>
+                </div>
+                <div class="row" *ngIf="dvariablemode">
+                    <div class="col-xl-6 col-md-6 col-sm-6 col-6 mt-2" *ngIf="dvar1">
+                        <mat-form-field appearance="outline">
+                            <mat-label>var1</mat-label>
+                            <input matInput  formControlName="desc_var1" >
+                        </mat-form-field>
+                    </div>
+                    <div class="col-xl-6 col-md-6 col-sm-6 col-6 mt-2" *ngIf="dvar2">
+                        <mat-form-field appearance="outline">
+                            <mat-label>var2</mat-label>
+                            <input matInput  formControlName="desc_var2" >
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row" *ngIf="dvariablemode">
+                    <div class="col-xl-6 col-md-6 col-sm-6 col-6 mt-2" *ngIf="dvar3">
+                        <mat-form-field appearance="outline">
+                            <mat-label>var3</mat-label>
+                            <input matInput  formControlName="desc_var3" >
+                        </mat-form-field>
+                    </div>
+                    <div class="col-xl-6 col-md-6 col-sm-6 col-6 mt-2" *ngIf="dvar4">
+                        <mat-form-field appearance="outline">
+                            <mat-label>var4</mat-label>
+                            <input matInput  formControlName="desc_var4" >
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row" *ngIf="dvariablemode">
+                    <div class="col-xl-6 col-md-6 col-sm-6 col-6 mt-2" *ngIf="dvar5">
+                        <mat-form-field appearance="outline">
+                            <mat-label>var5</mat-label>
+                            <input matInput  formControlName="desc_var5" >
+                        </mat-form-field>
+                    </div>
+                </div>               
+                <div class="btn-sec" mat-dialog-action *ngIf="svariablemode||dvariablemode">
+                    <button mat-raised-button type="submit" color="primary" class="Update-btn">Save</button>                    
+                </div>
+            </div>
+        </form>
+    </div>    
+</div>

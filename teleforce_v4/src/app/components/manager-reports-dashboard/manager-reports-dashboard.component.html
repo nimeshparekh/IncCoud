@@ -1,0 +1,206 @@
+
+<div class="row charts">
+    <div class="col-sm-6 col-12 mt-3">
+        <div class="card-ana">
+            <div class="card-ana-head">
+                <div>
+                    <p class="">Call Traffic Report</p>
+                </div>
+            </div>
+           
+            <div class="card-ana-body" >
+                <div style="display: block">
+                    <canvas baseChart [chartType]="chartTypetraffic" [datasets]="chartDatasetstraffic" [labels]="chartLabelstraffic"
+                        [colors]="chartColorstraffic" [options]="chartOptionstraffic" [legend]="true"
+                        (chartHover)="chartHoveredtraffic($event)" (chartClick)="chartClickedtraffic($event)">
+                    </canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-12 mt-3">
+        <div class="card-ana">
+            <div class="card-ana-head">
+                <div>
+                    <p class="">Hourly Calls</p>
+                </div>
+            </div>
+          
+            <div class="card-ana-body" >
+                <div style="display: block">
+                    <canvas baseChart [chartType]="chartTypehourly" [datasets]="chartDatasetshourly" [labels]="chartLabelshourly"
+                        [colors]="chartColorshourly" [options]="chartOptionshourly" [legend]="true"
+                        (chartHover)="chartHoveredhourly($event)" (chartClick)="chartClickedhourly($event)">
+                    </canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-12 mt-3" *ngIf="lms">
+        <div class="card-ana">
+            <div class="card-ana-head d-flex">
+                <div class="flex-fill">
+                    <p class="">Sales Funnel</p>
+                </div>
+            </div>
+         
+            <div class="card-ana-body" >
+                <div style="display: block">
+                    <canvas baseChart [chartType]="chartTypeFunnel" [datasets]="chartDatasetsFunnel" [labels]="chartLabelsFunnel"
+                        [colors]="chartColorsFunnel" [options]="chartOptionsFunnel" [legend]="true"
+                        (chartHover)="chartHoveredFunnel($event)" (chartClick)="chartClickedFunnel($event)">
+                    </canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-12 mt-3" *ngIf="lms">
+        <div class="card-ana">
+            <div class="card-ana-head d-flex">
+                <div class="flex-fill ">
+                    <p class="">Lead Source</p>
+                </div>
+            </div>
+            
+
+            <div class="card-ana-body">
+                <div style="display: block">
+                    <canvas baseChart [chartType]="chartTypeSource" [datasets]="chartDatasetsSource" [labels]="chartLabelsSource"
+                        [colors]="chartColorsSource" [options]="chartOptionsSource" [legend]="true"
+                        (chartHover)="chartHoveredSource($event)" (chartClick)="chartClickedSource($event)">
+                    </canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid mb-3">
+        <div class="call-analytics">
+            <div class="row">
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 mt-3">
+                    <div class="mycard">
+                        <div class="mycard-body">
+                            <div class="d-flex flex-row">
+                                <div class="flex-fill">
+                                    <div class="name-count">
+                                        <p>
+                                            Total Call
+                                        </p>
+                                        <label class="clr-87e0ab">{{totalcaller}}</label>
+                                    </div>
+                                </div>
+                                <div class="flex-row-reverse mt-4 ng-star-inserted">
+                                    <b><i class="mycard-icon fi-rr-smartphone text-large clr-87e0ab"></i></b>
+                                </div>
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 mt-3">
+                    <div class="mycard">
+                        <div class="mycard-body">
+                            <div class="d-flex flex-row">
+                                <div class="flex-fill">
+                                    <div class="name-count">
+                                        <p>
+                                            New Callers
+                                        </p>
+                                        <label class="clr-87e0ab">{{newcallers}}</label>
+                                    </div>
+                                </div>
+                                <div class="flex-row-reverse mt-4 ng-star-inserted">
+                                    <b><i class="mycard-icon fi-rr-time-forward-sixty text-large clr-e0b087"></i></b>
+                                </div>
+                            </div>
+                         
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 mt-3">
+                    <div class="mycard">
+                        <div class="mycard-body">
+                            <div class="d-flex flex-row">
+                                <div class="flex-fill">
+                                    <div class="name-count">
+                                        <p>
+                                            OLD Callers
+                                        </p>
+                                        <label class="clr-87e0ab">{{oldcallers}}</label>
+                                    </div>
+                                </div>
+                                <div class="flex-row-reverse mt-4 ng-star-inserted">
+                                    <b><i class="mycard-icon fi-rr-time-forward-sixty text-large clr-e0b087"></i></b>
+                                </div>
+                            </div>
+                         
+                        </div>
+                    </div>
+                </div>
+          </div>
+            <div class="row">
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 mt-3">
+                    <div class="mycard">
+                        <div class="mycard-body">
+                            <div class="d-flex flex-row">
+                                <div class="flex-fill">
+                                    <div class="name-count">
+                                        <p>
+                                            Total Incoming Call
+                                        </p>
+                                        <label class="clr-87e0ab">{{totalincomingcaller}}</label>
+                                    </div>
+                                </div>
+                                <div class="flex-row-reverse mt-4 ng-star-inserted">
+                                    <b><i class="mycard-icon fi-rr-smartphone text-large clr-87e0ab"></i></b>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 mt-3">
+                    <div class="mycard">
+                        <div class="mycard-body">
+                            <div class="d-flex flex-row">
+                                <div class="flex-fill">
+                                    <div class="name-count">
+                                        <p>
+                                            Total Outgoing Call
+                                        </p>
+                                        <label class="clr-87e0ab">{{totaloutgoingcaller}}</label>
+                                    </div>
+                                </div>
+                                <div class="flex-row-reverse mt-4 ng-star-inserted">
+                                    <b><i class="mycard-icon fi-rr-smartphone text-large clr-87e0ab"></i></b>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 mt-3">
+                    <div class="mycard">
+                        <div class="mycard-body">
+                            <div class="d-flex flex-row">
+                                <div class="flex-fill">
+                                    <div class="name-count">
+                                        <p>
+                                            Total Dailer Call
+                                        </p>
+                                        <label class="clr-87e0ab">{{totaldailercaller}}</label>
+                                    </div>
+                                </div>
+                                <div class="flex-row-reverse mt-4 ng-star-inserted">
+                                    <b><i class="mycard-icon fi-rr-smartphone text-large clr-87e0ab"></i></b>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+      </div>
+    </div>
+  
+   
+</div>

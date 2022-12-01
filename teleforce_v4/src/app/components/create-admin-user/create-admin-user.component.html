@@ -1,0 +1,112 @@
+<div mat-dialog-head class="dilog-head d-flex justify-content-between">
+    <h3 class="primary" *ngIf="addmode">Add Admin User</h3>
+    <h3 class="primary" *ngIf="editmode">Edit Admin User</h3>
+    <h3 class="primary" *ngIf="deletemode">Delete Admin User</h3>
+    <h3 class="primary" *ngIf="passwordmode">Change Password</h3>
+    <div class="d-inline-block">
+        <a class="close" (click)="openDialog()"><i class="fi-rr-cross-small"></i></a>
+    </div>
+</div>
+<div *ngIf="addmode || editmode">
+    <form [formGroup]="addForm" (ngSubmit)="submit()">
+        <div mat-dialog-content>
+            <div class="row">
+                <div class="col-xl-4 col-md-6 col-sm-12 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Username</mat-label>
+                        <div *ngIf="addmode">
+                            <input matInput placeholder="Username" formControlName="name" required>
+                        </div>
+                        <div *ngIf="editmode">
+                            <input matInput placeholder="Username" formControlName="name" required readonly>
+                        </div>
+                        <mat-error *ngIf="addForm.controls.name.hasError('required')">
+                            Please enter username
+                        </mat-error>
+                        <mat-error *ngIf="addForm.controls.name.hasError('maxlength')">
+                            Maximum 12 character allowed
+                        </mat-error>
+                        <mat-error *ngIf="invalidUserName()">
+                            Username already exists. please try other
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-4 col-md-6 col-sm-12 col-12 mt-2" *ngIf="addmode">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Password</mat-label>
+                        <input matInput placeholder="Password" formControlName="password" required>
+                        <button mat-icon-button matSuffix (click)="randomString()">
+                            <mat-icon>autorenew</mat-icon>
+                        </button>
+                        <mat-error *ngIf="addForm.controls.password.hasError('required')">
+                            Please enter password
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-4 col-md-6 col-sm-12 col-12 mt-2">
+                    <mat-form-field  appearance="outline">
+                        <mat-label>Email</mat-label>
+                        <input matInput placeholder="Email" formControlName="email" required>
+                        <mat-error *ngIf="addForm.controls.email.hasError('required')">
+                            Please enter email
+                        </mat-error>
+                        <mat-error *ngIf="addForm.controls.email.hasError('email')">
+                            Please enter valid email id
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-4 col-md-6 col-sm-12 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Mobile</mat-label>
+                        <input matInput placeholder="Mobile" formControlName="mobile" required>
+                        <mat-error *ngIf="addForm.controls.mobile.hasError('required')">
+                            Please enter mobile
+                        </mat-error>
+                        <mat-error *ngIf="addForm.controls.mobile.hasError('pattern')">
+                            Please enter valid 10 digit mobile number
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="btn-sec" mat-dialog-actions>
+            <button mat-raised-button type="submit" color="primary" class="Update-btn">Save</button>
+        </div>
+    </form>
+</div>
+<div *ngIf="deletemode">
+    <h3 style="margin-top: 10px; font-weight: 500;">
+        Are you sure to delete this ?
+    </h3>
+    <div class="btn-sec">
+        <button mat-raised-button type="button" color="primary" class="Update-btn"
+        (click)="deleteData(adminid)">Delete</button>
+        &nbsp;
+        <button mat-raised-button type="button" class="Discard-btn" (click)="openDialog()">Cancel</button>
+    </div>
+</div>
+<div *ngIf="passwordmode">
+    <form [formGroup]="passwordForm">
+        <div mat-dialog-content>
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Mobile</mat-label>
+                        <input matInput placeholder="New Password" formControlName="newpassword" required>
+                        <button mat-icon-button matSuffix (click)="randomString()">
+                            <mat-icon>autorenew</mat-icon>
+                        </button>
+                        <mat-error *ngIf="passwordForm.controls.newpassword.hasError('required')">
+                            Please enter new password
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="btn-sec" mat-dialog-actions>
+            <button mat-raised-button type="button" color="primary" class="Update-btn"
+            (click)="changepassword()">Change</button>
+            <button mat-raised-button type="button" class="Discard-btn" (click)="openDialog()">Cancel</button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,76 @@
+<div>
+    <div class="add-title">
+        <h2 class="primary" *ngIf="addmode">Add Package</h2>
+        <h2 class="primary" *ngIf="editmode">Edit Package</h2>
+        <h2 class="primary" *ngIf="deletemode">Delete Package</h2>
+    </div>
+    <div *ngIf="addmode || editmode">
+        <form [formGroup]="addForm" (ngSubmit)="submit()">
+            <mat-grid-list [cols]="2" rowHeight="100px">
+                <mat-grid-tile>
+                    <div class="text-inside">
+                        <mat-form-field>
+                            <input matInput placeholder="Package Name" formControlName="name" required>
+                            <mat-error *ngIf="addForm.controls.name.hasError('required')">
+                                Please enter package name
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </mat-grid-tile>                
+
+                
+
+                <mat-grid-tile>
+                    <div class="text-inside">
+                        <mat-form-field>
+                            <input type="number" matInput placeholder="Package Rate" formControlName="rate" required (change)="countPackageValue()">
+                            <mat-error *ngIf="addForm.controls.rate.hasError('required')">
+                                Please enter package rate
+                            </mat-error>                           
+                        </mat-form-field>
+                    </div>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <div class="text-inside">
+                        <mat-form-field>
+                            <input type="number" matInput placeholder="Package No" formControlName="no" (change)="countPackageValue()">                                                   
+                            <mat-error *ngIf="addForm.controls.no.hasError('required')">
+                                Please enter package no
+                            </mat-error>  
+                        </mat-form-field>
+                    </div>
+                </mat-grid-tile>
+                
+                          
+                <mat-grid-tile>
+                    <div class="text-inside">
+                        <mat-form-field>
+                            <input type="number" matInput placeholder="Package Value" formControlName="value" (change)="countPackageValue()">                                                   
+                            <mat-error *ngIf="addForm.controls.value.hasError('required')">
+                                Please enter package value
+                            </mat-error>  
+                        </mat-form-field>
+                    </div>
+                </mat-grid-tile>                
+            </mat-grid-list><br>
+            <div class="btn-sec">
+                <button mat-raised-button type="submit" color="primary" class="Update-btn">Save</button>
+                &nbsp;
+                <button mat-raised-button type="button" class="Discard-btn" (click)="openDialog()">Cancel</button>
+            </div>
+
+        </form>
+    </div>
+
+    <div *ngIf="deletemode">
+        <h4>
+            Are you sure to delete this ?
+        </h4>
+        <div class="btn-sec">
+            <button mat-raised-button type="button" color="primary" class="Update-btn"
+                (click)="deleteData(packageid)">Delete</button>
+            &nbsp;
+            <button mat-raised-button type="button" class="Discard-btn" (click)="openDialog()">Cancel</button>
+        </div>
+    </div>
+</div>

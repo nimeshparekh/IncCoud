@@ -1,0 +1,94 @@
+<div class="warap-height pt-4">
+  <!-- Begin Page Content -->
+  <div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">
+      <button routerLink="/settings" mat-icon-button title="Back" color="accent"
+        aria-label="Example icon button with a menu icon">
+        <mat-icon>keyboard_backspace</mat-icon>
+      </button>
+      DID Configuration
+    </h1>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4 mt-2">
+
+      <!--Progress Bar-->
+      <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+
+      <div class="card-body">
+
+        <!--Table Content-->
+        <div class="table-responsive">
+
+          <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+            <!-- Position Column -->
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef> Sr. No. </th>
+              <td mat-cell *matCellDef="let row;let i = index;" data-label="id">
+                {{i+1+(paginator.pageIndex * paginator.pageSize)}}
+              </td>
+            </ng-container>
+
+            <!-- DID Column -->
+            <ng-container matColumnDef="did_no">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>DID</th>
+              <td mat-cell *matCellDef="let row">
+                {{row.did_number}}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="date">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Assign Date</th>
+              <td mat-cell *matCellDef="let row">
+                {{row.assginDate | date:'dd-MM-yyyy'}}
+              </td>
+            </ng-container>
+
+            <!-- type Column -->
+            <ng-container matColumnDef="type">
+              <th mat-header-cell *matHeaderCellDef> Type </th>
+              <td mat-cell *matCellDef="let row">
+                {{row.Type==0?'Terminate Call':''}}
+                {{row.Type==1?'Announcement':''}}
+                {{row.Type==2?'Agents Group':''}}
+                {{row.Type==3?'IVR':''}}
+                {{row.Type==4?'Voice Mail':''}}
+                {{row.Type==5?'Time Condition':''}}
+                {{row.Type==6?'Miss Call':''}}
+                {{row.Type==7?'Conference':''}}
+                {{row.Type==8?'Click to Call':''}}
+                {{row.Type==9?'Outgoing / Incoming':''}}
+                {{row.Type==10?'SIP Hard Phone':''}}
+              </td>
+            </ng-container>
+
+            <!-- Edit Column -->
+            <ng-container matColumnDef="edit">
+              <th mat-header-cell *matHeaderCellDef> Edit </th>
+              <td mat-cell *matCellDef="let row">
+                <button (click)="viewdialog(row.id)" color="primary" mat-icon-button title="Edit"
+                  aria-label="Example icon button with a open in new tab icon">
+                  <mat-icon>edit</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+          </table>
+
+        </div>
+
+        <!--Paginator-->
+        <mat-paginator #paginator [length]="Length" [pageSize]="50" [pageSizeOptions]="[50,100,500]"></mat-paginator>
+
+      </div>
+
+    </div>
+
+  </div>
+  <!-- /.container-fluid -->
+</div>

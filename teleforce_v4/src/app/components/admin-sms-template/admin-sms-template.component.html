@@ -1,0 +1,164 @@
+<div class="warap-height pt-4">
+  <!-- Begin Page Content -->
+  <div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">SMS Template</h1>
+
+    <button mat-raised-button color="accent" (click)="Createdialog()" title="Add">Add SMS</button>
+
+    <!-- DataTales Example -->
+    <div class="card mb-4 mt-3">
+        
+      <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+      <mat-tab-group>
+        <mat-tab label="Approve">
+          <div class="card-body">
+            <div class="table-responsive">
+              
+              <table mat-table class="lessons-table mat-elevation-z8" matSort [dataSource]="dataSource">
+                <ng-container matColumnDef="id">
+      
+                  <mat-header-cell *matHeaderCellDef>Sr. No</mat-header-cell>
+      
+                  <mat-cell class="description-cell" *matCellDef="let row;let i = index;" data-label="id">
+                    {{i+1+(paginator.pageIndex * paginator.pageSize)}}</mat-cell>
+      
+                </ng-container>
+                <ng-container matColumnDef="account_name">
+      
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> Account Name</mat-header-cell>
+      
+                  <mat-cell class="description-cell" *matCellDef="let row">{{row.account_name}}
+                  </mat-cell>
+      
+                </ng-container>
+                <ng-container matColumnDef="sms_title">
+      
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> Sms
+                    Title</mat-header-cell>
+      
+                  <mat-cell class="description-cell" *matCellDef="let row">{{row.sms_title}}
+                  </mat-cell>
+      
+                </ng-container>
+      
+                <ng-container matColumnDef="sms_text">
+      
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Sms
+                    Text</mat-header-cell>
+      
+                  <mat-cell class="description-cell" *matCellDef="let row">
+                    {{row.sms_text}}
+                  </mat-cell>
+      
+                </ng-container>
+
+                <ng-container matColumnDef="approve_status">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
+                  <mat-cell class="description-cell" *matCellDef="let row">
+                    {{row.approve_status==0?'Pending':''}}{{row.approve_status==1?'Approve':''}}{{row.approve_status==2?'Reject':''}}
+                  </mat-cell>
+                </ng-container>
+      
+                <ng-container matColumnDef="action">
+      
+                  <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+      
+                  <mat-cell class="description-cell" *matCellDef="let row">
+                    <button mat-icon-button (click)="updatedialog(row.sms_id)" color="accent" aria-label="Example icon button with a menu icon">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button (click)="deleteData(row.sms_id)"  color="warn" aria-label="Example icon button with a heart icon">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </mat-cell>
+      
+                </ng-container>
+      
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      
+                <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+      
+              </table>
+              
+            </div>
+            <mat-paginator #paginator [length]="Length" [pageSize]="50" [pageSizeOptions]="[50,100,500]"></mat-paginator>
+          </div>
+        </mat-tab>
+        <mat-tab label="Not Approve">
+          <div class="card-body">
+            <div class="table-responsive">
+              
+              <table mat-table class="lessons-table mat-elevation-z8" matSort [dataSource]="notappdataSource">
+                <ng-container matColumnDef="id">
+        
+                  <mat-header-cell *matHeaderCellDef>Sr. No</mat-header-cell>
+        
+                  <mat-cell class="description-cell" *matCellDef="let row;let i = index;" data-label="id">
+                    {{i+1+(notapprovepaginator.pageIndex * notapprovepaginator.pageSize)}}</mat-cell>
+        
+                </ng-container>
+                <ng-container matColumnDef="account_name">
+        
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> Account Name</mat-header-cell>
+        
+                  <mat-cell class="description-cell" *matCellDef="let row">{{row.account_name}}
+                  </mat-cell>
+        
+                </ng-container>
+                <ng-container matColumnDef="sms_title">
+        
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> Sms 
+                    Title</mat-header-cell>
+        
+                  <mat-cell class="description-cell" *matCellDef="let row">{{row.sms_title}}
+                  </mat-cell>
+        
+                </ng-container>
+        
+                <ng-container matColumnDef="sms_text">
+        
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Sms
+                    Text</mat-header-cell>
+        
+                  <mat-cell class="description-cell" *matCellDef="let row">
+                    {{row.sms_text}}
+                  </mat-cell>
+        
+                </ng-container>
+
+                <ng-container matColumnDef="approve_status">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
+                  <mat-cell class="description-cell" *matCellDef="let row" >
+                    {{row.approve_status==0?'Pending':''}}{{row.approve_status==1?'Approve':''}}{{row.approve_status==2?'Reject':''}}
+                  </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="note">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Note</mat-header-cell>
+                    <mat-cell class="description-cell" *matCellDef="let row">{{row.note}}</mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="action">
+                    <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+                    <mat-cell class="description-cell" *matCellDef="let row">
+                        <button (click)="approvedialoag(row.sms_id)"  mat-flat-button color="primary">Status</button> 
+                    </mat-cell>
+                </ng-container>
+        
+                <mat-header-row *matHeaderRowDef="notApproveColumns"></mat-header-row>
+        
+                <mat-row *matRowDef="let row; columns: notApproveColumns"></mat-row>
+        
+              </table>
+              
+            </div>
+            <mat-paginator #notapprovepaginator [length]="notLength" [pageSize]="50" [pageSizeOptions]="[50,100,500]"></mat-paginator>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+
+    </div>
+
+  </div>
+  <!-- /.container-fluid -->
+</div>

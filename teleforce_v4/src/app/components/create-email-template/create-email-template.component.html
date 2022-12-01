@@ -1,0 +1,67 @@
+<div mat-dialog-head class="dilog-head d-flex justify-content-between">
+    <h3 class="primary" *ngIf="addmode">Add Email</h3>
+    <h3 class="primary" *ngIf="editmode">Edit Email</h3>
+    <h3 class="primary" *ngIf="deletemode">Delete Email</h3>
+    <div class="d-inline-block">
+        <a class="close" (click)="openDialog()"><i class="fi-rr-cross-small"></i></a>
+    </div>
+</div>
+<div *ngIf="addmode || editmode">
+    <form [formGroup]="addForm" (ngSubmit)="submit()">
+        <div mat-dialog-content>
+            <div class="row mt-3">
+                <div class="col-sm-6" *ngIf="addmode || editmode">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Email title</mat-label>
+                        <div *ngIf="addmode || editmode">
+                            <input matInput placeholder="Email title" formControlName="email_title" required>
+                        </div>
+                        <mat-error *ngIf="addForm.controls.email_title.hasError('required')">
+                            Please Enter Email Title 
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-6" *ngIf="addmode || editmode">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Email Subject</mat-label>
+                        <div *ngIf="addmode || editmode">
+                            <input matInput placeholder="Email Subject" formControlName="email_subject" required>
+                        </div>
+                        <mat-error *ngIf="addForm.controls.email_subject.hasError('required')">
+                            Please Enter Email Subject
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12">
+                    <mat-form-field>
+                        <div *ngIf="addmode || editmode">
+                            <angular-editor class="mt-2" [placeholder]="'Type Your Email Message'" formControlName="email_description" [config]="config"></angular-editor> 
+                        </div>
+                        <mat-error *ngIf="addForm.controls.	email_description.hasError('required')">
+                            Please Enter Email Description
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="btn-sec" mat-dialog-actions>
+            <button mat-raised-button type="submit" color="primary" class="Update-btn">Save</button>
+            <!-- <button mat-raised-button type="submit" color="primary" class="Update-btn">Save</button>
+            &nbsp;
+            <button mat-raised-button type="button" class="Discard-btn" (click)="openDialog()">Cancel</button> -->
+        </div>
+    </form>
+</div>
+<div *ngIf="deletemode">
+    <h4>
+        Are you sure to delete this ?
+    </h4>
+    <div class="btn-sec">
+        <button mat-raised-button type="button" color="primary" class="Update-btn"
+            (click)="deleteData(adminid)">Delete</button>
+            &nbsp;
+        <button mat-raised-button type="button" class="Discard-btn" (click)="openDialog()">Cancel</button>
+    </div>
+</div>
+
+

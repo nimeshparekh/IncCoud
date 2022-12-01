@@ -1,0 +1,173 @@
+<div>
+    <div class="add-title">
+      <h2 class="primary">Create Campaign</h2>
+    </div>
+    <div>
+      <!-- <form [formGroup]="addConForm" (change)="formChanged()"> -->
+      <form [formGroup]="addConForm" (ngSubmit)="campaignsubmit()">
+        <mat-grid-list cols="2" [cols]="breakpoint" rowHeight="85px" (window:resize)="onResize($event)">
+          <mat-grid-tile>
+            <mat-form-field class="example-full-width">
+              <mat-label>Choose a date</mat-label>
+              <input matInput formControlName="startdate" [matDatepicker]="picker">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+              <mat-error *ngIf="addConForm.controls.startdate.hasError('required')">
+                Please select date
+              </mat-error>
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <mat-form-field class="example-full-width">
+              <mat-label>Campaign Name</mat-label>
+              <input matInput formControlName="campaignname" placeholder="Campaign Name" value="">
+              <mat-error *ngIf="addConForm.controls.campaignname.hasError('required')">
+                Please enter name
+              </mat-error>
+            </mat-form-field>
+          </mat-grid-tile>
+        </mat-grid-list>
+  
+        <mat-radio-group (change)="showaudiofile($event)" formControlName="campaigntype">
+          <div style="color:grey;">Campaign type</div>
+          <div class="row">
+            <div class="col-sm-6">
+              <mat-radio-button class="mb-2" color="primary" style="padding:4px 4px 0px 0px;" [value]="1">Lead assign to
+                Agent
+              </mat-radio-button>
+            </div>
+            <div class="col-sm-6" *ngIf="progressivedialer">
+              <mat-radio-button class="mb-2" color="primary" style="padding:4px 0px 0px 24px;" [value]="0">Outbound
+                Calling
+              </mat-radio-button>
+            </div>
+          </div>
+          <mat-error *ngIf="addConForm.controls.campaigntype.hasError('required')">
+            Please select type
+          </mat-error>
+        </mat-radio-group>
+  
+        <mat-radio-group (change)="showivr($event)" *ngIf="show" formControlName="campaignmethod">
+          <div style="color:grey;">Campaign Method</div>
+          <div class="row">
+            <div class="col-sm-6">
+              <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="0">Live Agent
+              </mat-radio-button>
+            </div>
+            <div class="col-sm-6">
+              <mat-radio-button color="primary" style="padding:4px 0px 0px 24px;" [value]="1">IVR
+              </mat-radio-button>
+            </div>
+          </div>
+        </mat-radio-group>
+  
+        <mat-grid-list cols="2" [cols]="breakpoint" rowHeight="85px" (window:resize)="onResize($event)">
+          <mat-grid-tile *ngIf="ivvr">
+            <mat-form-field class="example-full-width">
+              <mat-label>IVR List</mat-label>
+              <mat-select (selectionChange)="change5($event.value)" formControlName="ivr">
+                <mat-option *ngFor="let topping of ivr" [value]="topping.BuilderID">{{topping.IvrName}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-grid-tile>     
+          <mat-grid-tile *ngIf="dialershow">
+            <mat-form-field class="example-full-width mt-5">
+              <mat-label>Dialer Type</mat-label>
+              <mat-select  formControlName="dialertype">
+                <mat-option value="0">Progressive</mat-option>
+                <mat-option value="1">Predictive</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-grid-tile>   
+          <mat-grid-tile *ngIf="agentshow">
+            <mat-form-field class="example-full-width mt-5">
+              <mat-label>Agent Group</mat-label>
+              <mat-select (selectionChange)="change($event.value)" formControlName="agentgroup">
+                <mat-option *ngFor="let topping of agent" [value]="topping.GroupID">
+                  {{topping.GroupName}}({{topping.GroupDescription}})</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile *ngIf="agentshow">
+            <mat-form-field class="example-full-width mt-5">
+              <mat-label>Agent list</mat-label>
+              <mat-select (selectionChange)="change2($event.value)" multiple formControlName="agents">
+                <mat-option *ngFor="let topping of category" [value]="topping.account_id">{{topping.account_name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile>
+            <mat-form-field class="example-full-width">
+              <mat-label>Segements</mat-label>
+              <mat-select (selectionChange)="chang($event.value)" multiple formControlName="segments">
+                <mat-option *ngFor="let topping of csegments" [value]="topping.cont_id">{{topping.name}}
+                  ({{topping.totalcontact}})</mat-option>
+              </mat-select>
+              <mat-error *ngIf="addConForm.controls.segments.hasError('required')">
+                Please select segment
+              </mat-error>
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile *ngIf="show">
+            <mat-form-field class="example-full-width">
+              <mat-label>Assign DID</mat-label>
+              <mat-select (selectionChange)="change4($event.value)" multiple formControlName="did">
+                <mat-option *ngFor="let topping of did" [value]="topping.did">{{topping.did_number}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile *ngIf="ivvr">
+            <mat-form-field class="example-full-width">
+              <mat-label>Assign Channel</mat-label>
+              <input matInput formControlName="campaignchannel" placeholder="Assign Channel" value="">
+              <mat-error *ngIf="addConForm.controls.campaignname.hasError('required')">
+                Please enter channel
+              </mat-error>
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile *ngIf="ivvr">
+            <mat-form-field class="example-full-width">
+              <mat-label>Pulse</mat-label>
+              <input matInput formControlName="pulse" placeholder="pulse" value="">
+              <mat-error *ngIf="addConForm.controls.pulse.hasError('required')">
+                Please enter pulse
+              </mat-error>
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile *ngIf="ivvr">
+            <mat-form-field class="example-full-width">
+              <mat-label>Pulse Rate</mat-label>
+              <input matInput formControlName="pulserate" placeholder="pulserate">
+              <mat-error *ngIf="addConForm.controls.pulserate.hasError('required')">
+                Please enter pulse
+              </mat-error>
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile *ngIf="ivvr">
+            <mat-form-field class="example-full-width">
+              <mat-label>Select Manager</mat-label>
+              <mat-select   formControlName="manager">
+                <mat-option *ngFor="let man of manager" [value]="man.account_id">{{man.account_name}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-grid-tile>
+        </mat-grid-list>
+  
+        <br>
+        <div class="btn-sec">
+          <button mat-raised-button type="submit" color="primary" class="Update-btn">Save</button>&nbsp;
+          <button mat-raised-button type="button" class="Discard-btn" (click)="openDialog()">Cancel</button>
+        </div>
+      </form>
+    </div>
+    <div *ngIf="deletemode">
+      <h4>
+        Are you sure to delete <b>{{delagentname}}</b>?
+      </h4>
+      <div class="btn-sec">
+        <button mat-raised-button type="button" color="primary" class="Update-btn">Delete</button>
+        <button mat-raised-button type="button" class="Discard-btn" (click)="openDialog()">Cancel</button>
+      </div>
+    </div>
+  </div>

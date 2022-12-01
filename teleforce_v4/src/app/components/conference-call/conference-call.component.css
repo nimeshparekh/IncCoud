@@ -1,0 +1,100 @@
+
+
+.material-icons
+{
+    cursor: pointer;
+}
+table 
+{
+    width: 100%;
+    min-width: 700px;
+}
+
+
+/******************role 2 css*********************/
+
+.mycard
+{
+  border: initial!important;
+  background: #fff!important;
+  border-radius: .75rem!important;
+  box-shadow: 0 1px 15px rgb(0 0 0/4%),0 1px 6px rgb(0 0 0/4%)!important;
+}
+.mycard-body{
+  padding: 1.75rem!important;
+}
+
+.mycard-body {
+  flex: 1 1 auto;
+  min-height: 1px;
+  padding: 1.25rem;
+}
+.mycard-body .name-count p
+{
+  margin: 0px;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+.mycard-body .name-count label
+{
+    font-size: 30px;
+    margin-top: 4px;
+    color: #1ea4dd;
+    font-family: 'Nunito';
+    font-weight: 600;
+}
+.mycard-icon
+{
+  font-size: 30px !important;
+}
+
+[class^="flaticon-"]:before, [class*=" flaticon-"]:before, [class^="flaticon-"]:after, [class*=" flaticon-"]:after {
+  font-family: Flaticon;
+  font-size: 36px;
+  font-style: normal;
+  margin-left: 20px;
+}
+
+.mycard-info
+{
+    font-size: 10px;
+    line-height: 14px;
+    min-height: 30px;
+}
+
+.clr-87e0ab
+{
+    color: #87e0ab !important;
+}
+.clr-e0b087
+{
+    color: #e0b087 !important;
+}
+.clr-e090da
+{
+    color: #e090da !important;
+}
+.clr-8a98b7
+{
+    color: #8a98b7 !important;
+}
+.clr-3a9a80
+{
+    color: #3a9a80 !important;
+}
+.clr-fdb65e
+{
+    color: #fdb65e !important;
+}
+.clr-bb94a8
+{
+    color: #bb94a8 !important;
+}
+.clr-c75de2
+{
+    color: #c75de2 !important;
+}
+.clr-ff7b7b
+{
+    color: #ff7b7b !important;
+}

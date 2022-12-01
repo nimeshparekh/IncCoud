@@ -1,0 +1,82 @@
+<div>
+    <div class="add-title">
+        <h2 class="primary" *ngIf="addmode">Add GST</h2>
+        <h2 class="primary" *ngIf="editmode">Edit GST</h2>
+        <h2 class="primary" *ngIf="deletemode">Delete GST</h2>
+    </div>
+    <div *ngIf="addmode || editmode">
+        <form [formGroup]="addForm" (ngSubmit)="submit()">
+            <mat-grid-list [cols]="2" rowHeight="85px">
+                <mat-grid-tile>
+                    <div class="text-inside">
+                        <mat-form-field>
+                            <div *ngIf="addmode || editmode">
+                                <input matInput placeholder="GST Number" formControlName="GST_Number" required>
+                            </div>
+                       
+                            <mat-error *ngIf="addForm.controls.GST_Number.hasError('required')">
+                                Please Enter GST Number
+                            </mat-error>
+                            
+                        </mat-form-field>
+                    </div>
+                </mat-grid-tile>
+                
+
+                <mat-grid-tile *ngIf="addmode || editmode">
+                    <div class="text-inside">
+                        <mat-form-field>
+                            <input matInput placeholder="State" formControlName="State" required>
+                            <mat-error *ngIf="addForm.controls.State.hasError('required')">
+                                Please Enter State
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </mat-grid-tile>
+
+                <mat-grid-tile *ngIf="addmode || editmode">
+                    <div class="text-inside">
+                        <mat-form-field>
+                            <input matInput placeholder="State code" formControlName="State_code" required>
+                            <mat-error *ngIf="addForm.controls.State_code.hasError('required')">
+                                Please Enter State code
+                            </mat-error>
+                           
+                        </mat-form-field>
+                    </div>
+                </mat-grid-tile>
+                
+                <mat-grid-tile >
+                    <div class="text-inside">
+                        <mat-form-field>
+                            <textarea matInput placeholder="Company Address" formControlName="address" required></textarea>
+                            <mat-error *ngIf="addForm.controls.address.hasError('required')">
+                                Please Enter Company Address
+                            </mat-error>
+                           
+                        </mat-form-field>
+                    </div>
+                </mat-grid-tile>
+
+            </mat-grid-list>
+            <div class="btn-sec">
+                <button mat-raised-button type="submit" color="primary" class="Update-btn">Save</button>
+                &nbsp;
+                <button mat-raised-button type="button" class="Discard-btn" (click)="openDialog()">Cancel</button>
+            </div>
+
+        </form>
+    </div>
+
+    <div *ngIf="deletemode">
+        <h4>
+            Are you sure to delete this ?
+        </h4>
+        <div class="btn-sec">
+            <button mat-raised-button type="button" color="primary" class="Update-btn"
+                (click)="deleteData(adminid)">Delete</button>
+                &nbsp;
+            <button mat-raised-button type="button" class="Discard-btn" (click)="openDialog()">Cancel</button>
+        </div>
+    </div>
+</div>

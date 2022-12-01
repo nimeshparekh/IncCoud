@@ -1,0 +1,268 @@
+<div class="member-list">
+    <div class="card-body">
+        <div> <h1> Deleted Lead  List</h1></div>
+
+        <div>
+            <form [formGroup]="searchform" (ngSubmit)="searchData()" *ngIf="searchform">
+                <div class="row">
+                    <div class="col-12 col-md-4 col-lg-3 col-xl-2 col-sm-6 mt-2" *ngIf="UserData != 1">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Agent</mat-label>
+                            <mat-select   multiple  formControlName="agent" (selectionChange)="agentchange($event.value)">
+                                <mat-option value="">All</mat-option>
+                                <mat-option *ngFor="let agent of agentarr" value="{{agent.account_id}}">
+                                    {{agent.account_name | titlecase}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-12 col-md-4 col-lg-3 col-xl-2 col-sm-6 mt-2">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Status</mat-label>
+                            <mat-select  multiple formControlName="status" (selectionChange)="statuschange($event.value)">
+                                <mat-option value="">All</mat-option>
+                                <mat-option *ngFor="let status of status;let i =index" value="{{status.masterstatus}}">
+                                    {{status.statusdb}}</mat-option>
+                                
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-12 col-md-4 col-lg-3 col-xl-2 col-sm-6 mt-2">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Source</mat-label>
+                            <mat-select  multiple  formControlName="source" (selectionChange)="sourcechange($event.value)">
+                                <mat-option value="">All</mat-option>
+                                <mat-option *ngFor="let item of source" value="{{item.source}}">
+                                    {{item.source | titlecase}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-12 col-md-4 col-lg-3 col-xl-2 col-sm-6 mt-2">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Lead Name</mat-label>
+                            <input matInput placeholder="Name" formControlName="lead_name">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-12 col-md-4 col-lg-3 col-xl-2 col-sm-6 mt-2">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Mobile Number</mat-label>
+                            <input matInput placeholder="Mobile Number" formControlName="mobileno">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-12 col-md-4 col-lg-3 col-xl-2 col-sm-6 mt-2">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Ads Name</mat-label>
+                            <mat-select  multiple  formControlName="ads_name" (selectionChange)="adschange($event.value)">
+                                <mat-option value="">All</mat-option>
+                                <mat-option *ngFor="let ads of adslist" value="{{ads.ads_name}}">
+                                    {{ads.ads_name | titlecase}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-12 col-md-4 col-lg-3 col-xl-2 col-sm-6 mt-2">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Lead Tag</mat-label>
+                            <mat-select  multiple  formControlName="tag_id" (selectionChange)="tagchange($event.value)">
+                                <mat-option value="">All</mat-option>
+                                <mat-option *ngFor="let tag of taglist" value="{{tag.tag_id}}">
+                                    {{tag.tag_name | titlecase}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-12 col-md-4 col-lg-3 col-xl-2 col-sm-6 mt-2" *ngIf="managerid!=1790">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Start Date</mat-label>
+                            <input matInput placeholder="Start Date" [matDatepicker]="startpicker"
+                                formControlName="startdate">
+                            
+                            <mat-datepicker-toggle matSuffix [for]="startpicker"></mat-datepicker-toggle>
+                            <mat-datepicker #startpicker tpicker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-12 col-md-4 col-lg-3 col-xl-2 col-sm-6 mt-2" *ngIf="managerid!=1790">
+                        <mat-form-field appearance="outline">
+                            <mat-label>End Date</mat-label>
+                            <input matInput placeholder="End Date" [matDatepicker]="endpicker" formControlName="enddate">
+                        
+                            <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
+                            <mat-datepicker #endpicker tpicker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-12 col-md-4 col-lg-3 col-xl-2 col-sm-6 mt-2">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Modified Start Date</mat-label>
+                            <input matInput placeholder="Modified Start Date" [matDatepicker]="startpicker1" formControlName="modifiedstartdate">
+                            
+                            <mat-datepicker-toggle matSuffix [for]="startpicker1"></mat-datepicker-toggle>
+                            <mat-datepicker #startpicker1 tpicker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-12 col-md-4 col-lg-3 col-xl-2 col-sm-6 mt-2">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Modified End Date</mat-label>
+                            <input matInput placeholder="Modified End Date" [matDatepicker]="endpicker1" formControlName="modifiedenddate">
+                            
+                            <mat-datepicker-toggle matSuffix [for]="endpicker1"></mat-datepicker-toggle>
+                            <mat-datepicker #endpicker1 tpicker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    
+                    <div class="col-12 col-md-2 col-lg-3 col-xl-2 col-sm-2 mt-2">
+                        <button mat-raised-button type="submit" color="primary"
+                            class="Update-btn mt-2" [disabled]="isDisabled">Search</button>&nbsp;
+                        <button title="refresh" class="mt-2" (click)="resetform()" mat-mini-fab color="warn"
+                            aria-label="Example icon button with a plus one icon">
+                            <span class="material-icons">refresh</span>
+                        </button>                    
+                    </div>
+                
+                </div>
+            </form>
+        </div>
+        
+
+        <br><br>
+
+            <div class="table-view">
+                <div class="card-body">
+                    <!-- <button mat-raised-button color="primary" (click)="createExcel()" [disabled]="isDisabled2">CSV</button>&nbsp;
+                    <button mat-raised-button color="primary" (click)="createTimelineExcel()" [disabled]="isDisabled1">Export Timeline</button>&nbsp;
+                   
+                    -->
+                    <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+
+                    <div class="table-responsive mt-2">
+                        <table mat-table [dataSource]="dataSource">
+
+                            <!--- Note that these columns can be defined in any order.
+                                    The actual rendered columns are set as a property on the row definition" -->
+
+                            <!-- position Column -->
+                            <!-- position Column -->
+                           
+
+                            <ng-container matColumnDef="position" >
+                                <th mat-header-cell *matHeaderCellDef> Sr No .</th>
+                                <td mat-cell *matCellDef="let element;let i = index;">
+                                    {{i+1+(paginator.pageIndex * paginator.pageSize)}}</td>
+                            </ng-container>
+
+                            <!--<ng-container matColumnDef="position">
+                                <mat-header-cell *matHeaderCellDef>Check</mat-header-cell>
+                                <mat-cell *matCellDef="let element"> 
+                                <mat-checkbox [(ngModel)]="element.checked"></mat-checkbox>
+                                </mat-cell>
+                            </ng-container>-->
+
+                            <ng-container matColumnDef="creation" >
+                                <th mat-header-cell *matHeaderCellDef ><p *ngIf="showcreatedate">Date</p>  </th>
+                                <td mat-cell *matCellDef="let element;let i = index;" class="ellipsis" > <p *ngIf="showcreatedate">{{element.creation | date : 'medium'}}</p> </td>
+                            </ng-container>
+
+                            <!-- username Column -->
+                            <ng-container matColumnDef="modifiedate">
+                                <th mat-header-cell *matHeaderCellDef> Modified Date </th>
+                                <td mat-cell *matCellDef="let element;let i = index;" class="ellipsis">
+                                    <span class="tbl-post-text ellipsis">{{element.modified | date:'medium'}}</span>
+                                </td>
+                            </ng-container>
+
+
+                            <!-- name Column -->
+                            <ng-container matColumnDef="agent">
+                                <th mat-header-cell *matHeaderCellDef> Agent </th>
+                                <td mat-cell *matCellDef="let element;let i = index;" class="ellipsis"> {{element.agent}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="lead_name">
+                                <th mat-header-cell *matHeaderCellDef> Lead Name </th>
+                                <td mat-cell *matCellDef="let element;let i = index;" class="ellipsis"> {{element.lead_name}} </td>
+                            </ng-container>
+
+
+                            <!-- <ng-container matColumnDef="lead_owner">
+                                <th mat-header-cell *matHeaderCellDef> Lead Owner </th>
+                                <td mat-cell *matCellDef="let element;let i = index;"> {{element.lead_owner}} </td>
+                            </ng-container> -->
+
+                            <!-- number Column -->
+                            <ng-container matColumnDef="mobile_no">
+                                <th mat-header-cell *matHeaderCellDef> Mobile </th>
+                                <td mat-cell *matCellDef="let element;let i = index;" class="ellipsis">
+                                    <span class="tbl-post-text ellipsis">{{element.mobileno}}</span>
+                                </td>
+                            </ng-container>
+
+                            <!-- <ng-container matColumnDef="title">
+                                <th mat-header-cell *matHeaderCellDef> Title </th>
+                                <td mat-cell *matCellDef="let element;let i = index;">
+                                    <span class="tbl-post-text">{{element.title}}</span>
+                                </td>
+                            </ng-container> -->
+
+                            <!-- email Column -->
+                            <ng-container matColumnDef="email_id">
+                                <th mat-header-cell *matHeaderCellDef> Email </th>
+                                <td mat-cell *matCellDef="let element;let i = index;" class="ellipsis" >
+                                    <span class="tbl-post-text ellipsis"  *ngIf="UserData==2">{{element.email_id}}</span>
+                                    <span class="tbl-post-text ellipsis" *ngIf="UserData==1&&element.show_no_id==0">{{element.email_id}}</span>
+                                    <span class="tbl-post-text ellipsis" *ngIf="UserData==1&&element.show_no_id==1">-</span>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="source">
+                                <th mat-header-cell *matHeaderCellDef> Source </th>
+                                <td mat-cell *matCellDef="let element;let i = index;" class="ellipsis">
+                                    <span class="tbl-post-text ellipsis">{{element.source}}</span>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="adname">
+                                <th mat-header-cell *matHeaderCellDef> Ads Name</th>
+                                <td mat-cell *matCellDef="let element;let i = index;" class="ellipsis">
+                                    <span class="tbl-post-text ellipsis">{{element.ads_name}}</span>
+                                </td>
+                            </ng-container>
+
+                            <!-- username Column -->
+                            <ng-container matColumnDef="status">
+                                <th mat-header-cell *matHeaderCellDef> Status </th>
+                                <td mat-cell *matCellDef="let element;let i = index;" class="ellipsis">
+                                    <span class="tbl-post-text ellipsis">{{element.newstatus}}</span>
+                                </td>
+                            </ng-container>
+                            
+                            <!-- action Column -->
+                            <ng-container matColumnDef="action">
+                                <th mat-header-cell *matHeaderCellDef> Action </th>
+                                <td mat-cell *matCellDef="let element;let i = index">
+                                    <button (click)="leaddetailpage(element.l_id)" title="Edit" mat-icon-button color="primary"
+                                        aria-label="View">
+                                        <i class="fa fa-eye"></i>
+                                    </button>
+                                    
+                                    <button (click)="deleteRequest(element.l_id)" title="restore" mat-icon-button color="primary" 
+                                    aria-label="View">
+                                    <mat-icon>restore</mat-icon>
+                                </button>
+                                  
+                                </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                        </table>
+                    </div>
+                    <!-- paginator -->
+                    <mat-paginator #paginator [length]="Length" [pageSizeOptions]="[50, 100, 200]" showFirstLastButtons></mat-paginator>
+                </div>
+                
+            </div>
+        </div>
+</div>

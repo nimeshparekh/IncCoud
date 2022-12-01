@@ -1,0 +1,35 @@
+<div mat-dialog-head class="dilog-head d-flex justify-content-between">
+    <h3 class="primary">Call History</h3>
+    <div class="d-inline-block">
+        <a class="close" (click)="closeDialog()"><i class="fi-rr-cross-small"></i></a>
+    </div>
+</div>
+<div mat-dialog-content class="mt-2">
+    <div class="History-inner position-relative" *ngFor="let call of callhistorylist | keyvalue">
+        <div class="maindate">
+            {{call.key}}
+        </div>
+        <ul class="timeLineHistDataList">
+            <li class="d-flex" *ngFor="let item of call.value;">
+                <span class="timeLineHistTime ">
+                    {{item.CallStartTime | date:"hh:mm:ss a"}}
+                </span>
+                <p class="timeLineHistdataline">Call added -
+                    <span class="timeLineHistInfo">
+                        <span *ngIf="item.CallType=='incoming' && item.CallTalkTime==0">Missed</span>
+                        <span *ngIf="item.CallType=='incoming' && item.CallTalkTime>0">Incoming</span>
+                        <span *ngIf="item.CallType=='outgoing'">Outgoing</span> 
+                        <span *ngIf="item.CallType=='dialer'">Dialer</span>  
+                        call <span *ngIf="item.CallType=='incoming'">from</span> <span *ngIf="item.CallType!='incoming'">to</span> {{item.CallerName}} ({{item.CallerNumber}})
+                </span>
+                <br>
+                    Call Duration : {{item.CallDuration}} second
+                <br>
+                    Call Result : {{item.feedback}} &nbsp;&nbsp;&nbsp;
+                    Call Description : {{item.note}}
+                <br>
+                    by {{item.AgentName}} {{item.CallStartTime | date:"dd-MM-yyyy"}}</p>
+            </li>
+        </ul>
+    </div>
+</div>

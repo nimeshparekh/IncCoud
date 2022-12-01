@@ -1,0 +1,45 @@
+<div mat-dialog-head class="dilog-head d-flex justify-content-between">
+    <h3 class="primary">Send SMS</h3>
+    <div class="d-inline-block">
+        <a class="close" (click)="onNoClick1()"><i class="fi-rr-cross-small"></i></a>
+    </div>
+</div>
+<form [formGroup]="smsForm" (ngSubmit)="send()">
+    <div mat-dialog-content>
+        <div class="row">
+            <div class="col-sm-6 mt-2">
+                <mat-form-field appearance="outline">
+                    <mat-label>Select Template</mat-label>
+                    <mat-select   formControlName="smstemp" (ngModelChange)="getsmsDetail($event)">
+                        <mat-option *ngFor="let sms of smslist" [value]="sms.sms_id">{{sms.sms_title}}</mat-option>
+                    </mat-select>
+                    <!-- <mat-select>
+                      <mat-option>None</mat-option>
+                      <mat-option value="option1">Option 1</mat-option>
+                      <mat-option value="option2">Option 2</mat-option>
+                      <mat-option value="option3">Option 3</mat-option>
+                    </mat-select> -->
+                </mat-form-field>
+            </div>
+            <div class="col-sm-6 mt-2">
+                <mat-form-field appearance="outline">
+                    <mat-label>Sms text</mat-label>
+                    <textarea matInput placeholder="Sms Text" formControlName="message" rows="6" cols="100"
+                        matTextareaAutosize required readonly=""></textarea>
+                    <mat-error *ngIf="smsForm.controls.message.hasError('required')">
+                        Please enter text
+                    </mat-error>
+                </mat-form-field>
+                <!--<p >Please replace above text shortcode to your data!!</p>-->
+            </div>
+            
+        </div>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-raised-button type="submit" color="primary" class="Update-btn" [disabled]="isDisabled">Send</button>
+    </div>
+</form>
+
+
+
+

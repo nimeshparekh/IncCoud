@@ -1,0 +1,83 @@
+<div mat-dialog-head class="dilog-head d-flex justify-content-between">
+    <h3 class="primary">Telesms Request feedback</h3>
+    <div class="d-inline-block">
+        <a class="close" (click)="openDialog()"><i class="fi-rr-cross-small"></i></a>
+    </div>
+  </div>
+  <div mat-dialog-content>
+    <form [formGroup]="feedbackform">
+      <div class="row mt-2">
+        <div class="col-12 col-md-6 col-lg-6 col-xl-6 col-sm-6">
+          <mat-form-field appearance="outline">
+            <mat-label>Feedback</mat-label>
+            <textarea rows="1" placeholder="Feedback" matInput formControlName="feedback"></textarea>
+          </mat-form-field>&nbsp;
+        </div>
+        <!-- <div class="col-12 col-md-6 col-lg-6 col-xl-6 col-sm-6">
+          <mat-form-field appearance="outline">
+            <mat-label>Status</mat-label>                           
+            <mat-select formControlName="feedback" (ngModelChange)="showSchedule($event)">
+            <mat-select formControlName="status" (ngModelChange)="showSchedule($event)">
+                <mat-option value="created">Created</mat-option>
+                <mat-option value="not answer">Not Answer</mat-option>
+                <mat-option value="answer">Answer</mat-option>
+                <mat-option value="not interested">Not Interested</mat-option>
+                <mat-option value="proposal">Proposal</mat-option>
+                <mat-option value="demo">Demo</mat-option>
+                <mat-option value="sale close">Sale Closed</mat-option>
+            </mat-select>                
+          </mat-form-field>&nbsp;
+        </div> -->
+        <div class="col-12 col-md-4 col-lg-3 col-xl-3 col-sm-6">
+          <button mat-flat-button color="primary" (click)="submit()" class="mt-2" >Save</button>
+        </div>
+      </div>
+    </form>  
+    <div class="card mb-4">
+  
+      <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+        
+      <div class="card-body">
+        
+        <div class="table-responsive">
+      
+          <table mat-table [dataSource]="dataSource" matSort>
+                      
+            <!-- Position Column -->
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef> Sr. No. </th>
+                <td mat-cell *matCellDef="let row;let i = index;" data-label="id">
+                  {{i+1+(paginator.pageIndex * paginator.pageSize)}}
+                </td>
+            </ng-container>
+        
+            <!-- date Column -->
+            <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef  mat-sort-header>Date</th>
+                <td mat-cell *matCellDef="let row">
+                  {{row.date |date: 'dd-MM-yyyy H:mm:s'}}
+                </td>
+            </ng-container>
+        
+            <!-- feedback Column -->
+            <ng-container matColumnDef="feedback">
+                <th mat-header-cell *matHeaderCellDef> Feedback </th>
+                <td mat-cell *matCellDef="let row"> 
+                  {{row.feedback}}
+                </td>
+            </ng-container>
+  
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  
+          </table>
+  
+        </div>
+  
+        <mat-paginator #paginator [length]="Length" [pageSize]="50" [pageSizeOptions]="[50,100,500]"></mat-paginator>
+  
+      </div>
+    </div>
+  </div>
+  
+  

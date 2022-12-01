@@ -1,0 +1,67 @@
+<div class="col-xs-12 col-lg-10 col-md-9 col-sm-8 col-8 p-0">
+    <div class="">
+        <div class="card-body">
+            <div class="my">
+                <div class="table-responsive">
+                    <table mat-table [dataSource]="dataSource">
+
+                        <!--- Note that these columns can be defined in any order.
+                            The actual rendered columns are set as a property on the row definition" -->
+                    
+                        <!-- published-on Column -->
+                        <ng-container matColumnDef="no">
+                            <th mat-header-cell *matHeaderCellDef> Sr No .</th>
+                            <td mat-cell *matCellDef="let element;let i = index;">{{i+1}}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="campaign_status">
+                            <th mat-header-cell *matHeaderCellDef> Campaign Status </th>
+                            <td mat-cell *matCellDef="let element;let i = index"> 
+                                <section class="example-section">
+                                    <mat-slide-toggle class="example-margin" (change)="onChange($event,element)" [checked]="element.campaign_status=='ACTIVE'"></mat-slide-toggle>
+                                  </section>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="campaign_name">
+                            <th mat-header-cell *matHeaderCellDef> Camapign Name </th>
+                            <td mat-cell (click)='nextAdset(i)' *matCellDef="let element;let i = index"> {{element.campaign_name}} </td>
+                        </ng-container>
+                    
+                        <!-- post-content Column -->
+                        <ng-container matColumnDef="campaign_objective">
+                            <th mat-header-cell *matHeaderCellDef> Campaign Typed </th>
+                            <td mat-cell *matCellDef="let element"> 
+                                <span class="tbl-post-text">{{element.campaign_objective}}</span>
+                            </td>
+                        </ng-container>
+
+
+                        <ng-container matColumnDef="campaign_budget">
+                            <th mat-header-cell *matHeaderCellDef> Campaign Budget </th>
+                            <td mat-cell *matCellDef="let element"> 
+                                <span class="tbl-post-text">{{element.campaign_budget/100}}</span>
+                            </td>
+                        </ng-container>
+                    
+                        <!-- action Column -->
+                        <ng-container matColumnDef="action">
+                            <th mat-header-cell *matHeaderCellDef> Action </th>
+                            <td mat-cell *matCellDef="let element;let i = index"> 
+                                <a class="pencil" (click)='loadSavedPost(i)'><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                &nbsp;&nbsp;
+                                <span class="action" (click)="openDialog(i)"><i class="fi-rr-stats"></i></span>
+                                <!-- <a class="pencil" (click)='nextAdset(i)'><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                &nbsp;&nbsp; -->
+                            </td>
+                        </ng-container>
+                        
+                    
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>  
+</div>

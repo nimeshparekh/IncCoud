@@ -1,0 +1,91 @@
+<div class="warap-height pt-2">
+    <div class="container-fluid mb-3">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="card mt-3">
+                    <div class="card-ana-head">
+                        <div>
+                            <p class="">Daily Meeting Report</p>
+                        </div>
+                    </div>
+                    <div class="card-ana-body">
+                        <div style="display: block">
+                            <canvas baseChart [chartType]="chartType" [datasets]="chartDatasets" [labels]="chartLabels"
+                                [colors]="chartColors" [options]="chartOptions" [legend]="true"
+                                (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
+                            </canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="card mt-3">
+                    <div class="card-ana-head">
+                        <div>
+                            <p class="">Daily Meeting Attendance Report</p>
+                        </div>
+                    </div>
+                    <div class="card-ana-body">
+                        <div style="display: block">
+                            <canvas baseChart [chartType]="chartTypeA" [datasets]="chartDatasetsA" [labels]="chartLabelsA"
+                                [colors]="chartColorsA" [options]="chartOptionsA" [legend]="true"
+                                (chartHover)="chartHoveredA($event)" (chartClick)="chartClickedA($event)">
+                            </canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="card mt-3">
+                    <div class="card-ana-head">
+                        <div>
+                            <p class="">Daily Webinar Attendance Report</p>
+                        </div>
+                    </div>
+                    <div class="card-ana-body">
+                        <div style="display: block">
+                            <canvas baseChart [chartType]="chartTypeB" [datasets]="chartDatasetsB" [labels]="chartLabelsB"
+                                [colors]="chartColorsB" [options]="chartOptionsB" [legend]="true"
+                                (chartHover)="chartHoveredB($event)" (chartClick)="chartClickedB($event)">
+                            </canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="card mt-3">
+                    <div class="card-ana-head">
+                        <div>
+                            <p class="">Invite VS Attendance</p>
+                        </div>
+                    </div>
+                    <div class="card-ana-body">
+                        <div style="display: block">
+                            <canvas baseChart [chartType]="chartTypeC" [datasets]="chartDatasetsC" [labels]="chartLabelsC"
+                                [colors]="chartColorsC" [options]="chartOptionsC" [legend]="true"
+                                (chartHover)="chartHoveredC($event)" (chartClick)="chartClickedC($event)">
+                            </canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="card mt-3">
+                    <div class="card-ana-head">
+                        <div>
+                            <p class="">Agent Engagement Report</p>
+                        </div>
+                    </div>
+                    <div class="card-ana-body">
+                        <div style="display: block">
+                            <canvas baseChart [chartType]="chartTypeD" [datasets]="chartDatasetsD" [labels]="chartLabelsD"
+                                [colors]="chartColorsD" [options]="chartOptionsD" [legend]="true"
+                                (chartHover)="chartHoveredD($event)" (chartClick)="chartClickedD($event)">
+                            </canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

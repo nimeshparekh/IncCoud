@@ -1,0 +1,110 @@
+<div class="warap-height pt-4">
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+        <!-- Page Heading -->
+        <h1 class="h3 mb-2 text-gray-800">
+            <button routerLink="/settings" mat-icon-button title="Back" color="accent"
+                aria-label="Example icon button with a menu icon">
+                <mat-icon>keyboard_backspace</mat-icon>
+            </button>
+            Calender Configuration
+        </h1>
+        <p class="mb-4"></p>
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <div class="card-body">
+                <form [formGroup]="addForm" (ngSubmit)="submit()">
+                    <p>Communication Settings</p>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <mat-form-field appearance="outline" class="example-full-width">
+                                <mat-label>Auto Email</mat-label>
+                                <mat-select formControlName="autoemail" (selectionChange)="checkautoemail($event)">
+                                    <mat-option value="no">No</mat-option>
+                                    <mat-option value="yes">Yes</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-3" *ngIf="isautoemail">
+                            <mat-form-field appearance="outline" class="example-full-width">
+                                <mat-label>Scheduled Email Template</mat-label>
+                                <mat-select formControlName="scheduledemailtemplate">
+                                    <mat-option *ngFor="let email of emailtemplate" [value]="email.email_id">
+                                        {{email.email_title}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-3" *ngIf="isautoemail">
+                            <mat-form-field appearance="outline" class="example-full-width">
+                                <mat-label>Link Share Email Template</mat-label>
+                                <mat-select formControlName="linkshareemailtemplate">
+                                    <mat-option *ngFor="let email of emailtemplate" [value]="email.email_id">
+                                        {{email.email_title}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <mat-form-field appearance="outline" class="example-full-width">
+                                <mat-label>Auto SMS</mat-label>
+                                <mat-select formControlName="autosms" (selectionChange)="checkautosms($event)">
+                                    <mat-option value="no">No</mat-option>
+                                    <mat-option value="yes">Yes</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-sm-3" *ngIf="isautosms">
+                            <mat-form-field appearance="outline" class="example-full-width">
+                                <mat-label>Schedule SMS Campaign</mat-label>
+                                <mat-select formControlName="smscampaignid">
+                                    <mat-option *ngFor="let sms of smscampaign" [value]="sms.cid">
+                                        {{sms.cam_name}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-sm-3" *ngIf="isautosms">
+                            <mat-form-field appearance="outline" class="example-full-width">
+                                <mat-label>Share Link SMS Campaign</mat-label>
+                                <mat-select formControlName="sharelinksmscampaignid">
+                                    <mat-option *ngFor="let sms of smscampaign" [value]="sms.cid">
+                                        {{sms.cam_name}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <mat-form-field appearance="outline" class="example-full-width">
+                                <mat-label>Start Time</mat-label>
+                                <input matInput placeholder="Start Time" type="time" formControlName="autostarttime">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <mat-form-field appearance="outline" class="example-full-width">
+                                <mat-label>End Time</mat-label>
+                                <input matInput placeholder="End Time" type="time" formControlName="autoendtime">
+                            </mat-form-field>
+                        </div>
+
+                    </div>
+
+                    <br>
+                    <div class="btn-sec">
+                        <button mat-raised-button type="submit" color="primary" class="Update-btn">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <!-- /.container-fluid -->
+</div>

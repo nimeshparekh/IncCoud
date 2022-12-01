@@ -1,0 +1,99 @@
+.brand-head
+{
+    vertical-align: middle;
+    background: #fff;
+    padding: 8px 1px 8px 0;
+}
+.brand-head-text
+{
+    margin: 0px;
+    font-family: 'Raleway-Regular';
+    font-weight: bold;
+    font-size: 16px;
+    color: #505050;
+    padding: 6px 0;
+}
+.btn-icon
+{
+    margin-right: 2px;
+    line-height: 15px;
+    font-size: 14px;
+}
+.table-view
+{
+    border: 1px solid #e8e8e8 !important;
+    overflow: hidden !important;
+    border-radius: .75rem!important;
+    box-shadow: 0 1px 15px rgb(0 0 0/4%),0 1px 6px rgb(0 0 0/4%)!important;
+}
+table
+{
+    width: 100%;
+    min-width: 1000px;
+}
+.upload input[type="file"]
+{
+    display: none;
+}
+.local-upload
+{
+    padding: 11px 22px 10px 22px;
+    background: #ffffff;
+    border-radius: 6px;
+    color: #868686;
+    margin-top: 10px;
+    margin: 5px 0 5px 0;
+    cursor: pointer;
+    font-size: 12px;
+    text-align: center;
+    border: 1px solid #e0e0e0;
+    width: 100%;
+}
+.mat-form-field {
+    display: inline-block;
+    position: relative;
+    text-align: left;
+    width: 100%;
+}
+
+.table-thumnail
+{
+    position: relative;
+}
+.table-thum-channel-img
+{
+    width: 36px;
+    height: 36px;
+    text-align: center;
+    border-radius: 50px;
+    line-height: 36px;
+    border:1px solid #ccc;
+}
+.table-channel-name
+{
+    margin-left: 8px;
+    line-height: 36px;
+    font-size: 14px;
+    font-weight: 500;
+}
+.tablesocial-img
+{
+    position: absolute;
+    width: 20px;
+    bottom: -4px;
+    right: -4px;
+}
+.card
+{
+    border-radius: 6px;
+    border: 1px solid #e8e8e8;
+    overflow: hidden;
+    border-radius: .75rem!important;
+    box-shadow: 0 1px 15px rgb(0 0 0/4%),0 1px 6px rgb(0 0 0/4%)!important;
+}
+
+.note
+{
+    padding: 5px;
+    background-color: bisque;
+}

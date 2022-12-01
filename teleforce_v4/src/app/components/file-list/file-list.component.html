@@ -1,0 +1,79 @@
+<div mat-dialog-head class="dilog-head d-flex justify-content-between pb-3">
+  <div>
+    <button mat-raised-button>Completed File : {{complete}}</button>
+    <button mat-raised-button class="ml-2">Pending File : {{pending}}</button>
+  </div>
+  <div class="d-inline-block">
+      <a class="close" (click)="openDialog()"><i class="fi-rr-cross-small"></i></a>
+  </div>
+</div>
+<div mat-dialog-content>
+
+  <!---- Table history ---->
+  <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+
+  <div class="table-responsive mt-2">
+          
+    <table mat-table [dataSource]="contactdataSource" matSort class="mat-elevation-z8">
+                
+      <!-- Position Column -->
+      <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> Sr. No. </th>
+          <td mat-cell *matCellDef="let row;let i = index;" data-label="id">
+            {{i+1+(contactpaginator.pageIndex * contactpaginator.pageSize)}}
+          </td>
+      </ng-container>
+    <!--created_date-->
+    <ng-container matColumnDef="created_date">
+      <th mat-header-cell *matHeaderCellDef  mat-sort-header> Date  </th>
+      <td mat-cell *matCellDef="let row">
+        {{row.upload_date | date: 'dd-MM-yyyy H:mm:s'}}
+      </td>
+  </ng-container>
+      <!--  File Name Column -->
+      <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef > File Name  </th>
+          <td mat-cell *matCellDef="let row">
+            {{row.file_name}}
+          </td>
+      </ng-container>
+
+      <!--  status Column -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef > Status  </th>
+        <td mat-cell *matCellDef="let row">
+          {{row.status==0?'Pending':'' || row.file_status==0?'Pending':''}}{{row.status==1?'Running':'' || row.file_status==1?'Running':''}}{{row.status==2?'Completed':'' || row.file_status==2?'Completed':''}}
+        </td>
+      </ng-container>
+
+      <!--  note Column -->
+      <ng-container matColumnDef="note">
+        <th mat-header-cell *matHeaderCellDef  mat-sort-header> Note  </th>
+        <td mat-cell *matCellDef="let row">
+          {{row.note}}
+        </td>
+      </ng-container>
+
+      <!-- Action Column -->
+      <!-- <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef> Action </th>
+          <td mat-cell  *matCellDef="let row;let i = index;">         
+            <button (click)="updateagentdialog(row.cont_id)"  title="Edit" mat-icon-button color="primary" aria-label="Example icon button with a home icon">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="deleteagentdialog(row.cont_id)" title="Delete" aria-label="Example icon button with a heart icon">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+      </ng-container> -->
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+  </div>
+
+  <mat-paginator #contactpaginator [length]="contactLength" [pageSize]="5" [pageSizeOptions]="[5,10,50]">
+  </mat-paginator>
+
+</div>

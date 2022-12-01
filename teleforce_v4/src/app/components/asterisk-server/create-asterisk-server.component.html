@@ -1,0 +1,162 @@
+<div>
+  <div class="add-title">
+    <h2 class="primary" *ngIf="addmode">Add Asterisk Server</h2>
+    <h2 class="primary" *ngIf="editmode">Edit Asterisk Server</h2>
+    <h2 class="primary" *ngIf="deletemode">Delete Asterisk Server</h2>
+  </div>
+  <div *ngIf="addmode || editmode">
+    <form [formGroup]="addForm" (ngSubmit)="submit()">
+
+      <div class="row">
+        <div class="col-sm-6">
+          <mat-form-field class="example-full-width">
+            <div *ngIf="addmode || editmode">
+              <input matInput placeholder="Server Name" formControlName="server_name" required>
+            </div>
+            <mat-error *ngIf="addForm.controls.server_name.hasError('required')">
+              Please Enter Server Name
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field class="example-full-width">
+            <div *ngIf="addmode || editmode">
+              <input matInput placeholder="Server IP" formControlName="server_ip" required>
+            </div>
+            <mat-error *ngIf="addForm.controls.server_ip.hasError('required')">
+              Please Enter Server IP
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field class="example-full-width">
+            <div *ngIf="addmode || editmode">
+              <input matInput placeholder="Server Username" formControlName="server_username" required>
+            </div>
+            <mat-error *ngIf="addForm.controls.server_username.hasError('required')">
+              Please Enter Server Username
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field class="example-full-width">
+            <div *ngIf="addmode || editmode">
+              <input matInput placeholder="Server Password" formControlName="server_password" required>
+            </div>
+            <mat-error *ngIf="addForm.controls.server_password.hasError('required')">
+              Please Enter Server Password
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field class="example-full-width">
+            <div *ngIf="addmode || editmode">
+              <input matInput placeholder="Mysql Username" formControlName="mysql_username" required>
+            </div>
+            <mat-error *ngIf="addForm.controls.mysql_username.hasError('required')">
+              Please Enter Mysql Username
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field class="example-full-width">
+            <div *ngIf="addmode || editmode">
+              <input matInput placeholder="Mysql Password" formControlName="mysql_password" required>
+            </div>
+            <mat-error *ngIf="addForm.controls.mysql_password.hasError('required')">
+              Please Enter Mysql Password
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field class="example-full-width">
+            <div *ngIf="addmode || editmode">
+              <input type = "text" matInput placeholder="Database Name" formControlName="database_name" required>
+            </div>
+            <mat-error *ngIf="addForm.controls.database_name.hasError('required')">
+              Please Enter Datbase Name
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field class="example-full-width">
+            <div *ngIf="addmode || editmode">
+              <input type = "text" matInput placeholder="Mysql Host" formControlName="mysql_host" required>
+            </div>
+            <mat-error *ngIf="addForm.controls.mysql_host.hasError('required')">
+              Please Enter Mysql Host
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field class="example-full-width">
+            <div *ngIf="addmode || editmode">
+              <input type = "text" matInput placeholder="SIP Host" formControlName="sip_host" required>
+            </div>
+            <mat-error *ngIf="addForm.controls.sip_host.hasError('required')">
+              Please Enter SIP Host
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field class="example-full-width">
+            <div *ngIf="addmode || editmode">
+              <input type = "text" matInput placeholder="ARI URL" formControlName="ari_url" required>
+            </div>
+            <mat-error *ngIf="addForm.controls.ari_url.hasError('required')">
+              Please Enter ARI URL
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field class="example-full-width">
+            <div *ngIf="addmode || editmode">
+              <input type = "text" matInput placeholder="ARI Username" formControlName="ari_username" required>
+            </div>
+            <mat-error *ngIf="addForm.controls.ari_username.hasError('required')">
+              Please Enter ARI Username
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field class="example-full-width">
+            <div *ngIf="addmode || editmode">
+              <input type = "text" matInput placeholder="ARI Password" formControlName="ari_password" required>
+            </div>
+            <mat-error *ngIf="addForm.controls.ari_password.hasError('required')">
+              Please Enter ARI Password
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field class="example-full-width">
+            <div *ngIf="addmode || editmode">
+              <input type = "text" matInput placeholder="Live Domain" formControlName="live_domain">
+            </div>
+            <mat-error *ngIf="addForm.controls.live_domain.hasError('required')">
+              Please Enter Live Domain
+            </mat-error>
+          </mat-form-field>
+        </div>
+</div>
+      <div class="btn-sec mt-3">
+        <button mat-raised-button type="submit" color="primary" class="Update-btn">Save</button>
+        &nbsp;
+        <button mat-raised-button type="button" class="Discard-btn" (click)="openDialog()">Cancel</button>
+      </div>
+
+    </form>
+  </div>
+
+  <div *ngIf="deletemode">
+    <h4>
+      Are you sure to delete this ?
+    </h4>
+    <div class="btn-sec">
+      <button mat-raised-button type="button" color="primary" class="Update-btn"
+        (click)="deleteData(serverid)">Delete</button>
+      &nbsp;
+      <button mat-raised-button type="button" class="Discard-btn" (click)="openDialog()">Cancel</button>
+    </div>
+  </div>
+</div>

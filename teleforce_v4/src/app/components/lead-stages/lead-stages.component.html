@@ -1,0 +1,85 @@
+<div class="warap-height pt-4">
+  <!-- Begin Page Content -->
+  <div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">
+      <button routerLink="/settings" mat-icon-button title="Back" color="accent"
+        aria-label="Example icon button with a menu icon">
+        <mat-icon>keyboard_backspace</mat-icon>
+      </button>
+      Lead Stage
+    </h1>
+
+    <!---- Table history ---->
+    <div class="card shadow mb-4 mt-3">
+
+      <!--Progress Bar-->
+      <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+
+      <div class="card-body">
+
+        <!--Add Segment Btn-->
+        <button mat-raised-button color="primary" (click)="createcontactdialog()" title="Add">Add Lead Stage</button>&nbsp;&nbsp;
+        <button mat-raised-button color="primary" (click)="createleadstatus()" title="Add Lead Stage Statu">Add Lead Status</button>
+
+        <div class="table-responsive mt-2">
+
+          <table mat-table [dataSource]="contactdataSource" matSort class="mat-elevation-z8">
+
+            <!-- Position Column -->
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef> Sr. No. </th>
+              <td mat-cell *matCellDef="let row;let i = index;" data-label="id">
+                {{i+1+(contactpaginator.pageIndex * contactpaginator.pageSize)}}
+              </td>
+            </ng-container>
+
+
+
+            <!--  Name Column -->
+            <ng-container matColumnDef="stage_name">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+              <td mat-cell *matCellDef="let row">
+                {{row.stage_name}}
+              </td>
+            </ng-container>
+
+            <!-- Action Column -->
+            <ng-container matColumnDef="action">
+              <th mat-header-cell *matHeaderCellDef> Action </th>
+              <td mat-cell *matCellDef="let row">
+                <button (click)="updateagentdialog(row.s_id)" title="Edit" mat-icon-button color="primary"
+                  aria-label="Example icon button with a home icon">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button (click)="deleteData(row.s_id)" title="Delete" mat-icon-button color="warn"
+                  aria-label="Example icon button with a home icon">
+                  <mat-icon>delete</mat-icon>
+                </button>
+                <button (click)="createstatusdialog(row.s_id)" title="Add" mat-icon-button color="accent"
+                  aria-label="Example icon button with a plus one icon">
+                  <mat-icon>plus_one</mat-icon>
+                </button>
+                <button (click)="createupdatedialog(row.s_id)" mat-icon-button color="primary" title="Add"
+                  aria-label="Example icon button with a menu icon">
+                  <mat-icon>menu</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+
+        </div>
+
+        <!--Paginator-->
+        <mat-paginator #contactpaginator [length]="contactLength" [pageSize]="50" [pageSizeOptions]="[50,100,500]">
+        </mat-paginator>
+
+      </div>
+    </div>
+  </div>
+  <!-- /.container-fluid -->
+</div>

@@ -1,0 +1,315 @@
+<div class="warap-height pt-4">    
+  <!-- Begin Page Content -->
+  <div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-3 text-gray-800">DID List</h1>
+
+    <button mat-raised-button color="accent" (click)="Createdialog()" title="Add">Add DID</button>
+    <!-- DataTales Example -->
+    <div class="card mb-4 mt-3">
+        
+      <mat-tab-group>
+        <mat-tab label="Used DID">
+          <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-6 col-lg-6">
+                <mat-form-field appearance="outline">
+                  <mat-label>Type here to filter</mat-label>
+                  <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Type here to filter">
+                </mat-form-field>
+              </div>
+              <div class="col-sm-6 col-lg-6">
+                <button class="mt-2 ml-2" mat-raised-button color="primary" (click)="exporter.exportTable('csv', {fileName:'usedList', sheet: 'sheet_name'})">CSV</button>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table mat-table matTableExporter #exporter="matTableExporter" matSort [dataSource]="dataSource">
+                <ng-container matColumnDef="id">
+        
+                  <mat-header-cell *matHeaderCellDef>Sr. No</mat-header-cell>
+        
+                  <mat-cell class="description-cell" *matCellDef="let row;let i = index;" data-label="id">
+                    {{i+1+(paginator.pageIndex * paginator.pageSize)}}</mat-cell>
+        
+                </ng-container>
+                <ng-container matColumnDef="did_name">
+        
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> DID Name </mat-header-cell>
+        
+                  <mat-cell class="description-cell" *matCellDef="let row">{{row.did_name}}
+                  </mat-cell>
+        
+                </ng-container>
+        
+                <ng-container matColumnDef="did_number">
+        
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> DID Number </mat-header-cell>
+        
+                  <mat-cell class="description-cell" *matCellDef="let row">
+                    {{row.did_number}}
+                  </mat-cell>
+        
+                </ng-container>
+
+                <ng-container matColumnDef="did">
+        
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> DID </mat-header-cell>
+          
+                    <mat-cell class="description-cell" *matCellDef="let row">
+                      {{row.did}}
+                    </mat-cell>
+          
+                  </ng-container>
+
+                  <ng-container matColumnDef="status">
+        
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+          
+                    <mat-cell class="description-cell" *matCellDef="let row">
+                      {{row.status | titlecase}}
+                    </mat-cell>
+          
+                  </ng-container>
+
+                  <ng-container matColumnDef="managername">
+        
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Assign To </mat-header-cell>
+          
+                    <mat-cell class="description-cell" *matCellDef="let row">
+                      {{row.managername | titlecase}}
+                    </mat-cell>
+          
+                  </ng-container>
+
+                  <!-- <ng-container matColumnDef="action">
+        
+                    <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+          
+                    <mat-cell class="description-cell" *matCellDef="let row">
+                        <button mat-mini-fab color="primary">
+                            <span (click)="updatedialog(row.id)" title="Edit">
+                                <mat-icon>edit</mat-icon>
+                            </span>
+                        </button>&nbsp;
+                        <button mat-mini-fab color="warn">
+                            <span (click)="deleteData(row.id)" title="Delete">
+                              <mat-icon>delete</mat-icon>
+                            </span>
+                        </button>
+                    </mat-cell>
+          
+                  </ng-container> -->
+        
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        
+                <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+        
+              </table>
+            </div>  
+            <mat-paginator #paginator [length]="Length" [pageSize]="50" [pageSizeOptions]="[50,100,500]"></mat-paginator>
+          </div>
+        </mat-tab>  
+        <mat-tab label="Unused DID"> 
+          <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-12 col-lg-6">
+                <mat-form-field appearance="outline">
+                  <mat-label>Type here to filter</mat-label>
+                  <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Type here to filter">
+                </mat-form-field>
+              </div>
+              <div class="col-sm-12 col-lg-6">
+                <button class="mt-2 ml-2" mat-raised-button color="primary" (click)="exporter1.exportTable('csv', {fileName:'unuseddid', sheet: 'sheet_name'})">CSV</button>
+              </div>
+             
+            </div>
+            <div class="table-responsive">
+              <table mat-table  matTableExporter #exporter1="matTableExporter" matSort [dataSource]="manualdataSource">
+                <ng-container matColumnDef="id">
+        
+                  <mat-header-cell *matHeaderCellDef>Sr. No</mat-header-cell>
+        
+                  <mat-cell class="description-cell" *matCellDef="let row;let i = index;" data-label="id">
+                    {{i+1+(paginator.pageIndex * paginator.pageSize)}}</mat-cell>
+        
+                </ng-container>
+                <ng-container matColumnDef="did_name">
+        
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> DID Name </mat-header-cell>
+        
+                  <mat-cell class="description-cell" *matCellDef="let row">{{row.did_name}}
+                  </mat-cell>
+        
+                </ng-container>
+        
+                <ng-container matColumnDef="did_number">
+        
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> DID Number </mat-header-cell>
+        
+                  <mat-cell class="description-cell" *matCellDef="let row">
+                    {{row.did_number}}
+                  </mat-cell>
+        
+                </ng-container>
+
+                <ng-container matColumnDef="did">
+        
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> DID </mat-header-cell>
+          
+                    <mat-cell class="description-cell" *matCellDef="let row">
+                      {{row.did}}
+                    </mat-cell>
+          
+                  </ng-container>
+
+                  <ng-container matColumnDef="status">
+        
+                    <mat-header-cell *matHeaderCellDef  mat-sort-header> Status </mat-header-cell>
+          
+                    <mat-cell class="description-cell" *matCellDef="let row">
+                      {{row.status | titlecase}}
+                    </mat-cell>
+          
+                  </ng-container>
+
+
+                  <ng-container matColumnDef="action">
+        
+                    <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+          
+                    <mat-cell class="description-cell" *matCellDef="let row">
+                        <button (click)="updatedialog(row.id)" title="Edit" mat-icon-button color="primary" aria-label="Example icon button with a menu icon">
+                          <mat-icon>edit</mat-icon>
+                        </button>
+                        <!-- <button mat-mini-fab color="warn">
+                            <span (click)="deleteData(row.id)" title="Delete">
+                              <mat-icon>delete</mat-icon>
+                            </span>
+                        </button> -->
+                    </mat-cell>
+          
+                  </ng-container>
+        
+                <mat-header-row *matHeaderRowDef="manualdisplayedColumns"></mat-header-row>
+        
+                <mat-row *matRowDef="let row; columns: manualdisplayedColumns"></mat-row>
+        
+              
+              </table>
+            </div>
+            <mat-paginator #manualpaginator [length]="manualLength" [pageSize]="50" [pageSizeOptions]="[50,100,500]"></mat-paginator>
+          </div>
+        </mat-tab>  
+        <mat-tab label="Expire DID">
+          <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-6 col-lg-6">
+                <mat-form-field appearance="outline">
+                  <mat-label>Type here to filter</mat-label>
+                  <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Type here to filter">
+                </mat-form-field>
+              </div>
+              <div class="col-sm-6 col-lg-6">
+                <button class="mt-2 ml-2" mat-raised-button color="primary" (click)="exporter2.exportTable('csv', {fileName:'expiredid', sheet: 'sheet_name'})">CSV</button>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table mat-table matTableExporter #exporter2="matTableExporter"  matSort [dataSource]="expriredataSource">
+                <ng-container matColumnDef="id">
+        
+                  <mat-header-cell *matHeaderCellDef>Sr. No</mat-header-cell>
+        
+                  <mat-cell class="description-cell" *matCellDef="let row;let i = index;" data-label="id">
+                    {{i+1+(paginator.pageIndex * paginator.pageSize)}}</mat-cell>
+        
+                </ng-container>
+                <ng-container matColumnDef="did_name">
+        
+                  <mat-header-cell *matHeaderCellDef  mat-sort-header> DID Name </mat-header-cell>
+        
+                  <mat-cell class="description-cell" *matCellDef="let row">{{row.did_name}}
+                  </mat-cell>
+        
+                </ng-container>
+        
+                <ng-container matColumnDef="did_number">
+        
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> DID Number </mat-header-cell>
+        
+                  <mat-cell class="description-cell" *matCellDef="let row">
+                    {{row.did_number}}
+                  </mat-cell>
+        
+                </ng-container>
+
+                <ng-container matColumnDef="did">
+        
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> DID </mat-header-cell>
+          
+                    <mat-cell class="description-cell" *matCellDef="let row">
+                      {{row.did}}
+                    </mat-cell>
+          
+                  </ng-container>
+
+                  <ng-container matColumnDef="status">
+        
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+          
+                    <mat-cell class="description-cell" *matCellDef="let row">
+                      {{row.status | titlecase}}
+                    </mat-cell>
+          
+                  </ng-container>
+
+                  <ng-container matColumnDef="managername">
+        
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Manager Name</mat-header-cell>
+          
+                    <mat-cell class="description-cell" *matCellDef="let row">
+                      {{row.managername | titlecase}}
+                    </mat-cell>
+          
+                  </ng-container>
+
+                  <!-- <ng-container matColumnDef="action">
+        
+                    <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+          
+                    <mat-cell class="description-cell" *matCellDef="let row">
+                        <button mat-mini-fab color="primary">
+                            <span (click)="updatedialog(row.id)" title="Edit">
+                                <mat-icon>edit</mat-icon>
+                            </span>
+                        </button>&nbsp;
+                        <button mat-mini-fab color="warn">
+                            <span (click)="deleteData(row.id)" title="Delete">
+                              <mat-icon>delete</mat-icon>
+                            </span>
+                        </button>
+                    </mat-cell>
+          
+                  </ng-container> -->
+        
+                <mat-header-row *matHeaderRowDef="expriredisplayedColumns"></mat-header-row>
+        
+                <mat-row *matRowDef="let row; columns: expriredisplayedColumns"></mat-row>
+        
+              </table>
+            </div>
+
+            <mat-paginator #exprirepaginator [length]="exprireLength" [pageSize]="50" [pageSizeOptions]="[50,100,500]"></mat-paginator>
+          </div>
+        </mat-tab> 
+      </mat-tab-group>
+        
+    </div>
+
+  </div>
+  <!-- /.container-fluid -->
+</div>

@@ -1,0 +1,57 @@
+.card {
+    transition: 0.8s;
+    background-color: #edf2f7;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgb(0 0 0 / 20%);
+    box-shadow: -6px -6px 20px rgb(255 255 255), 6px 6px 20px rgb(0 0 0 / 10%);
+    width: 90%;
+    /* margin: 28px auto;*/
+}
+.card .imgbox-dash {
+    position: relative;
+    text-align: center;
+    padding-top: 10px;
+    font-size: 34px;
+}
+
+.card .detailbox-dash {
+position: relative;
+margin-top: 20px;
+text-align: center;
+}
+.card .detailbox-dash h5{
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 40px;
+    color: #145388;
+    font-size: 14px;
+    box-shadow: -4px -4px 15px rgb(255 255 255), 4px 4px 15px rgb(0 0 0 / 10%);
+    cursor: pointer;
+    transition: 0.7s;
+}
+.card .detailbox-dash h5:hover{
+box-shadow: inset -4px -4px 15px rgba(255,255,255,0.5),
+inset 4px 4px 15px rgba(0,0,0,0.1);
+transition: 0.7s;
+}
+.card:hover {
+transform: scale(1.1);
+transition: 0.8s;
+}
+
+.dash-card {
+padding: 30px 30px;
+background-color: #fff;
+margin-top: 30px; 
+}
+
+.detailbox-dash {
+margin-top: 20px;
+}
+
+.dashboard-background table tbody tr td a {
+color: #212529;
+}
+/*Dashboard Section*/

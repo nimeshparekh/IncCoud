@@ -1,0 +1,13 @@
+.width-100
+{
+    width: 100%;
+}
+table 
+{
+    width: 100%;
+    min-width: 1000px;
+}
+.material-icons
+{
+    cursor: pointer;
+}

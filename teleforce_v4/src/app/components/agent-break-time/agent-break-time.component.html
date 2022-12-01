@@ -1,0 +1,79 @@
+<div class="warap-height pt-4"> 
+    <!-- Begin Page Content --> 
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <h1 class="h3 mb-3 text-gray-800">Break Time</h1>
+
+        <!-- DataTales Example -->
+        <div class="card mb-4 shadow">
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div *ngIf="startmode">
+                            <div class="row col-md-12">
+                                <div class="col-md-3">&nbsp;</div>
+                                <div class="col-md-1">
+                                    <form class="d-flex example-form" [formGroup]="holdform" style="margin-top:50px">
+                                        <div>
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Break Reason</mat-label>
+                                                <mat-select formControlName="reason"  >
+                                                    <mat-option *ngFor="let reason of reasonArr" [value]="reason.reason_id">
+                                                        {{reason.reason_name}}</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="mt-2 ml-3">
+                                            <mat-slide-toggle color="warn" (change)="onToggle($event)" [disabled]="!selected_reason"  formControlName="holdcall" *ngIf="isHoldcall">Hold Calling</mat-slide-toggle>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="breack-timeimg position-relative text-center" (click)="start()">
+                                        <img src="assets/img/coffee-break.png">
+                                        <button class="breaktimestartbtn" mat-raised-button type="button" color="primary" (click)="start()" *ngIf="startmode">Start</button>
+                                    </div>
+                                </div>
+                            </div> 
+                        </div>
+                        <div *ngIf="stopmode">
+                            <div class="breack-timeimg position-relative text-center" (click)="stop()">
+                                <img src="assets/img/coffee-break1.png">
+                                <button  class="breaktimestartbtn" mat-raised-button type="button" color="warn" (click)="stop()" *ngIf="stopmode">Stop</button>
+                            </div>
+                        </div>
+                        
+                        <!-- <button mat-raised-button type="button" color="warn" (click)="stop()" *ngIf="stopmode">Stop</button> -->
+                    </div>
+                </div>
+                <div class="row" *ngIf="stopmode">
+                    <div class="col-md-12 mt-3">
+                        <h3>
+                            Your Break start at <b>{{breakstartime | date:"dd-MM-yyy hh:mm:ss a":timezone}}</b> please stop break time first.
+                        </h3>
+                    </div>
+                </div>
+                <div class="mt-4" *ngIf="breaks.length>0">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Break Date</th>
+                                <th>Break Start Time</th>
+                                <th>Break Stop Time</th>
+                                <th>Break Type</th>
+                            </tr>
+                            <tr *ngFor="let break of breaks">
+                                <td>{{break.date | date:" dd-MM-yyyy":timezone}}</td>
+                                <td>{{break.start_time | date:"hh:mm:ss a":timezone}}</td>
+                                <td>{{break.stop_time | date:" hh:mm:ss a":timezone}}</td>
+                                <td>{{break.reason_name}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>           
+            </div>
+        </div>
+    </div>
+</div> 

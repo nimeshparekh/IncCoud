@@ -1,0 +1,133 @@
+ <!-- Begin Page Content -->
+ <div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Visitor Tracking</h1>
+    <p class="mb-4"></p>
+    <!-- <button mat-raised-button color="accent" (click)="Createdialog()" title="Add">Add Email</button>
+    <br><br> -->
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+      
+      <div class="card-body">
+        <div fxLayout fxLayoutAlign="center center">
+            <mat-form-field fxFlex="40%">
+              <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Type here to filter">
+            </mat-form-field>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          </div>
+        <div class="table-responsive">
+          <table>
+            <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+            <mat-table class="lessons-table mat-elevation-z8" matSort [dataSource]="dataSource">
+              <ng-container matColumnDef="id">
+      
+                <mat-header-cell *matHeaderCellDef>Sr. No</mat-header-cell>
+      
+                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" data-label="id">
+                  {{i+1+(paginator.pageIndex * paginator.pageSize)}}</mat-cell>
+      
+              </ng-container>
+              <ng-container matColumnDef="create_date">
+      
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Date </mat-header-cell>
+      
+                <mat-cell class="description-cell" *matCellDef="let row">{{row.create_date |date: 'dd-MM-yyyy H:mm:s'}}
+                </mat-cell>
+      
+              </ng-container>
+      
+              <ng-container matColumnDef="ip">
+      
+                <mat-header-cell *matHeaderCellDef mat-sort-header>IP</mat-header-cell>
+      
+                <mat-cell class="description-cell" *matCellDef="let row">
+                  {{row.ip}}
+                </mat-cell>
+      
+              </ng-container>
+              <ng-container matColumnDef="city">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>City</mat-header-cell>
+                  <mat-cell class="description-cell" *matCellDef="let row">
+                    {{row.city}}
+                  </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="zip">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Zip</mat-header-cell>
+                  <mat-cell class="description-cell" *matCellDef="let row">
+                    {{row.zip}}
+                  </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="regionName">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Region Name</mat-header-cell>
+                  <mat-cell class="description-cell" *matCellDef="let row">
+                    {{row.regionName}}
+                  </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="region">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Region </mat-header-cell>
+                  <mat-cell class="description-cell" *matCellDef="let row">
+                    {{row.region}}
+                  </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="countryCode">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>	Country Code</mat-header-cell>
+                  <mat-cell class="description-cell" *matCellDef="let row">
+                    {{row.countryCode}}
+                  </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="country">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>	Country</mat-header-cell>
+                  <mat-cell class="description-cell" *matCellDef="let row">
+                    {{row.country}}
+                  </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="lat">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Latitude</mat-header-cell>
+                  <mat-cell class="description-cell" *matCellDef="let row">
+                    {{row.lat}}
+                  </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="log">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Longitude</mat-header-cell>
+                  <mat-cell class="description-cell" *matCellDef="let row">
+                    {{row.lon}}
+                  </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="timezone">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Timezone</mat-header-cell>
+                  <mat-cell class="description-cell" *matCellDef="let row">
+                    {{row.timezone}}
+                  </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="isp">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>ISP</mat-header-cell>
+                  <mat-cell class="description-cell" *matCellDef="let row">
+                    {{row.isp}}
+                  </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="path">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Path</mat-header-cell>
+                  <mat-cell class="description-cell" *matCellDef="let row">
+                    {{row.path}}
+                  </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="heat">
+                  <mat-header-cell *matHeaderCellDef>Heat</mat-header-cell>
+                  <mat-cell class="description-cell" *matCellDef="let row" (click)="displayIP(row.ip)">
+                    <div class="hitnumber">{{row.heat}}</div>  
+                  </mat-cell>
+              </ng-container>
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      
+              <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+      
+            </mat-table>
+            <mat-paginator #paginator [length]="Length" [pageSize]="50" [pageSizeOptions]="[50,100,500]"></mat-paginator>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- /.container-fluid -->

@@ -1,0 +1,30 @@
+<div mat-dialog-head class="dilog-head d-flex justify-content-between">
+    <h5 class="dialog-head-h">Assign Group for {{name}}</h5>
+    <div class="d-inline-block" (click)="onNoClick()">
+        <a class="close"><i class="fi-rr-cross-small"></i></a>
+    </div>
+</div>
+<div class="col-xl-12 col-lg-12 col-md-6 col-sm-6 col-12 mt-2">
+    <form [formGroup]="memberForm">
+        <div class="col-sm-6">
+            <mat-form-field appearance="outline" class="example-full-width">
+                <mat-label>Agent Group</mat-label>
+                <mat-select formControlName="group">
+                    <mat-option *ngFor="let group of agentgroup" [value]="group.GroupID">
+                        {{group.GroupName}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="memberForm.controls.group.hasError('required')">
+                    Please select agent group
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mt-2">
+            <div class="float-right">
+                <div class="d-flex">
+                    <button mat-flat-button class="mla-cf-btn ml-2" color="primary" (click)="createassign()">Assign</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

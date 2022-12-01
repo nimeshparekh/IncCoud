@@ -1,0 +1,96 @@
+<div class="warap-height pt-4">
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+        <form [formGroup]="addForm" (ngSubmit)="submit()">
+
+            <div class="d-flex">
+                <div class="flex-fill">
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-2 text-gray-800">
+                        <a routerLink="/settings" mat-icon-button title="Back" color="accent"
+                            aria-label="Example icon button with a menu icon">
+                            <mat-icon>keyboard_backspace</mat-icon>
+                    </a>
+                        Header Footer Setting
+                    </h1>
+                </div>
+                <div class="flex-row-reverse">
+                    <button mat-flat-button class="2" color="primary" type="submit">Save</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4 col-12">
+                    <div class="mt-3">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Letter Head Based On</mat-label>
+                            <mat-select formControlName="letter_head">
+                                <mat-option value="image"> Image </mat-option>
+                                <mat-option value="html"> HTML </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="form-card mt-2">
+                <div class="row">
+                    <div class="col-sm-7">
+                        <h3><b>Set Your Header</b></h3>
+                        <mat-progress-bar mode="indeterminate" *ngIf="isLoding1"></mat-progress-bar><br>
+                        <input type="file" id="fileupload" style="display:none;" accept="image/*" />
+                        <button class="uploadimg" (click)="onUploadHeaderImage()" style="width:300px">Upload Your
+                            Image</button>
+                        <div>
+                            <!-- <textarea matInput placeholder="Email Description" formControlName="email_description" matTextareaAutosize required> </textarea>  -->
+                            <angular-editor [placeholder]="'Enter text here...'" formControlName="header_html"
+                                [config]="config"></angular-editor>
+                        </div>
+
+                        <!-- <button mat-flat-button class="2">Edit</button>-->
+                    </div>
+                    <div class="col-sm-5">
+                        <h3>
+                            <b>Preview</b>
+                        </h3>
+                        <div class="preview mt-2">
+
+                            <i class="fa fa-window-close" style="font-size:20px;" (click)="removeHeaderImage()"
+                                *ngIf="headerimg!=''"></i>
+                            <img src="api/header-footer/{{headerimg}}" width="100px" height="100px"
+                                *ngIf="headerimg!=''">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-card mt-2">
+                <div class="row">
+                    <div class="col-sm-7">
+                        <h3><b>Set Your Footer</b></h3>
+                        <mat-progress-bar mode="indeterminate" *ngIf="isLoding2"></mat-progress-bar><br>
+                        <input type="file" id="fileupload1" style="display:none;" accept="image/*" />
+                        <button class="uploadimg" (click)="onUploadFooterImage()" style="width:300px">Upload Your
+                            Image</button>
+                        <div>
+                            <!-- <textarea matInput placeholder="Email Description" formControlName="email_description" matTextareaAutosize required> </textarea>  -->
+                            <angular-editor [placeholder]="'Enter text here...'" formControlName="footer_html"
+                                [config]="config"></angular-editor>
+                        </div>
+                        <!--<button mat-flat-button class="2">Edit</button>-->
+                    </div>
+                    <div class="col-sm-5">
+                        <h3>
+                            <b>Preview</b>
+                        </h3>
+                        <div class="preview mt-2">
+                            <i class="fa fa-window-close" style="font-size:20px;" (click)="removeFooterImage()"
+                                *ngIf="footerimg!=''"></i>
+                            <img src="api/header-footer/{{footerimg}}" width="100px" height="100px"
+                                *ngIf="footerimg!=''">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- /.container-fluid -->
+</div>

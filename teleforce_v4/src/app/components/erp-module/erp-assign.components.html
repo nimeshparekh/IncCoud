@@ -1,0 +1,57 @@
+<div mat-dialog-head class="dilog-head d-flex justify-content-between">
+    <h3 class="dialog-head-h"> <b>Assign</b></h3>
+    <div class="d-inline-block">
+        <a class="close"  (click)="onNoClick()"><i class="fi-rr-cross-small"></i></a>
+    </div>
+</div>
+<form [formGroup]="memberForm"  (ngSubmit)="createassign()"> 
+    <div mat-dialog-content>
+        <div class="row mb-2">
+            <div class="col-sm-6 mt-2">
+                <mat-form-field appearance="outline">
+                    <mat-label>Name</mat-label>
+                    <mat-select formControlName="agent_id">
+                        <mat-option *ngFor="let lan of assign; let i = index" [value]="assign[i].account_id">
+                            <b class="searchop2">{{assign[i].account_name}}</b>
+                              <!-- <b class="searchop">{{assign[i].email}}</b> -->
+                        </mat-option>                    
+                    </mat-select>
+                    <mat-icon matSuffix>support_agent</mat-icon>
+
+                </mat-form-field>
+            </div>
+            <div class="col-sm-6 mt-2">
+                <mat-form-field appearance="outline">
+                    <mat-label>Comment</mat-label>
+                    <input matInput placeholder="Comment" formControlName="description">
+                    <mat-icon matSuffix>comment</mat-icon>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-6 mt-2">
+                <mat-form-field appearance="outline">
+                    <mat-label>Complete Date</mat-label>
+                    <input matInput placeholder="Enter Closing Date" [matDatepicker]="closing_datepicker" formControlName="expected_closing">
+                    <mat-datepicker-toggle matSuffix [for]="closing_datepicker"></mat-datepicker-toggle>
+                    <mat-datepicker #closing_datepicker tpicker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-6 mt-2">
+                <mat-form-field appearance="outline">
+                    <mat-label>Priority</mat-label>
+                    <mat-select formControlName="priority">
+                        <mat-option value="Low">Low</mat-option>
+                        <mat-option value="Medium">Medium </mat-option>
+                        <mat-option value="High">High </mat-option>
+                    </mat-select>
+                    <mat-icon matSuffix>priority_high</mat-icon>
+
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="btn-sec" mat-dialog-actions>
+        <button mat-raised-button color="accent"  type="submit" class="btn btn-default" [disabled]="isDisabled">Save</button>
+        <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+    </div>
+</form>
+

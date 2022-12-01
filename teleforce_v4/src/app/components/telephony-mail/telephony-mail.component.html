@@ -1,0 +1,295 @@
+ <!-- Begin Page Content -->
+ <div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">TeleMail Request</h1>
+    <p class="mb-4"></p>
+    <form [formGroup]="searchform" (ngSubmit)="searchData()">
+      <div class="row">
+        <div class="col-12 col-md-4 col-lg-3 col-xl-3 col-sm-6 mt-2">
+          <mat-form-field>
+            <input matInput placeholder="Mobile" formControlName="mobile">
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-3 col-lg-2 col-xl-2 col-sm-6 mt-2">
+          <mat-form-field>
+            <input matInput placeholder="Start Date" [matDatepicker]="startpicker" formControlName="startdate">
+            <mat-datepicker-toggle matSuffix [for]="startpicker"></mat-datepicker-toggle>
+            <mat-datepicker #startpicker tpicker></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-3 col-lg-2 col-xl-2 col-sm-6 mt-2">
+          <mat-form-field>
+            <input matInput placeholder="End Date" [matDatepicker]="endpicker" formControlName="enddate">
+            <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
+            <mat-datepicker #endpicker tpicker></mat-datepicker>
+          </mat-form-field> 
+        </div>
+      </div>
+      <!-- <button mat-raised-button type="submit" color="primary" class="Update-btn">Search</button>&nbsp; -->
+      <button mat-raised-button type="submit">Search</button>&nbsp;
+      <button title="refresh" (click)="resetform()" mat-mini-fab color="warn" aria-label="Example icon button with a plus one icon">
+        <span class="material-icons">refresh</span>
+      </button>
+     
+  
+    </form>
+    <br>
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+      
+      <div class="card-body">
+        
+        <mat-tab-group>
+          <mat-tab label="Current List">
+              <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+              <div class="table-responsive">
+                <br>
+                <div fxLayout fxLayoutAlign="center center">
+                  <button mat-raised-button color="primary" (click)="exporter.exportTable('csv', {fileName:'currentList', sheet: 'sheet_name'})">CSV</button>
+                </div> 
+                <br>
+                <table>
+
+                  <mat-table class="lessons-table mat-elevation-z8" matTableExporter #exporter="matTableExporter" matSort [dataSource]="dataSource">
+                    <ng-container matColumnDef="id">
+            
+                      <mat-header-cell *matHeaderCellDef>Sr. No</mat-header-cell>
+            
+                      <mat-cell class="description-cell" *matCellDef="let row;let i = index;" data-label="id">
+                        {{i+1+(paginator.pageIndex * paginator.pageSize)}}</mat-cell>
+            
+                    </ng-container >
+                    <ng-container matColumnDef="request_date">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Date</mat-header-cell>
+                        <mat-cell class="description-cell" *matCellDef="let row">{{row.request_date |date: 'dd-MM-yyyy H:mm:s'}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="name">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+                        <mat-cell class="description-cell" *matCellDef="let row">{{row.name}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="email">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
+                        <mat-cell class="description-cell" *matCellDef="let row">{{row.email}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="mobile">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Mobile</mat-header-cell>
+                        <mat-cell class="description-cell" *matCellDef="let row">{{row.mobile}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="intrest">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Intrest</mat-header-cell>
+                        <mat-cell class="description-cell" *matCellDef="let row">{{row.intrest}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="sms_send">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Send SMS</mat-header-cell>
+                        <mat-cell class="description-cell" *matCellDef="let row">{{row.sms_send}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="email_send">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Send Email</mat-header-cell>
+                        <mat-cell class="description-cell" *matCellDef="let row">{{row.email_send}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="auto_call">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Auto Call</mat-header-cell>
+                        <mat-cell class="description-cell" *matCellDef="let row">{{row.auto_call}}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="push_erp">
+                        <mat-header-cell *matHeaderCellDef> Push to ERP </mat-header-cell>
+                        <mat-cell class="description-cell" *matCellDef="let row">
+                          <button mat-mini-fab color="primary" *ngIf="row.push_erp=='no'" >
+                            <span (click)="pushtoerp(row.id)" title="View Feedback">
+                              <mat-icon>add</mat-icon>
+                            </span>
+                          </button>
+                          <button mat-raised-button color="primary" *ngIf="row.push_erp=='yes'" >
+                              Pushed
+                          </button>
+                        </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="deleted">
+                        <mat-header-cell *matHeaderCellDef >Deleted</mat-header-cell>
+                        <mat-cell class="description-cell" *matCellDef="let row">
+                            <button mat-mini-fab color="warn">
+                              <span (click)="deleteRequest(row.id)" title="Delete">
+                                <mat-icon>delete</mat-icon>
+                              </span>
+                            </button>
+                          </mat-cell>           
+                         </ng-container>
+                     <ng-container matColumnDef="feedback">
+                          <mat-header-cell *matHeaderCellDef> Feedback </mat-header-cell>
+                          <mat-cell class="description-cell" *matCellDef="let row">
+                              <button mat-mini-fab color="primary">
+                                  <span (click)="feedbackdialog(row.id)" title="Feedback Edit">
+                                      <mat-icon>feedback</mat-icon>
+                                  </span>
+                              </button>&nbsp;
+                          </mat-cell>
+                      </ng-container>
+            
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            
+                    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+            
+                  </mat-table>
+                  <mat-paginator #paginator [length]="Length" [pageSize]="50" [pageSizeOptions]="[50,100,500]"></mat-paginator>
+                </table>
+              </div>
+          </mat-tab>
+          <mat-tab label="Deleted List ">
+            <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+            <div class="table-responsive">
+              <br>
+              <div fxLayout fxLayoutAlign="center center">
+                <button mat-raised-button color="primary" (click)="exporter1.exportTable('csv', {fileName:'DeleteList', sheet: 'sheet_name'})">CSV</button>
+              </div> 
+              <br>
+              <table>
+                  <mat-table class="lessons-table mat-elevation-z8"  matTableExporter #exporter1="matTableExporter" matSort [dataSource]="manualdataSource">
+                    <ng-container matColumnDef="id">
+
+                        <mat-header-cell *matHeaderCellDef>Sr. No</mat-header-cell>
+
+                        <mat-cell class="description-cell" *matCellDef="let row;let i = index;" data-label="id">
+                            {{i+1+(manualpaginator.pageIndex * manualpaginator.pageSize)}}</mat-cell>
+
+                    </ng-container>
+                  <ng-container matColumnDef="request_date">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header>Date</mat-header-cell>
+                      <mat-cell class="description-cell" *matCellDef="let row">{{row.request_date |date: 'dd-MM-yyyy H:mm:s'}}</mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="name">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+                      <mat-cell class="description-cell" *matCellDef="let row">{{row.name}}</mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="email">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
+                      <mat-cell class="description-cell" *matCellDef="let row">{{row.email}}</mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="mobile">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header>Mobile</mat-header-cell>
+                      <mat-cell class="description-cell" *matCellDef="let row">{{row.mobile}}</mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="intrest">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header>Intrest</mat-header-cell>
+                      <mat-cell class="description-cell" *matCellDef="let row">{{row.intrest}}</mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="sms_send">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header>Send SMS</mat-header-cell>
+                      <mat-cell class="description-cell" *matCellDef="let row">{{row.sms_send}}</mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="email_send">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header>Send Email</mat-header-cell>
+                      <mat-cell class="description-cell" *matCellDef="let row">{{row.email_send}}</mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="auto_call">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header>Auto Call</mat-header-cell>
+                      <mat-cell class="description-cell" *matCellDef="let row">{{row.auto_call}}</mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="push_erp">
+                      <mat-header-cell *matHeaderCellDef > Push to ERP </mat-header-cell>
+
+                      <mat-cell class="description-cell" *matCellDef="let row">
+                        <button mat-mini-fab color="primary" *ngIf="row.push_erp=='no'" >
+                          <span (click)="pushtoerp(row.id)" title="View Feedback">
+                            <mat-icon>add</mat-icon>
+                          </span>
+                        </button>
+                        <button mat-raised-button color="primary" *ngIf="row.push_erp=='yes'" >
+                            Pushed
+                        </button>
+                      </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="feedback">
+                      <mat-header-cell *matHeaderCellDef> Feedback </mat-header-cell>
+                      <mat-cell class="description-cell" *matCellDef="let row">
+                          <button mat-mini-fab color="primary">
+                              <span (click)="feedbackdialog(row.id)" title="Feedback Edit">
+                                  <mat-icon>feedback</mat-icon>
+                              </span>
+                          </button>&nbsp;
+                      </mat-cell>
+                  </ng-container>
+          
+                      <mat-header-row *matHeaderRowDef="manualColumns"></mat-header-row>
+
+                      <mat-row *matRowDef="let row; columns: manualColumns"></mat-row>
+
+                  </mat-table>
+                  <mat-paginator #manualpaginator [length]="manualLength" [pageSize]="50"
+                      [pageSizeOptions]="[50,100,500]"></mat-paginator>
+              </table>
+            </div>
+          </mat-tab>
+          <mat-tab label="ERP List">
+            <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+            <div class="table-responsive">
+              <br>
+              <div fxLayout fxLayoutAlign="center center">
+                <button mat-raised-button color="primary" (click)="exporter2.exportTable('csv', {fileName:'ERPList', sheet: 'sheet_name'})">CSV</button>
+              </div> 
+              <br>
+              <table>
+                <mat-table class="lessons-table mat-elevation-z8"  matTableExporter #exporter2="matTableExporter" matSort [dataSource]="erpSource">
+                  <ng-container matColumnDef="id">
+          
+                    <mat-header-cell *matHeaderCellDef>Sr. No</mat-header-cell>
+          
+                    <mat-cell class="description-cell" *matCellDef="let row;let i = index;" data-label="id">
+                      {{i+1+(paginator.pageIndex * paginator.pageSize)}}</mat-cell>
+          
+                  </ng-container >
+                  <ng-container matColumnDef="request_date">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header>Date</mat-header-cell>
+                      <mat-cell class="description-cell" *matCellDef="let row">{{row.request_date |date: 'dd-MM-yyyy H:mm:s'}}</mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="name">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+                      <mat-cell class="description-cell" *matCellDef="let row">{{row.name}}</mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="email">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
+                      <mat-cell class="description-cell" *matCellDef="let row">{{row.email}}</mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="mobile">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header>Mobile</mat-header-cell>
+                      <mat-cell class="description-cell" *matCellDef="let row">{{row.mobile}}</mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="intrest">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header>Intrest</mat-header-cell>
+                      <mat-cell class="description-cell" *matCellDef="let row">{{row.intrest}}</mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="sms_send">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header> Send SMS</mat-header-cell>
+                      <mat-cell class="description-cell" *matCellDef="let row">{{row.sms_send}}</mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="email_send">
+                      <mat-header-cell *matHeaderCellDef mat-sort-header>Send Email</mat-header-cell>
+                      <mat-cell class="description-cell" *matCellDef="let row">{{row.email_send}}</mat-cell>
+                  </ng-container>
+                  <ng-container matColumnDef="feedback">
+                    <mat-header-cell *matHeaderCellDef> Feedback </mat-header-cell>
+                    <mat-cell class="description-cell" *matCellDef="let row">
+                        <button mat-mini-fab color="primary">
+                            <span (click)="feedbackdialog(row.id)" title="Feedback Edit">
+                                <mat-icon>feedback</mat-icon>
+                            </span>
+                        </button>&nbsp;
+                    </mat-cell>
+                </ng-container>
+                  
+                  <mat-header-row *matHeaderRowDef="erpColumns"></mat-header-row>
+          
+                  <mat-row *matRowDef="let row; columns: erpColumns"></mat-row>
+          
+                </mat-table>
+                <mat-paginator #erppaginator [length]="erpLength" [pageSize]="50" [pageSizeOptions]="[50,100,500]"></mat-paginator>
+              </table>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+        
+      </div>
+    </div>
+
+  </div>
+  <!-- /.container-fluid -->

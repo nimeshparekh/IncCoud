@@ -1,0 +1,17 @@
+
+<div mat-dialog-head class="dilog-head d-flex justify-content-between">
+  <h2 class="dialog-head-h">Preview</h2>
+  <a class="close" [href]="img_base_path" download="image" target="_blank"><i class="fi-rr-download"></i></a>
+  <div class="d-inline-block">
+      <a class="close" (click)="onNoClick()"><i class="fi-rr-cross-small"></i></a>
+  </div>
+</div>
+<div mat-dialog-content>
+  <div class="text-center">
+    <img   [src]="img_base_path" style="width:100%;">
+    <!-- <video *ngIf="media_type == 'video'" width="100%" height="auto" controls >
+      <source [src]="img_base_path" type="video/mp4">
+      Your browser does not support the video tag.
+    </video> -->
+  </div>
+</div>

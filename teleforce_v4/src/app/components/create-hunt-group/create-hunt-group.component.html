@@ -1,0 +1,224 @@
+<div mat-dialog-head class="dilog-head d-flex justify-content-between">
+    <h3 class="primary" *ngIf="addmode">Add Group</h3>
+    <h3 class="primary" *ngIf="editmode">Edit Group</h3>
+    <h3 class="primary" *ngIf="deletemode">Delete Group</h3>
+    <div class="d-inline-block">
+        <a class="close" (click)="openDialog()"><i class="fi-rr-cross-small"></i></a>
+    </div>
+</div>
+<div *ngIf="addmode || editmode">
+    <form [formGroup]="addForm" (ngSubmit)="submit()">
+        <div mat-dialog-content>
+            <div class="row">
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Group Name</mat-label>
+                        <input matInput placeholder="Group Name" formControlName="name" required>
+                        <mat-error *ngIf="addForm.controls.name.hasError('required')">
+                            Please enter groupname
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Group Description</mat-label>
+                        <textarea matInput placeholder="Group Description" rows="1" formControlName="description"
+                            required></textarea>
+                        <mat-error *ngIf="addForm.controls.name.hasError('required')">
+                            Please enter description
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Call Type</mat-label>
+                        <mat-select formControlName="calltype" required>
+                            <mat-option [value]="0">Sequence</mat-option>
+                            <mat-option [value]="1">Parallel</mat-option>
+                            <mat-option [value]="2">Round Robin</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="addForm.controls.name.hasError('required')">
+                            Please enter call type
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Music On Hold</mat-label>
+                        <mat-select formControlName="holdmusic">
+                            <mat-option *ngFor="let sound of sounds" [value]="sound.id">{{sound.originalfilename}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Queue Time Out</mat-label>
+                        <mat-select formControlName="queuetimeout">
+                            <mat-option [value]="10">10 sec</mat-option>
+                            <mat-option [value]="20">20 sec</mat-option>
+                            <mat-option [value]="30">30 sec</mat-option>
+                            <mat-option [value]="40">40 sec</mat-option>
+                            <mat-option [value]="50">50 sec</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Agent Time Out</mat-label>
+                        <mat-select formControlName="agenttimeout">
+                            <mat-option [value]="10">10 sec</mat-option>
+                            <mat-option [value]="20">20 sec</mat-option>
+                            <mat-option [value]="30">30 sec</mat-option>
+                            <mat-option [value]="40">40 sec</mat-option>
+                            <mat-option [value]="50">50 sec</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Wrapup Time</mat-label>
+                        <mat-select formControlName="wrapuptime">
+                            <mat-option [value]="0.33">20 second</mat-option>
+                            <mat-option [value]="0.5">30 second</mat-option>
+                            <mat-option [value]="1">1 minute</mat-option>
+                            <mat-option [value]="2">2 minute</mat-option>
+                            <mat-option [value]="3">3 minute</mat-option>
+                            <mat-option [value]="4">4 minute</mat-option>
+                            <mat-option [value]="5">5 minute</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>You want hit api ?</mat-label>
+                        <mat-select formControlName="hitapi">
+                            <mat-option [value]="0">No</mat-option>
+                            <mat-option [value]="1">Yes</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-form-field fxFlex="20%" appearance="outline">
+                        <mat-label>Start Time</mat-label>
+                        <input matInput placeholder="Start Time" type="time" formControlName="starttime" required>
+                        <mat-error *ngIf="addForm.controls.starttime.hasError('required')">
+                            Please enter start time
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-form-field fxFlex="20%" appearance="outline">
+                        <mat-label>End Time</mat-label>
+                        <input matInput placeholder="End Time" type="time" formControlName="endtime" required>
+                        <mat-error *ngIf="addForm.controls.endtime.hasError('required')">
+                            Please enter end time
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Transfer Extension</mat-label>
+                        <input matInput placeholder="Transfer Extension" formControlName="trans_ext" required  >
+                        <mat-error *ngIf="addForm.controls.trans_ext.hasError('required')">
+                            Please enter transfer extesion
+                        </mat-error>
+                        <mat-error *ngIf="addForm.controls.trans_ext.hasError('pattern')">
+                            Minimum 2 digit required and Maximum 4 digit number allowed
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <section class="example-section">
+                        <div style="color:grey;">Status</div>
+                        <mat-checkbox id="callrecording" class="callrecording ml-1" color="primary" formControlName="callrecording" value="1">
+                            Call Recording
+                        </mat-checkbox>
+                        <mat-checkbox id="sticky" class="sticky ml-1" color="primary" formControlName="sticky">
+                            Sticky
+                        </mat-checkbox>
+                        <!--<mat-checkbox id="closed" class="closed ml-1" color="primary" formControlName="closed">
+                            Closed
+                        </mat-checkbox>-->
+                    </section>
+                </div>
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-2">
+                    <section class="example-section">
+                        <div style="color:grey;" class="mb-1">Weekly Days</div>
+                        <mat-checkbox id="all" class="all ml-3" color="primary" formControlName="all">
+                            All
+                        </mat-checkbox>
+                        <mat-checkbox id="mon" class="mon ml-3" color="primary" formControlName="mon">
+                            Mon
+                        </mat-checkbox>
+                        <mat-checkbox id="tue" class="tue ml-3" color="primary" formControlName="tue">
+                            Tue
+                        </mat-checkbox>
+                        <mat-checkbox id="wed" class="wed ml-3" color="primary" formControlName="wed">
+                            Wed
+                        </mat-checkbox>
+                        <mat-checkbox id="thu" class="thu ml-3" color="primary" formControlName="thu">
+                            Thu
+                        </mat-checkbox>
+                        <mat-checkbox id="fri" class="fri ml-3" color="primary" formControlName="fri">
+                            Fri
+                        </mat-checkbox>
+                        <mat-checkbox id="sat" class="sat ml-3" color="primary" formControlName="sat">
+                            Sat
+                        </mat-checkbox>
+                        <mat-checkbox id="sun" class="sun ml-3" color="primary" formControlName="sun">
+                            Sun
+                        </mat-checkbox>
+                    </section>
+                </div>
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-2">
+                    <p style="padding-bottom: 10px; border-bottom: 1px solid #ccc; font-weight: 500;">
+                        Destination
+                    </p>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Type</mat-label>
+                        <mat-select formControlName="destinationtype"
+                            (selectionChange)="changedigitaction($event.value)">
+                            <mat-option [value]="0">Terminate Call</mat-option>
+                            <mat-option [value]="1">Announcement</mat-option>
+                            <mat-option [value]="2">Hunt Group</mat-option>
+                            <mat-option [value]="3" *ngIf="ivr">IVR</mat-option>
+                            <mat-option [value]="4">Voice Mail</mat-option>
+                            <mat-option [value]="5">Time Condition</mat-option>
+                            <mat-option [value]="6" *ngIf="misscallservice">Miss Call</mat-option>
+                            <!-- <mat-option [value]="7">Conference</mat-option>
+                            <mat-option [value]="8">Recording Studio</mat-option>
+                            <mat-option [value]="9">Custom IVR</mat-option>
+                            <mat-option [value]="10">SIP Hard Phone</mat-option> -->
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Action</mat-label>
+                        <mat-select formControlName="destinationaction">
+                            <mat-option *ngFor="let action of digitactionarr" [value]="action.value">
+                                {{action.name}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="btn-sec" mat-dialog-actions>
+            <button mat-raised-button type="submit" color="primary" class="Update-btn" [disabled]="isDisabled ">Save</button>
+        </div>
+    </form>
+</div>
+<div *ngIf="deletemode">
+    <h3 style="margin-top: 10px; font-weight: 500;">
+        Are you sure to delete this ?
+    </h3>
+    <div class="btn-sec">
+        <button mat-raised-button type="button" color="primary" class="Update-btn"
+            (click)="deleteData(groupid)">Delete</button>
+        &nbsp;
+        <button mat-raised-button type="button" class="Discard-btn" (click)="openDialog()">Cancel</button>
+    </div>
+</div>

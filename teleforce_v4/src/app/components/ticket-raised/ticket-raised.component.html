@@ -1,0 +1,141 @@
+<div mat-dialog-head class="dilog-head d-flex justify-content-between">
+    <h3 class="primary" *ngIf="addmode">Raised Ticket</h3>
+    <h3 class="primary" *ngIf="editmode">Edit Issue</h3>
+    <div class="d-inline-block">
+        <a class="close" (click)="openDialog()"><i class="fi-rr-cross-small"></i></a>
+    </div>
+
+</div>
+<div>
+    <form [formGroup]="addForm" (ngSubmit)="createissue()" *ngIf="addForm">
+        <div mat-dialog-content>
+            <div class="row">
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2" *ngIf="managerid==48">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Manager</mat-label>
+                        <mat-select formControlName="account_id" (ngModelChange)="getAgents($event)">
+                            <mat-option [value]="manager.account_id" *ngFor="let manager of managers">{{manager.account_name}} </mat-option>
+                            <!--<mat-option value="Replied">Replied </mat-option>
+                            <mat-option value="Hold">Hold </mat-option>
+                            <mat-option value="Closed">Closed </mat-option>-->
+                        </mat-select>
+
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2" *ngIf="managerid>0">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Agents</mat-label>
+                        <mat-select formControlName="agent_id" >
+                            <mat-option value="">None</mat-option>
+                            <mat-option value="{{agent.account_id}}" *ngFor="let agent of agents">{{agent.account_name}} </mat-option>
+                            <!--<mat-option value="Replied">Replied </mat-option>
+                            <mat-option value="Hold">Hold </mat-option>
+                            <mat-option value="Closed">Closed </mat-option>-->
+                        </mat-select>
+
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Status</mat-label>
+                        <mat-select formControlName="status">
+                            <mat-option value="Open">Open </mat-option>
+                            <!--<mat-option value="Replied">Replied </mat-option>
+                            <mat-option value="Hold">Hold </mat-option>
+                            <mat-option value="Closed">Closed </mat-option>-->
+                        </mat-select>
+
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Subject</mat-label>
+                        <input matInput placeholder="Enter Subject" formControlName="subject" required>
+                        <mat-error *ngIf="addForm.controls.subject.hasError('required')">
+                            Please enter Subject
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Priority</mat-label>
+                        <mat-select formControlName="priority" required>
+                            <mat-option value="Low">Low </mat-option>
+                            <mat-option value="Medium">Medium </mat-option>
+                            <mat-option value="High">High </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="addForm.controls.priority.hasError('required')">
+                            Please select priority
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Issue Type</mat-label>
+                        <mat-select formControlName="issue_type" required>
+                            <mat-option *ngFor="let issuetype of issuetypelist" [value]="issuetype.issue_id">
+                                {{issuetype.issue_name}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="addForm.controls.issue_type.hasError('required')">
+                            Please select issue type
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Contact No</mat-label>
+                        <input matInput placeholder="Enter Contact No" formControlName="contact_no" required>
+                        <mat-error *ngIf="addForm.controls.contact_no.hasError('required')">
+                            Please enter Contact No
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Email-ID</mat-label>
+                        <input matInput placeholder="Enter Email-ID" formControlName="email" required>
+                        <mat-error *ngIf="addForm.controls.email.hasError('required')">
+                            Please enter Email-ID
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <div class="row">
+                        <div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-2">
+                            <input type="file" id="fileupload" style="display:none;" accept="image/*" />
+                            <a mat-raised-button (click)="onUploadHeaderImage()" style="width:200px">Upload Image</a>
+                        </div>
+                        <div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-2">
+                            <!-- <img src="{{image}}" height="50" width="50" > -->
+                            <div *ngIf="image && image !== ''" style="margin-left: 30px;">
+                                <img src="{{baseUrl}}{{apiUrl}}/ticket/{{image}}" height="70" width="70">
+                                <i class="fa fa-window-close" style="font-size:20px;" (click)="removeimage()">
+        
+                                </i>
+                            </div>
+                        </div>
+                    </div>                    
+                </div>
+                
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Description</mat-label>
+                        <textarea matInput formControlName="description" rows="5"></textarea>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="btn-sec" mat-dialog-actions>
+            <button mat-raised-button type="submit" color="primary" class="Update-btn">Save</button>
+        </div>
+    </form>
+</div>

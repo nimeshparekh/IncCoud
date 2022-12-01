@@ -1,0 +1,158 @@
+<div class="warap-height pt-4"> 
+  <!-- Begin Page Content -->
+  <div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Live Call</h1>
+    
+    <form [formGroup]="searchform" (ngSubmit)="searchData2()">
+      <div class="row">
+        <div class="col-lg-2 col-md-4 col-sm-6 col-xs-6 col-12">
+          <mat-form-field appearance="outline">
+            <mat-label>Agent name</mat-label>
+            <mat-select formControlName="agent">
+              <mat-option value="">All</mat-option>
+              <mat-option *ngFor="let arr of dataagent" value="{{arr.AgentID}}">
+                {{arr.AgentName}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6 col-12">
+          <button mat-raised-button type="submit" color="primary" class="Update-btn mt-1">Search</button>&nbsp;
+          <button mat-raised-button color="warn" class="Update-btn mt-1" (click)="resetform()">Reset</button>&nbsp;
+          <button (click)="resetform()" class="mt-1" mat-mini-fab color="primary" aria-label="Example icon button with a plus one icon">
+            <span class="material-icons">refresh</span>
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <!-- DataTales Example -->
+    <div class="card mb-4">
+
+      <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+
+      <div class="card-body">
+
+        <!---- Table history ---->
+        <div class="table-responsive">
+          
+          <table mat-table class="lessons-table mat-elevation-z8" [dataSource]="dataSource">
+              <ng-container matColumnDef="id">
+    
+                <mat-header-cell *matHeaderCellDef>Sr. No</mat-header-cell>
+    
+                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" data-label="id">
+                  {{i+1+(paginator.pageIndex * paginator.pageSize)}}</mat-cell>
+    
+              </ng-container>
+              <ng-container matColumnDef="did">
+    
+                <mat-header-cell *matHeaderCellDef> DID </mat-header-cell>
+    
+                <mat-cell class="description-cell" *matCellDef="let row">{{row.DID}}
+                </mat-cell>
+    
+              </ng-container>
+    
+              <ng-container matColumnDef="agentname">
+    
+                <mat-header-cell *matHeaderCellDef> Agent Name </mat-header-cell>
+    
+                <mat-cell class="description-cell" *matCellDef="let row">{{row.AgentName}}
+                </mat-cell>
+    
+              </ng-container>
+    
+              <ng-container matColumnDef="agentno">
+    
+                <mat-header-cell *matHeaderCellDef> Agent Number </mat-header-cell>
+    
+                <mat-cell class="description-cell" *matCellDef="let row">{{row.AgentNumber}}
+                </mat-cell>
+    
+              </ng-container>
+    
+              <ng-container matColumnDef="calltime">
+    
+                <mat-header-cell *matHeaderCellDef> Call Time </mat-header-cell>
+    
+                <mat-cell class="description-cell" *matCellDef="let row">{{row.CallStartTime | date: 'dd-MM-yyyy H:mm:s'}}
+                </mat-cell>
+    
+              </ng-container>
+              <ng-container matColumnDef="number">
+    
+                <mat-header-cell *matHeaderCellDef> Number </mat-header-cell>
+    
+                <mat-cell class="description-cell" *matCellDef="let row">{{row.CallerNumber}}
+                </mat-cell>
+    
+              </ng-container>
+              <ng-container matColumnDef="duration">
+    
+                <mat-header-cell *matHeaderCellDef> Duration </mat-header-cell>
+    
+                <mat-cell class="description-cell" *matCellDef="let row">{{row.CallTalkTime}}
+                </mat-cell>
+    
+              </ng-container>
+              <ng-container matColumnDef="status">
+    
+                <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+    
+                <mat-cell class="description-cell" *matCellDef="let row">{{row.CallStatus}}
+                </mat-cell>
+    
+              </ng-container>
+              <ng-container matColumnDef="calltype">
+    
+                <mat-header-cell *matHeaderCellDef> Call Type </mat-header-cell>
+    
+                <mat-cell class="description-cell" *matCellDef="let row">{{row.CallType | titlecase}}
+                </mat-cell>
+    
+              </ng-container>
+    
+              <!-- <ng-container matColumnDef="recording">
+    
+                <mat-header-cell *matHeaderCellDef> Call Monitor </mat-header-cell>
+    
+                <mat-cell class="description-cell" *matCellDef="let row">
+                  <a href="javascript:void(0)">
+                      <span class="material-icons" (click)="callmonitor(row.uniqueid,'listen')" title="Listen">
+                          phone_in_talk
+                      </span>
+                  </a>
+                  &nbsp;
+                  <a href="javascript:void(0)">
+                      <span class="material-icons" (click)="callmonitor(row.uniqueid,'whisper')" title="Whishper">
+                          call_split
+                      </span>
+                  </a>
+                  &nbsp;
+                  <a href="javascript:void(0)">
+                      <span class="material-icons" (click)="callmonitor(row.uniqueid,'barge')" title="Barge">
+                          call_merge
+                      </span>
+                    </a>
+                </mat-cell>
+    
+              </ng-container> -->
+    
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    
+              <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    
+          </table>
+          
+        </div>
+
+        <mat-paginator #paginator [length]="Length" [pageSize]="50" [pageSizeOptions]="[50,100,500]">
+        </mat-paginator>
+      </div>
+    </div>
+    
+  </div>
+  <!-- /.container-fluid -->
+</div>

@@ -1,0 +1,144 @@
+<div>
+    <div class="add-title">
+        <h2 class="primary" *ngIf="addmode">Add Package</h2>
+        <h2 class="primary" *ngIf="editmode">Edit Package</h2>
+        <h2 class="primary" *ngIf="deletemode">Delete Package</h2>
+    </div>
+    <div *ngIf="addmode || editmode">
+        <form [formGroup]="addForm" (ngSubmit)="submit()">
+            <mat-grid-list [cols]="3" rowHeight="100px">
+                <mat-grid-tile>
+                    <div class="text-inside">
+                        <mat-form-field>
+                            <input matInput placeholder="Package Name" formControlName="name" required>
+                            <mat-error *ngIf="addForm.controls.name.hasError('required')">
+                                Please enter package name
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </mat-grid-tile>
+                <mat-grid-tile >
+                    <div class="text-inside">
+                        <mat-form-field>
+                            <input type="number" matInput placeholder="Brand No" formControlName="brandno"  >                            
+                        </mat-form-field>
+                    </div>
+                </mat-grid-tile>
+                <mat-grid-tile >
+                    <div class="text-inside">
+                        <mat-form-field>
+                            <input type="number" matInput placeholder="Channel No" formControlName="channelno" >                            
+                        </mat-form-field>
+                    </div>
+                </mat-grid-tile>
+                <mat-grid-tile >
+                    <div class="text-inside">
+                        <mat-form-field>
+                            <input type="number" matInput placeholder="Member No" formControlName="memberno" >                            
+                        </mat-form-field>
+                    </div>
+                </mat-grid-tile>
+                <mat-grid-tile >
+                    <div class="text-inside">
+                        <mat-form-field>
+                            <input type="number" matInput placeholder="Group No" formControlName="groupno" >                            
+                        </mat-form-field>
+                    </div>
+                </mat-grid-tile>
+                <mat-grid-tile >
+                    <div class="text-inside">
+                        <mat-form-field>
+                            <input type="number" matInput placeholder="Monitor No" formControlName="monitorno" >                            
+                        </mat-form-field>
+                    </div>
+                </mat-grid-tile>
+                <mat-grid-tile >
+                    <div class="text-inside">
+                        <mat-form-field>
+                            <input type="number" matInput placeholder="Hashtag No" formControlName="hashtagno" >                            
+                        </mat-form-field>
+                    </div>
+                </mat-grid-tile>
+                <mat-grid-tile >
+                    <div class="text-inside">
+                        <mat-form-field>
+                            <input type="number" matInput placeholder="messanger" formControlName="messanger" >                            
+                        </mat-form-field>
+                    </div>
+                </mat-grid-tile>
+                <mat-grid-tile >
+                    <div class="text-inside">
+                        <mat-form-field>
+                            <input type="number" matInput placeholder="User" formControlName="user" >                            
+                        </mat-form-field>
+                    </div>
+                </mat-grid-tile>
+                <mat-grid-tile >
+                    <div class="text-inside">
+                        <mat-form-field>
+                            <input type="number" matInput placeholder="Bot" formControlName="bot" >                            
+                        </mat-form-field>
+                    </div>
+                </mat-grid-tile>
+                <mat-grid-tile >
+                    <div class="text-inside">
+                        <mat-form-field>
+                            <input type="number" matInput placeholder="Media Library Space(GB)" formControlName="mediaspace" >                            
+                        </mat-form-field>
+                    </div>
+                </mat-grid-tile>
+                
+                <mat-grid-tile  >
+                    <div class="text-inside">
+                        <mat-radio-group formControlName="validity">
+                            <div style="color:grey;">Package Validity</div>
+                            <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="0">Monthly
+                            </mat-radio-button>
+                            <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="2">Quarterly
+                            </mat-radio-button><br>
+                            <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="3">Half Yearly
+                            </mat-radio-button>
+                            <mat-radio-button color="primary" style="padding:4px 0px 0px 24px;" [value]="1">Yearly
+                            </mat-radio-button>
+                            <mat-error *ngIf="addForm.controls.validity.hasError('required')">
+                                Please enter package validity
+                            </mat-error>  
+                        </mat-radio-group>  
+                        
+                    </div>
+                </mat-grid-tile>
+                
+               
+                <mat-grid-tile >
+                    <div class="text-inside">
+                        <mat-form-field>
+                            <input type="number" matInput placeholder="Package Value" formControlName="value" >                            
+                            <mat-error *ngIf="addForm.controls.value.hasError('required')">
+                                Please enter package value
+                            </mat-error>
+                        </mat-form-field>
+                        
+                    </div>
+                </mat-grid-tile>
+            </mat-grid-list><br>
+            <div class="btn-sec">
+                <button mat-raised-button type="submit" color="primary" class="Update-btn">Save</button>
+                &nbsp;
+                <button mat-raised-button type="button" class="Discard-btn" (click)="openDialog()">Cancel</button>
+            </div>
+
+        </form>
+    </div>
+
+    <div *ngIf="deletemode">
+        <h4>
+            Are you sure to delete this ?
+        </h4>
+        <div class="btn-sec">
+            <button mat-raised-button type="button" color="primary" class="Update-btn"
+                (click)="deleteData(adminid)">Delete</button>
+            &nbsp;
+            <button mat-raised-button type="button" class="Discard-btn" (click)="openDialog()">Cancel</button>
+        </div>
+    </div>
+</div>

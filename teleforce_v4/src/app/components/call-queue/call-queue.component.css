@@ -1,0 +1,14 @@
+.dilog-head
+{
+    border-bottom: 1px solid #ccc;
+}
+.close
+{
+    position: relative;
+}
+.table-bordered td
+{
+    padding: 6px 8px 6px 8px !important;
+    color: rgb(60 63 107);
+    font-size: 11px !important;
+}   

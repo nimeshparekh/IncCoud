@@ -1,0 +1,30 @@
+<div mat-dialog-head class="dilog-head d-flex justify-content-between">
+    <h3 class="primary">Agent Live Status</h3>
+    <div class="d-inline-block">
+        <a class="close" (click)="openDialog()"><i class="fi-rr-cross-small"></i></a>
+    </div>
+</div>
+
+<div class="mt-4">
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Login</th>
+                    <th>Break</th>
+                    <th>Call Hold</th>
+                    <th>On Call</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{checklogin(is_loggedin)}}</td>
+                    <td>{{checkbreak(break)}}</td>
+                    <td>{{checkcallhold(callhold)}}</td>
+                    <td>{{checkoncall(oncall)}}</td>
+                </tr>
+                
+            </tbody>
+        </table>
+    </div>
+</div>

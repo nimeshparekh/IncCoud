@@ -1,0 +1,35 @@
+mat-form-field {
+    width: 100%;
+  }
+
+
+  .width-100
+  {
+      width: 100%;
+  }
+  mat-cell, mat-header-cell, mat-footer-cell 
+{
+    /* flex: none; */
+    display: table-caption;
+    align-items: center;
+    overflow: hidden;
+    word-wrap: break-word;
+    min-height: inherit;
+    /* width: 12%; */
+    padding: 5px 4px 5px 4px;
+}
+table 
+{
+    width: 100%;
+}
+.material-icons
+{
+    cursor: pointer;
+}
+@media (max-width: 890px)
+{
+    table 
+    {
+        width: 800px;
+    }
+}

@@ -1,0 +1,102 @@
+<div class="warap-height pt-4">
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <h1 class="h3 mb-2 text-gray-800">Consultant List</h1>
+        <div class="row">
+            <div class="col-sm-2">
+              <mat-form-field appearance="outline">
+                <mat-label>Filter</mat-label>
+                <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Type here to filter">
+              </mat-form-field>
+            </div>
+           
+          </div>
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+
+            <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+
+            <div class="card-body">
+
+                <button mat-raised-button color="accent" (click)="Createdialog()" title="Add">Add Consultant</button>
+
+                <div class="table-responsive">
+
+                    <table mat-table class="lessons-table mat-elevation-z8" matSort [dataSource]="dataSource">
+                        <ng-container matColumnDef="id">
+
+                            <mat-header-cell *matHeaderCellDef>Sr. No</mat-header-cell>
+
+                            <mat-cell class="description-cell" *matCellDef="let row;let i = index;" data-label="id">
+                                {{i+1+(paginator.pageIndex * paginator.pageSize)}}</mat-cell>
+
+                        </ng-container>
+                        <ng-container matColumnDef="name">
+
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+
+                            <mat-cell class="description-cell" *matCellDef="let row">
+                                {{row.name}}
+                            </mat-cell>
+
+                        </ng-container>
+                        <ng-container matColumnDef="email">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
+                            <mat-cell class="description-cell" *matCellDef="let row">
+                                {{row.email}}
+                            </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="mobile">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>Mobile</mat-header-cell>
+                            <mat-cell class="description-cell" *matCellDef="let row">
+                                {{row.mobile}}
+                            </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="gender">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>Gender</mat-header-cell>
+                            <mat-cell class="description-cell" *matCellDef="let row">
+                                {{row.gender}}
+                            </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="joindate">
+                            <mat-header-cell *matHeaderCellDef mat-sort-header>Joining Date</mat-header-cell>
+                            <mat-cell class="description-cell" *matCellDef="let row">
+                                {{row.joiningdate | date:'dd-MM-yyyy'}}
+                            </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="action">
+
+                            <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+
+                            <mat-cell class="description-cell" *matCellDef="let row">
+                                <button (click)="updatedialog(row.id)" title="Edit" mat-icon-button
+                                    color="primary" aria-label="Example icon button with a menu icon">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+                                <!--<button (click)="deleteData(row.email_id)" title="Edit" mat-icon-button color="warn"
+                                    aria-label="Example icon button with a menu icon">
+                                    <mat-icon>delete</mat-icon>
+                                </button>-->
+
+                            </mat-cell>
+
+                        </ng-container>
+
+                        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+                        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+                    </table>
+
+                </div>
+
+                <mat-paginator #paginator [length]="Length" [pageSize]="50" [pageSizeOptions]="[50,100,500]">
+                </mat-paginator>
+
+            </div>
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+</div>

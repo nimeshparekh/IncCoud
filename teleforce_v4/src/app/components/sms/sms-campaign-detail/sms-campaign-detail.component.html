@@ -1,0 +1,306 @@
+<div class="warap-height pt-4">
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <h1 class="h3 mb-2 text-gray-800">
+            <button routerLink="/sms-campaign" mat-icon-button title="Back" color="accent" aria-label="Example icon button with a menu icon">
+                <mat-icon>keyboard_backspace</mat-icon>
+            </button>            
+            SMS Campaign <b>{{campaignname | titlecase}}</b> Details
+        </h1>
+        <div class="row">
+            <div class="col-sm-3 col-12 mt-4">
+                <div class="card campaing-details-card h-100">
+                    <div class="card-body">
+                        <!--<div class="example-button-row d-flex">
+                            <button mat-flat-button color="accent" class="mr-2 card-top-btn mob-btn">
+                                Cloud Enabled
+                            </button>
+                            <button mat-flat-button color="accent" class="mr-2 card-top-btn mob-btn">
+                                tracking Enabled
+                            </button>
+                        </div>-->
+                        <div class="campaing-details mt-3">
+                            <h3>
+                                Campaign:
+                            </h3>
+                            <div class="mt-2">
+                                <p>
+                                    Template Used:{{template}}
+                                </p>
+                                <p>
+                                    Link Used: {{link}}
+                                </p>
+                                <p>
+                                    Source: SMS
+                                </p>
+                                <p>
+                                    Date: {{date | date: 'MMM d, y, h:mm:ss a'}}
+                                </p>
+                                <p>
+                                    Type: 
+                                    {{campaigntype=='0'?'Transactional Campaign':''}}
+                                    {{campaigntype=='1'?'Promotional Campaign':''}}
+                                </p>
+                                <!--<p>
+                                    Success: {{status=='1'?'True':'Failed'}}
+                                </p>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-9 col-12">
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 co-sm-6 col-xs-12 col mt-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <div class="d-flex flex-row">
+                                    <div class="flex-fill">
+                                        <h6> SMS Credit Usage
+                                            <h2 class="font-weight-bold text-left text-primary">
+                                                <p class="lead bold mb-0 text-primary">{{totalsmscredit}}</p>
+                                            </h2>
+                                        </h6>
+                                    </div>
+                                    <div class="flex-row-reverse my-auto ng-star-inserted dashboard-icon">
+                                        <i class="fi-rr-checkbox text-large text-primary"></i>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 co-sm-6 col-xs-12 col mt-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <div class="d-flex flex-row">
+                                    <div class="flex-fill">
+                                        <h6> Links Click Count
+                                            <h2 class="font-weight-bold text-left text-primary">
+                                                <p class="lead bold mb-0 text-primary">{{hit_count}}</p>
+                                            </h2>
+                                        </h6>
+                                    </div>
+                                    <div class="flex-row-reverse my-auto ng-star-inserted dashboard-icon">
+                                        <i class="fi-rr-cursor-finger text-large text-primary"
+                                            ></i>
+                                    </div>
+                                </div>
+                                <div class="flex-row-reverse my-auto">
+                                    <div class="d-flex dashboard-text">
+                                        <i class="fi-rr-info text-primary my-auto mr-1"></i>
+                                        <p class="mb-0 text-primary">Viewed {{totaldata}} times</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 co-sm-6 col-xs-12 col mt-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <div class="d-flex flex-row">
+                                    <div class="flex-fill">
+                                        <h6> Click Through Rate
+                                            <h2 class="font-weight-bold text-left text-primary">
+                                                <p class="lead bold mb-0 text-primary">{{countpercentage(hit_count,totalsms)}}% </p>
+                                            </h2>
+                                        </h6>
+                                    </div>
+                                    <div class="flex-row-reverse my-auto ng-star-inserted dashboard-icon">
+                                        <i class="fi-rr-interactive text-large text-primary"></i>
+                                    </div>
+                                </div>
+                                <div class="flex-row-reverse my-auto">
+                                    <div class="d-flex dashboard-text">
+                                        <i class="fi-rr-info text-primary my-auto mr-1"></i>
+                                        <p class="mb-0 text-primary">Bounce Rate Data 00%</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 co-sm-6 col-xs-12 col mt-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <div class="d-flex flex-row">
+                                    <div class="flex-fill">
+                                        <h6> Total SMS
+                                            <h2 class="font-weight-bold text-left text-primary">
+                                                <p class="lead bold mb-0 text-primary">{{totalsms}}</p>
+                                            </h2>
+                                        </h6>
+                                    </div>
+                                    <div class="flex-row-reverse my-auto ng-star-inserted dashboard-icon">
+                                        <i class="fi-rr-signal-alt-2 text-large text-primary"></i>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 co-sm-6 col-xs-12 col mt-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <div class="d-flex flex-row">
+                                    <div class="flex-fill">
+                                        <h6> SMS Sent
+                                            <h2 class="font-weight-bold text-left text-primary">
+                                                <p class="lead bold mb-0 text-primary">{{smssent}}</p>
+                                            </h2>
+                                        </h6>
+                                    </div>
+                                    <div class="flex-row-reverse my-auto ng-star-inserted dashboard-icon">
+                                        <i class="fi-rr-redo text-large text-primary"></i>
+                                    </div>
+                                </div>
+                                <div class="flex-row-reverse my-auto">
+                                    <div class="d-flex dashboard-text">
+                                        <i class="fi-rr-info text-primary my-auto mr-1"></i>
+                                        <p class="mb-0 text-primary">{{totalsmsdelivered}} SMS Delivered </p>,&nbsp;
+                                        <p class="mb-0 text-primary">{{totalsmsfailed}} SMS  Failed</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  
+                    <div class="col-lg-4 col-md-4 co-sm-6 col-xs-12 col mt-4">
+                        <div class="card h-100">
+                            <div class="card-body d-inline-flex">
+                                <div class="text-center custom-button my-auto" (click)="exportcsv()">
+                                    <div class="dashboard-icon">
+                                        <i class="fi-rr-cloud-download text-large text-primary"></i>
+                                    </div>
+                                    <label>Export Report</label>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div><br>
+                <form [formGroup]="searchform" (ngSubmit)="Filtercontact()">
+                    <div class="row col-md-12">
+                        <div class="col-md-2">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Start Date</mat-label>
+                                <input matInput placeholder="Start Date" [matDatepicker]="startpicker" formControlName="startdate">
+                                <mat-datepicker-toggle matSuffix [for]="startpicker"></mat-datepicker-toggle>
+                                <mat-datepicker #startpicker tpicker></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-2">
+                            <mat-form-field appearance="outline">
+                                <mat-label>End Date</mat-label>
+                                <input matInput placeholder="End Date" [matDatepicker]="endpicker" formControlName="enddate">
+                                <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
+                                <mat-datepicker #endpicker tpicker></mat-datepicker>
+                            </mat-form-field> 
+                        </div>
+                                                
+                        <div class="col-md-2">
+                            <mat-form-field appearance="outline" class="outline-field">
+                                <mat-label class="mat-label">Mobile No</mat-label>
+                                <input type="tel" matInput placeholder="Mobile No" formControlName="mobile">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-2">
+                            <mat-form-field appearance="outline" class="outline-field">
+                                <mat-label class="mat-label">Name</mat-label>
+                                <input type="text" matInput placeholder="name" formControlName="name">
+                            </mat-form-field> 
+                        </div>
+                        <div class="col-md-2">
+                            <button class="mt-2" mat-raised-button type="submit">Search</button>
+                            <button class="ml-2" title="refresh" (click)="resetform()" mat-mini-fab color="warn" aria-label="Example icon button with a plus one icon">
+                                <span class="material-icons">refresh</span>
+                            </button>
+                        </div>
+                    </div>
+                </form>              
+
+            </div>
+        </div>
+        <div class="card shadow mb-4">
+
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table>
+                        <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+                        <mat-table class="lessons-table mat-elevation-z8"  [dataSource]="contactdataSource">
+                            <ng-container matColumnDef="id">
+
+                                <mat-header-cell *matHeaderCellDef>Sr. No</mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" data-label="id">
+                                    {{i+1+(contactpaginator.pageIndex * contactpaginator.pageSize)}}</mat-cell>
+
+                            </ng-container>
+                            <ng-container matColumnDef="date">
+
+                                <mat-header-cell *matHeaderCellDef > Send Date</mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.date | date:'dd-MM-yyyy hh:mm:ss'}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="name">
+
+                                <mat-header-cell *matHeaderCellDef >Name </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.name}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="mobile">
+
+                                <mat-header-cell *matHeaderCellDef >Mobile </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.mobile}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="status">
+
+                                <mat-header-cell *matHeaderCellDef >SMS Status </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.sms_status}}
+                                </mat-cell>
+
+                            </ng-container>
+                            
+                            <ng-container matColumnDef="credit">
+
+                                <mat-header-cell *matHeaderCellDef >SMS Credit </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.sms_credit}}
+                                </mat-cell>
+
+                            </ng-container>
+                            
+
+                            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+                            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+                        </mat-table>
+                        <mat-paginator #contactpaginator [length]="Length" [pageSize]="50" [pageSizeOptions]="[50,100,500]">
+                        </mat-paginator>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.container-fluid -->

@@ -1,0 +1,167 @@
+<div mat-dialog-head class="dilog-head d-flex justify-content-between">
+    <h3 class="primary" *ngIf="addmode">Add Conference Call</h3>
+    <h3 class="primary" *ngIf="editmode">Edit Conference Call</h3>
+    <h3 class="primary" *ngIf="deletemode">Delete Conference Call</h3>
+    <div class="d-inline-block">
+        <a class="close" (click)="openDialog()"><i class="fi-rr-cross-small"></i></a>
+    </div>
+</div>
+<div *ngIf="addmode || editmode">
+    <form [formGroup]="addForm" >
+        <div mat-dialog-content>
+            <div class="row">
+                <div class="col-xl-6 col-md-6 col-sm-12 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Conference Name</mat-label>
+                        <input matInput placeholder="Conference Name" formControlName="name">
+                        <mat-error *ngIf="addForm.controls.name.hasError('required')">
+                            Please enter name
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-12 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Manager Mobile</mat-label>
+                        <input matInput placeholder="Manager Mobile" formControlName="mobile">
+                        <mat-error *ngIf="addForm.controls.mobile.hasError('required')">
+                            Please enter mobile
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-12 col-12 mt-2">
+                    <mat-radio-group formControlName="type">
+                        <div style="color:grey;">Type</div>
+                        <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="0">Inbound
+                        </mat-radio-button>
+                        <mat-radio-button color="primary" style="padding:4px 0px 0px 24px;" [value]="1">Outbound
+                        </mat-radio-button>
+                        <mat-error *ngIf="addForm.controls.type.hasError('required')">
+                            Please select type
+                        </mat-error>
+                    </mat-radio-group>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-12 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>DID </mat-label>
+                        <mat-select formControlName="did">
+                            <mat-option *ngFor="let did of confdid;let i = index;" [value]="did.did">
+                                {{did.did}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-6 col-md-6 col-sm-12 col-12 mt-2">
+                    <mat-radio-group formControlName="membertype" (change)="showMember($event.value)">
+                        <div style="color:grey;">Member Type</div>
+                        <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="0">Agent
+                        </mat-radio-button>
+                        <mat-radio-button color="primary" style="padding:4px 0px 0px 24px;" [value]="1">Contact
+                        </mat-radio-button>
+                        <mat-radio-button color="primary" style="padding:4px 0px 0px 24px;" [value]="2">Custom
+                        </mat-radio-button>
+                        <mat-error *ngIf="addForm.controls.membertype.hasError('required')">
+                            Please select type
+                        </mat-error>
+                    </mat-radio-group>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-12 col-12 mt-2" *ngIf="agenttype">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Member </mat-label>
+                        <mat-select formControlName="member" multiple>
+                            <mat-option *ngFor="let agent of agents;let i = index;" [value]="agent.account_id">
+                                {{agent.account_name}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-12 col-12 mt-2" *ngIf="contacttype">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Member </mat-label>
+                        <mat-select formControlName="segment" multiple>
+                            <mat-option *ngFor="let segment of csegments;let i = index;" [value]="segment.cont_id">
+                                {{segment.name}}({{segment.totalcontact}})</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row"  *ngIf="customtype" formArrayName="customDetails">
+                <div class="col-xl-6 col-md-6 col-sm-12 col-12 mt-2"  *ngFor="let cd of addForm.controls.customDetails.controls ;let i=index;">
+                    <div class="d-flex" formGroupName={{i}}>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Member Name</mat-label>
+                            <input matInput placeholder="Member Name" formControlName="membername">
+                        </mat-form-field>&nbsp;&nbsp;
+                        <mat-form-field appearance="outline">
+                            <mat-label>Contact No.</mat-label>
+                            <input matInput placeholder="Contact No." formControlName="contactno" >
+                        </mat-form-field>&nbsp;&nbsp;
+                        <button mat-icon-button (click)="addNewRow()" color="primary">
+                            <mat-icon>add</mat-icon>
+                        </button>&nbsp;&nbsp;
+                        <button mat-icon-button (click)="deleteRow(i)" color="warn">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-6 col-md-6 col-sm-12 col-12 mt-2">
+                    <mat-radio-group formControlName="start" (change)="showSchedule($event.value)">
+                        <div style="color:grey;">Start</div>
+                        <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="0">Now
+                        </mat-radio-button>
+                        <mat-radio-button color="primary" style="padding:4px 0px 0px 24px;" [value]="1">Schedule
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-12 col-12 mt-2" *ngIf="scheduletime" >
+                    <mat-form-field appearance="outline">
+                        <mat-label>Schedule Time</mat-label>
+                        <input type="datetime-local" matInput placeholder="Schedule Time" formControlName="date"
+                            >
+                        <!-- <input matInput placeholder=" Date" [matDatepicker]="startpicker" formControlName="date" required> -->
+                        <!-- <mat-datepicker-toggle matSuffix [for]="startpicker"></mat-datepicker-toggle>
+                        <mat-datepicker #startpicker tpicker></mat-datepicker> -->
+                        <mat-error *ngIf="addForm.controls.date.hasError('required')">
+                            Please select date time
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-6 col-md-6 col-sm-12 col-12 mt-2">
+                    <mat-radio-group formControlName="sendsms" (change)="showTemplate($event.value)">
+                        <div style="color:grey;">Send SMS ?</div>
+                        <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="0">No
+                        </mat-radio-button>
+                        <mat-radio-button color="primary" style="padding:4px 0px 0px 24px;" [value]="1">Yes
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-12 col-12 mt-2" *ngIf="smstemplate" >
+                    <mat-form-field appearance="outline">
+                        <mat-label>SMS Campaign </mat-label>
+                        <mat-select formControlName="smstemplate" >
+                            <mat-option *ngFor="let sms of smstemp;let i = index;" [value]="sms.cid">
+                                {{sms.cam_name}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="btn-sec" mat-dialog-actions>
+            <button mat-raised-button type="submit" color="primary" class="Update-btn" (click)="submit()">Save</button>
+        </div>
+    </form>
+</div>
+<div *ngIf="deletemode">
+    <h3 style="margin-top: 10px; font-weight: 500;">
+        Are you sure to delete this?
+    </h3>
+    <div class="btn-sec">
+        <button mat-raised-button type="button" color="primary" class="Update-btn"
+        (click)="deleteData(adminid)">Delete</button>
+        &nbsp;
+        <button mat-raised-button type="button" class="Discard-btn" (click)="openDialog()">Cancel</button>
+    </div>
+</div>

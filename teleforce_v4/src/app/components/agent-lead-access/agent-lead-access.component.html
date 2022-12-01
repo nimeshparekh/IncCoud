@@ -1,0 +1,309 @@
+<div class="warap-height pt-4">
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <h1 class="h3 mb-3 text-gray-800">
+            <button routerLink="/settings" mat-icon-button title="Back" color="accent"
+                aria-label="Example icon button with a menu icon">
+                <mat-icon>keyboard_backspace</mat-icon>
+            </button>
+            Access Setting
+        </h1>
+
+
+        <!-- DataTales Example -->
+        <div class="card mb-4 shadow">
+
+            <div class="card-body">
+
+                <form [formGroup]="addForm" (ngSubmit)="submit()">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div>
+                                <b></b>
+                            </div>
+
+
+                            <div formArrayName="settingDetail" *ngFor="let cd of configarr.controls ;let i=index;">
+                                <div [formGroupName]="i">
+                                    <p *ngIf="i==0"> Would you give Lead Access to Agent ?</p>
+                                    <p *ngIf="i==1"> Do you want enable to ACW called Hold (After call work) ?</p>
+                                    <p *ngIf="i==2">Connect Agent Method.</p>
+
+                                    <p *ngIf="i==4">Dialer Prefix</p>
+
+                                    <p *ngIf="i==3">Redirect to LMS Detail or Feedback, when Incoming Call.</p>
+                                    <p *ngIf="i==5">Call queue music.</p>
+                                    <p *ngIf="i==6">VPN auto Answer. </p>
+                                    <p *ngIf="i==18">Sent Whatsapp message by </p>
+                                    <p *ngIf="i==19">Whatsapp API </p>
+                                    <p *ngIf="i==21">Whatsapp Incoming Agent Group </p>
+                                    <p *ngIf="i==23">Duplicate lead </p>
+                                    <p *ngIf="i==24">Incomming Call- Agent login</p>
+
+
+
+
+                                    <input matInput placeholder="Field Name" formControlName="setting_name"
+                                        style="display:none">
+
+
+
+                                    <mat-radio-group formControlName="setting_value" *ngIf="i==0">
+                                        <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="0">
+                                            No
+                                        </mat-radio-button>
+                                        <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="1">
+                                            Yes
+                                        </mat-radio-button>
+                                    </mat-radio-group>
+
+                                    <mat-radio-group formControlName="setting_value" *ngIf="i==1">
+                                        <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="0">
+                                            No
+                                        </mat-radio-button>
+                                        <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="1">
+                                            Yes
+                                        </mat-radio-button>
+                                    </mat-radio-group>
+
+                                    <mat-form-field appearance="outline" *ngIf="i==4">
+                                        <input matInput placeholder="Field Name" formControlName="setting_value">
+                                    </mat-form-field>
+                                    <mat-form-field appearance="outline" *ngIf="i==3">
+                                        <mat-select placeholder="Field Name" formControlName="setting_value">
+                                            <mat-option value="lms">LMS Detail</mat-option>
+                                            <mat-option value="feedback">Feedback</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+
+                                    <mat-radio-group formControlName="setting_value" *ngIf="i==2">
+                                        <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="0">
+                                            Hybrid
+                                        </mat-radio-button>
+                                        <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="1">
+                                            VPN
+                                        </mat-radio-button>
+                                        <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="2">
+                                            Mobile
+                                        </mat-radio-button>
+                                    </mat-radio-group>
+                                    <mat-form-field appearance="outline" *ngIf="i==5">
+                                        <mat-select placeholder="Sound" formControlName="setting_value">
+                                            <mat-option *ngFor="let temp of sound" [value]="temp.id">
+                                                {{temp.originalfilename}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                    <mat-radio-group formControlName="setting_value" *ngIf="i==6">
+                                        <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="0">
+                                            No
+                                        </mat-radio-button>
+                                        <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="1">
+                                            Yes
+                                        </mat-radio-button>
+                                    </mat-radio-group>
+                                    <mat-radio-group formControlName="setting_value" *ngIf="i==18">
+                                        <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="0">
+                                            Web
+                                        </mat-radio-button>
+                                        <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="1">
+                                            API
+                                        </mat-radio-button>
+                                        <!-- <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="2">
+                                            Both
+                                        </mat-radio-button> -->
+                                    </mat-radio-group>
+                                    <mat-form-field appearance="outline" *ngIf="i==19">
+                                        <mat-select placeholder="API" formControlName="setting_value">
+                                            <mat-option *ngFor="let api of customapi" [value]="api.api_id">
+                                                {{api.api_name}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                    <mat-form-field appearance="outline" *ngIf="i==21">
+                                        <mat-select placeholder="Group" formControlName="setting_value">
+                                            <mat-option *ngFor="let agent of agentgroup" [value]="agent.GroupID">
+                                                {{agent.GroupName}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                    <mat-radio-group formControlName="setting_value" *ngIf="i==23">
+                                        <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" value="don't_allow_duplicate">
+                                            Don't allow duplicate                                         </mat-radio-button>
+                                        <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" value="update_existing_lead">
+                                            Update existing lead 
+                                            </mat-radio-button>
+                                        <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" value="create_a_new_lead">
+                                            Create a new lead
+                                        </mat-radio-button>
+                                    </mat-radio-group>
+                                    <mat-radio-group formControlName="setting_value" *ngIf="i==24">
+                                        <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="0">
+                                            No
+                                        </mat-radio-button>
+                                        <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="1">
+                                            Yes
+                                        </mat-radio-button>
+                                    </mat-radio-group>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div>
+                                <b>
+                                    Agent Button Setting
+                                </b>
+                            </div>
+                            <div formArrayName="settingDetail" *ngFor="let cd of configarr.controls ;let i=index;">
+                                <div [formGroupName]="i">
+                                    <p *ngIf="i==7">Show the hold call button.</p>
+
+                                    <p *ngIf="i==8">Show the CSV button.</p>
+                                    <p *ngIf="i==9">Show the Softphone button.</p>
+                                    <p *ngIf="i==10">Show the Whatsapp button.</p>
+                                    <p *ngIf="i==11">Show the Feedback button.</p>
+
+                                    <p *ngIf="i==12">Show the Meeting button.</p>
+                                    <p *ngIf="i==13">Show the Transfer button.</p>
+                                    <p *ngIf="i==14">Show the Call history button.</p>
+                                    <p *ngIf="i==15">Show the Create contact button.</p>
+                                    <p *ngIf="i==16">Show the Call auto answer button.</p>
+                                    <p *ngIf="i==17">Show the VOIP button.</p>
+                                    <p *ngIf="i==20">Show the Recording button</p>
+                                    <p *ngIf="i==22">Show Delete button in LMS</p>
+
+
+                                    <input matInput placeholder="Field Name" formControlName="setting_name"
+                                        style="display:none">
+
+
+
+                                    <mat-radio-group formControlName="setting_value" *ngIf="i==7">
+                                        <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="0">
+                                            No
+                                        </mat-radio-button>
+                                        <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="1">
+                                            Yes
+                                        </mat-radio-button>
+
+                                    </mat-radio-group>
+
+                                    <mat-radio-group formControlName="setting_value" *ngIf="i==8">
+                                        <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="0">
+                                            No
+                                        </mat-radio-button>
+                                        <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="1">
+                                            Yes
+                                        </mat-radio-button>
+
+                                    </mat-radio-group>
+                                    <mat-radio-group formControlName="setting_value" *ngIf="i==9">
+                                        <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="0">
+                                            No
+                                        </mat-radio-button>
+                                        <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="1">
+                                            Yes
+                                        </mat-radio-button>
+
+                                    </mat-radio-group>
+                                    <mat-radio-group formControlName="setting_value" *ngIf="i==10">
+                                        <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="0">
+                                            No
+                                        </mat-radio-button>
+                                        <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="1">
+                                            Yes
+                                        </mat-radio-button>
+
+                                    </mat-radio-group>
+                                    <mat-radio-group formControlName="setting_value" *ngIf="i==11">
+                                        <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="0">
+                                            No
+                                        </mat-radio-button>
+                                        <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="1">
+                                            Yes
+                                        </mat-radio-button>
+
+                                    </mat-radio-group>
+                                    <mat-radio-group formControlName="setting_value" *ngIf="i==12">
+                                        <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="0">
+                                            No
+                                        </mat-radio-button>
+                                        <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="1">
+                                            Yes
+                                        </mat-radio-button>
+
+                                    </mat-radio-group>
+                                    <mat-radio-group formControlName="setting_value" *ngIf="i==13">
+                                        <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="0">
+                                            No
+                                        </mat-radio-button>
+                                        <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="1">
+                                            Yes
+                                        </mat-radio-button>
+
+                                    </mat-radio-group>
+                                    <mat-radio-group formControlName="setting_value" *ngIf="i==14">
+                                        <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="0">
+                                            No
+                                        </mat-radio-button>
+                                        <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="1">
+                                            Yes
+                                        </mat-radio-button>
+
+                                    </mat-radio-group>
+                                    <mat-radio-group formControlName="setting_value" *ngIf="i==15">
+                                        <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="0">
+                                            No
+                                        </mat-radio-button>
+                                        <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="1">
+                                            Yes
+                                        </mat-radio-button>
+
+                                    </mat-radio-group>
+                                    <mat-radio-group formControlName="setting_value" *ngIf="i==16">
+                                        <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="0">
+                                            No
+                                        </mat-radio-button>
+                                        <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="1">
+                                            Yes
+                                        </mat-radio-button>
+
+                                    </mat-radio-group>
+                                    <mat-radio-group formControlName="setting_value" *ngIf="i==17">
+                                        <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="0">
+                                            No
+                                        </mat-radio-button>
+                                        <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="1">
+                                            Yes
+                                        </mat-radio-button>
+
+                                    </mat-radio-group>
+                                    <mat-radio-group formControlName="setting_value" *ngIf="i==20">
+                                        <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="0">
+                                            No
+                                        </mat-radio-button>
+                                        <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="1">
+                                            Yes
+                                        </mat-radio-button>
+
+                                    </mat-radio-group>
+                                    <mat-radio-group formControlName="setting_value" *ngIf="i==22">
+                                        <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="0">
+                                            No
+                                        </mat-radio-button>
+                                        <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="1">
+                                            Yes
+                                        </mat-radio-button>
+
+                                    </mat-radio-group>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="btn-sec" mat-dialog-actions><br>
+                        <button mat-raised-button type="submit" color="primary" class="Update-btn">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

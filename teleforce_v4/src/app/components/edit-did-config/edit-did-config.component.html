@@ -1,0 +1,51 @@
+<div mat-dialog-head class="dilog-head d-flex justify-content-between">
+    <h3 class="primary">Edit Detail</h3>
+    <div class="d-inline-block">
+        <a class="close" (click)="openDialog()"><i class="fi-rr-cross-small"></i></a>
+    </div>
+</div>
+<div>
+    <form [formGroup]="feedbackform">
+        <div mat-dialog-content>
+            <div class="row mt-2">
+                <div class="col-sm-12 col-12">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Type</mat-label>
+                        <mat-select formControlName="type" required (selectionChange)="changeaction($event.value)">
+                            <mat-option [value]="0">Terminate Call</mat-option>
+                            <mat-option [value]="1">Announcement</mat-option>
+                            <mat-option [value]="2">Agents Group</mat-option>
+                            <mat-option [value]="3" *ngIf="ivr">IVR</mat-option>
+                            <mat-option [value]="4">Voice Mail</mat-option>
+                            <!-- <mat-option [value]="5">Time Condition</mat-option> -->
+                            <mat-option [value]="6" *ngIf="misscallservice">Miss Call</mat-option>
+                            <mat-option [value]="7" *ngIf="conference">Conference</mat-option>
+                            <mat-option [value]="8" *ngIf="clicktocall">Click to Call</mat-option>
+                            <mat-option [value]="9" *ngIf="dialer">Outgoing / Incoming</mat-option>
+                            <!--<mat-option [value]="8">Recording Studio</mat-option>
+                            <mat-option [value]="9">Custom IVR</mat-option>
+                            <mat-option [value]="10">SIP Hard Phone</mat-option> -->
+                        </mat-select>
+                        <mat-error *ngIf="feedbackform.controls.type.hasError('required')">
+                            Please select type
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12 col-12">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Action</mat-label>
+                        <mat-select formControlName="action" required>
+                            <mat-option *ngFor="let action of actionarr" [value]="action.value">{{action.name}}</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="feedbackform.controls.type.hasError('required')">
+                            Please select action
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="btn-sec" mat-dialog-actions>
+            <button mat-raised-button type="submit" color="primary" (click)="submit()" class="Update-btn">Save</button>
+        </div>
+    </form>
+</div>

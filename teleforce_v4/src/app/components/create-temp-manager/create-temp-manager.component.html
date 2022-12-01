@@ -1,0 +1,467 @@
+<div mat-dialog-head class="dilog-head d-flex justify-content-between">
+    <h3 class="primary" *ngIf="addmode">Add Manager</h3>
+    <h3 class="primary" *ngIf="editmode">Edit Manager</h3>
+    <h3 class="primary" *ngIf="deletemode">Delete Manager</h3>
+    <div class="d-inline-block">
+        <a class="close" (click)="openDialog()"><i class="fi-rr-cross-small"></i></a>
+    </div>
+</div>
+<div  *ngIf="addmode || editmode">
+    <form [formGroup]="addForm" (ngSubmit)="submit()">
+        <div mat-dialog-content>
+            <div class="row">
+                <div class="col-12">
+                    <h4 class="mt-2">Basic Detail</h4>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Username</mat-label>
+                        <div *ngIf="addmode">
+                            <input matInput placeholder="Username" formControlName="name" required>
+                        </div>
+                        <div *ngIf="editmode">
+                            <input matInput placeholder="Username" formControlName="name" required readonly>
+                        </div>
+                        <mat-error *ngIf="addForm.controls.name.hasError('required')">
+                            Please enter username
+                        </mat-error>
+                        <mat-error *ngIf="addForm.controls.name.hasError('maxlength')">
+                            Maximum 12 character allowed
+                        </mat-error>
+                        <mat-error *ngIf="invalidUserName()">
+                            Username already exists. please try other
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-6 col-12 mt-2" *ngIf="addmode">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Password</mat-label>
+                        <input matInput placeholder="Password" formControlName="password" required>
+                        <button mat-icon-button matSuffix (click)="randomString()">
+                            <mat-icon>autorenew</mat-icon>
+                        </button>
+                        <mat-error *ngIf="addForm.controls.password.hasError('required')">
+                            Please enter password
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Email</mat-label>
+                        <input matInput placeholder="Email" formControlName="email" required>
+                        <mat-error *ngIf="addForm.controls.email.hasError('required')">
+                            Please enter email
+                        </mat-error>
+                        <mat-error *ngIf="addForm.controls.email.hasError('email')">
+                            Please enter valid email id
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Mobile</mat-label>
+                        <input matInput placeholder="Mobile" formControlName="mobile" required>
+                        <mat-error *ngIf="addForm.controls.mobile.hasError('required')">
+                            Please enter mobile
+                        </mat-error>
+                        <mat-error *ngIf="addForm.controls.mobile.hasError('pattern')">
+                            Please enter valid 10 digit mobile number
+                        </mat-error>
+                        <mat-error *ngIf="invalidMobile()">
+                            Mobile No. already exists. please try other
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Alternate Mobile</mat-label>
+                        <input matInput placeholder="Alternate Mobile" formControlName="alternatemobile">                           
+                        <mat-error *ngIf="addForm.controls.alternatemobile.hasError('pattern')">
+                            Please enter valid 10 digit alternate mobile number
+                        </mat-error>                           
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Company Name</mat-label>
+                        <input matInput placeholder="Company Name" formControlName="companyname" required>
+                            <mat-error *ngIf="addForm.controls.companyname.hasError('required')">
+                                Please enter company name
+                            </mat-error>      
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Authorised Person Name</mat-label>
+                        <input matInput placeholder="Authorised Person Name"
+                        formControlName="authorised_person_name">   
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Company Address</mat-label>
+                        <textarea matInput placeholder="Company Address"
+                            formControlName="accountaddress" rows="1"></textarea>
+                        <mat-error *ngIf="addForm.controls.accountaddress.hasError('required')">
+                            Please enter company address.
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-6 col-12 mt-2">
+                    <mat-radio-group formControlName="status">
+                        <div style="color:grey;">Status</div>
+                        <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="0">Active
+                        </mat-radio-button>
+                        <mat-radio-button color="primary" style="padding:4px 0px 0px 24px;" [value]="1">Inactive
+                        </mat-radio-button>
+                    </mat-radio-group>
+                    <mat-error *ngIf="addForm.controls.status.hasError('required')">
+                        Please select status
+                    </mat-error>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Pulse</mat-label>
+                        <input type="number" matInput placeholder="Pulse" formControlName="pulse" min="0">
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Credits</mat-label>
+                        <input type="number" matInput placeholder="Credits" formControlName="credits" min="0">
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Balance</mat-label>
+                        <input type="number" matInput placeholder="Balance" formControlName="balance" min="0">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-2">
+                    <div class="text-inside">
+                        <mat-label>Which Package want to choose ? </mat-label>
+                        <div>
+                            <mat-checkbox id="bestpackagemode" class="bestpackagemode mt-2" color="primary"
+                                formControlName="bestpackagemode" value="1" (change)="checkbestpackagevalue($event)">
+                                Best Package
+                            </mat-checkbox>&nbsp;
+                            <mat-checkbox id="telesmspackagemode" class="telesmspackagemode" color="primary"
+                                formControlName="telesmspackagemode" (change)="checktelesmsvalue($event)">Tele SMS
+                                Package
+                            </mat-checkbox>&nbsp;
+                            <mat-checkbox id="telemailpackagemode" class="telemailpackagemode" color="primary"
+                                formControlName="telemailpackagemode" (change)="checktelemailvalue($event)">Tele Email
+                                Package
+                            </mat-checkbox>&nbsp;
+                            <mat-checkbox id="telemeetpackagemode" class="telemeetpackagemode" color="primary"
+                                formControlName="telemeetpackagemode" (change)="checktelemeetvalue($event)">Tele Meet
+                                Package
+                            </mat-checkbox>&nbsp;
+                            <mat-checkbox id="teledigitalpackagemode" class="teledigitalpackagemode" color="primary"
+                                formControlName="teledigitalpackagemode" (change)="checkteledigitalvalue($event)">Tele
+                                Digital Package
+                            </mat-checkbox>&nbsp;
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2" *ngIf="showbestpackage">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Package</mat-label>
+                        <mat-select formControlName="package" (ngModelChange)='getPackageDetail($event)'>
+                            <mat-option *ngFor="let package of packages" [value]="package.package_id">
+                                {{package.package_name}}</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="addForm.controls.package.hasError('required')">
+                            Please select package
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2" *ngIf="showbestpackage">
+                    <div *ngIf="service!=''">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Services</mat-label>
+                            <mat-select formControlName="services">
+                                <mat-option [value]="0" disabled>IVR</mat-option>
+                                <mat-option [value]="1" disabled>Miss Call</mat-option>
+                                <mat-option [value]="2" disabled>Conference</mat-option>
+                                <mat-option [value]="3" disabled>Dialer</mat-option>
+                                <mat-option [value]="4" disabled>Click to Call</mat-option>
+                                <mat-option [value]="5" disabled>Campaigns</mat-option>
+                                <mat-option [value]="7" disabled>Bulk SMS</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div *ngIf="serviceArr!=''">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Services</mat-label>
+                            <mat-select formControlName="services" multiple>
+                                <mat-option *ngFor="let topping of serviceArr" [value]="topping" disabled>
+                                    {{topping=='0'?'IVR':''}}
+                                    {{topping=='1'?'Miss Call':''}}
+                                    {{topping=='2'?'Conference':''}}
+                                    {{topping=='3'?'Dialer':''}}
+                                    {{topping=='4'?'Click to Call':''}}
+                                    {{topping=='5'?'Campaigns':''}}
+                                    {{topping=='7'?'Bulk SMS':''}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-6 col-12 mt-2" *ngIf="showbestpackage">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Expiry Date</mat-label>
+                        <input matInput placeholder="Expiry Date" [matDatepicker]="startpicker"
+                            formControlName="expirydate">
+                        <mat-datepicker-toggle matSuffix [for]="startpicker"></mat-datepicker-toggle>
+                        <mat-datepicker #startpicker tpicker></mat-datepicker>
+                        <mat-error *ngIf="addForm.controls.expirydate.hasError('required')">
+                            Please enter expiry date
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>User Limit</mat-label>
+                        <input type="number" matInput placeholder="User Limit" formControlName="userlimit" min="0"
+                            (change)='countBillingAmount()'>
+                        <mat-error *ngIf="addForm.controls.userlimit.hasError('required')">
+                            Please enter user limit
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Channels</mat-label>
+                        <input type="number" matInput placeholder="Channels" formControlName="channels" min="0">
+                            <mat-error *ngIf="addForm.controls.channels.hasError('required')">
+                                Please enter no of channel
+                            </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-6 col-12 mt-2" *ngIf="showbestpackage&&showpackageminute">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Package Minutes</mat-label>
+                        <input type="number" matInput placeholder="Package Minutes" formControlName="packageminutes" min="0" readonly>                            
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-6 col-12 mt-2" *ngIf="showbestpackage&&showpackageminute">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Package Free Minutes</mat-label>
+                        <input type="number" matInput placeholder="Package Free Minutes" formControlName="packagefreeminutes" min="0">                            
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-6 col-12 mt-2"  *ngIf="showsmspackage">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Tele SMS Package</mat-label>
+                        <mat-select formControlName="telesmspackage"
+                            (ngModelChange)='getTeleSMSPackageDetail($event)'>
+                            <mat-option *ngFor="let package of smspackages" [value]="package.SMS_ID">
+                                {{package.SMS_Plan}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-6 col-12 mt-2"  *ngIf="showsmspackage">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Tele SMS Package Value</mat-label>
+                        <input type="number" matInput placeholder="Tele SMS Package Value"
+                                formControlName="telesmspackagevalue" readonly>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-6 col-12 mt-2"  *ngIf="showmailpackage">
+                    <mat-form-field  appearance="outline">
+                        <mat-label>Tele Email Package</mat-label>
+                        <mat-select formControlName="telemailpackage"
+                            (ngModelChange)='getTeleMailPackageDetail($event)'>
+                            <mat-option *ngFor="let package of mailpackages" [value]="package.Mail_ID">
+                                {{package.Mail_Plan}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-6 col-12 mt-2"  *ngIf="showmailpackage">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Tele Email Package Value</mat-label>
+                        <input type="number" matInput placeholder="Tele Email Package Value"
+                            formControlName="telemailpackagevalue" readonly>
+                    </mat-form-field>
+                </div>
+                <!--<div class="col-xl-3 col-md-3 col-sm-6 col-12 mt-2"  *ngIf="showmailpackage">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Tele Email Package</mat-label>
+                        <mat-select formControlName="telemailpackage"
+                            (ngModelChange)='getTeleMailPackageDetail($event)'>
+                            <mat-option *ngFor="let package of mailpackages" [value]="package.Mail_ID">
+                                {{package.Mail_Plan}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-6 col-12 mt-2"  *ngIf="showmailpackage">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Tele Email Package Value</mat-label>
+                        <input type="number" matInput placeholder="Tele Email Package Value"
+                            formControlName="telemailpackagevalue" readonly>
+                    </mat-form-field>
+                </div>-->
+                <div class="col-xl-3 col-md-3 col-sm-6 col-12 mt-2"  *ngIf="showmailpackage">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Mail Expiry Date</mat-label>
+                        <input matInput placeholder="Mail Expiry Date" [matDatepicker]="startpicker"
+                            formControlName="mailexpirydate" >
+                        <mat-datepicker-toggle matSuffix [for]="startpicker"></mat-datepicker-toggle>
+                        <mat-datepicker #startpicker tpicker></mat-datepicker>  
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-6 col-12 mt-2"  *ngIf="showmeetpackage">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Tele Meet Package</mat-label>
+                        <mat-select formControlName="telemeetpackage"
+                            (ngModelChange)='getTeleMeetPackageDetail($event)'>
+                            <mat-option *ngFor="let package of meetpackages" [value]="package.Meet_ID">
+                                {{package.Meet_Plan}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-6 col-12 mt-2"  *ngIf="showmeetpackage">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Tele Meet Package Value</mat-label>
+                        <input type="number" matInput placeholder="Tele Meet Package Value"
+                            formControlName="telemeetpackagevalue" readonly>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-6 col-12 mt-2"  *ngIf="showmeetpackage">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Meet Expiry Date</mat-label>
+                        <input matInput placeholder="Meet Expiry Date" [matDatepicker]="startpicker"
+                            formControlName="meetexpirydate" >
+                        <mat-datepicker-toggle matSuffix [for]="startpicker"></mat-datepicker-toggle>
+                        <mat-datepicker #startpicker tpicker></mat-datepicker>                           
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-6 col-12 mt-2"  *ngIf="showdigitalpackage">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Tele Digital Package</mat-label>
+                        <mat-select formControlName="teledigitalpackage"
+                            (ngModelChange)='getTeleDigitalPackageDetail($event)'>
+                            <mat-option *ngFor="let package of digitalpackages" [value]="package.Digital_ID">
+                                {{package.Digital_Plan}}</mat-option>
+                        </mat-select>                        
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-6 col-12 mt-2"  *ngIf="showdigitalpackage">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Tele Digital Package Value</mat-label>
+                        <input type="number" matInput placeholder="Tele Digital Package Value"
+                                formControlName="teledigitalpackagevalue" readonly>                      
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-6 col-12 mt-2"  *ngIf="showdigitalpackage">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Digital Expiry Date</mat-label>
+                        <input matInput placeholder="Digital Expiry Date" [matDatepicker]="startpicker"
+                            formControlName="digitalexpirydate" >
+                        <mat-datepicker-toggle matSuffix [for]="startpicker"></mat-datepicker-toggle>
+                        <mat-datepicker #startpicker tpicker></mat-datepicker>
+                       
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <h4 class="mt-2">Billing Detail</h4>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Account State</mat-label>
+                        <mat-select formControlName="accountstatecode" (ngModelChange)='countBillingAmount()'>
+                            <mat-option *ngFor="let state of stateArr" [value]="state.state_code">
+                                {{state.state_name}}</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="addForm.controls.accountstatecode.hasError('required')">
+                            Please select state
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Account GST No.</mat-label>
+                        <input matInput placeholder="Account GST No." formControlName="mgstno">
+                        <mat-error *ngIf="addForm.controls.mgstno.hasError('required')">
+                            Please enter Account GST No.
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Company GST No.</mat-label>
+                        <mat-select formControlName="companygstno" (ngModelChange)='countBillingAmount()'>
+                            <mat-option *ngFor="let gst of gstArr" [value]="gst.GST_Number">
+                                {{gst.GST_Number}}</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="addForm.controls.companygstno.hasError('required')">
+                            Please select company GST No.
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-6 col-12 mt-2">
+                    <mat-radio-group formControlName="discountype" (change)="showDiscount($event.value)">
+                        <div style="color:grey;">Discount type</div>
+                        <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="0">Percentage
+                        </mat-radio-button>
+                        <mat-radio-button color="primary" style="padding:4px 0px 0px 24px;" [value]="1">Amount
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-6 col-12 mt-2" *ngIf="showdiscountper">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Package Discount(%)</mat-label>
+                        <input matInput placeholder="Package Discount(%)" formControlName="discountper"
+                            (change)='countBillingAmount()'>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-6 col-12 mt-2" *ngIf="showdiscountamt">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Discount Amount(Rs.)</mat-label>
+                        <input matInput placeholder="Discount Amount(Rs.)" formControlName="packagediscount" (change)='countBillingAmount()' >
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-6 col-12 mt-2" *ngIf="showdiscountper">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Package Discount(Rs.)</mat-label>
+                        <input matInput placeholder="Package Discount(Rs.)" formControlName="packagediscount"
+                            (change)='countBillingAmount()' >
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-sm-3">
+                    <mat-label>Bill Amount : {{billingamount}}</mat-label>
+                </div>
+                <div class="col-12 col-sm-3">
+                    <mat-label>Bill Amount After Discount: {{withdiscountamount}}</mat-label>
+                </div>
+                <div class="col-12 col-sm-3">
+                    <mat-label>GST Amount: {{gstamount}}</mat-label>
+                </div>
+                <div class="col-12 col-sm-3">
+                    <mat-label>Bill Final Amount: {{billfinalamount}}</mat-label>
+                </div>
+            </div>
+        </div>
+        <div class="btn-sec" mat-dialog-actions>
+            <button mat-raised-button type="submit" color="primary" class="Update-btn">Save</button>
+        </div>
+    </form>
+</div>
+<div *ngIf="deletemode">
+    <h3 style="margin-top: 10px; font-weight: 500;">
+        Are you sure to delete this ?
+    </h3>
+    <div class="btn-sec">
+        <button mat-raised-button type="button" color="primary" class="Update-btn"
+        (click)="deleteData(adminid)">Delete</button>
+        &nbsp;
+        <button mat-raised-button type="button" class="Discard-btn" (click)="openDialog()">Cancel</button>
+    </div>
+</div>

@@ -1,0 +1,12 @@
+button:focus
+{
+  outline: none !important;
+}
+
+
+
+table 
+{
+    width: 100%;
+    min-width: 500px;
+}

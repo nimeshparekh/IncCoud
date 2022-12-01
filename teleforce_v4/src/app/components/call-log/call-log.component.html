@@ -1,0 +1,389 @@
+<div class="warap-height pt-4">
+  <!-- Begin Page Content -->
+  <div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Call Log</h1>
+
+    <form [formGroup]="searchform" (ngSubmit)="searchData()">
+      <div class="row">
+        <div class="col-12 col-md-4 col-lg-3 col-xl-2 col-sm-6 mt-2">
+          <mat-form-field appearance="outline">
+            <mat-label>DID</mat-label>
+            <mat-select formControlName="did">
+              <mat-option value="">All</mat-option>
+              <mat-option *ngFor="let arr of didarr" value="{{arr.did}}">
+                {{arr.did}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-4 col-lg-3 col-xl-2 col-sm-6 mt-2">
+          <mat-form-field appearance="outline">
+            <mat-label>Agent</mat-label>
+            <mat-select formControlName="agentid">
+              <mat-option value="">All</mat-option>
+              <mat-option *ngFor="let agent of agents" value="{{agent.account_id}}">
+                {{agent.account_name | titlecase}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-4 col-lg-3 col-xl-2 col-sm-6 mt-2">
+          <mat-form-field appearance="outline">
+            <mat-label>Caller Number</mat-label>
+            <input matInput placeholder="Caller Number" formControlName="callerno">
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-4 col-lg-3 col-xl-2 col-sm-6 mt-2">
+          <mat-form-field appearance="outline">
+            <mat-label>Start Date</mat-label>
+            <input matInput placeholder="Start Date" [matDatepicker]="startpicker" formControlName="startdate">
+            <mat-datepicker-toggle matSuffix [for]="startpicker"></mat-datepicker-toggle>
+            <mat-datepicker #startpicker tpicker></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-4 col-lg-3 col-xl-2 col-sm-6 mt-2">
+          <mat-form-field appearance="outline">
+            <mat-label>End Date</mat-label>
+            <input matInput placeholder="End Date" [matDatepicker]="endpicker" formControlName="enddate">
+            <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
+            <mat-datepicker #endpicker tpicker></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-4 col-lg-3 col-xl-2 col-sm-6 mt-2">
+          <mat-form-field appearance="outline">
+            <mat-label>Status</mat-label>
+            <mat-select formControlName="status">
+              <mat-option value="">All</mat-option>
+              <mat-option *ngFor="let status of callstatus" value="{{status.callstatus}}">
+                {{status.callstatus}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        
+        <div class="col-12 col-md-4 col-lg-3 col-xl-2 col-sm-6 mt-2">
+          <mat-form-field appearance="outline">
+            <mat-label>Agent Status</mat-label>
+            <mat-select formControlName="agentstatus">
+              <mat-option value="">All</mat-option>
+              <mat-option *ngFor="let status of agentstatus" value="{{status.AgentStatus}}">
+                {{status.AgentStatus}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-4 col-lg-3 col-xl-2 col-sm-6 mt-2">
+          <mat-form-field appearance="outline">
+            <mat-label>Call Type</mat-label>
+            <mat-select formControlName="calltype">
+              <mat-option value="">All</mat-option>
+              <mat-option *ngFor="let type of calltype" value="{{type.CallType}}">
+                {{type.CallType | titlecase}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <!--call disconnected by-->
+        <div class="col-12 col-md-4 col-lg-3 col-xl-2 col-sm-6 mt-2">
+          <mat-form-field appearance="outline">
+            <mat-label>Disconnected By</mat-label>
+            <mat-select formControlName="disconnected_by">
+              <mat-option value="">All</mat-option>
+              <mat-option *ngFor="let type of disconnected_by" value="{{type.DisconnectedBy}}">
+                {{type.DisconnectedBy | titlecase}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="col-12 col-md-4 col-lg-3 col-xl-2 col-sm-6 mt-2">
+          <mat-form-field appearance="outline">
+            <mat-label>Last Destination</mat-label>
+            <mat-select formControlName="lastdestination">
+              <mat-option value="">All</mat-option>
+              <mat-option *ngFor="let destination of lastdestination" value="{{destination.LastDestination}}">
+                {{destination.LastDestination | titlecase}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-4 col-lg-3 col-xl-2 col-sm-6 mt-2">
+          <mat-form-field appearance="outline">
+            <mat-label>Service</mat-label>
+            <mat-select formControlName="service">
+              <mat-option value="">All</mat-option>
+              <mat-option value="2">Agents Group</mat-option>
+              <mat-option value="3" *ngIf="ivr">IVR</mat-option>
+              <mat-option value="6" *ngIf="misscallservice">Miss Call</mat-option>
+              <mat-option value="7" *ngIf="conference">Conference</mat-option>
+              <mat-option value="8" *ngIf="clicktocall">Click to Call</mat-option>
+              <mat-option value="9">Outgoing/Incoming</mat-option>
+
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-4 col-lg-3 col-xl-2 col-sm-6 mt-2">
+          <mat-form-field appearance="outline">
+            <mat-label>Extenstion</mat-label>
+            <mat-select formControlName="extension">
+              <mat-option value="">All</mat-option>
+              <mat-option *ngFor="let exten of extensions" value="{{exten.LastExtension}}">
+                {{exten.LastExtension}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-4 col-lg-3 col-xl-3 col-sm-6 mt-2">
+          <!-- <button mat-raised-button type="submit" color="primary" class="Update-btn">Search</button>&nbsp; -->
+          <button mat-raised-button type="submit" class="mt-2" (click)="Filtercontact()" [disabled]="isDisabled">Search</button>&nbsp;
+          <button mat-raised-button color="warn" class="mt-2" (click)="resetform()">Reset</button>&nbsp;
+          <!-- <button (click)="Filtercontact()" class="mt-2" mat-mini-fab color="primary"
+            aria-label="Example icon button with a plus one icon">
+            <span class="material-icons">refresh</span> -->
+          <!-- </button> -->
+        </div>
+      </div>
+    </form>
+
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4 mt-3">
+
+      <ng-template [ngIf]="dataSource.loading$ | async">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      </ng-template>
+      <!-- <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar> -->
+
+      <div class="card-body">
+
+        <div fxLayout fxLayoutAlign="center center">
+          <button mat-raised-button color="primary" (click)="createExcel()" [disabled]="isDisabled1">CSV</button>&nbsp;
+          <!-- <button mat-raised-button color="primary" (click)="downloadAudio()">Download</button>&nbsp; -->
+          <button mat-raised-button color="accent" (click)="assignLead()" *ngIf="logidArr.length>0">Assign Lead</button>
+        </div>
+
+        <!--Table Data-->
+        <div class="table-responsive mt-2">
+
+          <table mat-table matTableExporter #exporter="matTableExporter" [dataSource]="dataSource" matSort
+            (matSortChange)="sortData($event)" class="mat-elevation-z8">
+
+            <!-- assignlead Column -->
+            <ng-container matColumnDef="assignlead">
+              <th mat-header-cell *matHeaderCellDef> </th>
+              <td mat-cell *matCellDef="let row;let i = index;" data-label="id">
+                <input type="checkbox" name="" class="checkbox" data-parent="1" value="{{row.id}}"
+                  (click)="clickAssignLead(row.id)">
+              </td>
+            </ng-container>
+
+            <!-- Position Column -->
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef> Sr. No. </th>
+              <td mat-cell *matCellDef="let row;let i = index;" data-label="id">
+                {{i+1+(contactpaginator.pageIndex * contactpaginator.pageSize)}}
+              </td>
+            </ng-container>
+
+            <!-- DID Column -->
+            <ng-container matColumnDef="DID">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> DID </th>
+              <td mat-cell *matCellDef="let row">
+                {{row.DID}}
+              </td>
+            </ng-container>
+
+            <!-- AgentName Column -->
+            <ng-container matColumnDef="AgentName">
+              <th mat-header-cell *matHeaderCellDef> Agent Name </th>
+              <td mat-cell *matCellDef="let row">
+                {{row.AgentName}}
+              </td>
+            </ng-container>
+
+            <!-- CallStartTime Column -->
+            <ng-container matColumnDef="CallStartTime">
+              <th mat-header-cell *matHeaderCellDef>Call Time</th>
+              <td mat-cell *matCellDef="let row">
+                {{row.CallStartTime | date: 'dd-MM-yyyy H:mm:s':timezone}}
+              </td>
+            </ng-container>
+
+            <!-- CallerName Column -->
+            <ng-container matColumnDef="CallerName">
+              <th mat-header-cell *matHeaderCellDef> Caller Name </th>
+              <td mat-cell *matCellDef="let row">
+                {{row.CallerName  | slice:0:20}}
+              </td>
+            </ng-container>
+
+            <!-- CallerNumber Column -->
+            <ng-container matColumnDef="CallerNumber">
+              <th mat-header-cell *matHeaderCellDef> Caller Number </th>
+              <td mat-cell *matCellDef="let row">
+                {{row.CallerNumber}}
+              </td>
+            </ng-container>
+
+            <!-- CallTalkTime Column -->
+            <ng-container matColumnDef="CallTalkTime">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> TalkTime </th>
+              <td mat-cell *matCellDef="let row">
+                {{secondsToHms(row.CallTalkTime)}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="AgentTalkTime">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>AgentTalkTime </th>
+              <td mat-cell *matCellDef="let row">
+                {{secondsToHms(row.AgentTalkTime)}}
+              </td>
+            </ng-container>
+            <!-- CallStatus Column -->
+            <ng-container matColumnDef="CallStatus">
+              <th mat-header-cell *matHeaderCellDef> Status </th>
+              <td mat-cell *matCellDef="let row">
+                <span  *ngIf=" row.CallStatus == 'NOANSWER'" style="color:red">  {{row.CallStatus}}</span>
+                <span  *ngIf=" row.CallStatus == 'ANSWER'" style="color:rgb(102, 255, 0)">  {{row.CallStatus}}</span>
+                <span  *ngIf=" row.CallStatus == 'INVALIDNUMBER'" style="color:rgb(43, 54, 206)">  {{row.CallStatus}}</span>
+                <span  *ngIf=" row.CallStatus == 'NO_ROUT_NETWORK'" style="color:rgb(187, 43, 206)">  {{row.CallStatus}}</span>
+                <span  *ngIf=" row.CallStatus == 'BUSY'" style="color:rgb(236, 148, 47)">  {{row.CallStatus}}</span>
+                <span  *ngIf=" row.CallStatus == 'AppBusy'" style="color:rgb(47, 60, 236)">  {{row.CallStatus}}</span>
+                <span  *ngIf=" row.CallStatus == 'CANCEL'" style="color:rgb(161, 73, 46)">  {{row.CallStatus}}</span>
+                <span  *ngIf=" row.CallStatus == 'CHANUNAVAIL'" style="color:rgb(172, 17, 133)">  {{row.CallStatus}}</span>
+                <span  *ngIf=" row.CallStatus == 'ConnectionBusy'" style="color:rgb(236, 148, 47)">  {{row.CallStatus}}</span>
+                <span  *ngIf=" row.CallStatus == 'UserBusy'" style="color:rgb(236, 148, 47)">  {{row.CallStatus}}</span>
+
+                <span  *ngIf=" row.CallStatus == 'INCOMPATIBLE_DESTINATION'" style="color:rgb(161, 73, 46)">  {{row.CallStatus}}</span>
+                <span  *ngIf=" row.CallStatus == 'TEMPORARY_FAILUR'" style="color:rgb(29, 58, 22)">  {{row.CallStatus}}</span>
+                <span  *ngIf=" row.CallStatus == 'NETWORKBUSY'" style="color:rgb(172, 17, 17)">  {{row.CallStatus}}</span>
+                <span  *ngIf=" row.CallStatus == 'CONGESTION'" style="color:rgb(17, 172, 108)">  {{row.CallStatus}}</span>
+                <span  *ngIf=" row.CallStatus == 'SERVICE_UNAVAILABLE'" style="color:rgb(178, 64, 201)">  {{row.CallStatus}}</span>
+                <span  *ngIf=" row.CallStatus == 'RESOURCE_UNAVAILABLE'" style="color:rgb(137, 168, 140)">  {{row.CallStatus}}</span>
+                <span  *ngIf=" row.CallStatus == 'CAP_NOT_AUTHORIZED'" style="color:rgb(216, 213, 38)">  {{row.CallStatus}}</span>
+                <span  *ngIf=" row.CallStatus == 'CAP_NOT_AVAILABLE'" style="color:rgb(216, 213, 38)">  {{row.CallStatus}}</span>
+                <span  *ngIf=" row.CallStatus == 'DND'" style="color:rgb(248, 15, 15)">  {{row.CallStatus}}</span>
+                <span  *ngIf=" row.CallStatus == 'PROTOCOL_ERROR'" style="color:rgb(248, 15, 15)">  {{row.CallStatus}}</span>
+                <span  *ngIf=" row.CallStatus == 'CUSTOMERHANGPUP'" style="color:coral">  {{row.CallStatus}}</span> 
+                <span  *ngIf=" row.CallStatus == 'CUSTOMERHANGUP'" style="color:coral">  {{row.CallStatus}}</span> 
+                <span  *ngIf=" row.CallStatus == 'FAILED'" style="color:firebrick">  {{row.CallStatus}}</span> 
+                <span  *ngIf=" row.CallStatus == 'NA'" style="color:rgb(15, 14, 14)">  {{row.CallStatus}}</span> 
+                <span  *ngIf=" row.CallStatus == 'NetworkBusy'" style="color:rgb(226, 19, 19)">  {{row.CallStatus}}</span> 
+                <span  *ngIf=" row.CallStatus == 'OUTOFNETWORK'" style="color:rgb(25, 34, 83)">  {{row.CallStatus}}</span> 
+                <span  *ngIf=" row.CallStatus == 'RTO'" style="color:rgb(27, 49, 172)">  {{row.CallStatus}}</span> 
+                <span  *ngIf=" row.CallStatus == 'REJECT'" style="color:rgb(161, 73, 46)">  {{row.CallStatus}}</span>
+                <span  *ngIf=" row.CallStatus == 'TALKTOAGENT'" style="color:rgb(130, 161, 46)">  {{row.CallStatus}}</span>
+
+                <!-- {{row.CallStatus}} -->
+              </td>
+            </ng-container>
+
+            <!-- AgentStatus Column -->
+            <ng-container matColumnDef="AgentStatus" >
+              <th mat-header-cell *matHeaderCellDef> Agent Status </th>
+              <td mat-cell *matCellDef="let row">
+
+                <!-- {{row.AgentStatus}} -->
+                <span  *ngIf=" row.AgentStatus == 'NOANSWER'" style="color:red">  {{row.AgentStatus}}</span>
+                <span  *ngIf=" row.AgentStatus == 'ANSWER'" style="color:rgb(102, 255, 0)">  {{row.AgentStatus}}</span>
+                <span  *ngIf=" row.AgentStatus == 'INVALIDNUMBER'" style="color:rgb(43, 54, 206)">  {{row.AgentStatus}}</span>
+                <span  *ngIf=" row.AgentStatus == 'NO_ROUT_NETWORK'" style="color:rgb(187, 43, 206)">  {{row.AgentStatus}}</span>
+                <span  *ngIf=" row.AgentStatus == 'BUSY'" style="color:rgb(236, 148, 47)">  {{row.AgentStatus}}</span>
+                <span  *ngIf=" row.AgentStatus == 'AppBusy'" style="color:rgb(47, 60, 236)">  {{row.AgentStatus}}</span>
+                <span  *ngIf=" row.AgentStatus == 'CANCEL'" style="color:rgb(161, 73, 46)">  {{row.AgentStatus}}</span>
+                <span  *ngIf=" row.AgentStatus == 'CHANUNAVAIL'" style="color:rgb(172, 17, 133)">  {{row.AgentStatus}}</span>
+                <span  *ngIf=" row.AgentStatus == 'ConnectionBusy'" style="color:rgb(236, 148, 47)">  {{row.AgentStatus}}</span>
+                <span  *ngIf=" row.AgentStatus == 'UserBusy'" style="color:rgb(236, 148, 47)">  {{row.AgentStatus}}</span>
+
+                <span  *ngIf=" row.AgentStatus == 'INCOMPATIBLE_DESTINATION'" style="color:rgb(161, 73, 46)">  {{row.AgentStatus}}</span>
+                <span  *ngIf=" row.AgentStatus == 'TEMPORARY_FAILUR'" style="color:rgb(29, 58, 22)">  {{row.AgentStatus}}</span>
+                <span  *ngIf=" row.AgentStatus == 'NETWORKBUSY'" style="color:rgb(172, 17, 17)">  {{row.AgentStatus}}</span>
+                <span  *ngIf=" row.AgentStatus == 'CONGESTION'" style="color:rgb(17, 172, 108)">  {{row.AgentStatus}}</span>
+                <span  *ngIf=" row.AgentStatus == 'SERVICE_UNAVAILABLE'" style="color:rgb(178, 64, 201)">  {{row.AgentStatus}}</span>
+                <span  *ngIf=" row.AgentStatus == 'RESOURCE_UNAVAILABLE'" style="color:rgb(137, 168, 140)">  {{row.AgentStatus}}</span>
+                <span  *ngIf=" row.AgentStatus == 'CAP_NOT_AUTHORIZED'" style="color:rgb(216, 213, 38)">  {{row.AgentStatus}}</span>
+                <span  *ngIf=" row.AgentStatus == 'CAP_NOT_AVAILABLE'" style="color:rgb(216, 213, 38)">  {{row.AgentStatus}}</span>
+                <span  *ngIf=" row.AgentStatus == 'DND'" style="color:rgb(248, 15, 15)">  {{row.AgentStatus}}</span>
+                <span  *ngIf=" row.AgentStatus == 'PROTOCOL_ERROR'" style="color:rgb(248, 15, 15)">  {{row.AgentStatus}}</span>
+                <span  *ngIf=" row.AgentStatus == 'CUSTOMERHANGPUP'" style="color:coral">  {{row.AgentStatus}}</span> 
+                <span  *ngIf=" row.AgentStatus == 'CUSTOMERHANGUP'" style="color:coral">  {{row.AgentStatus}}</span> 
+                <span  *ngIf=" row.AgentStatus == 'FAILED'" style="color:firebrick">  {{row.AgentStatus}}</span> 
+                <span  *ngIf=" row.AgentStatus == 'NA'" style="color:rgb(15, 14, 14)">  {{row.AgentStatus}}</span> 
+                <span  *ngIf=" row.AgentStatus == 'NetworkBusy'" style="color:rgb(226, 19, 19)">  {{row.AgentStatus}}</span> 
+                <span  *ngIf=" row.AgentStatus == 'OUTOFNETWORK'" style="color:rgb(25, 34, 83)">  {{row.AgentStatus}}</span> 
+                <span  *ngIf=" row.AgentStatus == 'RTO'" style="color:rgb(27, 49, 172)">  {{row.AgentStatus}}</span> 
+                <span  *ngIf=" row.AgentStatus == 'REJECT'" style="color:rgb(161, 73, 46)">  {{row.AgentStatus}}</span>
+                <span  *ngIf=" row.AgentStatus == 'TALKTOAGENT'" style="color:rgb(130, 161, 46)">  {{row.AgentStatus}}</span>
+
+              </td>
+            </ng-container>
+
+            <!-- CallType Column -->
+            <ng-container matColumnDef="CallType">
+              <th mat-header-cell *matHeaderCellDef>Call Type </th>
+              <td mat-cell *matCellDef="let row">
+                {{row.CallType | titlecase}}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="AgentGroup">
+              <th mat-header-cell *matHeaderCellDef>Group </th>
+              <td mat-cell *matCellDef="let row">
+                {{row.GroupName | titlecase}}
+              </td>
+            </ng-container>
+
+            <!-- Disconnected By Column -->
+            <ng-container matColumnDef="DisconnectedBy">
+              <th mat-header-cell *matHeaderCellDef>Disconnected By </th>
+              <td mat-cell *matCellDef="let row">
+                {{row.DisconnectedBy | titlecase}}
+              </td>
+            </ng-container>
+
+            <!-- recording Column -->
+            <ng-container matColumnDef="recording">
+              <th mat-header-cell *matHeaderCellDef> Recording </th>
+              <td mat-cell *matCellDef="let row">
+                <a href="javascript:void(0)" class="cursor-pointer">
+                  <span (click)="openrecording(row.id,row.RecPath)" title="Listen Audio">
+                    <mat-icon>headset</mat-icon>
+                  </span>
+                </a>
+              </td>
+            </ng-container>
+
+            <!-- Action Column -->
+            <ng-container matColumnDef="action">
+              <th mat-header-cell *matHeaderCellDef> Action </th>
+              <td mat-cell *matCellDef="let row">
+                <button (click)="feedbackdialog(row.id)" title="feedback" mat-icon-button color="primary"
+                  aria-label="Example icon button with a home icon">
+                  <mat-icon>feedback</mat-icon>
+                </button>
+                <button (click)="contactdialog(row.id,row.CallerNumber)" title="" mat-icon-button color="accent"
+                  aria-label="Example icon button with a home icon">
+                  <mat-icon>contact_mail</mat-icon>
+                </button>
+                <button (click)="contacthistorydialog(row.id,row.CallerNumber,row.CallTypeID)" title="history" mat-icon-button
+                  style="color: darkcyan;" aria-label="Example icon button with a menu icon">
+                  <mat-icon>history</mat-icon>
+                </button>
+                <button mat-icon-button color="primary" >
+                  <span (click)="whatsappdialog(row.CallerNumber,row.id)" title="Share Whatsapp">
+                      <i style="font-size: 25px;" class="fab fa-whatsapp"></i>
+                  </span>
+              </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+
+        </div>
+
+        <mat-paginator #contactpaginator [length]="Length" [pageSize]="50" [pageSizeOptions]="[50,100,500]"
+          showFirstLastButtons="true">
+        </mat-paginator>
+
+      </div>
+
+    </div>
+
+  </div>
+  <!-- /.container-fluid -->
+</div>

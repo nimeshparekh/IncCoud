@@ -1,0 +1,182 @@
+mat-form-field {
+    width: 100%;
+  }
+
+
+  .width-100
+  {
+      width: 100%;
+  }
+
+table
+{
+    width: 100%;
+    min-width: 1000px;
+}
+  
+.material-icons
+{
+    cursor: pointer;
+}
+.brand-head
+{
+    vertical-align: middle;
+    background: #fff;
+    padding: 8px 1px 8px 0;
+}
+.brand-head-text
+{
+    margin: 0px;
+    font-family: 'Raleway-Regular';
+    font-weight: bold;
+    font-size: 16px;
+    color: #505050;
+    padding: 6px 0;
+}
+.btn-icon
+{
+    margin-right: 2px;
+    line-height: 15px;
+    font-size: 14px;
+}
+.box-p
+{
+  font-size: 11px;
+  line-height: 13px;
+  margin-top: 5px;
+  min-height: 30px;
+}
+.table-view
+{
+    border: 1px solid #e8e8e8 !important;
+    overflow: hidden !important;
+    border-radius: .75rem!important;
+    box-shadow: 0 1px 15px rgb(0 0 0/4%),0 1px 6px rgb(0 0 0/4%)!important;
+}
+table
+{
+    width: 100%;
+    min-width: 1600px;
+}
+.upload input[type="file"]
+{
+    display: none;
+}
+.local-upload
+{
+    padding: 11px 22px 10px 22px;
+    background: #ffffff;
+    border-radius: 6px;
+    color: #868686;
+    margin-top: 10px;
+    margin: 5px 0 5px 0;
+    cursor: pointer;
+    font-size: 12px;
+    text-align: center;
+    border: 1px solid #e0e0e0;
+    width: 100%;
+}
+.mat-form-field {
+    display: inline-block;
+    position: relative;
+    text-align: left;
+    width: 100%;
+}
+.searchop{
+    font-weight: inherit;
+    font-size: x-small;
+}
+.searchop2{
+    font-weight: 600;
+    font-size: small;
+}
+#timepicker-example-1 {
+    max-width: 200px;
+  }
+  
+  #timepicker-example-2 {
+    max-width: 178px;
+  }
+  
+  #timepicker-example-3 {
+    max-width: 178px;
+  }
+
+  .mycard
+{
+  border: initial!important;
+  background: #fff!important;
+  border-radius: .75rem!important;
+  box-shadow: 0 1px 15px rgb(0 0 0/4%),0 1px 6px rgb(0 0 0/4%)!important;
+}
+
+.mycard-body {
+  padding: 0.75rem!important;
+}
+.mycard-body {
+  flex: 1 1 auto;
+  min-height: 1px;
+  padding: 1.25rem;
+}
+.mycard-body .name-count p
+{
+  margin: 0px;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+.mycard-body .name-count label
+{
+  font-size: 48px;
+  margin-top: 4px;
+  color: #1ea4dd;
+  font-weight: 400;;
+}
+.mycard-icon
+{
+  font-size: 30px !important;
+}
+
+[class^="flaticon-"]:before, [class*=" flaticon-"]:before, [class^="flaticon-"]:after, [class*=" flaticon-"]:after {
+  font-family: Flaticon;
+  font-size: 36px;
+  font-style: normal;
+  margin-left: 20px;
+}
+.tbl-post-text
+{
+  width: 90%;
+}
+.mat-icon-button {
+  padding: 0;
+  min-width: 0;
+  width: 29px !important;
+  height: 29px !important;
+  flex-shrink: 0;
+  line-height: 40px;
+  border-radius: 50%;
+}
+.button {
+  background-color: #4c66af; /* Green */
+  border: none;
+  color: white;
+  padding: 10px 22px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.button1 {
+  background-color: #dbdfeb; /* Green */
+  border: none;
+  color: black;
+  padding: 10px 22px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 10px;
+}

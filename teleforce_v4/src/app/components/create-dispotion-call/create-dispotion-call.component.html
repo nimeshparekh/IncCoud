@@ -1,0 +1,49 @@
+<div mat-dialog-head class="dilog-head d-flex justify-content-between">
+    <h3 class="primary" *ngIf="addmode">Add Call Disposition</h3>
+    <h3 class="primary" *ngIf="editmode">Edit Call Disposition</h3>
+    <h3 class="primary" *ngIf="deletemode">Delete Call Disposition</h3>
+    <div class="d-inline-block">
+        <a class="close" (click)="openDialog()"><i class="fi-rr-cross-small"></i></a>
+    </div>
+</div>
+<div *ngIf="addmode || editmode">
+    <form [formGroup]="addForm" (ngSubmit)="submit()">
+        <div mat-dialog-content>
+            <div class="row">
+                <div class="col-xl-16 col-md-12 col-sm-12 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Call Disposition</mat-label>
+                        <input matInput placeholder="Disposition Name" formControlName="name" required>
+                        <mat-error *ngIf="addForm.controls.name.hasError('required')">
+                            Please enter Call Disposition Name
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-16 col-md-12 col-sm-12 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Sub Disposition</mat-label>
+                        <textarea matInput placeholder="Please Enter the Comma Sperated values...." formControlName="sub_disposition" required></textarea>
+                        <mat-error *ngIf="addForm.controls.sub_disposition.hasError('required')">
+                            Please enter Sub Disposition
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+              
+            </div>
+        </div>
+        <div class="btn-sec" mat-dialog-actions>
+            <button mat-raised-button type="submit" color="primary" class="Update-btn">Save</button>
+        </div>
+    </form>
+</div>
+<div *ngIf="deletemode">
+    <h3 style="margin-top: 10px; font-weight: 500;">
+        Are you sure to delete this ?
+    </h3>
+    <div class="btn-sec">
+        <button mat-raised-button type="button" color="primary" class="Update-btn"
+                (click)="deleteData(did_id)">Delete</button>
+        &nbsp;
+        <button mat-raised-button type="button" class="Discard-btn" (click)="openDialog()">Cancel</button>
+    </div>
+</div>

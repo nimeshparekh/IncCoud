@@ -1,0 +1,277 @@
+<div mat-dialog-head class="dilog-head d-flex justify-content-between">
+  <h3>Create New Campaign</h3>
+  <div class="d-inline-block">
+    <a class="close" (click)="onNoClick()"><i class="fi-rr-cross-small"></i></a>
+  </div>
+</div>
+<div mat-dialog-content class="mat-typography">
+  <form class="create-campaign" [formGroup]="bulkForm"  (ngSubmit)="bulksubmit()" >
+    <div class="row col-md-12">
+      <div class="col-md-12">
+        <mat-radio-group formControlName="campaigntype">
+          <div style="color:grey;">Campaign Type</div>
+          <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" value="1"
+            (change)="changecampaigntype($event.value)" *ngIf="usertype==2">Promotional
+          </mat-radio-button>
+          <mat-radio-button color="primary" style="padding:4px 0px 0px 24px;" value="0"
+            (change)="changecampaigntype($event.value)">Transactional
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </div>
+    <div class="row col-md-12">
+      <div *ngIf="promontionalmode&&usertype==2" class="col-md-6">
+        <mat-form-field appearance="outline" class="w-100 mt-1">
+          <mat-label class="mat-label">Segements</mat-label>
+          <mat-select multiple formControlName="segments">
+            <mat-option *ngFor="let topping of segment" [value]="topping.cont_id">{{topping.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div *ngIf="transactionalmode" class="col-md-6">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label class="mat-label">Lead Status</mat-label>
+          <mat-select multiple formControlName="leadstatus">
+            <mat-option *ngFor="let status of leadstatus;let i =index" [value]="status.masterstatus">
+              {{status.statusdb | titlecase}} ({{status.stage_name}})
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-md-6">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label> Campaign Name</mat-label>
+          <input matInput placeholder="Campaign Name" formControlName="cam_name" >
+          <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
+          <mat-error *ngIf="bulkForm.controls.cam_name.hasError('required')">
+            Please enter Campaign Name
+          </mat-error>
+        </mat-form-field>
+       
+      </div>
+
+    </div>
+    <div class="row col-md-12">
+      <div class="col-md-6">
+        <mat-radio-group formControlName="smstype">
+          <div style="color:grey;">SMS Type</div>
+          <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" value="text"
+            (change)="chechsmstype($event.value)">Text
+          </mat-radio-button>
+          <mat-radio-button color="primary" style="padding:4px 0px 0px 24px;" value="whatsapp"
+            (change)="chechsmstype($event.value)">Whatsapp
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
+      <div class="col-md-6" *ngIf="textmode">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label class="mat-label">Select Template</mat-label>
+          <mat-select formControlName="smstemp" (ngModelChange)="searchtemp($event)">
+            <mat-option *ngFor="let sms of smstemplist" [value]="sms.sms_id">{{sms.sms_title}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-md-6" *ngIf="whatsappmode">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label class="mat-label">Select Template</mat-label>
+          <mat-select formControlName="smstemp" (ngModelChange)="searchwhatsapptemp($event)">
+            <mat-option *ngFor="let sms of whatsapptemplist" [value]="sms.wtemp_id">{{sms.wtemp_title}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row col-md-12">
+      <div class="col-md-12">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Message</mat-label>
+          <textarea rows="2" matInput placeholder="Message" formControlName="message" (keyup)="countcharacter()"
+            [readonly]="true" matTextareaAutosize></textarea>
+        </mat-form-field>
+        <div class="w-100" style="margin-top: -20px;">
+          <h2 class="card-title chart-label-color mb-5 cardit-h2-left ml-2">{{msgcredit}} credit</h2>
+          <h2 class="card-title chart-label-color mb-5 char-h2-right mr-2">{{msgcharcnt}}
+            {{chartxt}}</h2>
+        </div>
+      </div>
+    </div>
+    <div class="row col-md-12">
+      <div *ngIf="var1" class="col-md-6">
+        <mat-form-field class="w-100" appearance="outline" >
+          <mat-label> var1 </mat-label>
+          <mat-select formControlName="var1" (ngModelChange)="changevar1($event)">
+            <mat-option value="">None</mat-option>
+            <mat-option value="form">Form</mat-option>
+            <mat-option value="link">Link</mat-option>
+            <mat-option value="name">Name</mat-option>
+            <mat-option value="mobile">Mobile</mat-option>
+            <mat-option value="custom">Custom</mat-option>
+          </mat-select>
+          <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
+        </mat-form-field>
+        <mat-form-field class="w-100" appearance="outline" *ngIf="customvar1">
+          <mat-label>Custom var1 </mat-label>
+          <input matInput placeholder="Custom var1 Value" formControlName="customvar1" >
+          <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
+        </mat-form-field>
+      </div>
+      <div *ngIf="var2" class="col-md-6">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label> var2</mat-label>
+          <mat-select formControlName="var2" (ngModelChange)="changevar2($event)">
+            <mat-option value="">None</mat-option>
+            <mat-option value="form">Form</mat-option>
+            <mat-option value="link">Link</mat-option>
+            <mat-option value="name">Name</mat-option>
+            <mat-option value="mobile">Mobile</mat-option>
+            <mat-option value="custom">Custom</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="w-100" appearance="outline" *ngIf="customvar2">
+          <mat-label>Custom var2 </mat-label>
+          <input matInput  formControlName="customvar2"  >
+          <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
+        </mat-form-field>
+      </div>
+      <div *ngIf="var3" class="col-md-6">
+        <mat-form-field class="w-100" appearance="outline" >
+          <mat-label> var3</mat-label>
+          <mat-select formControlName="var3" (ngModelChange)="changevar3($event)">
+            <mat-option value="">None</mat-option>
+            <mat-option value="form">Form</mat-option>
+            <mat-option value="link">Link</mat-option>
+            <mat-option value="name">Name</mat-option>
+            <mat-option value="mobile">Mobile</mat-option>
+            <mat-option value="custom">Custom</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="w-100" appearance="outline" *ngIf="customvar3">
+          <mat-label>Custom var3 </mat-label>
+          <input matInput  formControlName="customvar3" >
+          <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
+        </mat-form-field>
+      </div>
+      <div *ngIf="var4" class="col-md-6">
+        <mat-form-field class="w-100" appearance="outline" >
+          <mat-label> var4</mat-label>
+          <mat-select formControlName="var4" (ngModelChange)="changevar4($event)">
+            <mat-option value="">None</mat-option>
+            <mat-option value="form">Form</mat-option>
+            <mat-option value="link">Link</mat-option>
+            <mat-option value="name">Name</mat-option>
+            <mat-option value="mobile">Mobile</mat-option>
+            <mat-option value="custom">Custom</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="w-100" appearance="outline" *ngIf="customvar4">
+          <mat-label>Custom var4 </mat-label>
+          <input matInput  formControlName="customvar4" >
+          <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
+        </mat-form-field>
+      </div>
+      <div *ngIf="var5" class="col-md-6">
+        <mat-form-field class="w-100" appearance="outline" >
+          <mat-label>var5</mat-label>
+          <mat-select formControlName="var5" (ngModelChange)="changevar5($event)">
+            <mat-option value="">None</mat-option>
+            <mat-option value="form">Form</mat-option>
+            <mat-option value="link">Link</mat-option>
+            <mat-option value="name">Name</mat-option>
+            <mat-option value="mobile">Mobile</mat-option>
+            <mat-option value="custom">Custom</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="w-100" appearance="outline" *ngIf="customvar5">
+          <mat-label>Custom var5 </mat-label>
+          <input matInput  formControlName="customvar5" >
+          <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
+        </mat-form-field>
+      </div>
+    </div>
+    <!--<div>
+        <div class="w-100 wrap-it d-flex">
+          <div class="w-100">
+            <h2 class="smart-tracking  card-title chart-label-color">
+              <span class="ml-1 d-inline-flex">
+                Smart SMS (Walkthrough)
+                <input type="checkbox" class="smart-tracking-btn ml-2">
+              </span>
+            </h2>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="w-100 wrap-it d-flex">
+          <div class="w-100">
+            <h2 class="smart-tracking  card-title chart-label-color">
+              <span class="ml-1 d-inline-flex">
+                Website Redirect (Walkthrough)
+                <input type="checkbox" class="smart-tracking-btn ml-2">
+              </span>
+            </h2>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="w-100 wrap-it d-flex">
+          <div class="w-100">
+            <h2 class="smart-tracking  card-title chart-label-color">
+              <span class="ml-1 d-inline-flex">
+                Cloud SMS (Walkthrough)
+                <input type="checkbox" class="smart-tracking-btn ml-2">
+              </span>
+            </h2>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="notice text-danger mt-1 pt-1 pl-1 pr-1 ng-star-inserted">
+          <p>
+            Note: Please make sure tracking script is added to your website, else engagement time will not be recorded.
+          </p>
+        </div>
+      </div>-->
+    <div class="row col-md-12">
+      <div class="col-md-6">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label class="mat-label">Select Form</mat-label>
+          <mat-select formControlName="formdata">
+            <mat-option value="">None</mat-option>
+            <mat-option *ngFor="let sms of formsdata" [value]="sms.fid">{{sms.form_name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-md-6">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label class="mat-label">Select Link</mat-label>
+          <mat-select formControlName="link" (ngModelChange)="searchlink($event)">
+            <mat-option value="">None</mat-option>
+            <mat-option *ngFor="let sms of smslinks" [value]="sms.sl_id">{{sms.sl_name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-md-6">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Choose a date and time</mat-label>
+          <input matInput [ngxMatDatetimePicker]="datepicker" placeholder="Choose a date & time"
+            formControlName="startdate" >
+          <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+          <ngx-mat-datetime-picker #datepicker></ngx-mat-datetime-picker>
+          <mat-error *ngIf="bulkForm.controls.startdate.hasError('required')">
+            Please select Date
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div>
+      <p style="color:red">{{msg}}</p>
+    </div>
+    <div class="btn-sec">
+      <button mat-raised-button type="submit" color="primary" class="Update-btn" [disabled]="isDisabled">Save</button>&nbsp;
+      <button mat-raised-button type="button" class="Discard-btn" (click)="onNoClick()">Cancel</button>
+    </div>
+  </form>
+ 
+</div>
+<!-- <div mat-dialog-actions>
+      <button class="dilog-btn" (click)="submit()"mat-button>Send</button>
+  </div> -->

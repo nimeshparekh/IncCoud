@@ -1,0 +1,92 @@
+.meetinglink-copy
+{
+    display: block;
+}
+.meetinglink-copy label
+{
+    display: block;
+    margin-bottom: 3px;
+}
+.meetinglink
+{
+    background: #e1f6ff;
+    padding: 6px 12px 6px 12px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    display: flow-root;
+}
+.meetinglink p
+{
+    margin: 0;
+    font-size: 12px;
+    float: left;
+    margin-top: 2px;
+}
+.copy
+{
+    float: right;
+    margin-left: 20px;
+    height: 25px;
+    width: 25px;
+    text-align: center;
+    background: #1ea4dd;
+    color: #fff;
+    line-height: 29px;
+    border-radius: 50px;
+    font-size: 11px;
+    cursor: pointer;
+}
+.pagecheckbox input[type=checkbox]
+{
+  display: none;
+}
+.page-checkbox-alias
+{
+  display: inline-block;
+  z-index: 1;
+  position: relative;
+  text-align: center;
+  transition: all 250ms ease-out;
+  cursor: pointer;
+  background-color: #fff;
+  padding: 8px 14px;
+  font-family: sans-serif, Arial;
+  border: 1px solid #dedede;
+  border-radius: 6px;
+  width: 100%;
+  color: #777;
+  font-weight: 500;
+}
+.page-checkbox-alias:hover
+{
+  background-color: #f5fdff;
+  /* border: 1px dashed #007bff; */
+}
+.page-checkbox-alias:active
+{
+  background-color: #f5fdff;
+  border: 1px solid #007bff;
+}
+.page-checkbox-alias:focus
+{
+  background-color: #f5fdff;
+  border: 1px solid #007bff;
+}
+
+.pagecheckbox input[type=checkbox]:checked + .page-checkbox-alias
+{
+  background-color: #f5fdff;
+  border-color: #007bff;
+}
+.page-checkbox-alias img
+{
+    width: 60%;
+    margin: 0 auto;
+}
+.page-checkbox-alias p
+{
+    font-size: 10px;
+    margin: 0px;
+    margin-top: 2px;
+    margin-bottom: 0px;
+}

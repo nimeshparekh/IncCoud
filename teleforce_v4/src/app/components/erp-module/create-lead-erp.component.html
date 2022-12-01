@@ -1,0 +1,518 @@
+<div mat-dialog-head class="dilog-head d-flex justify-content-between">
+    <h3 class="primary">{{!editmode?'Add':'Edit'}} Lead</h3>
+  
+    <form [formGroup]="memberForm"  (ngSubmit)="createassign()"> 
+        <div class="row" *ngIf="editmode">
+            <div class="col-12" *ngIf="!isagent">
+                <mat-form-field appearance="outline">
+                    <mat-label> Agent Name</mat-label>
+                    <mat-select formControlName="agent_id">
+                        <mat-option *ngFor="let lan of assign; let i = index" [value]="assign[i].account_id">{{assign[i].account_name}}
+                            <!-- <b class="searchop2">{{assign[i].account_name}}</b> -->
+                            <!-- <b class="searchop">{{assign[i].email}}</b> -->
+                        </mat-option>                    
+                    </mat-select>
+                    <mat-icon matSuffix>support_agent</mat-icon>
+                </mat-form-field>
+            </div>
+            <!-- <div class="col-12">
+                <div class="text-right">
+                    <button mat-stroked-button color="accent" class="mt-2 my-btn"  type="submit"> 
+                        Assign
+                    </button>
+                </div>
+            </div> -->
+        </div>  
+    </form>
+    
+    <div class="d-inline-block mt-2">
+        <a class="close" (click)="openDialog()"><i class="fi-rr-cross-small"></i></a>
+    </div>
+</div>
+<div>
+    <form [formGroup]="addForm" (ngSubmit)="createlead()">
+        <div mat-dialog-content>
+            <div class="form-card">
+                <div class="row">
+                    <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Lead Name</mat-label>
+                            <input matInput placeholder="Enter Lead Name" formControlName="lead_name" *ngIf="!isagent">
+                            <input matInput placeholder="Enter Lead Name" formControlName="lead_name" *ngIf="isagent">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2" *ngIf="status_data == true">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Status</mat-label>
+                            <mat-select formControlName="status">
+                                <mat-option value="Lead">Lead </mat-option>
+                                <mat-option value="Open">Open </mat-option>
+                                <mat-option value="Replied">Replied </mat-option>
+                                <mat-option value="Opportunity">Opportunity </mat-option>
+                                <mat-option value="Quotation">Quotation </mat-option>
+                                <mat-option value="Lost Quotation">Lost Quotation </mat-option>
+                                <mat-option value="Interested">Interested </mat-option>
+                                <mat-option value="Converted">Converted </mat-option>
+                                <mat-option value="Do Not Contact">Do Not Contact </mat-option>
+                                <mat-option value="Not Interested">Not Interested </mat-option>
+                                <mat-option value="Junk Lead">Junk Lead </mat-option>
+
+                            </mat-select>
+
+                        </mat-form-field>
+                    </div>
+                    <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2" *ngIf="status_data == false">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Status</mat-label>
+                            <mat-select formControlName="status">
+                                <mat-option *ngFor="let lan of status; let i = index" [value]="status[i].masterstatus">{{status[i].statusdb}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Organization Name</mat-label>
+                            <input matInput placeholder="Enter Organization Name" formControlName="company_name">
+                            <!--<mat-error *ngIf="addConForm.controls.name.hasError('required')">
+                            Please enter Segment name
+                        </mat-error>-->
+                        </mat-form-field>
+                    </div>
+                    <!-- <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                        <mat-form-field appearance="outline">
+                            <mat-label>salutation</mat-label>
+                            <mat-select formControlName="salutation" >
+                                <mat-option *ngFor="let lan of Salutation; let i = index" [value]="Salutation[i].name">{{Salutation[i].name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div> -->
+                    <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2" *ngIf="!editmode">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Mobile No. </mat-label>
+                            <input matInput placeholder="Enter Mobile No." formControlName="mobile_no" [readonly]="editmode">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2" *ngIf="!editmode">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Email Address</mat-label>
+                            <input matInput placeholder="Enter Email Address" formControlName="email_id" *ngIf="!isagent">
+                            <input matInput placeholder="Enter Email Address" formControlName="email_id" *ngIf="isagent" [readonly]="editmode">
+                            <!--<mat-error *ngIf="addConForm.controls.name.hasError('required')">
+                            Please enter Segment name
+                        </mat-error>-->
+                        </mat-form-field>
+                    </div>
+                    
+                    <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2" *ngIf="showno&&editmode">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Mobile No. </mat-label>
+                            <input matInput placeholder="Enter Mobile No." formControlName="mobile_no" [readonly]="editmode">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2" *ngIf="showno&&editmode">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Email Address</mat-label>
+                            <input matInput placeholder="Enter Email Address" formControlName="email_id" *ngIf="!isagent">
+                            <input matInput placeholder="Enter Email Address" formControlName="email_id" *ngIf="isagent" [readonly]="editmode">
+                            <!--<mat-error *ngIf="addConForm.controls.name.hasError('required')">
+                            Please enter Segment name
+                        </mat-error>-->
+                        </mat-form-field>
+                    </div>
+                    <!-- <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Designation</mat-label>
+                            <mat-select formControlName="designation">
+                                <mat-option *ngFor="let lan of Designation; let i = index" [value]="Designation[i].name">{{Designation[i].name}}
+                                </mat-option>
+                            </mat-select>
+
+                        </mat-form-field>
+                    </div> -->
+                    <!-- <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Gender</mat-label>
+                            <mat-select formControlName="gender">
+                                <mat-option *ngFor="let lan of Gender; let i = index" [value]="Gender[i].name">{{Gender[i].name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div> -->
+                    <!--<div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2" *ngIf="source_data == true">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Source</mat-label>
+                            <mat-select formControlName="source">
+                                <mat-option value="infinityapp">infinityapp </mat-option>
+                                <mat-option value="Practo">Practo </mat-option>
+                                <mat-option value="JustDial">JustDial </mat-option>
+                                <mat-option value="Email">Email </mat-option>
+                                <mat-option value="SMS">SMS </mat-option>
+                                <mat-option value="Call">Call </mat-option>
+                                <mat-option value="Personal Reference">Personal Reference </mat-option>
+                                <mat-option value="Facebook">Facebook </mat-option>
+                                <mat-option value="Website">Website</mat-option>
+                                <mat-option value="Walk in">Walk in</mat-option>
+                                <mat-option value="Campaign">Campaign</mat-option>
+                                <mat-option value="Customer's Vendor">Customer's Vendor</mat-option>
+                                <mat-option value="Mail">Mail</mat-option>
+                                <mat-option value="Exhibition">Exhibition</mat-option>
+                                <mat-option value="Cold Calling">Cold Calling</mat-option>
+                                <mat-option value="Advertisement">Advertisement</mat-option>
+                                <mat-option value="Reference">Reference</mat-option>
+                                <mat-option value="Other">Other</mat-option>
+                            </mat-select>
+
+                        </mat-form-field>
+                    </div>-->
+                    <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2" >
+                        <mat-form-field appearance="outline">
+                            <mat-label>Source</mat-label>
+                            <mat-select formControlName="source">
+                                <mat-option *ngFor="let lan of Source; let i = index" [value]="Source[i].name">{{Source[i].name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <!-- <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Campaign Name</mat-label>
+                            <mat-select formControlName="campaign_name">
+                                <mat-option *ngFor="let lan of Campaign; let i = index" [value]="Campaign[i].name">{{Campaign[i].name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div> -->
+                </div>
+            </div>
+            <!-- <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-2">
+                    <div class="text-inside">
+                        <mat-label>FOLLOW UP</mat-label>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Next Contact By</mat-label>
+                        <mat-select formControlName="contact_by">
+                            <mat-option *ngFor="let lan of Converted; let i = index" [value]="Converted[i].name">{{Converted[i].name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Next Contact Date</mat-label>
+                        <input matInput placeholder="Enter Contact Date" [matDatepicker]="contact_datepicker"
+                            formControlName="contact_date">
+                        <mat-datepicker-toggle matSuffix [for]="contact_datepicker"></mat-datepicker-toggle>
+                        <mat-datepicker #contact_datepicker tpicker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Ends On</mat-label>
+                        <input matInput placeholder="Enter Ends On" formControlName="ends_on" [matDatepicker]="contact_datepicker2">
+                        <mat-datepicker-toggle matSuffix [for]="contact_datepicker2"></mat-datepicker-toggle>
+                        <mat-datepicker #contact_datepicker2 tpicker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div> -->
+            <!-- <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-2">
+                    <div class="text-inside">
+                        <mat-label>NOTES</mat-label>
+                    </div>
+                </div> -->
+                <!-- <div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Notes</mat-label>
+                        <textarea matInput placeholder="Enter Notes" formControlName="notes" rows="5"></textarea>
+                    </mat-form-field>
+                </div> -->                
+            <!-- </div> -->
+            <div class="form-card " *ngIf="editmode">
+                <form *ngIf="editmode" class="note-add-form" [formGroup]="commentAddForm" (ngSubmit)="commentsubmit()">
+                    <div class="row">
+                        <div class="col-12">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Note</mat-label>
+                                <textarea matInput placeholder="Note" formControlName="note" required></textarea>
+                                <mat-error *ngIf="commentAddForm.controls.note.hasError('required')">
+                                    Please enter Title
+                                </mat-error>
+                                <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
+                            </mat-form-field>
+                        </div>
+                        <!-- <div class="col-12">
+                            <div class="text-right">
+                                <button mat-stroked-button color="accent" class="mt-2 my-btn" type="submit"> 
+                                    <span class="btn-icon">
+                                        <i class="fas fa-save"></i>
+                                    </span>
+                                    Save
+                                </button>
+                            </div>
+                        </div> -->
+                    </div>
+                </form>
+            </div>
+            
+
+            <div class="form-card">
+                <div class="row">
+                    <div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-2">
+                        <div class="text-inside">
+                            <mat-label>ADDRESS</mat-label>
+                        </div>
+                    </div>
+                    <!-- <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Address Type</mat-label>
+                            <mat-select formControlName="address_type">
+                                <mat-option value="Billing">Billing </mat-option>
+                                <mat-option value="Shipping">Shipping </mat-option>
+                                <mat-option value="Office">Office </mat-option>
+                                <mat-option value="Personal">Personal </mat-option>
+                                <mat-option value="Plant">Plant </mat-option>
+                                <mat-option value="Postal">Postal </mat-option>
+                                <mat-option value="Shop">Shop </mat-option>
+                                <mat-option value="Subsidiary">Subsidiary </mat-option>
+                                <mat-option value="Warehouse">Warehouse </mat-option>
+                                <mat-option value="Current">Current </mat-option>
+                                <mat-option value="Permanent">Permanent </mat-option>
+                                <mat-option value="Other">Other </mat-option>
+                            </mat-select>
+
+                        </mat-form-field>
+                    </div> -->
+                    <!-- <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Address Title </mat-label>
+                            <input matInput placeholder="Enter Address Title" formControlName="address_title">
+                        </mat-form-field>
+                    </div> -->
+                    <!-- <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                        <mat-form-field appearance="outline">
+                            <mat-label>State </mat-label>
+                            <input matInput placeholder="Enter State" formControlName="state">
+                        </mat-form-field>
+                    </div> -->
+                    <!-- <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Country</mat-label>
+                            <mat-select formControlName="country">
+                                <mat-option *ngFor="let lan of Country; let i = index" [value]="Country[i].name">{{Country[i].name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div> -->
+                    <div class="col-12">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Address</mat-label>
+                            <input matInput placeholder="Enter Address Line 1" formControlName="address_line1">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                        <mat-form-field appearance="outline">
+                            <mat-label>City </mat-label>
+                            <input matInput placeholder="Enter City" formControlName="city">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                        <mat-form-field appearance="outline">
+                            <mat-label>State </mat-label>
+                            <input matInput placeholder="Enter State" formControlName="state">
+                        </mat-form-field>
+                    </div>
+                   
+                    <!-- <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Address Line 2 </mat-label>
+                            <input matInput placeholder="Enter Address Line 2" formControlName="address_line2">
+                        </mat-form-field>
+                    </div> -->
+                    <!-- <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Postal Code </mat-label>
+                            <input matInput placeholder="Enter Postal Code" formControlName="pincode">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                        <mat-form-field appearance="outline">
+                            <mat-label>City/Town </mat-label>
+                            <input matInput placeholder="Enter City/Town" formControlName="city">
+                        </mat-form-field>
+                    </div> -->
+                </div>
+            </div>
+            <div class="form-card">
+                <div class="row">
+                    <div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-2">
+                        <div class="text-inside">
+                            <mat-label>Sales</mat-label>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Currency</mat-label>
+                            <mat-select formControlName="currency">
+                                <mat-option *ngFor="let lan of Currency; let i = index" [value]="Currency[i].name">{{Currency[i].name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <!-- <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Probability(%)</mat-label>
+                            <input matInput placeholder="Enter Probability" formControlName="probability" value="">
+                        </mat-form-field>
+                    </div> -->
+                    <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Opportunity Amount</mat-label>
+                            <input matInput placeholder="Enter Opportunity Amount" formControlName="opportunity_amount">
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-2">
+                    <div class="text-inside">
+                        <mat-label>CONTACT</mat-label>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Phone </mat-label>
+                        <input matInput placeholder="Enter Phone" formControlName="phone">
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Mobile No. </mat-label>
+                        <input matInput placeholder="Enter Mobile No." formControlName="mobile_no">
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Fax </mat-label>
+                        <input matInput placeholder="Enter Fax" formControlName="fax">
+                    </mat-form-field>
+                </div>
+            </div> -->
+            <div class="form-card">
+                <div class="row">
+                    <div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-2">
+                        <div class="text-inside" (click)="change_form">
+                            <mat-label>MORE INFORMATION</mat-label>
+                        </div>
+                    </div>
+                    <!-- <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Lead Type</mat-label>
+                            <mat-select formControlName="type">
+                                <mat-option value="Client">Client </mat-option>
+                                <mat-option value="Channel Partner">Channel Partner </mat-option>
+                                <mat-option value="Consultant">Consultant </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div> -->
+                    <!-- <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Company</mat-label>
+                            <mat-select formControlName="company">
+                                <mat-option *ngFor="let lan of Company; let i = index" [value]="Company[i].name">{{Company[i].name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div> -->
+                    <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Market Segment</mat-label>
+                            <mat-select formControlName="market_segment">
+                                <mat-option *ngFor="let lan of segment; let i = index" [value]="segment[i].name">{{segment[i].name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Website </mat-label>
+                            <input matInput placeholder="Enter Website" formControlName="website">
+                            <!--<mat-error *ngIf="addConForm.controls.name.hasError('required')">
+                            Please enter Segment name
+                        </mat-error>-->
+                        </mat-form-field>
+                    </div>
+                    <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Tag</mat-label>
+                            <mat-select formControlName="tag_id">
+                                <mat-option *ngFor="let tag of tags; let i = index" [value]="tag.tag_id">{{tag.tag_name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                </div>
+            </div>
+            <!-- <div class="row"> -->
+                
+                <!-- <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Industry</mat-label>
+                        <mat-select formControlName="industry">
+                            <mat-option *ngFor="let lan of industry; let i = index" [value]="industry[i].name">{{industry[i].name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div> -->
+                <!-- <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Territory</mat-label>
+                        <mat-select formControlName="territory">
+                            <mat-option [value]="0">
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div> -->
+                <!-- <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Request Type</mat-label>
+                        <mat-select formControlName="request_type">
+                            <mat-option value="ProductEnquiry">Product Enquiry </mat-option>
+                            <mat-option value="Information">Request For Information </mat-option>
+                            <mat-option value="Suggestions">Suggestions </mat-option>
+                            <mat-option value="Other">Other </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div> -->
+                <!-- <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <div>
+                        <mat-checkbox id="unsubscribed" class="unsubscribed mt-2" color="primary" formControlName="unsubscribed">
+                            Unsubscribed
+                        </mat-checkbox><br>
+                        <mat-checkbox id="blogsubscriber" class="blogsubscriber mt-2" color="primary" formControlName="blogsubscriber">
+                           Blog Subscriber
+                        </mat-checkbox>
+                    </div>
+                </div> -->
+                <!-- <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Product </mat-label>
+                        <input matInput placeholder="Enter Product" formControlName="product">
+                    </mat-form-field>
+                </div> -->
+            <!-- </div> -->
+            
+
+        </div>
+        <div class="btn-sec" mat-dialog-actions>
+            <button mat-raised-button color="primary"  type="submit" class="btn btn-default" [disabled]="isDisabled">Save</button>
+            <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,135 @@
+<div class="warap-height pt-4">   
+  <!-- Begin Page Content -->
+  <div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">
+      <button routerLink="/settings" mat-icon-button title="Back" color="accent"
+        aria-label="Example icon button with a menu icon">
+        <mat-icon>keyboard_backspace</mat-icon>
+      </button>
+      Click to Call
+    </h1>
+   
+    <form [formGroup]="addForm" (ngSubmit)="submit()">
+      <div class="row">
+        <div class="col-12 col-md-4 col-lg-3 col-xl-2 col-sm-6 mt-2">
+          <mat-form-field appearance="outline">
+            <mat-label>Script Name</mat-label>
+            <input matInput placeholder="Script Name" formControlName="scriptname" required>
+            <!-- <mat-error *ngIf="addForm.controls.scriptname.hasError('required')">
+                Please enter scriptname
+            </mat-error> -->
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-4 col-lg-3 col-xl-2 col-sm-6 mt-2">
+          <mat-form-field appearance="outline">
+            <mat-label>Domain</mat-label>
+            <input matInput placeholder="Domain" formControlName="domain" required>
+          </mat-form-field> 
+        </div>
+        <div class="col-12 col-md-4 col-lg-3 col-xl-2 col-sm-6 mt-2">      
+          <mat-form-field appearance="outline">
+            <mat-label>Agent Group</mat-label>
+            <mat-select  formControlName="agentgroup">
+              <mat-option *ngFor="let group of agentgroups;let i = index;" [value]="group.GroupID">
+                {{group.GroupName}}</mat-option>
+            </mat-select>
+          </mat-form-field>  
+        </div>
+        <div class="col-12 col-md-4 col-lg-3 col-xl-2 col-sm-6 mt-2">
+          <mat-radio-group formControlName="button_position">
+            <div style="color:grey;">Button Position</div>
+            <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" value="left">Left
+            </mat-radio-button>
+            <mat-radio-button color="primary" style="padding:4px 0px 0px 24px;" value="right">Right
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <div class="col-12 col-md-4 col-lg-3 col-xl-2 col-sm-6 mt-2">
+          <button mat-raised-button type="submit" color="accent" class="Update-btn mt-2">Generate Script</button>
+        </div>
+      </div>
+    </form>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4 mt-4">
+      
+      <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+
+      <div class="card-body">        
+
+        <!--Table Data-->
+        <div class="table-responsive mt-2">
+          
+          <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+                  
+            <!-- Position Column -->
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef> Sr. No. </th>
+                <td mat-cell *matCellDef="let row;let i = index;" data-label="id">
+                  {{i+1+(paginator.pageIndex * paginator.pageSize)}}
+                </td>
+            </ng-container>
+        
+            <!-- scriptname Column -->
+            <ng-container matColumnDef="scriptname">
+                <th mat-header-cell *matHeaderCellDef  mat-sort-header>  Scriptname </th>
+                <td mat-cell *matCellDef="let row">
+                  {{row.script_name}}
+                </td>
+            </ng-container>
+        
+            <!-- domain Column -->
+            <ng-container matColumnDef="domain">
+                <th mat-header-cell *matHeaderCellDef> Domain </th>
+                <td mat-cell *matCellDef="let row"> 
+                  {{row.domain}}
+                </td>
+            </ng-container>
+        
+            <!-- agentgroup Column -->
+            <ng-container matColumnDef="agentgroup">
+                <th mat-header-cell *matHeaderCellDef>Agentgroup</th>
+                <td mat-cell *matCellDef="let row">
+                  {{row.GroupName}}
+                </td>
+            </ng-container>
+
+            <!-- button_position Column -->
+            <ng-container matColumnDef="button_position">
+                <th mat-header-cell *matHeaderCellDef> Button Position </th>
+                <td mat-cell *matCellDef="let row">
+                  {{row.button_position | titlecase}}
+                </td>
+            </ng-container>
+
+            <!-- Action Column -->
+            <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef> Action </th>
+                <td mat-cell *matCellDef="let row">
+                  <button (click)="viewData(row.tag_id)" title="Copy here your script" mat-icon-button color="accent" aria-label="Example icon button with a home icon">
+                    <mat-icon>integration_instructions</mat-icon>
+                  </button>
+                  <button (click)="deleteData(row.clickid)" title="Change Password" mat-icon-button color="warn" aria-label="Example icon button with a menu icon">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </td>
+            </ng-container>
+            
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+          
+        </div>
+
+        <mat-paginator #paginator [length]="Length" [pageSize]="50" [pageSizeOptions]="[50,100,500]"></mat-paginator>
+
+
+      </div>
+
+    </div>
+
+  </div>
+  <!-- /.container-fluid -->
+</div>

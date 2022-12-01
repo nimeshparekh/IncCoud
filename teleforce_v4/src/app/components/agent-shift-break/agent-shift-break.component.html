@@ -1,0 +1,56 @@
+<div class="warap-height pt-4"> 
+    <!-- Begin Page Content --> 
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <h1 class="h3 mb-3 text-gray-800">Shift Time</h1>
+
+        <!-- DataTales Example -->
+        <div class="card mb-4 shadow">
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div *ngIf="startmode">
+                            <div class="breack-timeimg position-relative text-center" (click)="start()">
+                                <img src="assets/img/shift-time1.png">
+                                <button class="breaktimestartbtn" mat-raised-button type="button" color="primary" (click)="start()" *ngIf="startmode">Start</button>
+                            </div>
+                        </div>
+                        <div *ngIf="stopmode">
+                            <div class="breack-timeimg position-relative text-center" (click)="stop()">
+                                <img src="assets/img/shift-time.png">
+                                <button  class="breaktimestartbtn" mat-raised-button type="button" color="warn" (click)="stop()" *ngIf="stopmode">Stop</button>
+                            </div>
+                        </div>
+                        
+                        <!-- <button mat-raised-button type="button" color="warn" (click)="stop()" *ngIf="stopmode">Stop</button> -->
+                    </div>
+                </div>
+                <div class="row" *ngIf="stopmode">
+                    <div class="col-md-12 mt-3">
+                        <h3>
+                            Your Shift start at <b>{{shiftstartime | date:"dd-MM-yyy hh:mm:ss a"}}</b> please stop shift time first.
+                        </h3>
+                    </div>
+                </div>
+                <div class="mt-4" *ngIf="shifts.length>0">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Shift Date</th>
+                                <th>Shift Start Time</th>
+                                <th>Shift Stop Time</th>
+                            </tr>
+                            <tr *ngFor="let shift of shifts">
+                                <td>{{shift.date | date:" dd-MM-yyyy":timezone}}</td>
+                                <td>{{shift.start_time | date:"hh:mm:ss a":timezone}}</td>
+                                <td>{{shift.stop_time | date:" hh:mm:ss a":timezone}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>           
+            </div>
+        </div>
+    </div>
+</div> 

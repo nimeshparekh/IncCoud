@@ -1,0 +1,307 @@
+<div class="warap-height pt-4">
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <h1 class="h3 mb-2 text-gray-800">Common Agent Performance Report</h1>
+        <p class="mb-2"></p>
+        <form [formGroup]="searchform"> 
+            <div class="row">
+               
+                <div class="col-sm-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Choose a date</mat-label>
+                        <input matInput placeholder="From Date" [matDatepicker]="startpicker" formControlName="startdate" >
+                        <mat-datepicker-toggle matSuffix [for]="startpicker"></mat-datepicker-toggle>
+                        <mat-datepicker #startpicker tpicker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Agent</mat-label>
+                        <mat-select formControlName="agentid">
+                            <mat-option value="">All</mat-option>
+                            <mat-option *ngFor="let agent of agents" value="{{agent.account_id}}">
+                                {{agent.account_name | titlecase}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <!-- <div class="col-sm-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Choose a date</mat-label>
+                        <input matInput placeholder="To Date" [matDatepicker]="endpicker" formControlName="enddate" >
+                        <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
+                        <mat-datepicker #endpicker tpicker></mat-datepicker>
+                    </mat-form-field> 
+                </div> -->
+                <div class="col-sm-2">
+                    <button mat-raised-button type="submit" (click)="searchData()"  [disabled]="isDisabled">Search</button>&nbsp;
+                </div>
+            </div>            
+        </form>     
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4 mt-3">
+
+            <div class="card-body">
+                <div class="table-responsive" id="dashboard">
+                    <table width="100%">
+                        <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+                        <div fxLayout fxLayoutAlign="center center" class="mt-2">
+                            <button mat-raised-button color="primary" (click)="downloadpdf()"> PDF</button>
+                            <!-- <button mat-raised-button color="primary"
+                                (click)="exporter.exportTable('csv', {fileName:'common-agent-performance-Report', sheet: 'sheet_name'})">CSV</button> --> -->
+                        </div><br>
+                        <mat-table class="lessons-table mat-elevation-z8" matTableExporter #exporter="matTableExporter"  [dataSource]="dataSource">
+                            <ng-container matColumnDef="id">
+
+                                <mat-header-cell *matHeaderCellDef>Sr. No</mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" data-label="id">
+                                    {{i+1+(paginator.pageIndex * paginator.pageSize)}}</mat-cell>
+
+                            </ng-container>
+                            <ng-container matColumnDef="report_date">
+
+                                <mat-header-cell *matHeaderCellDef > Date </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" maxlength="10">
+                                {{row.report_date }}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="agent_name">
+
+                                <mat-header-cell *matHeaderCellDef > agent </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" maxlength="10">
+                                {{row.agent_name}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="total_calls">
+
+                                <mat-header-cell *matHeaderCellDef > Total Calls </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" maxlength="10">
+                                {{row.total_calls}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="answered_calls">
+
+                                <mat-header-cell *matHeaderCellDef > Answered Calls </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" maxlength="10">
+                                {{row.answered_calls}}
+                                </mat-cell>
+
+                            </ng-container>
+
+
+                            <ng-container matColumnDef="dialer_calls">
+
+                                <mat-header-cell *matHeaderCellDef > Dialer Calls </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" maxlength="10">
+                                {{row.dialer_calls}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="incoming_calls">
+
+                                <mat-header-cell *matHeaderCellDef >Incoming Calls </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" maxlength="10">
+                                    {{row.incoming_calls }}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="outgoing_calls">
+
+                                <mat-header-cell *matHeaderCellDef > Outgoing Calls</mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" maxlength="10">
+                                    {{row.outgoing_calls}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="total_duration">
+
+                                <mat-header-cell *matHeaderCellDef > Total Duration</mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.total_duration}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="dialer_duration">
+
+                                <mat-header-cell *matHeaderCellDef > 	Dialer Duration </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.dialer_duration}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="incoming_duration">
+
+                                <mat-header-cell *matHeaderCellDef > Incoming Duration </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.incoming_duration}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="outgoing_duration">
+
+                                <mat-header-cell *matHeaderCellDef > Outgoing Duration </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.outgoing_duration}}
+                                </mat-cell>
+
+                            </ng-container>
+                            <ng-container matColumnDef="total_connected_calls">
+
+                                <mat-header-cell *matHeaderCellDef > Total Connected Calls </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.total_connected_calls}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            
+                            <ng-container matColumnDef="dialer_connected_calls">
+
+                                <mat-header-cell *matHeaderCellDef > Dialer Connected Calls </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.dialer_connected_calls}}
+                                </mat-cell>
+
+                            </ng-container>
+                            <ng-container matColumnDef="incoming_connected_calls">
+
+                                <mat-header-cell *matHeaderCellDef > Incoming Connected Calls </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.incoming_connected_calls	}}
+                                </mat-cell>
+
+                            </ng-container>
+                            <ng-container matColumnDef="outgoing_connected_calls">
+
+                                <mat-header-cell *matHeaderCellDef > Outgoing Connected Calls </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.outgoing_connected_calls}}
+                                </mat-cell>
+
+                            </ng-container>
+                            <ng-container matColumnDef="total_connected_duration">
+
+                                <mat-header-cell *matHeaderCellDef > Total Connected Duration </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.total_connected_duration}}
+                                </mat-cell>
+
+                            </ng-container>
+                            <ng-container matColumnDef="average_talktime">
+
+                                <mat-header-cell *matHeaderCellDef > Average Talktime </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.average_talktime}}
+                                </mat-cell>
+
+                            </ng-container>
+                            <ng-container matColumnDef="total_leads">
+
+                                <mat-header-cell *matHeaderCellDef > Total Lead</mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.total_leads}}
+                                </mat-cell>
+
+                            </ng-container>
+                            <ng-container matColumnDef="converted_leads">
+
+                                <mat-header-cell *matHeaderCellDef > Converted Leads </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.converted_leads}}
+                                </mat-cell>
+
+                            </ng-container>
+                            <ng-container matColumnDef="opportunity_ammount">
+
+                                <mat-header-cell *matHeaderCellDef > Opportunity Ammount</mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.opportunity_ammount}}
+                                </mat-cell>
+
+                            </ng-container>
+                            <ng-container matColumnDef="total_calls_lead">
+
+                                <mat-header-cell *matHeaderCellDef > Total Calls Lead </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.total_calls_lead}}
+                                </mat-cell>
+
+                            </ng-container>
+                            <ng-container matColumnDef="total_sms_lead">
+
+                                <mat-header-cell *matHeaderCellDef > Total sms lead</mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.total_sms_lead}}
+                                </mat-cell>
+
+                            </ng-container>
+                            <ng-container matColumnDef="total_email_lead">
+
+                                <mat-header-cell *matHeaderCellDef >Total Email Lead </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.total_email_lead}}
+                                </mat-cell>
+
+                            </ng-container>
+                            <ng-container matColumnDef="total_whatsapp_lead">
+
+                                <mat-header-cell *matHeaderCellDef > Total Whatsapp Lead </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.total_whatsapp_lead}}
+                                </mat-cell>
+
+                            </ng-container>
+                            
+                            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+                            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+                        </mat-table>
+                        <mat-paginator #paginator [length]="Length" [pageSize]="50" [pageSizeOptions]="[50,100,500]">
+                        </mat-paginator>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /.container-fluid -->
+</div>    

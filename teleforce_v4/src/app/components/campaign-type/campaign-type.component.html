@@ -1,0 +1,55 @@
+<div class="warap-height pt-4 pb-4">
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 mt-5" *ngIf="campaigns">
+                <div class="card text-center wow fadeInUp" data-wow-delay=".1s">
+                    <a>
+                        <div class="imgbox-dash">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="detailbox-dash" routerLink="/voice-campaign">
+                            <h5>Voice (Dialer)</h5>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 mt-5" *ngIf="sms">
+                <div class="card text-center wow fadeInUp" data-wow-delay=".1s">
+                    <a>
+                        <div class="imgbox-dash">
+                            <i class="fas fa-sms"></i>
+                        </div>
+                        <div class="detailbox-dash" routerLink="/sms-campaign">
+                            <h5>SMS</h5>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 mt-5" *ngIf="email">
+                <div class="card text-center wow fadeInUp" data-wow-delay=".1s">
+                    <a>
+                        <div class="imgbox-dash">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="detailbox-dash" routerLink="/email-campaign">
+                            <h5>Email</h5>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 mt-5" *ngIf="obd">
+                <div class="card text-center wow fadeInUp" data-wow-delay=".1s">
+                    <a>
+                        <div class="imgbox-dash">
+                            <i class="fi-rr-megaphone"></i>
+                        </div>
+                        <div class="detailbox-dash" routerLink="/obd-campaign">
+                            <h5>Voice Broadcast (OBD)</h5>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

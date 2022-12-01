@@ -1,0 +1,90 @@
+<div class="pb-2">
+    <div class="post-management-insight">
+        <mat-tab-group>
+            <mat-tab> 
+                <ng-template mat-tab-label>
+                    Insights
+                </ng-template>
+                <div class="container-fluid mt-3 scroll-y-300">
+                    <div class="row" >
+                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
+                            <div class="insights-box-dialog">
+                                <h6>Reach</h6>
+                                <p>{{insight_engagement.reach}}</p>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
+                            <div class="insights-box-dialog">
+                                <h6>Impressions</h6>
+                                <p>{{insight_engagement.impressions}}</p>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
+                            <div class="insights-box-dialog">
+                                <h6>Spend</h6>
+                                <p>{{insight_engagement.spend}}</p>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
+                            <div class="insights-box-dialog">
+                                <h6>cost per inline link click</h6>
+                                <p>{{insight_engagement.cost_per_inline_link_click}}</p>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
+                            <div class="insights-box-dialog">
+                                <h6>Social spend</h6>
+                                <p>{{insight_engagement.social_spend}}</p>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
+                            <div class="insights-box-dialog">
+                                <h6>cpm</h6>
+                                <p>{{insight_engagement.cpm}}</p>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
+                            <div class="insights-box-dialog">
+                                <h6>cpc</h6>
+                                <p>{{insight_engagement.cpc}}</p>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
+                            <div class="insights-box-dialog">
+                                <h6>Frequency</h6>
+                                <p>{{insight_engagement.frequency}}</p>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
+                            <div class="insights-box-dialog">
+                                <h6>Unique ctr</h6>
+                                <p>{{insight_engagement.unique_ctr}}</p>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
+                            <div class="insights-box-dialog">
+                                <h6>inline link clicks</h6>
+                                <p>{{insight_engagement.inline_link_clicks}}</p>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
+                            <div class="insights-box-dialog">
+                                <h6>inline post engagement</h6>
+                                <p>{{insight_engagement.inline_post_engagement}}</p>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-6 col-12">
+                            <div class="insights-box-dialog">
+                                <h6>Click</h6>
+                                <p>{{insight_engagement.clicks}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>  
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+    <div mat-dialog-actions class="text-right">
+        <button mat-button (click)="onNoClick()">Close</button>
+    </div>
+</div>

@@ -1,0 +1,124 @@
+<div mat-dialog-head class="dilog-head d-flex justify-content-between pb-3">
+  <div>
+    <button mat-raised-button color="primary" class="ml-2 mt-2">
+      <mat-icon>file_download</mat-icon>
+      <a href="/assets/lead.csv" target="_self" download>
+        Download Template
+      </a>
+    </button>&nbsp;
+  </div>
+  <div class="d-inline-block">
+    <a class="close" (click)="closeDialog()"><i class="fi-rr-cross-small"></i></a>
+  </div>
+</div>
+<div mat-dialog-content>
+
+  <div class="csv-file-chooser-section">
+    <form [formGroup]="importform">
+      <div class="row">
+        <div class="col-12 col-md-4 col-lg-4 col-xl-4 col-sm-4 mt-2">
+          <mat-form-field appearance="outline">
+            <mat-label>Assign Agent Group</mat-label>
+            <mat-select placeholder="Agent Group" formControlName="agentgroupid" required
+              (selectionChange)="getAssignedAgents($event.value)">
+              <mat-option *ngFor="let group of agentgroup" [value]="group.GroupID">{{group.GroupName}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="importform.controls.agentgroupid.hasError('required')">
+              Please select agent group
+          </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-4 col-lg-4 col-xl-4 col-sm-4 mt-2">
+          <mat-form-field appearance="outline">
+            <mat-label>Assign Agent</mat-label>
+            <mat-select formControlName="agent">
+              <mat-option value="">None</mat-option>
+              <mat-option *ngFor="let agent of agentarr" value="{{agent.AgentID}}">
+                {{agent.agentname | titlecase}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="col-12 col-md-4 col-lg-4 col-xl-4 col-sm-4 mt-2">
+          <mat-form-field appearance="outline">
+            <mat-label>Segment</mat-label>
+            <mat-select formControlName="segment">
+              <mat-option value="">-Please select-</mat-option>
+              <mat-option *ngFor="let cat of category" [value]="cat.cont_id">
+                {{cat.name}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="importform.controls.segment.hasError('required')">
+              Please select segment
+          </mat-error>
+          </mat-form-field>
+        </div>
+        <!-- <div class="col-12 col-md-4 col-lg-4 col-xl-4 col-sm-4 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Duplicate Allow</mat-label>
+                        <mat-select formControlName="duplicate">
+                            <mat-option value="no">No</mat-option>
+                            <mat-option value="yes">Yes</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div> -->
+      </div>
+      <div class="float-right d-flex">
+        <div>
+          <button mat-raised-button color="primary" (click)="onUploadCsv()" class="ml-2 mt-2" [disabled]="isDisabled">
+            <mat-icon>file_upload</mat-icon>
+            Upload CSV
+          </button>
+        </div>
+
+        <input type="file" id="fileUpload" name="fileUpload" accept=".csv" style="display:none" />
+      </div>
+    </form>
+    <!-- <input type="file" #fileImportInput name="File Upload" id="txtFileUpload" (change)="fileChangeListener($event)"
+               accept=".csv"/>
+      
+      </div>
+      
+      <div class="csv-result-table">
+      
+        <table>
+          <thead>
+          <tr>
+            <th>#</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+            <th>Title</th>
+            <th>Occupation</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let csvData of csvRecords;let i = index;">
+      
+            <td>{{i+1}}</td>
+            <td>
+              <span>{{csvData.firstName}}</span>
+            </td>
+            <td>
+              <span>{{csvData.lastName}}</span>
+            </td>
+            <td>
+              <span>{{csvData.email}}</span>
+            </td>
+            <td>
+              <span>{{csvData.phoneNumber}}</span>
+            </td>
+            <td>
+              <span>{{csvData.title}}</span>
+            </td>
+            <td>
+              <span>{{csvData.occupation}}</span>
+            </td>
+      
+          </tr>
+          </tbody>
+        </table>
+ -->
+  </div>

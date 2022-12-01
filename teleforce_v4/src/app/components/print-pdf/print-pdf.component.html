@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en" id="printableArea">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Lead Quotation</title>
+	<meta name="generator" content="frappe">
+	<link type="text/css" rel="stylesheet" href="https://beta.cloudX.in/assets/css/printview.css">
+	<style>
+		/* modern format: for-test */
+	</style>
+</head>
+
+<body>
+	<div class="print-format-gutter">
+		<div class="print-format">
+
+			<div class="page-break">
+				<div> <button (click)="openPDF('printableArea')"><i class="fas fa-print"></i> </button></div>
+				<div id="header-html" class="hidden-pdf">
+
+					<div class="letter-head" *ngIf="imgdoc">
+						<img src="https://beta.cloudX.in/files/Leter1.jpg" style="width: 100%;" *ngIf="!headerimg">
+						<img src="api/header-footer/{{headerimg}}" style="width: 100%;" *ngIf="headerimg">
+					</div>
+					<div class="letter-head" *ngIf="htmldoc" [innerHTML]="headerimg"></div>
+
+					<div class="print-heading">
+						<h2>Quotation<br>
+							<small>{{name}}</small>
+						</h2>
+					</div>
+
+				</div>
+
+
+
+
+
+
+				<div class="row section-break" data-label="" >
+					<div class="col-md-6 column-break">
+
+						<div class="row important data-field" data-fieldname="customer_name" data-fieldtype="Data">
+							<div class="col-xs-5">
+
+
+								<label>Customer Name : </label>
+
+
+							</div>
+							<div class="col-xs-7 value">
+
+								&nbsp;{{customer_name}}
+
+							</div>
+						</div>
+
+					</div>
+
+					<div class="col-md-6 column-break">
+
+						<div class="row  data-field" data-fieldname="transaction_date" data-fieldtype="Date">
+							<div class="col-xs-5">
+								<label>Date : </label>
+							</div>
+							<div class="col-xs-7 value">
+			 					&nbsp;{{transaction_date | date:'dd-MM-yyyy'}}
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+
+				<div class="row section-break" data-label="Address and Contact" >
+					<div class="col-md-12 column-break">
+						<div class="row  data-field" data-fieldname="contact_mobile" data-fieldtype="Small Text">
+							<div class="col-xs-5">
+								<label>Mobile : </label>
+							</div>
+							<div class="col-xs-7 value">
+								&nbsp;{{contact_mobile}}
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row section-break" data-label="">
+					<div class="col-md-12 column-break">
+						<div data-fieldname="items" data-fieldtype="Table">
+							<label>Items</label>
+							<table class="table table-bordered table-condensed">
+								<thead>
+									<tr>
+										<th style="width: 40px" class="table-sr">Sr</th>
+										<th style="width: 150px;" class="" data-fieldname="items"
+											data-fieldtype="Table">
+											Item Code</th>
+										<th style="width: 300px;" class="" data-fieldname="items"
+											data-fieldtype="Table">
+											Description</th>
+										<th style="width: 100px;" class="text-right" data-fieldname="items"
+											data-fieldtype="Table">
+											Quantity</th>
+										<th style="width: 80px;" class="text-right" data-fieldname="items"
+											data-fieldtype="Table">
+											Discount Amount</th>
+										<th style="width: 100px;" class="text-right" data-fieldname="items"
+											data-fieldtype="Table">
+											Rate</th>
+											<th style="width: 100px;" class="text-right" data-fieldname="items"
+											data-fieldtype="Table">
+											GST</th>
+										<th style="width: 100px;" class="text-right" data-fieldname="items"
+											data-fieldtype="Table">
+											Amount</th>
+									</tr>
+								</thead>
+								<tbody id="demo2">
+
+									
+								</tbody>
+								
+							</table>
+						</div>
+					</div>
+				</div>
+
+				<div class="row section-break" data-label="">
+					<div class="col-md-12 column-break">
+						<div class="row  data-field" data-fieldname="total_qty" data-fieldtype="Float">
+							<div class="col-xs-5">
+								<label>Total Quantity : </label>
+							</div>
+							<div class="col-xs-7 text-right value">
+								&nbsp;{{total_qty}}
+							</div>
+						</div>
+					</div>
+					<div class="col-md-12 column-break">
+						<div class="row  data-field" data-fieldname="total_qty" data-fieldtype="Float">
+							<div class="col-xs-5">
+								<label>Total Discount : </label>
+							</div>
+							<div class="col-xs-7 text-right value">
+								&nbsp; ₹ {{total_discount}}
+							</div>
+						</div>
+					</div>
+					<div class="col-md-12 column-break">
+						<div class="row data-field" data-fieldname="total_qty" data-fieldtype="Float">
+							<div class="col-xs-5">
+								<label>Total : </label></div>
+							<div class="col-xs-7 text-right value">
+								&nbsp; ₹ {{total}}
+							</div>
+						</div>
+					</div>
+					<div class="col-md-12 column-break">
+						<div class="row  data-field" data-fieldname="total_qty" data-fieldtype="Float">
+							<div class="col-xs-5">
+								<label>Total GST Amount : </label>
+							</div>
+							<div class="col-xs-7 text-right value">
+								&nbsp; 	₹ {{total_gstamount}}
+							</div>
+						</div>
+					</div>
+					<div class="col-md-12 column-break">
+						<div class="row  data-field" data-fieldname="grand_total" data-fieldtype="Currency">
+							<div class="col-xs-5">
+								<label>Grand Total : </label>
+							</div>
+							<div class="col-xs-7 text-right value">
+								&nbsp; ₹ {{grand_total}}
+							</div>
+						</div>
+					</div>
+					<div class="col-md-12 column-break">
+						<div class="row  data-field" data-fieldname="in_words" data-fieldtype="Data">
+							<div class="col-xs-3">
+								<label>In Words : </label>
+							</div>
+							<div class="col-xs-9 text-right value">
+								&nbsp;{{in_words}}
+							</div>
+						</div>
+					</div>
+				</div>			
+
+
+				<div class="foothead">					
+					<div class="letter-head-footer" *ngIf="imgdoc">
+						<img src="https://beta.cloudX.in/files/Leter2.jpg" style="width: 100%;" *ngIf="!footerimg">
+						<img src="api/header-footer/{{footerimg}}" style="width: 100%;" *ngIf="footerimg">
+					</div>
+					<div class="letter-head-footer" *ngIf="htmldoc" [innerHTML]="footerimg"></div>
+					<p class="text-center small page-number visible-pdf">
+						Page <span class="page"></span> of <span class="topage"></span>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+			const page_div = document.querySelector('.page-break');
+
+			page_div.style.display = 'flex';
+			page_div.style.flexDirection = 'column';
+
+			const footer_html = document.getElementById('footer-html');
+			footer_html.classList.add('hidden-pdf');
+			footer_html.classList.remove('visible-pdf');
+			footer_html.style.order = 1;
+			footer_html.style.marginTop = '20px';
+		});
+		name = "test"
+	</script>
+</body><!-- Administrator -->
+
+</html>

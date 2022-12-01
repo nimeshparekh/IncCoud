@@ -1,0 +1,234 @@
+<div class="container-fluid">
+  <h1 class="h3 mb-2 text-gray-800">Contacts</h1>
+  <p class="mb-4"></p>
+  
+  <div class="row">
+    <div class="col-12 col-md-4 col-lg-3 col-xl-3 col-sm-6 mt-2"> 
+      <button  mat-raised-button color="primary" class="width-100" (click)="createcontactdialog()" title="Add">Add Contact</button>
+    </div>
+    <div class="col-12 col-md-4 col-lg-3 col-xl-3 col-sm-6 mt-2"> 
+      <button mat-button color="primary" class="width-100"> 
+        <mat-icon>file_download</mat-icon>
+        <a href="/assets/sample.csv" target="_self" download>
+        Download Template
+        </a>
+      </button>
+    </div>
+    <div class="col-12 col-md-4 col-lg-3 col-xl-3 col-sm-6 mt-2"> 
+      <button mat-button color="accent" class="width-100" [disabled]="!selected_seg" (click)="onUploadCsv()">
+        <mat-icon>file_upload</mat-icon>
+        Upload CSV
+      </button>
+    </div>
+    
+    <div class="col-12 col-md-4 col-lg-3 col-xl-3 col-sm-6 mt-2">
+      <div class="create-campaign" (click)="createfiledialog()">
+        <button mat-raised-button color="primary" class="width-100">Upload File Status</button>
+      </div>
+    </div>
+    <div class="col-12 col-md-4 col-lg-3 col-xl-3 col-sm-6 mt-2"> 
+      <input type="file" id="fileUpload" name="fileUpload" multiple="multiple" accept=".csv" style="display:none;"/>
+      <mat-form-field class="width-100">
+        <mat-label> Segment to upload</mat-label>
+        <mat-select [(value)]="not" (selectionChange)="selectedSegment($event.value)">
+          <mat-option *ngFor="let cat of category" [value]="cat.cont_id">
+            {{cat.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-12 col-md-4 col-lg-3 col-xl-3 col-sm-6 mt-2"> 
+      <div *ngFor="let file of files" [@fadeInOut]="file.state">
+        <mat-progress-bar [value]="file.progress"></mat-progress-bar>
+        <span id="file-label">
+        {{file.data.name}} 
+        <a title="Retry" (click)="retryFile(file)" *ngIf="file.canRetry">
+        <mat-icon>refresh</mat-icon></a>
+        <a title="Cancel" (click)="cancelFile(file)" *ngIf="file.canCancel">
+        <mat-icon>cancel</mat-icon></a>
+        </span>
+      </div>
+    </div>
+  </div>
+ 
+
+  <div class="">
+    <form [formGroup]="searchform">
+      <div class="row">
+        <div class="col-12 col-md-4 col-lg-2 col-xl-2 col-sm-6">
+          <mat-form-field>
+            <mat-label>Name</mat-label>
+            <input matInput placeholder="Name" formControlName="name">
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-4 col-lg-2 col-xl-2 col-sm-6">
+          <mat-form-field>
+            <input matInput placeholder="Mobile Number" formControlName="mobile">
+          </mat-form-field>    
+        </div>
+        <div class="col-12 col-md-4 col-lg-2 col-xl-2 col-sm-6">       
+          <mat-form-field>
+            <input matInput placeholder="Email" formControlName="email">
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-4 col-lg-2 col-xl-2 col-sm-6">
+          <mat-form-field>
+            <mat-label>City</mat-label>
+            <input matInput placeholder="City" formControlName="city">
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-4 col-lg-2 col-xl-2 col-sm-6">
+          <!-- <mat-form-field>
+            <mat-label>State</mat-label>
+            <input matInput placeholder="State" formControlName="state">
+          </mat-form-field> -->
+          <mat-form-field>
+            <mat-label>State</mat-label>
+            <mat-select formControlName="state">
+              <mat-option value="">All</mat-option>
+              <mat-option *ngFor="let type of state" value="{{type.state_name}}">
+                {{type.state_name}}</mat-option>
+                
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-4 col-lg-2 col-xl-2 col-sm-6">
+          <mat-form-field>
+            <mat-label>Segment</mat-label>
+            <mat-select formControlName="category">
+              <mat-option value="">All</mat-option>
+              <mat-option *ngFor="let type of category" value="{{type.cont_id}}">
+                {{type.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <button mat-raised-button type="submit" (click)="Filtercontact()">Search</button>&nbsp;
+      <button mat-raised-button color="warn" class="Update-btn" (click)="resetform()">Reset</button>&nbsp;
+      <button (click)="resetform()" mat-mini-fab color="primary" aria-label="Example icon button with a plus one icon">
+        <span class="material-icons">refresh</span>
+      </button>
+    </form>
+  </div>
+  <br>
+<!---- Table history ---->
+  <div class="card shadow mb-4">
+    <div class="card-body">
+      <!---- Table history ---->
+      <div class="">
+        <div class="history-table table-responsive">
+          <table class="example-table-container">
+            <ng-template [ngIf]="contactdataSource.loading$ | async">
+              <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+            </ng-template>
+            <!-- <mat-table class="lessons-table mat-elevation-z8" [dataSource]="condataSource"> -->
+
+            <mat-table class="lessons-table mat-elevation-z8" matSort [dataSource]="contactdataSource" (matSortChange)="sortData($event)">
+
+              <ng-container matColumnDef="id">
+
+                <mat-header-cell *matHeaderCellDef>Sr. No</mat-header-cell>
+
+                <mat-cell class="description-cell" *matCellDef="let row;let i = index;">
+                  {{i+1+(contactpaginator.pageIndex * contactpaginator.pageSize)}}</mat-cell>
+
+              </ng-container>
+              <ng-container matColumnDef="name">
+
+                <mat-header-cell *matHeaderCellDef  mat-sort-header> Name</mat-header-cell>
+
+                <mat-cell class="description-cell" *matCellDef="let row">{{row.name}}</mat-cell>
+
+              </ng-container>
+
+              <ng-container matColumnDef="mobile">
+
+                <mat-header-cell *matHeaderCellDef  mat-sort-header>Mobile</mat-header-cell>
+
+                <mat-cell class="duration-cell" *matCellDef="let row">{{row.mobile}}</mat-cell>
+
+              </ng-container>
+
+              <ng-container matColumnDef="email">
+
+                <mat-header-cell *matHeaderCellDef  mat-sort-header>Email</mat-header-cell>
+
+                <mat-cell class="duration-cell" *matCellDef="let row;">
+                  {{row.email}}
+                </mat-cell>
+
+              </ng-container>
+
+              <ng-container matColumnDef="address">
+
+                <mat-header-cell *matHeaderCellDef  mat-sort-header>Address</mat-header-cell>
+
+                <mat-cell class="duration-cell" *matCellDef="let row;">
+                  {{row.address}}
+                </mat-cell>
+
+              </ng-container>
+
+              <ng-container matColumnDef="city">
+
+                <mat-header-cell *matHeaderCellDef  mat-sort-header>City</mat-header-cell>
+
+                <mat-cell class="duration-cell" *matCellDef="let row;">
+                  {{row.city}}
+                </mat-cell>
+
+              </ng-container>
+
+              <ng-container matColumnDef="state">
+
+                <mat-header-cell *matHeaderCellDef  mat-sort-header>State</mat-header-cell>
+
+                <mat-cell class="duration-cell" *matCellDef="let row;">
+                  {{row.state}}
+                </mat-cell>
+
+              </ng-container>
+
+              <ng-container matColumnDef="category">
+
+                <mat-header-cell *matHeaderCellDef  mat-sort-header>Segment</mat-header-cell>
+                    
+                <mat-cell class="duration-cell" *matCellDef="let row;">
+                  {{row.segment}}
+                </mat-cell>
+
+              </ng-container>
+
+              <ng-container matColumnDef="action">
+
+                <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
+
+                <mat-cell class="duration-cell" *matCellDef="let row;let i = index;">
+                  <button mat-mini-fab color="accent">
+                    <span (click)="updateagentdialog(row.cont_id)" title="Edit Details">
+                      <mat-icon>edit</mat-icon>
+                    </span>
+                  </button>&nbsp;
+                  <button mat-mini-fab color="warn">
+                    <span (click)="deleteagentdialog(row.cont_id,row.name)" title="Delete Details">
+                      <mat-icon>delete</mat-icon>
+                    </span>
+                  </button>
+                </mat-cell>
+
+              </ng-container>
+
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+              <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+            </mat-table>
+            <mat-paginator #contactpaginator [length]="conLength" [pageSize]="50" [pageSizeOptions]="[50,100,500]">
+            </mat-paginator>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

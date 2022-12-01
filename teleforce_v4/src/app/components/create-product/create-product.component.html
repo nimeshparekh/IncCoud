@@ -1,0 +1,235 @@
+<div mat-dialog-head class="dilog-head d-flex justify-content-between">
+    <h3 class="primary" *ngIf="addmode">Add Product</h3>
+    <h3 class="primary" *ngIf="editmode">Edit Product</h3>
+    <h3 class="primary" *ngIf="deletemode">Delete Product</h3>
+    <div class="d-inline-block">
+        <a class="close" (click)="openDialog()"><i class="fi-rr-cross-small"></i></a>
+    </div>
+</div>
+<div *ngIf="addmode || editmode">
+    <form [formGroup]="addForm" (ngSubmit)="submit()">
+        <div mat-dialog-content>
+            <div class="row">
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Product Name</mat-label>
+                        <input matInput placeholder="Product Name" formControlName="name" required>
+                        <mat-error *ngIf="addForm.controls.name.hasError('required')">
+                            Please enter name
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Description</mat-label>
+                        <textarea matInput placeholder="Description" rows="1" formControlName="description"
+                            required></textarea>
+                        <mat-error *ngIf="addForm.controls.description.hasError('required')">
+                            Please enter Description
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>HSN/SAC</mat-label>
+                        <textarea matInput placeholder="HSN/SAC" rows="1" formControlName="hsn"></textarea>
+                    </mat-form-field>
+                </div>
+
+                <!-- <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Long Description</mat-label>
+                        <textarea matInput placeholder="Long Description" rows="1" formControlName="longdescription"
+                            required></textarea>
+                        <mat-error *ngIf="addForm.controls.name.hasError('required')">
+                            Please enter Long Description
+                        </mat-error>
+                    </mat-form-field>
+                </div> -->
+
+                <!-- <div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-4">
+                    <div>
+                        <angular-editor formControlName="longdescription" [config]="editorConfig"></angular-editor>
+                    </div>
+                </div> -->
+
+                <!-- <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Email Template</mat-label>
+                        <mat-select formControlName="emailtemplate">
+                            <mat-option *ngFor="let email of email_templates" [value]="email.email_id">{{email.email_title}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>SMS Template</mat-label>
+                        <mat-select formControlName="smstemplate">
+                            <mat-option *ngFor="let sms of sms_templates" [value]="sms.sms_id">{{sms.sms_title}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>WHATSAPP Template</mat-label>
+                        <mat-select formControlName="whatsapptemplate">
+                            <mat-option *ngFor="let whatsapp of whatsapp_templates" [value]="whatsapp.sms_id">{{whatsapp.sms_title}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div> -->
+
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Unit of Measure</mat-label>
+                        <input matInput placeholder="Unit of Measure" formControlName="unit" required>
+                        <mat-error *ngIf="addForm.controls.name.hasError('required')">
+                            Please enter unit
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Product Price</mat-label>
+                        <input matInput placeholder="Product Price" formControlName="price" (blur)="getamount()"
+                            required>
+                        <mat-error *ngIf="addForm.controls.name.hasError('required')">
+                            Please enter price
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Product Quantity</mat-label>
+                        <input matInput placeholder="Product Quantity" formControlName="actual_qty" (blur)="getamount()"
+                            required>
+                        <mat-error *ngIf="addForm.controls.actual_qty.hasError('required')">
+                            Please enter Quantity
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Product Total Amount</mat-label>
+                        <input matInput placeholder="Product Amount" formControlName="amount" readonly required>
+                        <mat-error *ngIf="addForm.controls.name.hasError('required')">
+                            Please enter amount
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>GST (%)</mat-label>
+                        <input matInput placeholder="GST(%)" formControlName="gst" required>
+                        <mat-error *ngIf="addForm.controls.gst.hasError('required')">
+                            Please enter GST
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-3 col-12 mt-2">
+                    <input type="file" id="fileupload" style="display:none;" accept="image/*" />
+                    <a mat-raised-button (click)="onUploadHeaderImage()" style="width:300px">Upload Your
+                        Image</a>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-3 col-12 mt-2">
+                    <!-- <img src="{{image}}" height="50" width="50" > -->
+                    <div *ngIf="image && image !== ''" style="margin-left: 30px;">
+                        <img src="{{baseUrl}}{{apiUrl}}/products/thumbnail/{{image}}" height="70" width="70">
+                        <i class="fa fa-window-close" style="font-size:20px;" (click)="removeimage()">
+                           
+                        </i>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-md-3 col-sm-3 col-12 mt-2">
+                    <input type="file" id="filedoc" style="display:none;" accept=".pdf,.docx,.doc" />
+                    <a mat-raised-button (click)="onUploadDocs()" style="width:300px">Upload Your
+                        Document</a>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-3 col-12 mt-2">
+                    <!-- <img src="{{image}}" height="50" width="50" > -->
+                    <div *ngIf="document && document !== ''" style="margin-left: 30px;">
+                        <a href="{{baseUrl}}{{apiUrl}}/products/docs/{{document}}" target="_blank"><i class="fa fa-file"
+                                style="font-size:60px"></i></a>
+                        <i class="fa fa-window-close" style="font-size:20px" (click)="removedoc()">
+                            
+                        </i>
+                    </div>
+
+                </div>
+
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Web URL</mat-label>
+                        <input matInput placeholder="Web URL" formControlName="web_url">
+                    </mat-form-field>
+                </div>
+
+
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Status</mat-label>
+                        <mat-select formControlName="status">
+                            <mat-option [value]="0">Inactive</mat-option>
+                            <mat-option [value]="1">Active</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+            </div>
+            <h4>Other Information &nbsp;&nbsp;&nbsp; 
+                <a mat-icon-button color="primary">
+                    <span (click)="addItem()" title="Add filed">
+                        <mat-icon>add</mat-icon>
+                    </span>
+                </a>
+              </h4>
+              <div formArrayName="attributes" *ngFor="let item of addForm.get('attributes').controls; let i = index;">
+                <div class="row mt-2" [formGroupName]="i">
+                  <div class="col-sm-5 col-12">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Field Name</mat-label>
+                      <input matInput placeholder="Field Name" formControlName="otherkey">
+                    </mat-form-field>
+                  </div>
+                  <div class="col-sm-5 col-12">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Field Value</mat-label>
+                      <input matInput placeholder="Field Value" formControlName="othervalue">
+                    </mat-form-field>
+                  </div>
+                  <div class="col-sm-1 col-12">
+                    <a mat-icon-button color="primary">
+                      <span (click)="removetem(i)" title="Add filed">
+                          <mat-icon>remove</mat-icon>
+                      </span>
+                  </a>  
+                  </div>
+                </div>
+              </div>
+        </div>
+        <div class="btn-sec" mat-dialog-actions>
+            <button mat-raised-button type="submit" color="primary" class="Update-btn">Save</button>
+        </div>
+    </form>
+</div>
+
+<div *ngIf="deletemode">
+    <h3 style="margin-top: 10px; font-weight: 500;">
+        Are you sure to delete <b>{{delagentname}}</b>?
+    </h3>
+    <div class="btn-sec">
+        <button mat-raised-button type="button" color="primary" class="Update-btn"
+            (click)="deleteData(delagentid)">Delete</button>
+        &nbsp;
+        <button mat-raised-button type="button" class="Discard-btn" (click)="openDialog()">Cancel</button>
+    </div>
+</div>

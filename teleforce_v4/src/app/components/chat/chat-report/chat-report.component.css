@@ -1,0 +1,34 @@
+.card-ana
+{
+    border: initial!important;
+    background: #fff!important;
+    box-shadow: 0 1px 15px rgb(0 0 0/4%),0 1px 6px rgb(0 0 0/4%)!important;
+}
+.card-ana-head
+{
+    padding: 10px;
+    border-bottom: 1px solid rgb(227, 231, 243);
+}
+.card-ana-head p
+{
+    margin: 0px;
+    font-size: 16px;
+    font-weight: 800;
+    margin-bottom: 0px;
+}
+.card-ana-body
+{
+    padding: 10px;
+}
+.card-filter
+{
+    padding: 6px;
+    border-bottom: 1px solid rgb(227, 231, 243);
+}
+.card
+{
+    border: 1px solid #e8e8e8;
+    overflow: hidden;
+    border-radius: 0.75 rem !important;
+    box-shadow: 0 1px 15px rgb(0 0 0/4%),0 1px 6px rgb(0 0 0/4%)!important;
+}

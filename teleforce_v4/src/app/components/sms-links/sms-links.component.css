@@ -1,0 +1,116 @@
+table 
+{
+    width: 100%;
+    min-width: 500px;
+}
+.links
+{
+    position: relative;
+}
+.filter-part
+{
+    border-bottom: 1px solid #ececec;
+    padding-bottom: 10px;
+}
+.filter-field
+{
+    float: left;
+    margin-left: 10px;
+}
+.head-buttons
+{
+    display: inline-block;
+    float: right;
+}
+.head-buttons i
+{
+    margin-right: 10px;
+}
+.btn-head
+{
+    float: left;
+    border: none;
+    background: #00d2fc;
+    margin-left: 10px;
+    padding: 10px 14px 10px 14px;
+    border-radius: 27px;
+    color: #fff;
+    margin-top: 5px;
+}
+.btn-head:focus
+{
+    outline: none;
+}
+
+.link-dashboard
+{
+    margin-top: 20px;
+}
+.card 
+{
+    border: initial;
+    background: #fff;
+    border-radius: .75rem;
+    box-shadow: 0 1px 15px rgb(0 0 0 / 4%), 0 1px 6px rgb(0 0 0 / 4%);
+}
+.green-btn-bdr
+{
+    border-bottom: 5px solid rgb(102, 187, 106);
+}
+.red-btn-bdr
+{
+    border-bottom: 5px solid rgb(239, 83, 80);
+}
+.card-head
+{
+    padding: .75rem 1.25rem;
+    margin-bottom: 0;
+}
+.card-head:first-child {
+    border-radius: calc(.25rem - 1px) calc(.25rem - 1px) 0 0;
+}
+.post-icon i
+{
+    font-size: 12px;
+}
+.card-btn
+{
+    padding: 0 0 0 6px;
+}
+.card-btn i
+{
+    font-size: 14px;
+}
+.card-btn:focus
+{
+    outline: none;
+}
+.w-100
+{
+    width: 100%;
+}
+.close
+{
+
+}
+.dilog-head
+{
+    border-bottom: 1px solid #ccc;
+}
+.dilog-btn
+{
+    background-color: #00d2fc !important;
+}
+.clear
+{
+    border-radius: 50px;
+}
+.insight-btn
+{
+    padding: 0px 8px 0 8px;
+    border-radius: 56px;
+}
+.insight-btn i
+{
+    font-size: 9px;
+}

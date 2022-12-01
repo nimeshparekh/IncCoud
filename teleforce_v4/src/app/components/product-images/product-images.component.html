@@ -1,0 +1,56 @@
+<div mat-dialog-head class="dilog-head d-flex justify-content-between">
+    <h3 class="primary">Product Images</h3>
+    <div class="d-inline-block">
+        <a class="close" (click)="openDialog()"><i class="fi-rr-cross-small"></i></a>
+    </div>
+</div>
+<div  mat-dialog-content>
+    <form [formGroup]="productform">
+        <div>
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Product Image File</mat-label>
+                        <ngx-mat-file-input #removableInput formControlName="imagefile" placeholder="Image File" [accept]="'image/*'"></ngx-mat-file-input>
+                        <button mat-icon-button matSuffix *ngIf="!removableInput.empty" (click)="removableInput.clear($event)">
+                        <mat-icon>clear</mat-icon>
+                        </button>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+
+        <div class="btn-sec" >
+            <button mat-raised-button color="primary" (click)="imagefileupload()">Upload</button>
+        </div>
+
+        <div class="mt-4">
+            <h5>Uploaded Product Images</h5>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Image Name</th>
+                            <th>Image</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of imagedata;let i=index">
+                            <td>{{i+1}}</td>
+                            <td>{{ item.product_image }}</td>
+                            <td>
+                                <img src="api/products/images/{{item.product_image}}" height="50" width="50" >
+                            </td>
+                            <td>
+                                <a (click) = "deleteProdImage(item.product_image_id,item.product_image)"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                            </td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,13 @@
+<div >
+    <div class="add-title">
+        <h2 class="primary">Agent List</h2>
+    </div>
+    <div>
+        <ul>
+            <li *ngFor="let agent of agents">{{agent.account_name}}</li>
+        </ul>
+    </div>
+    <div class="btn-sec ">
+        <button mat-raised-button type="button" class="Discard-btn" (click)="openDialog()">Close</button>
+    </div>
+</div>

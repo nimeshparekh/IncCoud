@@ -1,0 +1,15 @@
+.export
+{
+    background: teal;
+    border: none;
+    height: 36px;
+    width: 100px;
+    display: block;
+    float: revert;
+    color: #fff;
+    margin-bottom: 20px;
+    border-radius: 6px;
+}
+a.blockbuilder-branding {
+    display: none;
+}

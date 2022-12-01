@@ -1,0 +1,110 @@
+ <!-- Begin Page Content -->
+ <div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Email Server</h1>
+    <p class="mb-4"></p>
+    <button mat-raised-button color="accent" (click)="Createdialog()" title="Add">Add Email Server</button>
+    <br><br>
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+      
+      <div class="card-body">
+        <div class="table-responsive">
+          <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+          <table>
+            <mat-table class="lessons-table mat-elevation-z8" matSort [dataSource]="dataSource">
+              <ng-container matColumnDef="id">
+      
+                <mat-header-cell *matHeaderCellDef>Sr. No</mat-header-cell>
+      
+                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" data-label="id">
+                  {{i+1+(paginator.pageIndex * paginator.pageSize)}}</mat-cell>
+      
+              </ng-container>
+              <ng-container matColumnDef="smtp_server">
+      
+                <mat-header-cell *matHeaderCellDef mat-sort-header>SMTP Server</mat-header-cell>
+      
+                <mat-cell class="description-cell" *matCellDef="let row">{{row.smtp_server}}
+                </mat-cell>
+      
+              </ng-container>
+      
+              <ng-container matColumnDef="smtp_port">
+      
+                <mat-header-cell *matHeaderCellDef mat-sort-header>SMTP Port</mat-header-cell>
+      
+                <mat-cell class="description-cell" *matCellDef="let row">
+                  {{row.smtp_port}}
+                </mat-cell>
+      
+              </ng-container>
+              <ng-container matColumnDef="smtp_username">
+      
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>SMTP Username</mat-header-cell>
+        
+                  <mat-cell class="description-cell" *matCellDef="let row">
+                    {{row.smtp_username}}
+                  </mat-cell>
+        
+                </ng-container>
+                <ng-container matColumnDef="smtp_password">
+      
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>SMTP Password</mat-header-cell>
+        
+                  <mat-cell class="description-cell" *matCellDef="let row">
+                    {{row.smtp_password}}
+                  </mat-cell>
+        
+                </ng-container>
+                <ng-container matColumnDef="perday_limit">
+      
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Perday Limit</mat-header-cell>
+        
+                  <mat-cell class="description-cell" *matCellDef="let row">
+                    {{row.perday_limit}}
+                  </mat-cell>
+        
+                </ng-container>
+                <ng-container matColumnDef="attachment_size">
+      
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Attachment Size</mat-header-cell>
+        
+                  <mat-cell class="description-cell" *matCellDef="let row">
+                    {{row.attachment_size}}
+                  </mat-cell>
+        
+                </ng-container>
+                <ng-container matColumnDef="action">
+      
+                  <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+        
+                  <mat-cell class="description-cell" *matCellDef="let row">
+                      <button mat-mini-fab color="primary">
+                          <span (click)="updatedialog(row.server_id)" title="Edit">
+                              <mat-icon>edit</mat-icon>
+                          </span>
+                      </button>&nbsp;
+                      <button mat-mini-fab color="warn">
+                          <span (click)="deleteData(row.server_id)" title="Delete">
+                            <mat-icon>delete</mat-icon>
+                          </span>
+                      </button>
+                  </mat-cell>
+        
+                </ng-container>
+      
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      
+              <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+      
+            </mat-table>
+            <mat-paginator #paginator [length]="Length" [pageSize]="50" [pageSizeOptions]="[50,100,500]"></mat-paginator>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- /.container-fluid -->

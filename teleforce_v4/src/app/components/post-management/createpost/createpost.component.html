@@ -1,0 +1,159 @@
+<div class="page-maindiv warap-height create-post">
+    <div class="row m-0">
+        <div class="col-xs-2 col-lg-2 col-md-3 col-sm-4 col-4 p-0">
+            <div class="post-mng-sidenav">
+                <ul class="post-mng-sidenav-list">
+                    <li routerLink="/post-management">
+                        <i class="fa fa-paper-plane-o" aria-hidden="true"></i> <span>Published Post</span>
+                    </li>
+                    <li routerLink="/scheduled-post">
+                        <i class="fa fa-clock-o" aria-hidden="true"></i> <span>Scheduled Post</span>
+                    </li>
+                    <li class="active" routerLink="/createpost">
+                        <i class="fa fa-plus" aria-hidden="true"></i> <span>Create Post</span>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="col-xs-12 col-lg-10 col-md-9 col-sm-8 col-8 p-0">
+            <form [formGroup]="postForm">
+
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="create-post-form mt-4">
+                                <div class="form-card">
+                                    <h5>Select Your Channels</h5>
+                                    <div class="select-media">
+                                        <ul class="m-t-20" *ngFor='let checkbox of all_channels, let i = index'>
+                                            <li data-toggle="tooltip" data-placement="bottom" [title]="checkbox.channel_name +' ('+ checkbox.access_media +')'" >
+                                                <input type="checkbox" [id]="checkbox.page_id" [(ngModel)]="channel_checked[i]" (change)="onNativeChange(checkbox,$event)" [ngModelOptions]="{standalone: true}"/>
+                                                <!-- <span>{{checkbox.channel_thumbnail}} <br></span> -->
+                                                <label class="position-relative" [for]="checkbox.page_id">
+                                                    <img *ngIf="checkbox.channel_thumbnail!=''" [src]="checkimagepathExists(checkbox.channel_thumbnail)"/>
+                                                    <img *ngIf="checkbox.channel_thumbnail==''" src="assets/img/default_profile_normal.png"/>                                                
+                                                    <div class="tablesocial-img-div">
+                                                        <img class="tablesocial-img" *ngIf="checkbox.access_media=='facebook'" src="assets/images/icon/3.png">
+                                                        <img class="tablesocial-img" *ngIf="checkbox.access_media=='twitter'" src="assets/images/icon/4.png">
+                                                        <img class="tablesocial-img" *ngIf="checkbox.access_media=='instagram'" src="assets/images/icon/2.png">
+                                                        <img class="tablesocial-img" *ngIf="checkbox.access_media=='linkedin'" src="assets/images/icon/1.png">
+                                                        <img class="tablesocial-img" *ngIf="checkbox.access_media=='google'" src="assets/images/icon/google.png">
+                                                        <img class="tablesocial-img" *ngIf="checkbox.access_media=='youtube'" src="assets/images/icon/5.png">                                                
+                                                    </div>
+                                                </label>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12"  *ngIf="youtube_category">
+                            <div class="create-post-form mt-4">
+                                <div class="form-card1">
+                                    <!-- <div class="post-part"> -->
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Select Your Category</mat-label>
+                                            <mat-select formControlName="category" >
+                                                <mat-option value='one'>
+                                                    welcome
+                                                </mat-option>
+                                                <!-- <mat-option *ngFor="let lan of youtube_categoty_list; let i = index"  [value]="lan.id">
+                                                {{lan.snippet.title}}
+                                                </mat-option> -->
+                                            </mat-select>
+                                        </mat-form-field> 
+                                    <!-- </div> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" *ngIf="title">
+                            <div class="create-post-form mt-4">
+                                <div class="form-card1 p-2">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Enter Video title</mat-label>
+                                        <input matInput placeholder="Enter Video title" formControlName="title">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="create-post-form mt-4">
+                                <div class="form-card1">
+                                    <div class="post-part">
+                                        <textarea class="post-textarea"  #myInput formControlName="message" (keyup)="onKeyUp($event)" placeholder="What's in your mind ?" rows="6"></textarea>
+                                    </div>
+                                    <div class="post-privew" *ngFor='let preview of previews; let i = index'>
+                                        <div class="img-preview" *ngIf="previews_type[i] == 'image'">
+                                            <div class="img-preview-close" (click)="remove_item(i)">
+                                                <i class="fas fa-times"></i>
+                                            </div>
+                                            <!-- <img src="assets/images/icon/imgload.png"> -->
+                                            <img [src]="preview">
+                                            <div class="img-text">
+                                            </div>
+                                        </div>
+                                        <div class="img-preview" *ngIf="previews_type[i] == 'video'">
+                                            <div class="img-preview-close" (click)="remove_item(i)">
+                                                <i class="fas fa-times"></i>
+                                            </div>
+                                            <!-- <img src="assets/images/icon/imgload.png"> -->
+                                            <video controls>
+                                                <source [src]="preview">
+                                                    Your browser does not support the video tag.
+                                            </video>
+                                            <div class="img-text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span style='color: red;' *ngIf="error">
+                                        Please enter Discription
+                                      </span>
+                                    <div class="post-buttons">
+                                        <label class="nopadding clrlbl">
+                                            Characters Count: {{myInput.value.length}}
+                                        </label>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="d-flex">
+                                                        <input class="local-upload-file" type="file" #fileInput id="uploadFile" name="uploadFile" (change)="selectFiles($event)" accept="image/*,video/*" />
+                                                        <label for="upload"  class="local-upload">
+                                                            <img src="assets/images/icon/uploadphoto.png"> Images / Video
+                                                        </label>
+                                                    
+                                                    <!--<div class="local-upload-div">
+                                                        <div class="upload">
+                                                            <input  type="file" #fileInput id="uploadFile" name="uploadFile" (change)="selectFiles($event)" accept="image/*,video/*" />
+                                                            <label for="upload"  class="local-upload">
+                                                                <img src="assets/images/icon/uploadphoto.png"> Images / Video
+                                                            </label>
+                                                        </div>
+                                                    </div>-->
+                                                    <div>
+                                                        <button mat-flat-button color="accent" class="ml-3" title="Select From Media Library" (click)="openDialog3()">
+                                                            <mat-icon>collections</mat-icon>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="text-right">
+                                                    <!--<button mat-flat-button class="mr-3" color="primary">Draft Post</button>-->
+                                                    <button mat-flat-button class="mr-3" (click)='openDialog()' color="primary">Schedule Post</button>
+                                                    <button mat-flat-button color="primary" *ngIf = "already_syc != true" (click)="post_now()">Post Now</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div  *ngIf="spin" class="loader-div">
+        <img  src="assets/img/1.gif" class="loader-img">
+    </div>
+</div>

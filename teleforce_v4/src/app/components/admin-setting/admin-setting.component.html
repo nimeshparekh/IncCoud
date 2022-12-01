@@ -1,0 +1,53 @@
+<div class="warap-height pt-4">
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <h1 class="h3 mb-3 text-gray-800">
+           
+            Setting
+        </h1>
+
+
+        <!-- DataTales Example -->
+        <div class="card mb-4 shadow">
+
+            <div class="card-body">
+
+                <form [formGroup]="addForm" (ngSubmit)="submit()">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div>
+                                <b></b>
+                            </div>
+
+
+                            <div formArrayName="settingDetail" *ngFor="let cd of configarr.controls ;let i=index;">
+                                <div [formGroupName]="i">
+                                    <p *ngIf="i==0"> Ticket Assign Agentgroup</p>
+                                    
+
+                                    <input matInput placeholder="Field Name" formControlName="setting_name"
+                                        style="display:none">
+
+
+                                        <mat-form-field appearance="outline" *ngIf="i==0">
+                                            <mat-select placeholder="Group" formControlName="setting_value">
+                                                <mat-option *ngFor="let agent of agentgroup" [value]="agent.GroupID">
+                                                    {{agent.GroupName}}</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="btn-sec" mat-dialog-actions><br>
+                        <button mat-raised-button type="submit" color="primary" class="Update-btn">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

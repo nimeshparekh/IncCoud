@@ -1,0 +1,230 @@
+<div class="warap-height-patient">
+    <div class="brand-head">
+        <div class="d-flex mt-3 container-fluid">
+            <div class="flex-fill">
+                <h1 class="h3 mb-2 text-gray-800 brand-head-text">Schedule Call / Appointment</h1>
+                <form [formGroup]="searchform">
+                    <div class="row">
+                        <div class="col-12 col-md-4 col-lg-3 col-xl-2 col-sm-6 mt-2">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Agent</mat-label>
+                                <mat-select formControlName="agentid" (selectionChange)="change2($event.value)">
+                                    <mat-option value="">All</mat-option>
+                                    <mat-option *ngFor="let agent of agents" value="{{agent.account_id}}">
+                                        {{agent.account_name | titlecase}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="card flex-row-reverse shadow mb-4 mt-1">
+                <div class="card-body">
+                    <div class="d-flex">
+                        <button mat-stroked-button color="accent" (click)="createfiledialog()" class="ml-2">Upload
+                            File Status
+                        </button>
+                        <button mat-stroked-button class="ml-2 Download-temp">
+                            <mat-icon>file_download</mat-icon>
+                            <a href="/assets/sample_csv_schedule_upload.csv" target="_self" download>
+                                Download Template
+                            </a>
+                        </button>
+                        <div class="d-flex">
+                            <div>
+                                <input type="file" id="fileUpload" name="fileUpload" multiple="multiple" accept=".csv"
+                                    style="display:none;" />
+                                <!-- <mat-form-field appearance="outline">
+                                    <mat-label> Agent to upload</mat-label>
+                                    <mat-select [(value)]="not" (selectionChange)="selectedSegment($event.value)">
+                                        <mat-option *ngFor="let cat of category" [value]="cat.cont_id">
+                                            {{cat.name}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field> -->
+                            </div>
+                            <div>
+                                <button mat-stroked-button color="accent" class="ml-2" [disabled]="!selected_seg"
+                                    (click)="onUploadCsv()">
+                                    <mat-icon>file_upload</mat-icon>
+                                    Upload CSV
+                                </button>
+                            </div>
+                            <div *ngFor="let file of files" [@fadeInOut]="file.state">
+                                <span id="file-label">
+                                    <div class="upload-progress">
+                                        <mat-progress-bar [value]="file.progress" style="margin-top: -2px;">
+                                        </mat-progress-bar>
+                                        <span>{{file.data.name}} </span>
+                                        <button class="upload-progress-btn" mat-icon-button (click)="retryFile(file)"
+                                            *ngIf="file.canRetry" color="accent" title="Retry"
+                                            aria-label="Example icon button with a menu icon">
+                                            <mat-icon>refresh</mat-icon>
+                                        </button>
+                                        <button class="upload-progress-btn" mat-icon-button (click)="cancelFile(file)"
+                                            *ngIf="file.canCancel" color="accent" title="warn"
+                                            aria-label="Example icon button with a menu icon">
+                                            <mat-icon>cancel</mat-icon>
+                                        </button>
+                                    </div>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="flex-row-reverse">
+                <button class="btn btn-danger"> Emergency Help </button>
+            </div> -->
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="table-view mt-3 mb-4">
+            <div class="row m-0">
+                <div class="col-md-3 p-0">
+                    <div class="contact-box">
+                        <mat-tab-group>
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                    <div class="contact-Search-box">
+                                        <div class="d-flex">
+                                            <i class="fas fa-tasks search-icon"></i>
+                                            <div class="search"><b class="ml-5 mr-3">Schedule List</b></div>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                                <div class="contact-list" *ngIf="ismanager">
+                                    <div class="contact-list-box" *ngFor="let request of meetinglist">
+                                        <div class="contact-details">
+                                            <div class="d-flex">
+                                                <div class="flex-fill">
+                                                    <label title="Agent Name"> Agent : {{request.account_name}}</label>
+                                                </div>
+                                                <div *ngIf="request.EventType == 'Video'" class="flex-row-reverse">
+                                                    <div class="contactProductBtn" title="Accept"
+                                                        (click)="joinmeeting(request.original_meeting_link,request.user_id,request.customer_id)">
+                                                        <i class="fas fa-video"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <br>
+                                            <label title="Product Name">Customer Name : {{request.Subject}}</label>
+                                            <p><span>{{request.Location}} ({{request.StartTime | date : 'h:mm:ss a'}} -
+                                                    {{request.EndTime | date : 'h:mm:ss a'}})</span></p>
+                                            <!-- <p><span>{{request.Description}}</span></p> -->
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="contact-list" *ngIf="isagent">
+                                    <div class="contact-list-box" *ngFor="let request of agentmeetinglist">
+                                        <div class="contact-details">
+                                            <div class="d-flex">
+                                                <div class="flex-fill">
+                                                    <label title="Product Name ellipsis ">{{request.Subject}}</label>
+                                                </div>
+
+                                                <div *ngIf="request.EventType == 'Video'" class="flex-row-reverse">
+                                                    <div class="contactProductBtn" title="Accept"
+                                                        (click)="joinmeeting(request.original_meeting_link,request.user_id,request.customer_id)">
+                                                        <i class="fas fa-video"></i>
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="request.EventType == 'Call'" class="flex-row-reverse">
+                                                    <div class="contactProductBtn" title="Accept"
+                                                        (click)="callmeeting(request.OwnerId,request.user_id)">
+                                                        <i class="fas fa-phone"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="schedule-location-name">
+                                            <p class="ellipsis"><span>{{request.Location}} ({{request.StartTime | date :
+                                                    'h:mm:ss a'}} - {{request.EndTime | date : 'h:mm:ss a'}})</span></p>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </mat-tab>
+                        </mat-tab-group>
+                    </div>
+                </div>
+                <div class="col-md-9 p-0">
+                    <ejs-schedule [timeScale]="timeScale" timezone="Asia/Calcutta" [eventSettings]="eventSettings"
+                        [currentView]="currentView" (popupOpen)="onPopupOpen($event)" (dragStop)="onDragStop($event)" (resizeStop)="onResizeStop($event)"
+                        (actionComplete)='onActionComplete($event)' [startHour]="startHour" [endHour]="endHour">
+                        <e-views>
+                            <e-view option="Day"></e-view>
+                            <e-view option="Week"></e-view>
+                            <e-view option="WorkWeek"></e-view>
+                            <e-view option="Month"></e-view>
+                        </e-views>
+
+                        <ng-template #editorTemplate>
+                            <table class="custom-event-editor" width="100%" cellpadding="5">
+                                <tbody>
+                                    <tr>
+                                        <td class="e-textlabel">Customer Name</td>
+                                        <td colspan="4">
+                                            <input id="Subject" class="e-field e-input" type="text" value=""
+                                                name="Subject" style="width: 100%" />
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="e-textlabel">Email</td>
+                                        <td colspan="4">
+                                            <input id="Location" class="e-field e-input" type="text" value=""
+                                                name="Location" style="width: 100%" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="e-textlabel">Mobile</td>
+                                        <td colspan="4">
+                                            <input id="OwnerId" class="e-field e-input" type="text" value=""
+                                                name="OwnerId" style="width: 100%" />
+                                            <!-- <input type="text" id="EventType" name="EventType" class="e-field" style="width: 100%" /> -->
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="e-textlabel">From</td>
+                                        <td colspan="4">
+                                            <input id="StartTime" class="e-field" type="text" name="StartTime" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="e-textlabel">To</td>
+                                        <td colspan="4">
+                                            <input id="EndTime" class="e-field" type="text" name="EndTime" />
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="e-textlabel"> Type</td>
+                                        <td colspan="4">
+                                            <input id="EventType" class="e-field e-input" type="text" value=""
+                                                name="EventType" style="width: 100%" />
+                                            <!-- <input type="text" id="EventType" name="EventType" class="e-field" style="width: 100%" /> -->
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="e-textlabel">Notes</td>
+                                        <td colspan="4">
+                                            <textarea id="Description" class="e-field e-input" name="Description"
+                                                rows="3" cols="50"
+                                                style="width: 100%; height: 60px !important; resize: vertical"></textarea>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </ng-template>
+
+                    </ejs-schedule>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

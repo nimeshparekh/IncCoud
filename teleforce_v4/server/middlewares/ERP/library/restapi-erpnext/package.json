@@ -1,0 +1,82 @@
+{
+  "_from": "restapi-erpnext",
+  "_id": "restapi-erpnext@1.0.10",
+  "_inBundle": false,
+  "_integrity": "sha512-r+yQVOw7IkHVDXd32+wPi9Hi8Xb2zwg1CcqlAVzE7z1Vr+JKb5ZyBH07OyjdwWVuJdF/oNvBWO148yf06GZWQg==",
+  "_location": "/restapi-erpnext",
+  "_phantomChildren": {
+    "asynckit": "0.4.0",
+    "aws4": "1.11.0",
+    "caseless": "0.12.0",
+    "co": "4.6.0",
+    "combined-stream": "1.0.8",
+    "extend": "3.0.2",
+    "forever-agent": "0.6.1",
+    "hawk": "3.1.3",
+    "is-typedarray": "1.0.0",
+    "isstream": "0.1.2",
+    "json-stable-stringify": "1.0.1",
+    "json-stringify-safe": "5.0.1",
+    "jsprim": "1.4.1",
+    "mime-types": "2.1.30",
+    "safe-buffer": "5.1.2",
+    "sshpk": "1.16.1",
+    "stringstream": "0.0.6",
+    "tunnel-agent": "0.6.0"
+  },
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "restapi-erpnext",
+    "name": "restapi-erpnext",
+    "escapedName": "restapi-erpnext",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/restapi-erpnext/-/restapi-erpnext-1.0.10.tgz",
+  "_shasum": "83dc0bc6c8922ad875a46326b5880e60e38d5079",
+  "_spec": "restapi-erpnext",
+  "_where": "E:\\cloudX-app-1.0\\server",
+  "author": {
+    "name": "fredyteheranto",
+    "email": "fedyteheran91@gmail.com"
+  },
+  "bugs": {
+    "url": "https://github.com/ERPNextLatino/Restapi_erpnextonode/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "bluebird": "3.5.0",
+    "request": "2.81.0",
+    "request-promise": "4.2.0"
+  },
+  "deprecated": false,
+  "description": "Modulo para consumir a la API REST de APIRESTERPNext V10+",
+  "homepage": "https://github.com/ERPNextLatino/Restapi_erpnextonode#readme",
+  "keywords": [
+    "erpnext",
+    "sainterp",
+    "nodejs",
+    "clientapi",
+    "colombia",
+    "barranquilla",
+    "js",
+    "javascript"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "name": "restapi-erpnext",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ERPNextLatino/Restapi_erpnextonode.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.0.10"
+}

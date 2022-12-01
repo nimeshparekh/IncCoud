@@ -1,0 +1,105 @@
+<div class="warap-height">
+    <div class="lead-dashboard-main">
+        <div class="lead-positions-column" *ngFor="let lead of stage; let i = index">
+            <div class="lead-column-header" style="color: #b10f0f;">
+                <div class="d-flex">
+                    <div class="flex-fill">
+                        <div class="lch-headname ellipsis">
+                            {{lead.stage_name}}
+                        </div>
+                        <p class="lch-amount">
+                            <i class="fas fa-rupee-sign"></i>
+                            1500,
+                            <span>{{lead.data.length}} Deal</span>
+                        </p>
+                    </div>
+                    <div class="flex-row-reverse">
+                        <button mat-flat-button class="mt-1 add-new-deal" #test [id]="lead.status[0]"
+                            (click)="openLeadDialog(test)">
+                            <span class="btn-icon">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+                <span class="lch-arrw-right"></span>
+            </div>
+            <div class="lead-column-body" >
+                <div class="lead-column-body-main-card">
+                    <mat-progress-bar mode="indeterminate" *ngIf="erp_list_isLoading"></mat-progress-bar>
+                    <div class="no-deals-atall" *ngIf="lead.data<=0">
+                        <p>No deals in this stage</p>
+                        <button mat-flat-button class="mt-1" #test [id]="lead.status[0]"
+                        (click)="openLeadDialog(test)">
+                            <span class="btn-icon">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                            </span>
+                            Deal
+                        </button>
+                    </div>
+                    <div class="lead-data-list-card" *ngFor="let item of lead.data; let j = index">
+                        <div class="ldlc-head">
+                            <div class="d-flex">
+                                <p  (click)="leaddetailpage(item.l_id)" class="flex-fill ellipsis ldlc-head-name"><b>
+                                    {{item.lead_name}}
+                                </b></p>
+                                <div class="flex-row-reverse">
+                                    <button class="ldlc-btn" (click)="openDialog(item.name)" title="assign" *ngIf="!isagent">
+                                        <i class="fas fa-user-tag"></i>
+                                    </button>
+                                    <button class="ldlc-btn ml-1" (click)="openDialog2(j)" title="edit">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </button>
+
+                                    <button class="ldlc-btn ml-1" (click)="openSchedule(item.l_id)" title="meeting">
+                                        <i class="fas fa-calendar-alt"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ldlc-body">
+                            <div class="ldlc-body-data">
+                                <div class="d-flex">
+                                    <div class="ellipsis flex-fill">
+                                        Email : <b>{{item.email_id}}</b>
+                                    </div>
+                                    <div class="flex-row-reverse">
+                                        <button class="ldlc-mail" (click)="clicktoemail(item.email_id)">
+                                            <i class="fas fa-envelope"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ldlc-body-data">
+                                <div class="d-flex">
+                                    <div class="ellipsis flex-fill">
+                                        Mobile : <b>{{item.mobile_no}}</b>
+                                    </div>
+                                    <div class="flex-row-reverse">
+                                        <button class="ldlc-call" (click)="clicktocall(item.mobile_no)">
+                                            <i class="fas fa-phone-alt"></i>
+                                        </button>
+                                        <button class="ldlc-sms" (click)="clicktosms(item.mobile_no)">
+                                            <i class="fas fa-sms"></i>
+                                        </button>
+                                        <button class="ldlc-call" (click)="whatsappdialog(item.mobile_no)">
+                                            <i class="fab fa-whatsapp"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ldlc-body-data ellipsis">Status : <b>{{item.status}}</b></div>
+                            <div class="ldlc-body-data ellipsis">Source : <b>{{item.source}}</b></div>
+                            <div class="ldlc-body-data ellipsis">Assign :
+                                <b>{{item.agentname!=''?item.agentname:'NA'}}</b>
+                            </div>
+                            <div class="ldlc-body-data ellipsis">Amount :
+                                <b>{{item.opportunity_amount!=''?item.opportunity_amount:'NA'}} ₹</b>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

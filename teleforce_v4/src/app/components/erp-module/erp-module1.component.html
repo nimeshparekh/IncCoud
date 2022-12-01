@@ -1,0 +1,435 @@
+<div class="warap-height pt-4">
+    <div style="width: 1650px;">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-2 col-md-4 col-sm-6">
+                    <div class="deal-bg">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="deal-content-heading">
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <div class="deal-head-title">
+                                                <h3>
+                                                    Lead
+                                                </h3>
+                                                <p class="amount">
+                                                    <i class="fi-rr-dollar"></i>
+                                                    00.00
+                                                    <span class="divider">|</span>
+                                                    &diams; 0 Deal
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-4 text-center">
+                                            <button class="btn" (click)="openLeadDialog()">
+                                                +
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="deal-content-body">
+                                    <div class="card">
+                                        <!-- <mat-progress-spinner >
+                                        </mat-progress-spinner> -->
+                                        <mat-spinner *ngIf="erp_list_isLoading"></mat-spinner>
+
+                                        <div class="row" *ngFor="let lan of erp_list; let i = index">
+                                            <div class="col-8">
+                                                <div class="deal-content-title">
+                                                    <h3 (click)="updatedialog(i)">
+                                                    Lead Name:<b> {{erp_list[i].lead_name}}</b>
+                                                    </h3>
+                                                    <hr>
+                                                    <p class="name" (click)="updatedialog(i)">
+                                                        {{erp_list[i].email_id}}
+                                                    </p>
+                                                    <p class="name" (click)="updatedialog(i)">
+                                                        Status : <b>{{erp_list[i].status}}</b>
+                                                    </p>
+                                                    <!-- <p class="amount">
+                                                        <i class="fi-rr-dollar"></i>
+                                                        00.00
+                                                        <span class="divider">|</span>
+                                                        &diams; Today
+                                                    </p> -->
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="function-button-hover text-center">
+                                                    <a>
+                                                        <!-- <mat-icon matSuffix (click)="openDialog(erp_list[i].name)">support_agent</mat-icon> -->
+                                                        <button class="btn" (click)="openDialog(erp_list[i].name)">
+                                                            +
+                                                        </button>
+                                                        <!-- <i class="fi-rr-pencil" ></i> -->
+                                                    </a>
+                                                    <a>
+                                                        <i class="fi-rr-pencil" (click)="openDialog2(i)"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-4 col-sm-6">
+                    <div class="deal-bg">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="deal-content-heading">
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <div class="deal-head-title">
+                                                <h3>
+                                                    Needs Analysis
+                                                </h3>
+                                                <p class="amount">
+                                                    <i class="fi-rr-dollar"></i>
+                                                    00.00
+                                                    <span class="divider">|</span>
+                                                    &diams; 0 Deal
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-4 text-center">
+                                            <button class="btn">
+                                                +
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="deal-content-body">
+                                    <div class="card">
+                                        <mat-spinner *ngIf="erp_list_not_lead_isLoading"></mat-spinner>
+                                        <div class="row" *ngFor="let lan of erp_list_not_lead; let i = index">
+                                            <div class="col-8">
+                                                <div class="deal-content-title">
+                                                    <h3 (click)="NotLeadDetail(i)">
+                                                    Lead Name:<b> {{erp_list_not_lead[i].lead_name}}</b>
+                                                    </h3>
+                                                    <hr>
+                                                    <p class="name">
+                                                        {{erp_list_not_lead[i].email_id}}
+                                                    </p>
+                                                    <p class="name">
+                                                        Status : <b>{{erp_list_not_lead[i].status}}</b>
+                                                    </p>
+                                                    <!-- <p class="amount">
+                                                        <i class="fi-rr-dollar"></i>
+                                                        00.00
+                                                        <span class="divider">|</span>
+                                                        &diams; Today
+                                                    </p> -->
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="function-button-hover text-center">
+                                                    <a>
+                                                        <i class="fi-rr-pencil" (click)="openDialog3(i)"></i>
+                                                    </a>
+                                                    <!-- <input type="checkbox"> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-6">
+                    <div class="deal-bg">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="deal-content-heading">
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <div class="deal-head-title">
+                                                <h3>
+                                                    Proposal/Price Quote
+                                                </h3>
+                                                <p class="amount">
+                                                    <i class="fi-rr-dollar"></i>
+                                                    00.00
+                                                    <span class="divider">|</span>
+                                                    &diams; 0 Deal
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-4 text-center">
+                                            <button class="btn" (click)="openDialogOpp()">
+                                                +
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="deal-content-body">
+                                    <div class="card">
+                                        <mat-spinner *ngIf="Opportunity_not_Quotation_isLoading"></mat-spinner>
+                                        <div class="row" *ngFor="let lan of Opportunity_not_Quotation; let i = index">
+                                            <div class="col-8">
+                                                <div class="deal-content-title">
+                                                    <h3 *ngIf="Opportunity_not_Quotation[i].customer_name"  (click)="OpportunityNotQuotationDetail(i)">
+                                                        Name:<b> {{Opportunity_not_Quotation[i].customer_name}}</b>
+                                                    </h3>
+                                                    <h3 *ngIf="!Opportunity_not_Quotation[i].customer_name" (click)="OpportunityNotQuotationDetail(i)">
+                                                        Name:<b> {{Opportunity_not_Quotation[i].name}}</b>
+                                                     </h3>
+                                                    <hr>
+                                                    <p class="name">
+                                                        Opportunity From: <b>{{Opportunity_not_Quotation[i].opportunity_from}}</b>
+                                                     </p>
+                                                    <p class="name">
+                                                       Amount :  <b>{{Opportunity_not_Quotation[i].opportunity_amount}}</b>
+                                                    </p>
+                                                    <p class="name">
+                                                        Status : <b>{{Opportunity_not_Quotation[i].status}}</b>
+                                                    </p>
+                                                    <!-- <p class="amount">
+                                                        <i class="fi-rr-dollar"></i>
+                                                        00.00
+                                                        <span class="divider">|</span>
+                                                        &diams; Today
+                                                    </p> -->
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="function-button-hover text-center">
+                                                    <a>
+                                                        <i class="fi-rr-pencil" (click)="openDialog_opp(i)"></i>
+                                                    </a>
+                                                    <!-- <input type="checkbox"> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-6">
+                    <div class="deal-bg">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="deal-content-heading">
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <div class="deal-head-title">
+                                                <h3>
+                                                    Negotiation/Review
+                                                </h3>
+                                                <p class="amount">
+                                                    <i class="fi-rr-dollar"></i>
+                                                    00.00
+                                                    <span class="divider">|</span>
+                                                    &diams; 0 Deal
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="col-4 text-center">
+                                            <button class="btn" >
+                                                +
+                                            </button>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="deal-content-body">
+                                    <div class="card">
+                                        <mat-spinner *ngIf="Opportunity_Quotation_isLoading"></mat-spinner>
+                                        <div class="row" *ngFor="let lan of Opportunity_Quotation; let i = index">
+                                            <div class="col-8">
+                                                <div class="deal-content-title">
+                                                    <h3 *ngIf="Opportunity_Quotation[i].customer_name" (click)="OpportunityQuotationDetail(i)">
+                                                        Name:<b> {{Opportunity_Quotation[i].customer_name}}</b>
+                                                    </h3>
+                                                    <h3 *ngIf="!Opportunity_Quotation[i].customer_name" (click)="OpportunityQuotationDetail(i)">
+                                                        Name:<b> {{Opportunity_Quotation[i].name}}</b>
+                                                     </h3>
+                                                    <hr>
+                                                    <p class="name">
+                                                        Opportunity From: <b>{{Opportunity_Quotation[i].opportunity_from}}</b>
+                                                     </p>
+                                                    <p class="name">
+                                                       Amount :  <b>{{Opportunity_Quotation[i].opportunity_amount}}</b>
+                                                    </p>
+                                                    <p class="name">
+                                                        Status : <b>{{Opportunity_Quotation[i].status}}</b>
+                                                    </p>
+                                                    <!-- <p class="amount">
+                                                        <i class="fi-rr-dollar"></i>
+                                                        00.00
+                                                        <span class="divider">|</span>
+                                                        &diams; Today
+                                                    </p> -->
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="function-button-hover text-center">
+                                                    <a>
+                                                        <i class="fi-rr-pencil" (click)="openDialog_opp2(i)"></i>
+                                                    </a>
+                                                    <!-- <input type="checkbox"> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-6">
+                    <div class="deal-bg">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="deal-content-heading">
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <div class="deal-head-title">
+                                                <h3>
+                                                    Closed Won
+                                                </h3>
+                                                <p class="amount">
+                                                    <i class="fi-rr-dollar"></i>
+                                                    00.00
+                                                    <span class="divider">|</span>
+                                                    &diams; 0 Deal
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-4 text-center">
+                                            <button class="btn" (click)="openQue()">
+                                                +
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="col-12">
+                                <div class="deal-content-body">
+                                    <p class="blank_stage">
+                                        No deals in this stage
+                                    </p>
+                                </div>
+                            </div> -->
+                            <div class="col-12">
+                                <div class="deal-content-body">
+                                    <div class="card">
+                                        <mat-spinner *ngIf="getQuotation_isLoading"></mat-spinner>
+                                        <div class="row" *ngFor="let lan of getQuotation; let i = index">
+                                            <div class="col-8">
+                                                <div class="deal-content-title">
+                                                    <h3 *ngIf="getQuotation[i].customer_name"  (click)="getQuotationDetail(i)">
+                                                        Name:<b> {{getQuotation[i].customer_name}}</b>
+                                                    </h3>
+                                                    <!-- <h3 *ngIf="!getQuotation[i].customer_name">
+                                                        Name:<b> {{getQuotation[i].name}}</b>
+                                                     </h3> -->
+                                                    <hr>
+                                                    <p class="name">
+                                                       Amount :  <b>{{getQuotation[i].rounded_total}}</b>
+                                                    </p>
+                                                    <p class="name">
+                                                        Status : <b>{{getQuotation[i].status}}</b>
+                                                    </p>
+                                                    <!-- <p class="amount">
+                                                        <i class="fi-rr-dollar"></i>
+                                                        00.00
+                                                        <span class="divider">|</span>
+                                                        &diams; Today
+                                                    </p> -->
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="function-button-hover text-center">
+                                                    <a>
+                                                        <i class="fi-rr-pencil" (click)="create_customer(i)"></i>
+                                                    </a>
+                                                    <!-- <input type="checkbox"> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-6">
+                    <div class="deal-bg">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="deal-content-heading">
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <div class="deal-head-title">
+                                                <h3>
+                                                    Closed Lost
+                                                </h3>
+                                                <p class="amount">
+                                                    <i class="fi-rr-dollar"></i>
+                                                    00.00
+                                                    <span class="divider">|</span>
+                                                    &diams; 0 Deal
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-4 text-center">
+                                            <button class="btn">
+                                                +
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="col-12">
+                                <div class="deal-content-body">
+                                    <p class="blank_stage">
+                                        No deals in this stage
+                                    </p>
+                                </div>
+                            </div> -->
+                            <div class="col-12">
+                                <div class="deal-content-body">
+                                    <div class="card">
+                                        <mat-spinner *ngIf="get_Customer_list_isLoading"></mat-spinner>
+                                        <div class="row" *ngFor="let lan of get_Customer_list; let i = index">
+                                            <div class="col-8">
+                                                <div class="deal-content-title">
+                                                    <h3 *ngIf="get_Customer_list[i].customer_name" (click)="getCustomerListDetail(i)">
+                                                        Name:<b> {{get_Customer_list[i].customer_name}}</b>
+                                                    </h3>
+                                                    <!-- <h3 *ngIf="!getQuotation[i].customer_name">
+                                                        Name:<b> {{getQuotation[i].name}}</b>
+                                                     </h3> -->
+                                                    <hr>
+                                                    <p class="name">
+                                                       created by :  <b>{{get_Customer_list[i].owner}}</b>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,29 @@
+
+ mat-cell, mat-header-cell, mat-footer-cell 
+ {
+
+     display: table-caption;
+     align-items: center;
+     overflow: hidden;
+     word-wrap: break-word;
+     min-height: inherit;
+ 
+     padding: 5px 4px 5px 4px;
+ }
+ table 
+ {
+     width: 100%;
+ }
+
+ .material-icons
+ {
+     cursor: pointer;
+ }
+@media (max-width: 1190px)
+{
+    table 
+    {
+        width: 1000px;
+    }
+}
+

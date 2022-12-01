@@ -1,0 +1,84 @@
+<div mat-dialog-head class="dilog-head d-flex justify-content-between">
+    <h3 *ngIf="addmode">Call Disposition</h3>
+    <div class="d-inline-block">
+        <a class="close" (click)="openDialog()"><i class="fi-rr-cross-small"></i></a>
+    </div>
+</div>
+<form [formGroup]="feedbackform" (ngSubmit)="submit()">
+    <div mat-dialog-content>
+        <div class="col-sm-12 mt-3">
+            <div class="text-inside">
+                <mat-form-field class="w-100" appearance="outline">
+                    <mat-label>Call Result</mat-label>                           
+                    <!-- <mat-select formControlName="feedback" (ngModelChange)="showSchedule($event)"> -->
+                        <mat-select formControlName="feedback">
+                            <mat-option *ngFor="let values of feedbaclvalues"  [value]="values">{{values}}</mat-option>
+                        </mat-select>
+                    <mat-error *ngIf="feedbackform.controls.feedback.hasError('required')">
+                        Please select Call Result
+                    </mat-error>                           
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="text-inside">
+                <mat-form-field  class="w-100" appearance="outline">
+                    <mat-label>Call Description</mat-label> 
+                    <textarea matInput placeholder="Note" formControlName="note" ></textarea>                            
+                </mat-form-field>
+            </div>
+        </div>                
+        <!-- <div *ngIf="schedule"> -->
+        <!-- <div class="col-sm-12">
+            <div class="text-inside">
+                <mat-form-field  class="w-100" appearance="outline">
+                    <mat-label>Schedule Date</mat-label> 
+                    <input matInput placeholder="Schedule Date" [matDatepicker]="startpicker" formControlName="scheduledate">
+                    <mat-datepicker-toggle matSuffix [for]="startpicker"></mat-datepicker-toggle>
+                    <mat-datepicker #startpicker tpicker></mat-datepicker>                                                      
+                </mat-form-field>  
+            </div>
+        </div> -->
+        <div class="col-sm-12">
+            <div class="text-inside">
+                <mat-form-field class="w-100" appearance="outline">
+                    <mat-label>Schedule Datetime</mat-label>
+                    <input matInput [ngxMatDatetimePicker]="picker" placeholder="Choose a date & time"
+                      formControlName="scheduledate">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <ngx-mat-datetime-picker #picker></ngx-mat-datetime-picker>
+                </mat-form-field>
+            </div>
+          </div>
+        <!-- <div class="col-sm-12">
+            <div class="text-inside">
+                <mat-form-field  class="w-100" appearance="outline">
+                    <mat-label>Start Time</mat-label> 
+                    <input matInput placeholder="Start Time" type="time" formControlName="starttime">
+                </mat-form-field>                        
+            </div>
+        </div>
+
+        <div class="col-sm-12">
+            <div class="text-inside">
+                <mat-form-field  class="w-100" appearance="outline">
+                    <mat-label>End Time</mat-label> 
+                    <input matInput placeholder="End Time" type="time" formControlName="endtime">
+                </mat-form-field>                        
+            </div>
+        </div> -->
+
+        <div class="col-sm-12">
+            <div class="text-inside">
+                <mat-form-field  class="w-100" appearance="outline">
+                    <mat-label>Email</mat-label> 
+                    <input matInput placeholder="Email" type="email" formControlName="email">
+                </mat-form-field>                        
+            </div>
+        </div>
+
+    </div>
+    <div class="btn-sec mb-2" mat-dialog-actions>
+        <button mat-raised-button type="submit" color="primary" class="Update-btn">Save</button>
+    </div>
+</form>

@@ -1,0 +1,77 @@
+<div mat-dialog-head class="dilog-head d-flex justify-content-between">
+    <h3 class="primary">Send Mail</h3>
+    <div class="d-inline-block">
+        <a class="close" (click)="onNoClick()"><i class="fi-rr-cross-small"></i></a>
+    </div>
+</div>
+<form [formGroup]="addForm">
+    <div mat-dialog-content>
+        <div class="row">
+            <div class="col-sm-12 mt-2">
+                <mat-form-field appearance="outline">
+                    <mat-label>To</mat-label>
+                    <input matInput placeholder="To" formControlName="to" required>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-12 mt-2">
+                <mat-form-field appearance="outline">
+                    <mat-label>CC</mat-label>
+                    <input matInput placeholder="To" formControlName="cc">
+                </mat-form-field>
+            </div>
+            <div class="col-sm-12 mt-2">
+                <mat-form-field appearance="outline">
+                    <mat-label>BCC</mat-label>
+                    <input matInput placeholder="To" formControlName="bcc">
+                </mat-form-field>
+            </div>
+            <div class="col-sm-12 mt-2">
+                <mat-form-field appearance="outline">
+                    <mat-label>Subject</mat-label>
+                    <input matInput placeholder="Subject" formControlName="subject">
+                    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-12 mt-2">
+                <mat-form-field appearance="outline">
+                    <mat-label>Select Template</mat-label>                    
+                    <mat-select formControlName="template" (ngModelChange)="getTemplateDetail($event)">
+                        <mat-option *ngFor="let mail of maillist" [value]="mail.email_id">{{mail.email_title}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-12 mt-2">
+                <angular-editor class="mt-2" [placeholder]="'Type Your Email Message'" formControlName="email_description" [config]="config"></angular-editor> 
+            </div>
+            <div class="col-sm-12 mt-2">
+                <section class="example-section">
+                    <mat-checkbox class="example-margin">Send me a copy</mat-checkbox>
+                </section>
+            </div>
+            <!-- <div class="col-sm-12 mt-2">
+                <h6>Select Attachments</h6>
+                <input hidden type='file' accept="application/pdf"><a>+ Add Attachment</a>
+            </div> -->
+            <div class="col-sm-12 mt-2">
+                <label for='input-file' class="d-flex">
+                    <!-- <span class="material-icons">
+                        cloud_upload
+                    </span> -->
+                    <p>Select Attachments</p>
+                </label>
+                <!-- <input id='input-file' type='file' /> -->
+                <input class="local-upload-file" type="file" id="data_send" name="myfile" (change)='data_send($event)'  formControlName="thumbnailfile" accept="application/pdf"/>
+                <!-- <button mat-icon-button matSuffix *ngIf="!removableInput.empty" (click)="removableInput.clear($event)"> -->
+            </div>
+
+            
+        </div>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-raised-button type="submit" color="primary" class="Update-btn" (click)="sendmail()" [disabled]="isDisable">Send</button>
+    </div>
+</form>
+
+
+
+

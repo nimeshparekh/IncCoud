@@ -1,0 +1,153 @@
+<div class="warap-height pt-4">     
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <h1 class="h3 mb-2 text-gray-800">Campaign wise Summary</h1>
+        <p class="mb-2"></p>   
+        <form [formGroup]="searchform">
+            <div class="row">
+                <div class="col-sm-3">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Choose a date</mat-label>
+                        <input matInput placeholder="From Date" [matDatepicker]="startpicker" formControlName="startdate" required>
+                        <mat-datepicker-toggle matSuffix [for]="startpicker"></mat-datepicker-toggle>
+                        <mat-datepicker #startpicker tpicker></mat-datepicker>
+                        <mat-error *ngIf="searchform.controls.startdate.hasError('required')">
+                            Please select From Date
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-3">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Choose a date</mat-label>
+                        <input matInput placeholder="To Date" [matDatepicker]="endpicker" formControlName="enddate" required>
+                        <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
+                        <mat-datepicker #endpicker tpicker></mat-datepicker>
+                        <mat-error *ngIf="searchform.controls.enddate.hasError('required')">
+                            Please select To Date
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-3">
+                    <button mat-raised-button class="mt-2" type="submit" (click)="searchData()">Search</button>&nbsp;&nbsp;
+                    <button *ngIf="msg!=''" mat-raised-button class="mt-2" type="submit" (click)="requestData()">Request Report</button>
+                  </div>
+            </div>
+        </form> 
+        <p *ngIf="msg!=''" style="color:red">{{msg}}</p>
+        
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4 mt-3">
+
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table width="100%">
+                        <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+                        <div fxLayout fxLayoutAlign="center center" class="mt-2">
+                            <button mat-raised-button color="primary"
+                                (click)="exporter.exportTable('csv', {fileName:'Campaign-Summary-Report', sheet: 'sheet_name'})">CSV</button>
+                        </div><br>
+                        <mat-table class="lessons-table mat-elevation-z8" matTableExporter #exporter="matTableExporter"  [dataSource]="dataSource">
+                            <ng-container matColumnDef="id">
+
+                                <mat-header-cell *matHeaderCellDef>Sr. No</mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" data-label="id">
+                                    {{i+1+(paginator.pageIndex * paginator.pageSize)}}</mat-cell>
+
+                            </ng-container>
+                            <ng-container matColumnDef="name">
+
+                                <mat-header-cell *matHeaderCellDef > Campaign Name </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" maxlength="10">
+                                {{row.campaign_name}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="records">
+
+                                <mat-header-cell *matHeaderCellDef > Total Records </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.total_contacts}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="calls">
+
+                                <mat-header-cell *matHeaderCellDef > Total Calls </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                {{row.total_calls}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="answer">
+
+                                <mat-header-cell *matHeaderCellDef> Answer<br>(Count Calls) </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                {{row.answered}}
+                                </mat-cell>
+
+                            </ng-container>
+                        
+                            <ng-container matColumnDef="noanswer">
+
+                                <mat-header-cell *matHeaderCellDef> No Answer<br>(Count Calls) </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.not_answered}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="notinterested">
+
+                                <mat-header-cell *matHeaderCellDef> Not Interested<br>(Count Calls) </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.not_interested}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="schedule">
+
+                                <mat-header-cell *matHeaderCellDef> Schedule<br>(Count Calls) </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.scheduled}}
+                                </mat-cell>
+
+                            </ng-container>
+                            <ng-container matColumnDef="connected_ratio">
+
+                                <mat-header-cell *matHeaderCellDef> Connected Ratio </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.connected_ratio	}}
+                                </mat-cell>
+
+                            </ng-container>
+                            
+                            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+                            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+                        </mat-table>
+                        <mat-paginator #paginator [length]="Length" [pageSize]="50" [pageSizeOptions]="[50,100,500]">
+                        </mat-paginator>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /.container-fluid -->
+</div>

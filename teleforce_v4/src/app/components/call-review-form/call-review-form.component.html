@@ -1,0 +1,71 @@
+ <!-- Begin Page Content -->
+ <div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">
+      <button routerLink="/settings" mat-icon-button title="Back" color="accent"
+        aria-label="Example icon button with a menu icon">
+        <mat-icon>keyboard_backspace</mat-icon>
+      </button>
+      Call Review Form
+    </h1>
+    <p class="mb-4"></p>
+    <button mat-raised-button color="accent" (click)="Createdialog()" title="Add">Add Parameter</button>
+    <br><br>
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+      
+      <div class="card-body">
+        <div class="table-responsive">
+          <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+          <mat-table class="lessons-table mat-elevation-z8" matSort [dataSource]="dataSource">
+            <ng-container matColumnDef="id">
+    
+              <mat-header-cell *matHeaderCellDef>Sr. No</mat-header-cell>
+    
+              <mat-cell class="description-cell" *matCellDef="let row;let i = index;" data-label="id">
+                {{i+1+(paginator.pageIndex * paginator.pageSize)}}</mat-cell>
+    
+            </ng-container>
+            <ng-container matColumnDef="smsplan">
+    
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Parameter  </mat-header-cell>
+    
+              <mat-cell class="description-cell" *matCellDef="let row">{{row.form_parameter}}
+              </mat-cell>
+    
+            </ng-container>
+    
+            
+              <ng-container matColumnDef="action">
+    
+                <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+      
+                <mat-cell class="description-cell" *matCellDef="let row">
+                    <button mat-mini-fab color="primary">
+                        <span (click)="updatedialog(row.form_id)" title="Edit">
+                            <mat-icon>edit</mat-icon>
+                        </span>
+                    </button>&nbsp;
+                    <button mat-mini-fab color="warn">
+                        <span (click)="deleteData(row.form_id)" title="Delete">
+                          <mat-icon>delete</mat-icon>
+                        </span>
+                    </button>
+                </mat-cell>
+      
+              </ng-container>
+    
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    
+            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    
+          </mat-table>
+          <mat-paginator #paginator [length]="Length" [pageSize]="50" [pageSizeOptions]="[50,100,500]"></mat-paginator>
+        
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- /.container-fluid -->

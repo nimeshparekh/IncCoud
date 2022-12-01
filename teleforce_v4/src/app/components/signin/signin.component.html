@@ -1,0 +1,83 @@
+<div class="bg pt-5" style="margin-left: -100px;">
+  <div class="container">
+
+    <!-- Outer Row -->
+    <div class="row justify-content-center">
+
+      <div class="col-xl-10 col-lg-12 col-md-9">
+
+        <div class="card o-hidden border-0 shadow-lg">
+          <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+              <div class="col-lg-6 d-none text-center d-lg-block sign-bg">
+                <img src="assets/img/aaaaaaa.png" class="sign">
+              </div>
+              <div class="col-lg-6">
+                <div class="p-5">
+                  <div class="text-center">
+                    <h1 class="h4 text-gray-900 mb-4 sign-head"><img src="assets/img/b-logo.png"></h1>
+                  </div>
+                  <form class="user" [formGroup]="signinForm" (ngSubmit)="signin()">
+                    <div class="form-group">
+                      <input type="email" class="form-control form-control-user" id="exampleInputEmail"
+                        aria-describedby="emailHelp" formControlName="username" placeholder="Username"
+                        required>
+                    
+                    </div>
+                    <div class="form-group position-relative">
+                      <input [type]="fieldTextType ? 'text' : 'password'" class="form-control form-control-user" id="exampleInputPassword"
+                        placeholder="Password" formControlName="password" required>
+                        <span class="passshow">
+                          <i
+                              class="fa"
+                              [ngClass]="{
+                              'fa-eye-slash': !fieldTextType,
+                              'fa-eye': fieldTextType
+                              }"
+                              (click)="passshowhide()"
+                          ></i>
+                        </span>
+                    </div>
+                    <div class="form-group" *ngIf="logindata.length>0" >
+                      <label>Logged device information</label>
+                      <div>
+                        Device : {{logindata[0].browser}} ({{logindata[0].deviceType}}) <br>
+                        Login Time : {{logindata[0].date | date: 'medium'}}
+                        <button (click)="forcelogout(logindata[0].uid)" class="btn btn-danger btn-user btn-block">Logout</button>
+                      </div>  
+                    </div>
+
+                    <div class="form-group">
+                      <div class="custom-control custom-checkbox small">
+                        <input type="checkbox" class="custom-control-input" id="customCheck">
+                        <label class="custom-control-label" for="customCheck">Remember Me</label>
+                      </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-user btn-block" style="background: #0d4574;
+                    border: 1px solid #0d4574;">Sign in</button>
+                  </form>
+
+                  <hr>
+                  <div class="text-center">
+                    <a class="small" routerLink="/password-reset">Forgot Password?</a>
+                  </div>
+                  <div class="text-center">
+                    <a class="small" routerLink="/signup">Registered here.</a>
+                  </div>
+                  <p style="color:red"><b>{{login_expiredmsg}}</b></p>
+                  <!-- <div class="text-center">
+                    <a class="small" routerLink="/signup">Create an Account!</a>
+                  </div> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</div> 

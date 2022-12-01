@@ -1,0 +1,77 @@
+<div class="warap-height pt-4">
+  <!-- Begin Page Content -->
+  <div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Call Summary Report</h1>
+    <p class="mb-2"></p>
+
+    <form [formGroup]="searchform" > 
+      <div class="row">
+        <div class="col-sm-3">
+          <mat-form-field appearance="outline">
+            <mat-label>Choose a date</mat-label>
+            <input matInput placeholder="From Date" [matDatepicker]="startpicker" formControlName="startdate" required>
+            <mat-datepicker-toggle matSuffix [for]="startpicker"></mat-datepicker-toggle>
+            <mat-datepicker #startpicker tpicker></mat-datepicker> 
+            <mat-error *ngIf="searchform.controls.startdate.hasError('required')">
+                Please select From Date
+            </mat-error>   
+          </mat-form-field> 
+        </div>
+        <div class="col-sm-3">
+          <mat-form-field appearance="outline">
+            <mat-label>Choose a date</mat-label>
+            <input matInput placeholder="To Date" [matDatepicker]="endpicker" formControlName="enddate" required>
+            <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
+            <mat-datepicker #endpicker tpicker></mat-datepicker> 
+            <mat-error *ngIf="searchform.controls.enddate.hasError('required')">
+                Please select To Date
+            </mat-error>   
+          </mat-form-field>  
+        </div>
+        <div class="col-sm-3">
+          <button mat-raised-button class="mt-2" type="submit" (click)="searchData()"  [disabled]="isDisabled">Search</button>&nbsp;&nbsp;
+          <button *ngIf="msg!=''" mat-raised-button class="mt-2" type="submit" (click)="requestData()">Request Report</button>
+        </div>
+        
+      </div>
+    </form>
+    <!-- DataTales Example -->
+    <p *ngIf="msg!=''" style="color:red">{{msg}}</p>
+    <div class="card shadow mb-4 mt-3">
+      
+      <div class="card-body">
+        <button mat-raised-button color="primary" (click)="createExcel()">CSV</button><br><br>
+                                
+        <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+        <div class="table-responsive">
+         <table class="table table-bordered">
+             <tr>
+                 <th colspan="3">Status(Count)</th>
+                 <th colspan="3">Call Type(Count)</th>
+             </tr>
+             <tr>
+                 <!-- <th>CANCEL</th> -->
+                 <th>ANSWER</th>
+                 <th>NOANSWER</th>
+                 <th>Incoming</th>
+                 <th>Dialer </th>
+                 <th>Outgoing</th>
+             </tr>
+             <tr>
+                 <!-- <td>{{totalcancel}}</td> -->
+                 <td>{{totalanswer}}</td>
+                 <td>{{totalnoanswer}}</td>
+                 <td>{{totalincoming}}</td>
+                 <td>{{totaldialer}}</td>
+                 <td>{{totaloutgoing}}</td>
+             </tr>
+        </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- /.container-fluid -->
+</div>

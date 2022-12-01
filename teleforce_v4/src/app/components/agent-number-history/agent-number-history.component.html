@@ -1,0 +1,116 @@
+<!-- Begin Page Content -->
+
+<div mat-dialog-head class="dilog-head d-flex justify-content-between">
+    <h3>Call History</h3>
+    <div class="d-inline-block">
+        <a class="close" (click)="openDialog()"><i class="fi-rr-cross-small"></i></a>
+    </div>
+</div>
+<!-- DataTales Example -->
+<div mat-dialog-content>
+    <div class="">
+
+        <!--Excel Btn-->
+        <div fxLayout fxLayoutAlign="center center" class="mt-2" *ngIf="settings['show_excel_button']=='1'">
+            <button mat-raised-button color="primary"
+            (click)="exporter2.exportTable('csv', {fileName:'call-history', sheet: 'sheet_name'})">CSV</button>
+        </div>
+
+        <!--Progress Bar-->
+        <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>       
+        
+        <div class="table-responsive mt-3">
+            <table mat-table [dataSource]="scheduledataSource" matSort class="mat-elevation-z8" matTableExporter #exporter2="matTableExporter">
+            
+                <!-- Position Column -->
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef> Sr. No. </th>
+                    <td mat-cell *matCellDef="let row;let i = index;" data-label="id">
+                        {{i+1+(schedulepaginator.pageIndex * schedulepaginator.pageSize)}}
+                    </td>
+                </ng-container>
+            
+                <!-- CallStartTime Column -->
+                <ng-container matColumnDef="calltime">
+                    <th mat-header-cell *matHeaderCellDef  mat-sort-header>Call Time</th>
+                    <td mat-cell *matCellDef="let row">
+                        {{row.CallStartTime | date: 'dd-MM-yyyy H:mm:s'}}
+                    </td>
+                </ng-container>
+            
+                <!-- CallerName Column -->
+                <ng-container matColumnDef="callername">
+                    <th mat-header-cell *matHeaderCellDef>Caller Name </th>
+                    <td mat-cell *matCellDef="let row"> 
+                        {{row.CallerName}}
+                    </td>
+                </ng-container>
+            
+                <!-- CallerNumber Column -->
+                <ng-container matColumnDef="callerno">
+                    <th mat-header-cell *matHeaderCellDef>  Caller Number </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{row.CallerNumber}}
+                    </td>
+                </ng-container>
+
+                <!-- duration Column -->
+                <ng-container matColumnDef="duration">
+                    <th mat-header-cell *matHeaderCellDef>  Duration </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{row.CallTalkTime}}
+                    </td>
+                </ng-container>
+
+                <!-- type Column -->
+                <ng-container matColumnDef="type">
+                    <th mat-header-cell *matHeaderCellDef>  Call Type </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{row.CallType | titlecase}}
+                    </td>
+                </ng-container>
+
+                <!-- status Column -->
+                <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef>  Status </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{row.CallStatus}}
+                    </td>
+                </ng-container>
+
+                <!-- agent Column -->
+                <ng-container matColumnDef="agent">
+                    <th mat-header-cell *matHeaderCellDef>  Agent </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{row.AgentName}}
+                    </td>
+                </ng-container>
+
+                <!-- Feedback Column -->
+                <ng-container matColumnDef="feedback">
+                    <th mat-header-cell *matHeaderCellDef>  Feedback </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{row.feedback | titlecase}}
+                    </td>
+                </ng-container>
+
+                <!-- note Column -->
+                <ng-container matColumnDef="note">
+                    <th mat-header-cell *matHeaderCellDef>  Note </th>
+                    <td mat-cell *matCellDef="let row">
+                        {{row.note | titlecase}}
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="scheduleColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: scheduleColumns;"></tr>
+            </table>
+        </div>
+
+        <mat-paginator #schedulepaginator [length]="scheduleLength" [pageSize]="5"
+                    [pageSizeOptions]="[5]"></mat-paginator>
+    </div>
+</div>
+
+
+<!-- /.container-fluid -->

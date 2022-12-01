@@ -1,0 +1,96 @@
+<div class="warap-height pt-4">
+  <!-- Begin Page Content -->
+  <div class="container-fluid">
+
+      <!-- Page Heading -->
+      <h1 class="h3 mb-2 text-gray-800">Email Template</h1>
+
+      <!-- DataTales Example -->
+      <div class="card shadow mb-4">
+
+        <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+
+        <div class="card-body">
+
+          <button mat-raised-button color="accent" (click)="Createdialog()" title="Add">Add Email</button>
+
+          <div class="table-responsive">
+          
+            <table mat-table class="lessons-table mat-elevation-z8" matSort [dataSource]="dataSource">
+              <ng-container matColumnDef="id">
+      
+                <mat-header-cell *matHeaderCellDef>Sr. No</mat-header-cell>
+      
+                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" data-label="id">
+                  {{i+1+(paginator.pageIndex * paginator.pageSize)}}</mat-cell>
+      
+              </ng-container>
+              <ng-container matColumnDef="account_name">
+      
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Account Name</mat-header-cell>
+      
+                <mat-cell class="description-cell" *matCellDef="let row">{{row.account_name}}
+                </mat-cell>
+      
+              </ng-container>
+              <ng-container matColumnDef="email_title">
+      
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Title </mat-header-cell>
+      
+                <mat-cell class="description-cell" *matCellDef="let row">{{row.email_title}}
+                </mat-cell>
+      
+              </ng-container>
+      
+              <ng-container matColumnDef="email_subject">
+      
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Subject </mat-header-cell>
+      
+                <mat-cell class="description-cell" *matCellDef="let row">
+                  {{row.email_subject}}
+                </mat-cell>
+      
+              </ng-container>
+
+              <!-- <ng-container matColumnDef="email_description">
+      
+                  <mat-header-cell *matHeaderCellDef>Email Description </mat-header-cell>
+        
+                  <mat-cell class="description-cell" *matCellDef="let row">
+                    {{row.email_description}}
+                  </mat-cell>
+        
+                </ng-container> -->
+
+                <ng-container matColumnDef="action">
+      
+                  <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+        
+                  <mat-cell class="description-cell" *matCellDef="let row">
+        
+                      <button (click)="updatedialog(row.email_id)" title="Edit" mat-icon-button color="primary" aria-label="Example icon button with a menu icon">
+                        <mat-icon>edit</mat-icon>
+                      </button>
+                      <button (click)="deleteData(row.email_id)" title="Edit" mat-icon-button color="warn" aria-label="Example icon button with a menu icon">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                      
+                  </mat-cell>
+        
+                </ng-container>
+      
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      
+              <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+      
+            </table>
+        
+          </div>
+
+          <mat-paginator #paginator [length]="Length" [pageSize]="50" [pageSizeOptions]="[50,100,500]"></mat-paginator>
+
+        </div>
+      </div>
+  </div>
+  <!-- /.container-fluid -->
+</div>

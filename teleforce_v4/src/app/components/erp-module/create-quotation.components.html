@@ -1,0 +1,73 @@
+<div>
+    <div class="d-inline-block">
+        <a class="close" (click)="openDialog()"><i class="fi-rr-cross-small"></i></a>
+    </div>
+    <div class="row">
+        <div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-2">
+            <div class="text-inside">
+               
+                <div class="table-view" >
+                    <div class="example-container mat-elevation-z8">
+                        <table mat-table [dataSource]="dataSource">
+
+                            <ng-container matColumnDef="checked">
+                                <mat-header-cell *matHeaderCellDef>Check</mat-header-cell>
+                                <mat-cell *matCellDef="let element"> 
+                                  <mat-checkbox [(ngModel)]="element.checked"></mat-checkbox>
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="id">
+                                <th mat-header-cell *matHeaderCellDef> </th>
+                                <mat-checkbox></mat-checkbox>
+                                <td mat-cell *matCellDef="let element;let i = index;">{{i+1}}</td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="itemcode">
+                                <th mat-header-cell *matHeaderCellDef> Item Code </th>
+                                <td mat-cell *matCellDef="let element;let i = index;">{{element.item_code}}</td>
+                            </ng-container>
+
+
+                            <!-- <ng-container matColumnDef="qty">
+                                <th mat-header-cell *matHeaderCellDef> Qty</th>
+                                <td mat-cell *matCellDef="let element;let i = index;"> </td>
+                            </ng-container> -->
+
+                            
+                            <ng-container matColumnDef="itemname">
+                                <th mat-header-cell *matHeaderCellDef> Rate </th>
+                                <td mat-cell *matCellDef="let element;let i = index;">
+                                    {{element.price_list_rate}}
+                                </td>
+                            </ng-container>
+
+                           
+                            <!-- <ng-container matColumnDef="action">
+                                <th mat-header-cell *matHeaderCellDef> Action </th>
+                                <td mat-cell *matCellDef="let element;let i = index">
+                                    <button (click)="updatedialog(i)" title="Edit" mat-icon-button color="primary" aria-label="Edit">
+                                    <i class="fi-rr-pencil"></i>
+                                  </button>&nbsp;
+                                  <button (click)="deletedialog(element._id)" title="delete" mat-icon-button color="primary" aria-label="delete">
+                                    <i class="fa fa-times"></i>
+                                  </button> 
+                                     <a class="pencil"><i class="fi-rr-pencil"></i></a>
+                                </td>
+                            </ng-container> -->
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                        </table>
+                    </div>
+
+                </div>
+                <br>
+                <button mat-raised-button class="ml-2" color="default" title="Add" *ngIf="showitem">Add
+                    Multiple</button>
+                <button mat-raised-button class="ml-2" color="default" title="Add" *ngIf="showitem">Add
+                    Row</button>
+            </div>
+        </div>
+    </div>
+</div>

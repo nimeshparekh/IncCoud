@@ -1,0 +1,88 @@
+<div class="warap-height pt-4">
+  <!-- Begin Page Content -->
+  <div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Plan Minutes Calculation Report</h1>
+
+    <!---- Table history ---->
+    <div class="card shadow mb-4 mt-3">
+
+      <!--Progress Bar-->
+      <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+
+      <div class="card-body">
+
+        <!--Add Segment Btn-->
+
+        <div class="table-responsive mt-2">
+
+          <table mat-table [dataSource]="contactdataSource" matSort class="mat-elevation-z8">
+
+            <!-- Position Column -->
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef> Sr. No. </th>
+              <td mat-cell *matCellDef="let row;let i = index;" data-label="id">
+                {{i+1+(contactpaginator.pageIndex * contactpaginator.pageSize)}}
+              </td>
+            </ng-container>
+
+            <!--  Name Column -->
+            <ng-container matColumnDef="account_name">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+              <td mat-cell *matCellDef="let row">
+                {{row.account_name}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Tele_Plan_Minuites">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Plan Minutes </th>
+              <td mat-cell *matCellDef="let row">
+                {{row.Tele_Plan_Minuites}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="totalpulse">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Used Minutes</th>
+              <td mat-cell *matCellDef="let row">
+                {{row.Tele_Plan_Used}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Tele_Plan_Available">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Available Minutes </th>
+              <td mat-cell *matCellDef="let row">
+                {{row.Tele_Plan_Available}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Tele_Startdate">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Start Date </th>
+              <td mat-cell *matCellDef="let row">
+                {{row.Tele_Startdate | date}}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Tele_Expire">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Expire Date </th>
+              <td mat-cell *matCellDef="let row">
+                {{row.Tele_Expire | date}}
+              </td>
+            </ng-container>
+
+            
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+
+        </div>
+
+        <!--Paginator-->
+        <mat-paginator #contactpaginator [length]="contactLength" [pageSize]="10" [pageSizeOptions]="[10,25,50,100,500]">
+        </mat-paginator>
+
+      </div>
+    </div>
+  </div>
+  <!-- /.container-fluid -->
+</div>

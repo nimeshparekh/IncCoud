@@ -1,0 +1,465 @@
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+  <h1 class="h3 mb-2 text-gray-800">Master Data </h1>
+  <p class="mb-4"></p>
+
+  <!-- DataTales Example -->
+  <div class="card shadow mb-4">
+
+      <div class="card-body">
+          <div class="table-responsive">
+              <!-- <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar> -->
+                          
+              <mat-tab-group>
+                  <mat-tab label="Master Data">
+
+                    <form class="mt-3" [formGroup]="searchform">
+                      <div class="row">
+                        <div class="col-12 col-md-3 col-lg-2 col-xl-2 col-sm-6">
+                            <mat-form-field>
+                              <input matInput placeholder="City name" formControlName="city">
+                            </mat-form-field>
+                          </div>
+                          <div class="col-12 col-md-3 col-lg-2 col-xl-2 col-sm-6">
+                            <mat-form-field>
+                              <input matInput placeholder="Pincode" formControlName="pincode">
+                            </mat-form-field>
+                          </div>
+                          <div class="col-12 col-md-3 col-lg-2 col-xl-2 col-sm-6">
+                            <mat-form-field>
+                              <input matInput placeholder="Mobile" formControlName="mobile">
+                            </mat-form-field>
+                          </div>
+                      </div>
+                      <!-- <button mat-raised-button type="submit" color="primary" class="Update-btn">Search</button>&nbsp; -->
+                      <button mat-raised-button type="submit" (click)="Filtercontact()">Search</button>&nbsp;
+                      <!-- <button mat-raised-button color="warn" class="Update-btn" (click)="resetform()">Reset</button>&nbsp; -->
+                      <button (click)="resetform()" mat-mini-fab color="primary" aria-label="Example icon button with a plus one icon">
+                        <span class="material-icons">refresh</span>
+                      </button>
+                  
+                    </form>
+                    <div class="table-responsive mt-3">
+                        
+                          
+                          <ng-template [ngIf]="dataSource.loading$ | async">
+                            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                          </ng-template>
+                          <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+                          <table class="mt-4">
+                              <mat-table class="lessons-table mat-elevation-z8" [dataSource]="dataSource">
+                                <ng-container matColumnDef="id" sticky>
+                    
+                                  <mat-header-cell *matHeaderCellDef>Sr. No</mat-header-cell>
+                    
+                                  <mat-cell class="description-cell" *matCellDef="let row;let i = index;" data-label="id">
+                                    {{i+1+(contactpaginator.pageIndex * contactpaginator.pageSize)}}</mat-cell>
+                    
+                                </ng-container>
+                                <ng-container matColumnDef="name">
+                    
+                                  <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+                    
+                                  <mat-cell class="description-cell" *matCellDef="let row">{{row.name}}
+                                  </mat-cell>
+                    
+                                </ng-container>
+                    
+                                <ng-container matColumnDef="number">
+                    
+                                  <mat-header-cell *matHeaderCellDef> Mobile Number </mat-header-cell>
+                    
+                                  <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.mobile}}
+                                  </mat-cell>
+                    
+                                </ng-container>
+                    
+                                <ng-container matColumnDef="email">
+                    
+                                  <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+                    
+                                  <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.email}}
+                                  </mat-cell>
+                    
+                                </ng-container>
+                    
+                                <ng-container matColumnDef="address">
+                    
+                                  <mat-header-cell *matHeaderCellDef> Address </mat-header-cell>
+                    
+                                  <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.address}}
+                                  </mat-cell>
+                    
+                                </ng-container>
+                    
+                                <ng-container matColumnDef="city">
+                    
+                                  <mat-header-cell *matHeaderCellDef> City </mat-header-cell>
+                    
+                                  <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.city}}
+                                  </mat-cell>
+                    
+                                </ng-container>
+                    
+                                <ng-container matColumnDef="Pincode">
+                    
+                                  <mat-header-cell *matHeaderCellDef> Pincode </mat-header-cell>
+                    
+                                  <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.Pincode}}
+                                  </mat-cell>
+                    
+                                </ng-container>
+                                <!-- <ng-container matColumnDef="action">
+                                    <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+                                    <mat-cell class="description-cell" *matCellDef="let row">
+                                        <button mat-mini-fab color="primary">
+                                            <span (click)="feedbackdialog(row.id)" title="Feedback Edit">
+                                                <mat-icon>feedback</mat-icon>
+                                            </span>
+                                        </button>&nbsp;
+                                    </mat-cell>
+                                </ng-container> -->
+                    
+                                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    
+                                <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+                    
+                              </mat-table>
+                              <mat-paginator #contactpaginator [length]="Length" [pageSize]="20"
+                                [pageSizeOptions]="[50,100,500]"></mat-paginator>
+                          </table>
+                    </div>
+                  </mat-tab>
+
+                  <!-- <mat-tab label="City Data">
+                    <div class="col-xl-6 col-lg-6">
+                      <div class="card shadow mb-4 mt-4">
+                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                          <h4 class="m-0 font-weight-bold text-primary">City Data</h4>
+                        </div>
+                        <div class="card-body des-card">
+                          <div class="chart-pie pt-4 pb-2">
+                            <div style="display: block">
+                              Total Data : {{Length}}
+
+                              <canvas baseChart
+                                          [data]="doughnutChartData"
+                                          [labels]="doughnutChartLabels"
+                                          [chartType]="doughnutChartType"></canvas>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                      <div class="table-responsive mt-3">
+                        <ng-template [ngIf]="dataSource.loading$ | async">
+                          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                        </ng-template>
+                        <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+                        <table>
+                                <mat-table class="lessons-table mat-elevation-z8" [dataSource]="countdataSource">
+                                  <ng-container matColumnDef="id">
+                      
+                                    <mat-header-cell *matHeaderCellDef>Sr. No</mat-header-cell>
+                      
+                                    <mat-cell class="description-cell" *matCellDef="let row;let i = index;" data-label="id">
+                                      {{i+1+(countpaginator.pageIndex * countpaginator.pageSize)}}</mat-cell>
+                      
+                                  </ng-container>
+                                  <ng-container matColumnDef="city">
+                      
+                                    <mat-header-cell *matHeaderCellDef> city </mat-header-cell>
+                      
+                                    <mat-cell class="description-cell" *matCellDef="let row">{{row.city}}
+                                    </mat-cell>
+                      
+                                  </ng-container>
+                      
+                                  <ng-container matColumnDef="total">
+                      
+                                    <mat-header-cell *matHeaderCellDef> total </mat-header-cell>
+                      
+                                    <mat-cell class="description-cell" *matCellDef="let row">
+                                      {{row.total}}
+                                    </mat-cell>
+                      
+                                  </ng-container>
+                      
+                                  <mat-header-row *matHeaderRowDef="countdisplayedColumns"></mat-header-row>
+                      
+                                  <mat-row *matRowDef="let row; columns: countdisplayedColumns"></mat-row>
+                      
+                                </mat-table>
+                                <mat-paginator #countpaginator [length]="Length2" [pageSize]="50"
+                                  [pageSizeOptions]="[50,100,500]"></mat-paginator>
+                           </table>
+                      </div>
+                  </mat-tab> -->
+
+                  <!-- <mat-tab label="Pincode Data">
+                    <div class="col-xl-6 col-lg-6">
+                      <div class="card shadow mb-4 mt-4">
+                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                          <h4 class="m-0 font-weight-bold text-primary">Pincode Data</h4>
+                        </div>
+                        <div class="card-body des-card">
+                          <div class="chart-pie pt-4 pb-2">
+                            <div style="display: block">
+                              Total Data : {{Length}}
+
+                              <canvas baseChart
+                                          [data]="doughnutChartData2"
+                                          [labels]="doughnutChartLabels2"
+                                          [chartType]="doughnutChartType2"></canvas>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                      <div class="table-responsive mt-3">
+                        <ng-template [ngIf]="dataSource.loading$ | async">
+                          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                        </ng-template>
+                        <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+                        <table>
+                                <mat-table class="lessons-table mat-elevation-z8" [dataSource]="pincountdataSource">
+                                  <ng-container matColumnDef="id">
+                      
+                                    <mat-header-cell *matHeaderCellDef>Sr. No</mat-header-cell>
+                      
+                                    <mat-cell class="description-cell" *matCellDef="let row;let i = index;" data-label="id">
+                                      {{i+1+(pincountpaginator.pageIndex * pincountpaginator.pageSize)}}</mat-cell>
+                      
+                                  </ng-container>
+                                  <ng-container matColumnDef="Pincode">
+                      
+                                    <mat-header-cell *matHeaderCellDef> Pincode </mat-header-cell>
+                      
+                                    <mat-cell class="description-cell" *matCellDef="let row">{{row.Pincode}}
+                                    </mat-cell>
+                      
+                                  </ng-container>
+                      
+                                  <ng-container matColumnDef="total">
+                      
+                                    <mat-header-cell *matHeaderCellDef> total </mat-header-cell>
+                      
+                                    <mat-cell class="description-cell" *matCellDef="let row">
+                                      {{row.total}}
+                                    </mat-cell>
+                      
+                                  </ng-container>
+                      
+                                  <mat-header-row *matHeaderRowDef="pincountdisplayedColumns"></mat-header-row>
+                      
+                                  <mat-row *matRowDef="let row; columns: pincountdisplayedColumns"></mat-row>
+                      
+                                </mat-table>
+                                <mat-paginator #pincountpaginator [length]="Length3" [pageSize]="50"
+                                  [pageSizeOptions]="[50,100,500]"></mat-paginator>
+                           </table>
+                      </div>
+                  </mat-tab> -->
+
+                  <mat-tab label="Details">
+                    <ng-template [ngIf]="dataSource.loading$ | async">
+                      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                    </ng-template>
+                    <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+                    <section class="content-body">
+                      <div class="container mt-4">
+                          
+                        <div class="row">  
+                          <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12" *ngFor="let lan of loaddata; let i = index">
+                            <div class="state-icon mb-20" >
+                                <div class="hovereffect">
+                                  <img src="assets/img/1north/Chandigarh.jpg">
+                                  <div class="overlay">
+                                        <h2>{{loaddata[i].city}}</h2>
+                                        <a class="info">{{loaddata[i].total}}</a>
+                                    </div>
+                                </div>
+                            </div>
+                          </div> 
+
+                          <!-- <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                            <div class="state-icon mb-20">
+                                <div class="hovereffect">
+                                  <img src="assets/img/1north/Chandigarh.jpg">
+                                  <div class="overlay">
+                                        <h2>Chandigarh</h2>
+                                        <a class="info">{{loaddata[24]}}</a>
+                                    </div>
+                                </div>
+                            </div>
+                          </div>
+
+                          <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                            <div class="state-icon mb-20">
+                                <div class="hovereffect">
+                                  <img src="assets/img/1north/Delhi.jpg">
+                                  <div class="overlay">
+                                        <h2>Delhi</h2>
+                                        <a class="info">{{loaddata[1]}}</a>
+                                    </div>
+                                </div>
+                            </div>
+                          </div>
+
+                          <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                            <div class="state-icon mb-20">
+                                <div class="hovereffect">
+                                  <img src="assets/img/1north/Haryana.jpg">
+                                  <div class="overlay">
+                                        <h2>Haryana</h2>
+                                        <a class="info">{{loaddata[18]}}</a>
+                                    </div>
+                                </div>
+                            </div>
+                          </div>
+
+                          <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                            <div class="state-icon mb-20">
+                                <div class="hovereffect">
+                                  <img src="assets/img/1north/himachal pradesh.jpg">
+                                  <div class="overlay">
+                                        <h2>Telangana</h2>
+                                        <a class="info">{{loaddata[40]}}</a>
+                                    </div>
+                                </div>
+                            </div>
+                          </div> -->
+
+                        
+
+                          <!-- <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                            <div class="state-icon mb-20">
+                                <div class="hovereffect">
+                                  <img src="assets/img/1north/Uttar Pradesh.jpg">
+                                  <div class="overlay"> 
+                                        <h2>Uttar Pradesh</h2>
+                                        <a class="info">{{loaddata[11]}}</a>
+                                    </div>
+                                </div>
+                            </div>
+                          </div> -->
+
+                          <!-- <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                            <div class="state-icon mb-20">
+                                <div class="hovereffect">
+                                  <img src="assets/img/1north/uttarakhand.jpg">
+                                  <div class="overlay">
+                                        <h2>Uttarakhand</h2>
+                                        <a class="info">More</a>
+                                    </div>
+                                </div>
+                            </div>
+                          </div> -->
+
+                          <!-- <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                            <div class="state-icon mb-20">
+                                <div class="hovereffect">
+                                  <img src="assets/img/2east/Arunachal Pradesh.jpg">
+                                  <div class="overlay">
+                                        <h2>Arunachal Pradesh</h2>
+                                        <a class="info">More</a>
+                                    </div>
+                                </div>
+                            </div>
+                          </div> -->
+
+                          <!-- <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                            <div class="state-icon mb-20">
+                                <div class="hovereffect">
+                                  <img src="assets/img/2east/Assam.jpg">
+                                  <div class="overlay">
+                                        <h2>West Bengal</h2>
+                                        <a class="info">{{loaddata[0]}}</a>
+                                    </div>
+                                </div>
+                            </div>
+                          </div>
+                          <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                            <div class="state-icon mb-20">
+                                <div class="hovereffect">
+                                  <img src="assets/img/3west/Gujarat.jpg">
+                                  <div class="overlay">
+                                        <h2>Gujarat</h2>
+                                        <a class="info">{{loaddata[2]}}</a>
+                                     </div>
+                                 </div>
+                            </div>
+                          </div>
+                          <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                            <div class="state-icon mb-20">
+                                <div class="hovereffect">
+                                  <img src="assets/img/3west/Maharastra.jpg">
+                                  <div class="overlay">
+                                        <h2>Maharastra</h2>
+                                        <a class="info">{{loaddata[3]}}</a>
+                                     </div>
+                                 </div>
+                            </div>
+                          </div>
+             
+                          <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                            <div class="state-icon mb-20">
+                                <div class="hovereffect">
+                                  <img src="assets/img/3west/Rajasthan.jpg">
+                                  <div class="overlay">
+                                        <h2>Rajasthan</h2>
+                                        <a class="info">{{loaddata[13]}}</a>
+                                     </div>
+                                 </div>
+                            </div>
+                          </div>
+                          <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                            <div class="state-icon mb-20">
+                                <div class="hovereffect">
+                                  <img src="assets/img/4south/Karnataka.jpg">
+                                  <div class="overlay">
+                                        <h2>Karnataka</h2>
+                                        <a class="info">{{loaddata[9]}}</a>
+                                     </div>
+                                 </div>
+                            </div>
+                          </div>
+                          <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                            <div class="state-icon mb-20">
+                                <div class="hovereffect">
+                                  <img src="assets/img/4south/Tamil Nadu.jpg">
+                                  <div class="overlay">
+                                        <h2>Tamil Nadu</h2>
+                                        <a class="info">{{loaddata[8]}}</a>
+                                     </div>
+                                 </div>
+                            </div>
+                          </div> -->
+
+                  
+                        </div>
+                        
+                        
+             
+                      </div>
+                    </section>
+                  </mat-tab>
+
+                  
+
+                  
+                  
+
+              </mat-tab-group>
+          </div>
+      </div>
+  </div>
+
+</div>
+<!-- /.container-fluid -->

@@ -1,0 +1,243 @@
+.patient-main-dashboard
+{
+    height: 100vh;
+    background: url(../../../assets/img/bg-covid3.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.patient-base-header
+{
+    background: #fff;
+    padding: 10px 0 10px 0;
+    box-shadow: 0 .15rem 1.75rem 0 rgba(58,59,69,.15)!important;
+    position: sticky;
+    top: 0;
+}
+
+.profile-name p
+{   
+    margin: 0px;
+    margin-right: 10px;
+}
+.profile-name img
+{
+    width: 40px;
+    border: 1px solid #ccc;
+    border-radius: 50px;
+    padding: 6px;
+}
+.sidepenalopenbtn
+{
+    width: 100px;
+    text-align: center;
+    color: #ccc;
+}
+.header-logo img
+{
+    width: 180px;
+}
+.btn-link
+{
+    color: #3291a5;
+}
+.contact-list
+{
+    padding: 10px 10px;
+}
+.contact-list-box
+{
+    background-color: #fff;
+    padding: 6px 6px 6px 7px;
+    display: flow-root;
+    margin-top: 8px;
+    box-shadow: inset 0 0 7px #aeaeae;
+    box-shadow: 0 1px 6px rgb(0 0 0/4%),0 1px 6px rgb(0 0 0/4%)!important;
+    border-radius: 8px;
+}
+.profile-img
+{
+    width: 40px;
+    height: 40px;
+    background: #cdcdcd;
+    border-radius: 50px;
+    float: left;
+    text-align: center;
+    line-height: 50px;
+    font-size: 37px;
+    overflow: hidden;
+}
+.contact-details
+{
+    margin-left: 10px;
+    margin-top: 2px;
+}
+.contact-details p
+{
+    margin: 0px;
+    font-size: 12px;
+}
+.contact-details label
+{
+    font-weight: 400;
+    font-size: 16px;
+    margin-bottom: 0px;
+    color: #1ea4dd;
+    text-transform: capitalize;
+    line-height: 30px;
+}
+.contactCallBtn
+{
+    float: right;
+    width: 35px;
+    height: 35px;
+    background: #fff;
+    line-height: 37px;
+    border-radius: 50px;
+    text-align: center;
+    cursor: pointer;
+    color: #259609;
+    margin-top: 3px;
+    margin-right: 10px;
+}
+.contactCallBtn:hover
+{
+    background: #259609;
+    color: #fff;
+}
+.historycontactCallBtn
+{
+  margin-top: 4px !important;
+}
+.call-history-img
+{
+    width: 40px;
+    height: 40px;
+    background: #ecf1f3;
+    border-radius: 50px;
+    float: left;
+    text-align: center;
+    line-height: 36px;
+    font-size: 37px;
+    overflow: hidden;  
+    margin-top: 1px;
+}
+.call-history-img img
+{
+    width: 27px;
+}
+.brand-head
+{
+    vertical-align: middle;
+    padding: 8px 1px 8px 0;
+}
+.brand-head-text
+{
+    margin: 0px !important;
+    padding-top: 4px;
+}
+.btn-icon
+{
+    margin-right: 2px;
+    line-height: 15px;
+    font-size: 14px;
+}
+.table-view
+{
+    border: 1px solid #e8e8e8 !important;
+    overflow: hidden !important;
+    border-radius: .75rem!important;
+    box-shadow: 0 1px 15px rgb(0 0 0/4%),0 1px 6px rgb(0 0 0/4%)!important;
+    backdrop-filter: blur(5px);
+    background: rgba(255, 255, 255, 0);
+}
+/* table
+{
+    width: 100%;
+    min-width: 1000px;
+} */
+.list-view
+{
+    margin-top: 30px;
+}
+agm-map {  
+    height: 600px;  
+    width: 100%;  
+}  
+
+#map {
+    height: 500px;
+    background-color: grey;
+  }
+
+  /* TODO: Step 4A1: Make a generic sidebar */
+  /* Styling for an info pane that slides out from the left. 
+   * Hidden by default. */
+  #panel {
+    height: 100%;
+    width: null;
+    background-color: white;
+    position: fixed;
+    z-index: 1;
+    overflow-x: hidden;
+    transition: all .2s ease-out;
+  }
+
+  .open {
+    width: 250px;
+  }
+
+  /* Styling for place details */
+  .hero {
+    width: 100%;
+    max-height: 166px;
+    display: block;
+  }
+
+
+.details {
+color: darkslategrey;
+}
+
+a {
+text-decoration: none;
+color: cadetblue;
+}
+
+#panel img {
+width: 100%;
+}
+
+
+  .ellipsis
+  {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+  }
+
+.contactProductBtn
+{
+    width: 30px;
+    height: 30px;
+    line-height: 32px;
+    text-align: center;
+    border-radius: 50px;
+    background: #e0ebff;
+    color: #3da6b6;
+    cursor: pointer;
+    font-size: 11px;
+}
+.schedule-location-name p
+{
+    margin: 0px;
+    padding: 7px 10px 0px 10px;
+    margin-top: 5px;
+    border-top: 1px solid #ececec;
+}
+.notified
+{
+  height: 26px;
+  font-size: 11px;
+  line-height: 20px;
+}

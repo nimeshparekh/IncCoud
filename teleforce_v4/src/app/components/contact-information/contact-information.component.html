@@ -1,0 +1,19 @@
+<div mat-dialog-head class="dilog-head d-flex justify-content-between">
+    <h3 class="primary">Contact Information</h3>
+    <div class="d-inline-block">
+        <a class="close" (click)="closeDialog()"><i class="fi-rr-cross-small"></i></a>
+    </div>
+</div>
+<div mat-dialog-content class="call-queue">
+    <table class="table table-bordered">
+        <tr>
+            <th>Field Name</th>
+            <th>Field Value</th>
+        </tr>
+        <tr *ngFor="let group of groupArr">
+            <td>{{group.meta_key}}</td>
+            <td>{{group.meta_value}}</td>
+        </tr>
+    </table>
+</div>
+   

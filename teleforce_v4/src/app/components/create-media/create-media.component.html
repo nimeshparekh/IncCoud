@@ -1,0 +1,31 @@
+<div mat-dialog-head class="dilog-head d-flex justify-content-between">
+    <h2 class="dialog-head-h">Add Folder</h2>
+    <div class="d-inline-block">
+        <a class="close" (click)="onNoClick()"><i class="fi-rr-cross-small"></i></a>
+    </div>
+</div>
+
+<form [formGroup]="AdGroupForm"> 
+    <div mat-dialog-content>
+        <div class="row">
+            <div class="col-12 col-sm-6 col-md-6">
+                <mat-form-field appearance="outline">
+                    <mat-label>Enter Your Folder</mat-label>
+                    <input matInput placeholder="Enter Name" formControlName="name">
+                    <mat-icon matSuffix>create_new_folder</mat-icon>
+                </mat-form-field>
+            </div>            
+        </div>
+    </div>
+    <div class="btn-sec" mat-dialog-actions>
+        <button mat-raised-button type="submit" color="primary" (click)="create_folder()" class="Update-btn">
+            Submit
+            <i class="fa fa-spinner fa-spin"  *ngIf="spin"></i>
+        </button>
+    </div>
+</form>
+<!--
+<div  *ngIf="spin" class="loader-div">
+    <img  src="assets/img/1.gif" class="loader-img">
+</div>
+-->

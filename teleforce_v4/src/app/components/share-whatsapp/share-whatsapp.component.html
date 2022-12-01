@@ -1,0 +1,40 @@
+<div mat-dialog-head class="dilog-head d-flex justify-content-between">
+    <h3>Send Whatsapp</h3>
+    <div class="d-inline-block">
+        <a class="close" (click)="closeDialog()"><i class="fi-rr-cross-small"></i></a>
+    </div>
+</div>
+<form [formGroup]="wpform" (ngSubmit)="sendtowhatsapp()" class="mt-2">
+    <div mat-dialog-content>
+        <div class="col-sm-12">
+            <div class="text-inside" *ngIf="show_no_id==0">
+                <mat-form-field  class="w-100" appearance="outline">
+                    <mat-label>Mobile</mat-label> 
+                    <input matInput placeholder="Mobile" formControlName="mobile"  >
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <div class="text-inside">
+                <mat-form-field  class="w-100" appearance="outline">
+                    <mat-label>Template</mat-label> 
+                    <mat-select matInput placeholder="Template" formControlName="email_tempid" (selectionChange)="getTemplateDetail($event.value)">
+                        <mat-option *ngFor="let temp of whatsapptemplate" [value]="temp.wtemp_id">{{temp.wtemp_title}}</mat-option>
+                        </mat-select>
+                </mat-form-field>
+            </div>
+        </div>                   
+        <div class="col-sm-12">
+            <div class="text-inside">
+                <mat-form-field  class="w-100" appearance="outline">
+                    <mat-label>Message</mat-label> 
+                    <textarea matInput placeholder="Message" formControlName="message" ></textarea>                            
+                </mat-form-field>                        
+            </div>
+        </div>
+       
+    </div>
+    <div class="btn-sec mb-2" mat-dialog-actions>
+        <button mat-raised-button type="submit" color="primary" class="Update-btn">Send</button>
+    </div>
+</form>

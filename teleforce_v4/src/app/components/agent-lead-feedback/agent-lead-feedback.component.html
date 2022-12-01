@@ -1,0 +1,48 @@
+<div mat-dialog-head class="dilog-head d-flex justify-content-between">
+    <h3 class="primary" *ngIf="addmode">Feedback</h3>
+    <div class="d-inline-block">
+        <a class="close" (click)="openDialog()"><i class="fi-rr-cross-small"></i></a>
+    </div>
+</div>
+<div class="mt-2">
+    <form [formGroup]="feedbackform" (ngSubmit)="submit()">
+        <div mat-dialog-content>
+            <div class="row mt-2">
+                <div class="col-sm-12 col-12">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Feedback</mat-label>                           
+                        <mat-select formControlName="feedback" (ngModelChange)="showSchedule($event)">
+                            <mat-option value="interested">Interested</mat-option>
+                            <mat-option value="not interested">Not Interested</mat-option>
+                            <mat-option value="schedule">Schedule</mat-option>
+                            <mat-option value="contacted">Contacted</mat-option>
+                            <mat-option value="notcontacted">Not Contacted</mat-option>
+                            <mat-option value="converted">Converted</mat-option>
+                            <mat-option value="closed">Closed</mat-option> </mat-select>
+                        <mat-error *ngIf="feedbackform.controls.feedback.hasError('required')">
+                            Please enter Feedback
+                        </mat-error>                           
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12 col-12">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Note</mat-label> 
+                        <textarea matInput placeholder="Note" formControlName="note" ></textarea>                            
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-12 col-12" *ngIf="schedule">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Schedule Date</mat-label> 
+                        <input matInput placeholder="Schedule Date" [matDatepicker]="startpicker" formControlName="scheduledate">
+                        <mat-datepicker-toggle matSuffix [for]="startpicker"></mat-datepicker-toggle>
+                        <mat-datepicker #startpicker tpicker></mat-datepicker>                                                      
+                    </mat-form-field>     
+                </div>
+            
+            </div>
+        </div>
+        <div class="btn-sec" mat-dialog-actions>
+            <button mat-raised-button type="submit" color="primary" class="Update-btn">Save</button>
+        </div>
+    </form>
+</div>

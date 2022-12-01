@@ -1,0 +1,471 @@
+<div class="warap-height pt-4">    
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <h1 class="h3 mb-2 text-gray-800 d-flex">
+            <button routerLink="/obd-campaign" mat-icon-button title="Back" color="accent" aria-label="Example icon button with a menu icon">
+                <mat-icon>keyboard_backspace</mat-icon>
+            </button>
+            <div style="margin-top: 4px; margin-left: 6px;">
+               OBD Campaign <b>{{campaignname | titlecase}}</b> Details
+            </div>
+        </h1>
+
+        <div class="card mt-2">
+            <mat-tab-group>                
+                <mat-tab label="Call Log">
+                    <div class="container-fluid mt-3">
+                        <form [formGroup]="searchform">    
+                            <div class="row">
+                                <div class="col-12 col-md-3 col-lg-3 col-xl-3 col-sm-6">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Agent</mat-label>
+                                        <mat-select formControlName="agentid">
+                                        <mat-option value="">All</mat-option>
+                                        <mat-option *ngFor="let agent of agents" value="{{agent.account_id}}">
+                                            {{agent.account_name | titlecase}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-12 col-md-3 col-lg-3 col-xl-3 col-sm-6">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Caller Name</mat-label>
+                                        <input matInput placeholder="Caller Name" formControlName="callername">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-12 col-md-3 col-lg-3 col-xl-3 col-sm-6">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Caller Number</mat-label>
+                                        <input matInput placeholder="Caller Number" formControlName="callerno">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-12 col-md-3 col-lg-3 col-xl-3 col-sm-6">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Start Date</mat-label>
+                                        <input matInput placeholder="Start Date" [matDatepicker]="startpicker" formControlName="startdate">
+                                        <mat-datepicker-toggle matSuffix [for]="startpicker"></mat-datepicker-toggle>
+                                        <mat-datepicker #startpicker tpicker></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-12 col-md-3 col-lg-3 col-xl-3 col-sm-6">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>End Date</mat-label>
+                                        <input matInput placeholder="End Date" [matDatepicker]="endpicker" formControlName="enddate">
+                                        <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
+                                        <mat-datepicker #endpicker tpicker></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-12 col-md-3 col-lg-3 col-xl-3 col-sm-6">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Status</mat-label>
+                                        <mat-select formControlName="status">
+                                        <mat-option value="">All</mat-option>
+                                        <mat-option *ngFor="let status of callstatus" value="{{status.CallStatus}}">
+                                            {{status.CallStatus}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-12 col-md-3 col-lg-3 col-xl-3 col-sm-6">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Call Type</mat-label>
+                                        <mat-select formControlName="calltype">
+                                        <mat-option value="">All</mat-option>
+                                        <mat-option value="incoming">Incoming</mat-option>
+                                        <mat-option value="outgoing">Outgoing</mat-option>
+                                        <mat-option value="dialer">Dialer</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-12 col-md-3 col-lg-2 col-xl-2 col-sm-6">
+                                    <mat-form-field appearance="outline">
+                                    <mat-label>Extenstion</mat-label>
+                                    <mat-select formControlName="extension">
+                                        <mat-option value="">All</mat-option>
+                                        <mat-option *ngFor="let exten of extensions" value="{{exten.ext_id}}">
+                                        {{exten.ext_id}}</mat-option>
+                                    </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <!--<div class="col-12 col-md-3 col-lg-3 col-xl-3 col-sm-6">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Disposition</mat-label>
+                                        <mat-select formControlName="disposition">
+                                        <mat-option value="">All</mat-option>
+                                        <mat-option *ngFor="let dis of disposition" value="{{dis.feedback}}">
+                                            {{dis.feedback}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>-->
+                                
+                                <div class="col-12 col-md-12 col-lg-12 col-xl-12 col-sm-6">
+                                    <button mat-raised-button type="submit" (click)="Filtercontact()">Search</button>&nbsp;
+                                    <!--<button mat-raised-button color="warn" class="Update-btn" (click)="resetform()">Reset</button>&nbsp;-->
+                                    <button (click)="resetform()" mat-mini-fab color="primary" aria-label="Example icon button with a plus one icon">
+                                        <span class="material-icons">refresh</span>
+                                    </button>&nbsp;&nbsp;
+                                    <button mat-raised-button color="accent" (click)="ReGenerateCampaign()">Re-Generate Campaign</button>&nbsp;
+                                </div>
+                            </div> 
+                        </form>
+                        <div class="card mb-4 mt-3">
+                            <ng-template [ngIf]="logdataSource.loading$ | async">
+                                <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                            </ng-template>
+                            <div class="card-body">
+                                <button mat-raised-button color="primary" (click)="createExcel()">CSV</button>
+                                <div class="table-responsive mt-2">
+                                    <table mat-table [dataSource]="logdataSource" (matSortChange)="sortData($event)" matSort class="mat-elevation-z8">
+                    
+                                        <!-- Position Column -->
+                                        <ng-container matColumnDef="id">
+                                            <th mat-header-cell *matHeaderCellDef> Sr. No. </th>
+                                            <td mat-cell *matCellDef="let row;let i = index;" data-label="id">
+                                                {{i+1+(contactpaginator.pageIndex * contactpaginator.pageSize)}}
+                                            </td>
+                                        </ng-container>
+                                    
+                                        <!-- CallStartTime Column -->
+                                        <ng-container matColumnDef="CallStartTime">
+                                            <th mat-header-cell *matHeaderCellDef  mat-sort-header>  Call Time </th>
+                                            <td mat-cell *matCellDef="let row">
+                                                {{row.CallStartTime | date:'dd-MM-yyyy HH:mm:ss':timezone}}
+                                            </td>
+                                        </ng-container>
+                                    
+                                        <!-- Caller Name  Column -->
+                                        <ng-container matColumnDef="CallerName">
+                                            <th mat-header-cell *matHeaderCellDef> Caller Name  </th>
+                                            <td mat-cell *matCellDef="let row"> 
+                                              {{row.CallerName}}
+                                            </td>
+                                        </ng-container>
+                                    
+                                        <!-- CallerNumber Column -->
+                                        <ng-container matColumnDef="CallerNumber">
+                                            <th mat-header-cell *matHeaderCellDef>Caller Number</th>
+                                            <td mat-cell *matCellDef="let row">
+                                                {{row.CallerNumber}}
+                                            </td>
+                                        </ng-container>
+                            
+                                        <!-- CallStatus Column -->
+                                        <ng-container matColumnDef="CallStatus">
+                                            <th mat-header-cell *matHeaderCellDef> Status </th>
+                                            <td mat-cell *matCellDef="let row">
+                                                {{row.CallStatus}}
+                                            </td>
+                                        </ng-container>
+                            
+                                        <!-- CallDuration Person Column -->
+                                        <ng-container matColumnDef="CallDuration" >
+                                            <th mat-header-cell *matHeaderCellDef  mat-sort-header> Duration </th>
+                                            <td mat-cell *matCellDef="let row">
+                                              {{row.CallDuration}}
+                                            </td>
+                                        </ng-container>
+                            
+                                        <!-- CallTalkTime Column -->
+                                        <ng-container matColumnDef="CallTalkTime" >
+                                            <th mat-header-cell *matHeaderCellDef  mat-sort-header> Talktime </th>
+                                            <td mat-cell *matCellDef="let row">
+                                                {{row.CallTalkTime}}
+                                            </td>
+                                        </ng-container>
+
+                                        <!-- <ng-container matColumnDef="CallPluse">
+                                            <th mat-header-cell *matHeaderCellDef> Pluse </th>
+                                            <td mat-cell *matCellDef="let row">
+                                                {{row.CallPluse}}
+                                            </td>
+                                        </ng-container> -->
+                            
+                                        <!-- DisconnectedBy Status Column -->
+                                        <ng-container matColumnDef="DisconnectedBy">
+                                            <th mat-header-cell *matHeaderCellDef> Disconnected By </th>
+                                            <td mat-cell *matCellDef="let row">
+                                                {{row.DisconnectedBy}}
+                                            </td>
+                                        </ng-container>
+                            
+                                        <!-- AgentName Column -->
+                                        <ng-container matColumnDef="AgentName">
+                                            <th mat-header-cell *matHeaderCellDef> Agent </th>
+                                            <td mat-cell *matCellDef="let row">
+                                                {{row.AgentName}}
+                                            </td>
+                                        </ng-container>
+
+                                        <!--  Status Column -->
+                                        <ng-container matColumnDef="AgentStatus">
+                                            <th mat-header-cell *matHeaderCellDef> Status </th>
+                                            <td mat-cell *matCellDef="let row">
+                                                {{row.AgentStatus}}
+                                            </td>
+                                        </ng-container>
+                            
+                                        <!--  CallType Column -->
+                                        <ng-container matColumnDef="CallType">
+                                            <th mat-header-cell *matHeaderCellDef> Call Type </th>
+                                            <td mat-cell *matCellDef="let row">
+                                                {{row.CallType | titlecase}}
+                                            </td>
+                                        </ng-container>
+
+                                         
+                                        <!--  recording Column -->
+                                        <ng-container matColumnDef="recording">
+                                            <th mat-header-cell *matHeaderCellDef> Recording </th>
+                                            <td mat-cell *matCellDef="let row">
+                                                <a href="javascript:void(0)" class="cursor-pointer">
+                                                    <span (click)="openrecording(row.RecPath)" title="Delete">
+                                                        <mat-icon>headset</mat-icon>
+                                                    </span>
+                                                </a>
+                                            </td>
+                                        </ng-container>
+                                    
+                                        <tr mat-header-row *matHeaderRowDef="displayedLogColumns"></tr>
+                                        <tr mat-row *matRowDef="let row; columns: displayedLogColumns;"></tr>
+                                    </table>
+                                </div>
+                                <mat-paginator #contactpaginator [length]="logLength" [pageSize]="50"
+                                [pageSizeOptions]="[50,100,500]" showFirstLastButtons="true"></mat-paginator>
+                            </div>
+                        </div>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Call Summary">
+                    <div class="container-fluid mt-3">
+                        <div class="card mb-4 mt-3">
+                            <ng-template [ngIf]="logdataSource.loading$ | async">
+                                <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                            </ng-template>
+                            <div class="card-body">
+                                <div class="table-responsive mt-2">
+                                    <table mat-table [dataSource]="summarydataSource" matSort class="mat-elevation-z8">
+                    
+                                        <!-- Position Column -->
+                                        <ng-container matColumnDef="id">
+                                            <th mat-header-cell *matHeaderCellDef> Sr. No. </th>
+                                            <td mat-cell *matCellDef="let row;let i = index;" data-label="id">
+                                                {{i+1+(summarypaginator.pageIndex * summarypaginator.pageSize)}}
+                                            </td>
+                                        </ng-container>
+                                    
+                                        <!-- Status Column -->
+                                        <ng-container matColumnDef="status">
+                                            <th mat-header-cell *matHeaderCellDef  mat-sort-header> Status </th>
+                                            <td mat-cell *matCellDef="let row">
+                                                {{row.CallStatus}}
+                                            </td>
+                                        </ng-container>
+                                    
+                                        <!-- count  Column -->
+                                        <ng-container matColumnDef="count">
+                                            <th mat-header-cell *matHeaderCellDef> Count </th>
+                                            <td mat-cell *matCellDef="let row"> 
+                                                {{row.total}}
+                                            </td>
+                                        </ng-container>
+                            
+                                        <!-- Action Column -->
+                                        <ng-container matColumnDef="action">
+                                            <th mat-header-cell *matHeaderCellDef> Action </th>
+                                            <td mat-cell *matCellDef="let row">         
+                                                
+                                            </td>
+                                        </ng-container>
+                            
+                                    
+                                        <tr mat-header-row *matHeaderRowDef="displayedSummaryColumns"></tr>
+                                        <tr mat-row *matRowDef="let row; columns: displayedSummaryColumns;"></tr>
+                                    </table>
+                                </div>
+                                <mat-paginator #summarypaginator [length]="summaryLength" [pageSize]="50"
+                                [pageSizeOptions]="[50,100,500]" showFirstLastButtons="true"></mat-paginator>
+                            </div>
+                        </div>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Campaign Detail">
+                    <div class="container-fluid mt-3 mb-3">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <mat-label><b>Campaign Name : </b> </mat-label>
+                                {{campaigndetail?.cam_name}} 
+                            </div>
+                            <div class="col-md-4">
+                                <mat-label><b>Campaign Date : </b> </mat-label>
+                                {{campaigndetail?.create_date | date:'dd-MM-yyyy'}}
+                            </div>
+                            <div class="col-md-4" *ngIf="!ivrcampaign" >
+                                <mat-label><b>Agent Group : </b> </mat-label>
+                                {{campaigndetail?.groupname}}
+                            </div>
+                            <!-- <div class="col-md-6" >
+                            <br>
+                                <mat-label><b>Segment : </b> </mat-label>
+                                <ul style="padding: 0px;
+                                display: inline;">
+                                    <li *ngFor="let segment of segments" style="display: inline;">
+                                        {{segment.name}},
+                                    </li>
+                                </ul>
+                            </div> -->
+                            <div class="col-md-12 mt-4" >
+                                <div>
+                                    <table width="100%" class="table table-bordered">
+                                        <tr>
+                                            <th>Total Record</th>
+                                            <th>Running Record</th>
+                                            <th>Complete Record</th>
+                                        </tr>
+                                        <tr *ngFor="let segment of segments"> 
+                                            <td>{{(segment.pendingrecord)+(segment.runningrecord)+(segment.completerecord)}}</td>
+                                            <td>{{segment.runningrecord}}</td>
+                                            <td>{{segment.completerecord}}</td>
+                                            <td> <span><button (click)="loaddata()" mat-mini-fab color="primary" aria-label="Example icon button with a plus one icon">
+                                                <span class="material-icons">refresh</span>
+                                            </button></span></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <br>
+                                <mat-label><b>Campaign Type : </b> </mat-label>
+                                {{campaigndetail?.cam_type==0?'Outbound Calling':'' }}
+                                {{campaigndetail?.cam_type==1?'Lead Assign to Agent':'' }}
+                                <br>
+                            </div>
+                            <div class="col-md-6" *ngIf="campaigndetail?.cam_type==1">
+                                <br>
+                                <mat-label><b>Assign Agent : </b> </mat-label>
+                                <ul style="padding: 0px;
+                                display: inline;">
+                                    <li *ngFor="let agent of agents" style="display: inline;">
+                                        {{agent.account_name}},
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <br>
+                                <mat-label><b>Campaign Method : </b> </mat-label>
+                                {{campaigndetail?.cam_method==0?'Live Agent':'' }}
+                                {{campaigndetail?.cam_method==1?'OBD':'' }}
+                                <br>
+                            </div>
+                            <div class="col-md-6" *ngIf="campaigndetail?.cam_method==1">
+                                <br>
+                                <mat-label><b>IVR : </b> </mat-label>
+                                {{ivrname}}
+                                <br>
+                            </div>
+                            <div class="col-md-6">
+                                <br>
+                                <mat-label><b>Retry Unanswered Call? : </b> </mat-label>
+                                    {{campaigndetail?.retry}} 
+                                    &nbsp;&nbsp;&nbsp;
+                                    <mat-label><b>Time Interval : </b></mat-label>
+                                    {{campaigndetail?.retrytime}} Hour
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Usages">
+                    <div class="container-fluid mt-3 mb-3">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <table width="100%" class="table table-bordered">
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Total</th>
+                                    </tr>
+                                    <tr *ngFor="let cons of consumptions">
+                                        <td>{{cons.date | date:'dd/MM/yyyy'}}</td>
+                                        <td>{{cons.total}}</td>
+                                    </tr>
+                                </table>    
+                            </div>
+                        </div>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Assign DID"  >
+                    <div class="container-fluid mt-3">
+                        <form [formGroup]="addConForm" (ngSubmit)="channelsubmit()">
+                            <div class="row">
+                                <div class="col-12 col-md-3 col-lg-3 col-xl-3 col-sm-6">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Assign DID</mat-label>
+                                        <mat-select formControlName="channelForm" name="channelForm" multiple>
+                                        <mat-option *ngFor="let channel of channellist;let i = index;" [value]="channellist[i].did">
+                                            {{channellist[i].channelname}}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-12 col-md-3 col-lg-3 col-xl-3 col-sm-6">
+                                    <button mat-raised-button class="mt-2" color="primary">Assign</button>
+                                </div>
+                            </div> 
+                        </form>
+                        <div class="card mb-4 mt-2">
+                            <ng-template [ngIf]="logdataSource.loading$ | async">
+                                <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                            </ng-template>
+                            <div class="card-body">
+                                <div class="table-responsive mt-2">
+                                    <table mat-table [dataSource]="channeldataSource" matSort class="mat-elevation-z8">
+                    
+                                        <!-- Position Column -->
+                                        <ng-container matColumnDef="id">
+                                            <th mat-header-cell *matHeaderCellDef> Sr. No. </th>
+                                            <td mat-cell *matCellDef="let row;let i = index;" data-label="id">
+                                                {{i+1+(channelpaginator.pageIndex * channelpaginator.pageSize)}}
+                                            </td>
+                                        </ng-container>
+                                    
+                                        <!-- channel Column -->
+                                        <ng-container matColumnDef="channel">
+                                            <th mat-header-cell *matHeaderCellDef  mat-sort-header> DID </th>
+                                            <td mat-cell *matCellDef="let row">
+                                                {{row.did}}
+                                            </td>
+                                        </ng-container>
+                                    
+                                        <!-- status Column -->
+                                        <ng-container matColumnDef="status">
+                                            <th mat-header-cell *matHeaderCellDef> DID Number </th>
+                                            <td mat-cell *matCellDef="let row"> 
+                                                {{row.did_number}}
+                                            </td>
+                                        </ng-container>
+
+                                        <!-- Action Column -->
+                                        <ng-container matColumnDef="action">
+                                            <th mat-header-cell *matHeaderCellDef> Action </th>
+                                            <td mat-cell *matCellDef="let row">         
+                                                <button mat-icon-button color="warn" (click)="deleteAssignDID(row.cam_did)" title="Delete" aria-label="Example icon button with a heart icon">
+                                                    <mat-icon>delete</mat-icon>
+                                                </button>
+                                            </td>
+                                        </ng-container>
+
+                                        <tr mat-header-row *matHeaderRowDef="displayedChannelColumns"></tr>
+                                        <tr mat-row *matRowDef="let row; columns: displayedChannelColumns;"></tr>
+                                    </table>
+                                </div>
+                                <mat-paginator #channelpaginator [length]="channelLength" [pageSize]="50"
+                                [pageSizeOptions]="[50,100,500]" showFirstLastButtons="true"></mat-paginator>
+                            </div>
+                        </div>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+
+    </div>
+    <!-- /.container-fluid -->
+</div>

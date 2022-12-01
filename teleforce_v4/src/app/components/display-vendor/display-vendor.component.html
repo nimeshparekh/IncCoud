@@ -1,0 +1,152 @@
+ <!-- Begin Page Content -->
+ <div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Vendor</h1>
+    <p class="mb-4"></p>
+    <button mat-raised-button color="accent" (click)="Createdialog()" title="Add">Add Vendor</button>
+    <br><br>
+    
+    <form [formGroup]="searchform" >
+      <div class="row">
+        <div class="col-12 col-md-3 col-lg-2 col-xl-2 col-sm-6">
+      <mat-form-field>
+        <input matInput placeholder="Mobile" formControlName="ven_mobile">
+      </mat-form-field>
+    </div>
+      <div class="col-12 col-md-3 col-lg-2 col-xl-2 col-sm-6">
+      <mat-form-field>
+        <input matInput placeholder="City" formControlName="ven_city">
+      </mat-form-field>&nbsp;&nbsp;
+      </div>
+      <div class="col-12 col-md-3 col-lg-2 col-xl-2 col-sm-6">
+      <mat-form-field>
+        <input matInput placeholder="Pincode" formControlName="ven_pincode">
+      </mat-form-field>&nbsp;&nbsp;
+  </div>
+</div>
+      <button mat-raised-button type="submit" (click)="searchData()">Search</button>&nbsp;
+      <button mat-raised-button color="warn" class="Update-btn" (click)="resetform()">Reset</button>&nbsp;
+    
+    </form>
+ 
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+      
+      <div class="card-body">
+        <div class="table-responsive">
+          <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+          <table>
+            <mat-table class="lessons-table mat-elevation-z8" matSort [dataSource]="dataSource">
+              <ng-container matColumnDef="id">
+      
+                <mat-header-cell *matHeaderCellDef>Sr. No</mat-header-cell>
+      
+                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" data-label="id">
+                  {{i+1+(paginator.pageIndex * paginator.pageSize)}}</mat-cell>
+      
+              </ng-container>
+              <ng-container matColumnDef="ven_name">
+      
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+      
+                <mat-cell class="description-cell" *matCellDef="let row">{{row.ven_name}}
+                </mat-cell>
+      
+              </ng-container>
+      
+              <ng-container matColumnDef="ven_email">
+      
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
+      
+                <mat-cell class="description-cell" *matCellDef="let row">
+                  {{row.ven_email}}
+                </mat-cell>
+      
+              </ng-container>
+              <ng-container matColumnDef="ven_mobile">
+      
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Mobile</mat-header-cell>
+        
+                  <mat-cell class="description-cell" *matCellDef="let row">
+                    {{row.ven_mobile}}
+                  </mat-cell>
+        
+                </ng-container>
+                <ng-container matColumnDef="ven_address">
+      
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Address</mat-header-cell>
+          
+                    <mat-cell class="description-cell" *matCellDef="let row">
+                      {{row.ven_address}}
+                    </mat-cell>
+          
+                  </ng-container>
+                <ng-container matColumnDef="ven_city">
+      
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>City</mat-header-cell>
+        
+                  <mat-cell class="description-cell" *matCellDef="let row">
+                    {{row.ven_city}}
+                  </mat-cell>
+        
+                </ng-container>
+                <ng-container matColumnDef="ven_state">
+      
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>State</mat-header-cell>
+        
+                  <mat-cell class="description-cell" *matCellDef="let row">
+                    {{row.ven_state}}
+                  </mat-cell>
+        
+                </ng-container>
+                <ng-container matColumnDef="ven_pincode">
+      
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Pincode</mat-header-cell>
+        
+                  <mat-cell class="description-cell" *matCellDef="let row">
+                    {{row.ven_pincode}}
+                  </mat-cell>
+        
+                </ng-container>
+                <ng-container matColumnDef="ven_status">
+      
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
+          
+                    <mat-cell class="description-cell" *matCellDef="let row">
+                      {{row.ven_status}}
+                    </mat-cell>
+          
+                  </ng-container>
+                <ng-container matColumnDef="action">
+      
+                  <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+        
+                  <mat-cell class="description-cell" *matCellDef="let row">
+                      <button mat-mini-fab color="primary">
+                          <span (click)="updatedialog(row.ven_id)" title="Edit">
+                              <mat-icon>edit</mat-icon>
+                          </span>
+                      </button>&nbsp;
+                      <button mat-mini-fab color="warn">
+                          <span (click)="deleteData(row.ven_id)" title="Delete">
+                            <mat-icon>delete</mat-icon>
+                          </span>
+                      </button>
+                  </mat-cell>
+        
+                </ng-container>
+      
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      
+              <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+      
+            </mat-table>
+            <mat-paginator #paginator [length]="Length" [pageSize]="50" [pageSizeOptions]="[50,100,500]"></mat-paginator>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- /.container-fluid -->

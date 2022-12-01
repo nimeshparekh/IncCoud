@@ -1,0 +1,634 @@
+<div mat-dialog-head class="dilog-head d-flex justify-content-between">
+    <h3 class="primary">Add Sale Order</h3>
+    <div class="d-inline-block">
+        <a class="close" (click)="openDialog()"><i class="fi-rr-cross-small"></i></a>
+    </div>
+
+</div>
+<div>
+    <form [formGroup]="addForm" (ngSubmit)="createsaleorder()">
+        <div mat-dialog-content>
+
+            <div class="row">
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Company</mat-label>
+                        <mat-select formControlName="company">
+                            <mat-option *ngFor="let company of companylist" [value]="company.name">
+                                {{company.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Customer</mat-label>
+                        <mat-select formControlName="customer">
+                            <mat-option *ngFor="let lan of customer; let i = index" [value]="customer[i].name">
+                                {{customer[i].name}}</mat-option>
+                        </mat-select>
+
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Date</mat-label>
+                        <input matInput placeholder="Enter Date" [matDatepicker]="datepicker"
+                            formControlName="transaction_date">
+                        <!--<mat-error *ngIf="addConForm.controls.name.hasError('required')">
+                        Please enter Segment name
+                      </mat-error>-->
+                        <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+                        <mat-datepicker #datepicker tpicker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Order Type</mat-label>
+                        <mat-select formControlName="order_type">
+                            <mat-option selected value="Sales">Sales </mat-option>
+                            <mat-option value="Maintenance">Maintenance </mat-option>
+                            <mat-option value="Shopping Cart">Shopping Cart </mat-option>
+                        </mat-select>
+
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Delivery Date</mat-label>
+                        <input matInput placeholder="Enter Delivery Date" [matDatepicker]="datepicker1"
+                            formControlName="delivery_date">
+                        <!--<mat-error *ngIf="addConForm.controls.name.hasError('required')">
+                        Please enter Segment name
+                      </mat-error>-->
+                        <mat-datepicker-toggle matSuffix [for]="datepicker1"></mat-datepicker-toggle>
+                        <mat-datepicker #datepicker1 tpicker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Customer's Purchase Order</mat-label>
+                        <input matInput placeholder="Enter Purchase Order" formControlName="po_no">
+                    </mat-form-field>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-2">
+                    <div class="text-inside">
+                        <mat-label>CURRENCY AND PRICE LIST</mat-label>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Currency</mat-label>
+                        <mat-select formControlName="currency">
+                            <mat-option *ngFor="let cur of currency; let i = index" [value]="cur.name">{{cur.name}}
+                            </mat-option>
+                        </mat-select>
+
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Price List</mat-label>
+                        <mat-select formControlName="selling_price_list">
+                            <mat-option *ngFor="let cur of currency; let i = index" [value]="cur.name">{{cur.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Exchange Rate</mat-label>
+                        <input matInput formControlName="conversion_rate">
+
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-checkbox id="ignore_pricing_rule" class=" mt-2" color="primary"
+                        formControlName="ignore_pricing_rule" value="1">
+                        Ignore Pricing Rule
+                    </mat-checkbox>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Set Source Warehouse</mat-label>
+                        <mat-select formControlName="set_warehouse">
+                            <mat-option *ngFor="let war of warehouse; let i = index" [value]="war.name">{{war.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-2">
+                    Item
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>
+                                <mat-checkbox id="deleteallitems" class=" mt-2" color="primary"
+                                    formControlName="deleteallitems" value="1">
+                                </mat-checkbox>
+                            </th>
+                            <th>Item Code</th>
+                            <th>Delivery Date</th>
+                            <th>Quantity</th>
+                            <th>Rate</th>
+                            <th>Amount</th>
+                            <th>&nbsp;</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <mat-checkbox id="deleteitem" class=" mt-2" color="primary" formControlName="deleteitem"
+                                    value="1"></mat-checkbox>
+                            </td>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td>
+                                &nbsp;
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Total Quantity</mat-label>
+                        <input matInput formControlName="total_qty" placeholder="Total Quantity" value="0">
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Total(INR)</mat-label>
+                        <input matInput formControlName="total_net_weight" placeholder="Total Quantity" value="0.00">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-2">
+                    <div class="text-inside">
+                        <mat-label>TAXES AND CHARGES</mat-label>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Tax Category</mat-label>
+                        <mat-select formControlName="tax_category">
+                            <mat-option value="GST">GST</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Shipping Rule</mat-label>
+                        <mat-select formControlName="shipping_rule">
+                            <mat-option *ngFor="let rule of shippingrules; let i = index" [value]="rule.name">
+                                {{rule.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Sales Taxes and Charges Template</mat-label>
+                        <mat-select formControlName="taxes_and_charges">
+                            <mat-option *ngFor="let rule of taxesandcharges; let i = index" [value]="rule.name">
+                                {{rule.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-2">
+                    Sales Taxes and Charges
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>
+                                <mat-checkbox id="deletealltax" class=" mt-2" color="primary"
+                                    formControlName="deletealltax" value="1">
+                                </mat-checkbox>
+                            </th>
+                            <th>Type</th>
+                            <th>Account Head</th>
+                            <th>Rate</th>
+                            <th>Amount</th>
+                            <th>Total</th>
+                            <th>&nbsp;</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <mat-checkbox id="deletetax" class=" mt-2" color="primary" formControlName="deletetax"
+                                    value="1"></mat-checkbox>
+                            </td>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td>
+                                &nbsp;
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Total Taxes and Charges (INR)</mat-label>
+                        <input matInput formControlName="total_taxes_and_charges" value="0.00">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-2">
+                    <div class="text-inside">
+                        <mat-label>ADDITIONAL DISCOUNT AND COUPON CODE</mat-label>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Coupon Code</mat-label>
+                        <mat-select formControlName="coupon_code">
+                            <mat-option *ngFor="let rule of couponcode; let i = index" [value]="rule.name">{{rule.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Additional Discount Percentage</mat-label>
+                        <input matInput formControlName="additional_discount_percentage"
+                            placeholder="Additional Discount Percentage">
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Apply Additional Discount On</mat-label>
+                        <mat-select formControlName="apply_discount_on">
+                            <mat-option value="Grand Total">Grand Total</mat-option>
+                            <mat-option value="Net Total">Net Total</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-8 col-md-8 col-sm-8 col-12 mt-2">
+
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Additional Discount Amount (INR)</mat-label>
+                        <input matInput formControlName="discount_amount" placeholder="Additional Discount Amount">
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-8 col-md-8 col-sm-8 col-12 mt-2">
+
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Grand Total (INR)</mat-label>
+                        <input matInput formControlName="grand_total" placeholder="Grand Total">
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-8 col-md-8 col-sm-8 col-12 mt-2">
+
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Rounding Adjustment (INR)</mat-label>
+                        <input matInput formControlName="rounding_adjustment" placeholder="Rounding Adjustment">
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-8 col-md-8 col-sm-8 col-12 mt-2">
+
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Rounded Total (INR)</mat-label>
+                        <input matInput formControlName="rounded_total" placeholder="Rounded Total">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-2">
+                    <div class="text-inside">
+                        <mat-label>PAYMENT TERMS</mat-label>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Payment Terms Template</mat-label>
+                        <mat-select formControlName="payment_terms_template">
+                            <mat-option *ngFor="let rule of paymentermstemplate; let i = index" [value]="rule.name">
+                                {{rule.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-2">
+                    Payment Schedule
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>
+                                <mat-checkbox id="deleteallpayment" class=" mt-2" color="primary"
+                                    formControlName="deleteallpayment" value="1">
+                                </mat-checkbox>
+                            </th>
+                            <th>Payment Term</th>
+                            <th>Description</th>
+                            <th>Due Date</th>
+                            <th>Invoice Portion</th>
+                            <th>Payment Amount</th>
+                            <th>&nbsp;</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <mat-checkbox id="deletetax" class=" mt-2" color="primary" formControlName="deletetax"
+                                    value="1"></mat-checkbox>
+                            </td>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td>
+                                &nbsp;
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-2">
+                    <div class="text-inside">
+                        <mat-label>TERMS AND CONDITIONS</mat-label>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Terms</mat-label>
+                        <mat-select formControlName="tc_name">
+                            <mat-option *ngFor="let rule of termscondition; let i = index" [value]="rule.name">
+                                {{rule.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-2">
+                    <div class="text-inside">
+                        <mat-label>Terms and Conditions Details</mat-label>
+                    </div>
+                </div>
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-2">
+                    <angular-editor [placeholder]="'Enter Terms and Conditions Details'" formControlName="terms"
+                        [config]="config"></angular-editor>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-2">
+                    <div class="text-inside">
+                        <mat-label>MORE INFORMATION</mat-label>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Inter Company Order Reference</mat-label>
+                        <mat-select formControlName="inter_company_order_reference">
+                            <mat-option *ngFor="let rule of purchaseorder; let i = index" [value]="rule.name">
+                                {{rule.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Source</mat-label>
+                        <mat-select formControlName="source">
+                            <mat-option *ngFor="let rule of leadsource; let i = index" [value]="rule.name">{{rule.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Project</mat-label>
+                        <mat-select formControlName="project">
+                            <mat-option *ngFor="let rule of project; let i = index" [value]="rule.name">{{rule.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Campaign</mat-label>
+                        <mat-select formControlName="campaign">
+                            <mat-option *ngFor="let rule of campaign; let i = index" [value]="rule.name">{{rule.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-2">
+                    <div class="text-inside">
+                        <mat-label>PRINT SETTINGS</mat-label>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Letter Head</mat-label>
+                        <mat-select formControlName="letter_head">
+                            <mat-option *ngFor="let rule of letterhead; let i = index" [value]="rule.name">{{rule.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Print Heading</mat-label>
+                        <mat-select formControlName="select_print_heading">
+                            <mat-option *ngFor="let rule of printheading; let i = index" [value]="rule.name">
+                                {{rule.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-checkbox id="group_same_items" class=" mt-2" color="primary" formControlName="group_same_items"
+                        value="1">
+                        Group Same Item
+                    </mat-checkbox>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-2">
+                    <div class="text-inside">
+                        <mat-label>BILLING AND DELIVERY STATUS</mat-label>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Status</mat-label>
+                        <input matInput formControlName="status" value="Draft">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-2">
+                    <div class="text-inside">
+                        <mat-label>COMMISSION</mat-label>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Sales Partner</mat-label>
+                        <mat-select formControlName="sales_partner">
+                            <mat-option *ngFor="let rule of salespartner; let i = index" [value]="rule.name">
+                                {{rule.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Commission Rate</mat-label>
+                        <input matInput formControlName="commission_rate" placeholder="Commission Rate">
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Total Commission</mat-label>
+                        <input matInput formControlName="total_commission" placeholder="Total Commission">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-2">
+                    SALES TEAM
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>
+                                <mat-checkbox id="deleteallsalesteam" class=" mt-2" color="primary"
+                                    formControlName="deleteallsalesteam" value="1">
+                                </mat-checkbox>
+                            </th>
+                            <th>Sales Person</th>
+                            <th>Contribution(%)</th>
+                            <th>Contribution to Net Total </th>
+                            <th>Commission Rate </th>
+                            <th>Incentives </th>
+                            <th>&nbsp;</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <mat-checkbox id="deleteitem" class=" mt-2" color="primary" formControlName="deleteitem"
+                                    value="1"></mat-checkbox>
+                            </td>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td>
+                                &nbsp;
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-2">
+                    <div class="text-inside">
+                        <mat-label>AUTO REPEAT SECTION</mat-label>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>From Date</mat-label>
+                        <input matInput placeholder="Enter From Date" [matDatepicker]="datepicker2"
+                            formControlName="from_date">
+                        <mat-datepicker-toggle matSuffix [for]="datepicker2"></mat-datepicker-toggle>
+                        <mat-datepicker #datepicker2 tpicker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Auto Repeat</mat-label>
+                        <mat-select formControlName="auto_repeat">
+                            <mat-option *ngFor="let rule of autorepeat; let i = index" [value]="rule.name">{{rule.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>To Date</mat-label>
+                        <input matInput placeholder="Enter To Date" [matDatepicker]="datepicker3"
+                            formControlName="to_date">
+                        <mat-datepicker-toggle matSuffix [for]="datepicker3"></mat-datepicker-toggle>
+                        <mat-datepicker #datepicker3 tpicker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="btn-sec" mat-dialog-actions>
+            <button mat-raised-button color="accent" type="button" class="btn btn-default">Save</button>
+        </div>
+    </form>
+</div>

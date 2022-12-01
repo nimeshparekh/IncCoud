@@ -1,0 +1,208 @@
+
+<div class="container clearfix">
+  <div class="row">
+    <div class="col-xs-9 col-lg-9 col-md-12 col-sm-12 col-12 p-0">
+      <div class="people-list" id="people-list">
+        <div class="search">
+          <input type="text" placeholder="search" />
+          <i class="fa fa-search"></i>
+        </div>
+        <ul class="list">
+            <li class="clearfix" *ngFor="let user of all_chat_user">
+              <div (click)="getChatdetails(user.chat_id,user)">
+                <div class="table-thumnail">
+                  <img  class="table-thum-channel-img" [src]="user.profile_pic?user.profile_pic:'assets/images/icon/profile.png'" alt="avatar" />
+                  <img class="tablesocial-img" src="assets/images/icon/{{user.channel_type}}.png">
+                </div>
+              
+                <div class="about">
+                  <div class="name"> {{user.first_name ? user.first_name : user.sender_id}}
+                    <span class="{{user.total?'unread':''}}">{{user.total?user.total:''}}</span>
+                  </div>
+                </div>
+              </div>
+            </li>
+        </ul>
+      </div>
+      
+      <div class="chat">
+        <div class="chat-header clearfix">
+          <div class="table-thumnail" *ngIf="chat_user">
+                  <img  class="table-thum-channel-img" [src]="chat_user.profile_pic?chat_user.profile_pic:'assets/images/icon/profile.png'" alt="avatar" />
+          </div>
+          
+          <div class="chat-about" *ngIf="chat_user">
+            <div class="chat-with">{{chat_user.first_name ? chat_user.first_name : chat_user.sender_id}}</div>
+            <div class="chat-num-messages">
+              <img style="width:20px;" src="assets/images/icon/{{chat_user.channel_type}}.png">
+            </div>
+          </div>
+        </div> <!-- end chat-header -->
+        
+        <div class="chat-history">
+          <ul>
+            
+            <li class="clearfix" *ngFor="let chat of all_chat_details">
+              <div class="message-data {{chat.is_echo==1?'':'align-right'}} ">
+                <span class="message-data-time" >{{chat.date_time | date: 'yyyy/MM/dd HH:mm'}}</span> &nbsp; &nbsp;
+                <span class="message-data-name" ></span> <i class="fa fa-circle me"></i>
+                
+              </div>
+              <div class="message {{chat.is_echo==1?' my-message':'other-message float-righ'}} ">
+                <img *ngIf="chat.option_type=='image'" src="{{chat.attachement}}"  width="320" height="240">
+                <audio controls *ngIf="chat.option_type=='audio'">
+                  <source src="{{chat.attachement}}" type="audio/ogg">
+                  <source src="{{chat.attachement}}" type="audio/mpeg">
+                  Your browser does not support the audio tag.
+                </audio>
+                <video width="320" height="240" controls *ngIf="chat.option_type=='video'">
+                  <source src="{{chat.attachement}}" type="video/mp4">
+                  <source src="{{chat.attachement}}" type="video/ogg">
+                  Your browser does not support the video tag.
+                </video>
+                <a *ngIf="chat.option_type=='file'" href= "{{chat.attachement}}" download>download files</a>
+                  {{chat.chat_text}}
+              </div>
+            </li>
+           
+          </ul>
+          
+        </div> <!-- end chat-history -->
+        
+        <form [formGroup]="chatForm">
+          <div class="chat-message clearfix">
+            <textarea  formControlName="message"  (change)="doTextareaValueChange($event)" id="message-to-send" placeholder="Type Your Message..." ></textarea>
+            <span class="mca-chat-icon">
+              <input type="file" id="attach_file" (change)='uploadattachnent($event)' accept="video/*|image/*">
+              <label style="margin:0px;" for="attach_file">
+                  <i class="material-icons">
+                      attach_file
+                  </i>
+              </label> 
+            </span>
+            <img *ngIf="file_type=='image'" [src]="previews"  width="120" height="140" >
+            <video *ngIf="file_type=='video'" width="120" height="140" controls>
+              <source  [src]="previews" type="video/mp4">
+              <source  [src]="previews" type="video/ogg">
+              Your browser does not support the video tag.
+            </video>
+            <audio controls *ngIf="file_type=='audio'"  width="120" height="140">
+              <source [src]="previews" type="audio/ogg">
+              <source [src]="previews" type="audio/mpeg">
+              Your browser does not support the audio tag.
+            </audio>
+            <button (click)="sendmessage()">Send</button>
+          </div> 
+          <!-- end chat-message -->
+        </form>
+        
+      </div> <!-- end chat -->
+    </div>
+    <div class="col-xs-3 col-lg-3 col-md-12 col-sm-12 col-12 p-0">
+        <div class="m-lead-area">
+            <mat-tab-group>
+                <mat-tab>
+                    <ng-template mat-tab-label>
+                        <div class="d-flex mla-tab-head">
+                            <i class="fa fa-address-card-o mr-1 mla-icon" aria-hidden="true"></i> <span class="ml-1">Connection Info</span>
+                        </div>
+                    </ng-template>
+                    <div class="mla-connaction-info">
+                            <div class="mla-cf-profile d-flex">
+                                <!--<img [src]="connection_info.profilePic">-->
+                                <div class="ml-2 mt-2"><!--{{connection_info.firstName}}--></div>
+                            </div>
+                        <div class="mla-cf-edit-profile">
+                            <h5 *ngIf="!isagent">
+                                Assign Chat User
+                            </h5>
+                            <div class="row" *ngIf="!isagent">
+                                <div class="col-xl-12 col-lg-12 col-md-6 col-sm-6 col-12 mt-2">
+                                    <form [formGroup]="memberForm"> 
+                                        <input type="hidden" formControlName="chat_id">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label> Agent Name</mat-label>
+                                            <mat-select formControlName="agent_id">
+                                                <mat-option *ngFor="let lan of assign; let i = index" [value]="assign[i].account_id">{{assign[i].account_name}}
+                                                </mat-option>                    
+                                            </mat-select>
+                                            <mat-icon matSuffix>support_agent</mat-icon>
+                                        </mat-form-field>
+                                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mt-2">
+                                            <div class="float-right">
+                                                <div class="d-flex">
+                                                    <button mat-flat-button class="mla-cf-btn ml-2" color="primary" (click)="createassign()">Assign</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                
+                            </div>
+                            <h5>
+                                Personal Info
+                            </h5>
+                            <form class="mt-1" [formGroup]="updateForm" (ngSubmit)="update_connection()">
+                                <div class="row">
+                                    <div class="col-xl-12 col-lg-12 col-md-6 col-sm-6 col-12 mt-2">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Email Address</mat-label>
+                                            <input matInput placeholder="Email Address" formControlName="email">
+                                            <mat-icon matSuffix>local_post_office</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-xl-12 col-lg-12 col-md-6 col-sm-6 col-12 mt-1">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Mobile No</mat-label>
+                                            <input matInput placeholder="Mobile No" formControlName="mobile">
+                                            <mat-icon matSuffix>stay_current_portrait</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-xl-12 col-lg-12 col-md-6 col-sm-6 col-12 mt-1">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Add Website</mat-label>
+                                            <input matInput placeholder="Add Website" formControlName="website">
+                                            <mat-icon matSuffix>add_link</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-xl-12 col-lg-12 col-md-6 col-sm-6 col-12 mt-1">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>City</mat-label>
+                                            <input matInput placeholder="Add city" formControlName="city">
+                                            <mat-icon matSuffix>location_on</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-xl-12 col-lg-12 col-md-6 col-sm-6 col-12 mt-1">
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Add Description</mat-label>
+                                            <textarea rows="1" matInput placeholder="Description" formControlName="description"></textarea>
+                                            <mat-icon matSuffix>description</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mt-2">
+                                        <div class="float-right">
+                                            <div class="d-flex">
+                                                <button mat-flat-button class="mla-cf-btn" (click)="cancel_connection()">Cancel</button>
+                                                <button type="submit" mat-flat-button class="mla-cf-btn ml-2" color="primary" >Update</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </mat-tab>
+                <mat-tab label="interactions">
+                    <ng-template mat-tab-label>
+                        <div class="d-flex mla-tab-head">
+                            <i class="fa fa-comments-o mr-1 mla-icon" aria-hidden="true"></i> <span class="ml-1">Interactions</span>
+                        </div>
+                    </ng-template>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+    </div>
+  </div>
+</div> <!-- end container -->
+
+

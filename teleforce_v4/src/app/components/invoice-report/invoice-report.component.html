@@ -1,0 +1,31 @@
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Invoice Report</h1>
+    <p class="mb-4"></p>
+    <br><br>
+    <form [formGroup]="searchform">       
+        <mat-form-field>
+            <input matInput placeholder="Bill From Date" [matDatepicker]="startpicker" formControlName="startdate" required>
+            <mat-datepicker-toggle matSuffix [for]="startpicker"></mat-datepicker-toggle>
+            <mat-datepicker #startpicker tpicker></mat-datepicker>
+            <mat-error *ngIf="searchform.controls.startdate.hasError('required')">
+                Please select  From Date
+            </mat-error>
+        </mat-form-field>&nbsp;&nbsp; 
+        <mat-form-field>
+            <input matInput placeholder="Bill To Date" [matDatepicker]="endpicker" formControlName="enddate" required>
+            <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
+            <mat-datepicker #endpicker tpicker></mat-datepicker>
+            <mat-error *ngIf="searchform.controls.enddate.hasError('required')">
+                Please select To Date
+            </mat-error>
+        </mat-form-field>&nbsp;&nbsp;        
+        <button mat-raised-button type="submit" (click)="searchData()">Search</button>&nbsp;
+    </form>
+    
+
+</div>
+<!-- /.container-fluid -->

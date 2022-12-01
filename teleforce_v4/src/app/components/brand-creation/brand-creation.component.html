@@ -1,0 +1,23 @@
+<h1 mat-dialog-title>Brand {{brand}}</h1>
+<form [formGroup]="addForm">
+    <mat-dialog-content >
+    
+        <mat-form-field appearance="outline" >
+            <mat-label>Brand Name</mat-label>
+            <input matInput placeholder="Brand Name"  formControlName="brand_name">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Auto Share</mat-label>
+            <mat-select formControlName="auto_share">
+                <mat-option value="no">No</mat-option>
+                <mat-option value="yes">Yes</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </mat-dialog-content>
+
+    <mat-dialog-actions>
+    <button mat-flat-button color="accent" (click)="close()">Close</button>
+    <button mat-flat-button color="warn" (click)="update_brand()">Submit</button>
+    </mat-dialog-actions>
+</form>

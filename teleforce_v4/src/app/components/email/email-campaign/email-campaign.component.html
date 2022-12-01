@@ -1,0 +1,237 @@
+<div class="warap-height pt-4">
+  <!-- Begin Page Content -->
+  <div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Email Campaign</h1>
+    <div class="row">
+      <div class="col-sm-6 col-12">
+        <div class="row">
+            <div class="col-sm-6 col-12 col mt-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="d-flex flex-row">
+                            <div class="flex-fill">
+                                <h6> Total Credit
+                                    <h2 class="font-weight-bold text-left text-primary">
+                                        <p class="lead bold mb-0 text-primary"></p>
+                                    </h2>
+                                </h6>
+                            </div>
+                            <div class="flex-row-reverse my-auto ng-star-inserted dashboard-icon">
+                                <i class="fi-rr-checkbox text-large text-primary"></i>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-12 col mt-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="d-flex flex-row">
+                            <div class="flex-fill">
+                                <h6> Total Balance 
+                                    <h2 class="font-weight-bold text-left text-primary">
+                                        <p class="lead bold mb-0 text-primary"></p>
+                                    </h2>
+                                </h6>
+                            </div>
+                            <div class="flex-row-reverse my-auto ng-star-inserted dashboard-icon">
+                                <i class="fi-rr-cursor-finger text-large text-primary"
+                                    ></i>
+                            </div>
+                        </div>
+                        <div class="flex-row-reverse my-auto">
+                            <div class="d-flex dashboard-text">
+                                <i class="fi-rr-info text-primary my-auto mr-1"></i>
+                                <p class="mb-0 text-primary"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-12  col mt-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="d-flex flex-row">
+                            <div class="flex-fill">
+                                <h6> Total Used Balance
+                                    <h2 class="font-weight-bold text-left text-primary">
+                                        <p class="lead bold mb-0 text-primary"> </p>
+                                    </h2>
+                                </h6>
+                            </div>
+                            <div class="flex-row-reverse my-auto ng-star-inserted dashboard-icon">
+                                <i class="fi-rr-interactive text-large text-primary"></i>
+                            </div>
+                        </div>
+                        <div class="flex-row-reverse my-auto">
+                            <div class="d-flex dashboard-text">
+                                <i class="fi-rr-info text-primary my-auto mr-1"></i>
+                                <p class="mb-0 text-primary"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+       
+        </div>
+    </div>
+    <div class="col-sm-6 col-12">
+    
+       
+      <div class="card-ana">
+        <div class="card-ana-head ">
+            <div class="flex-fill">
+                <p class="">Email Count</p>
+            </div>
+        </div>
+     
+        <div class="card-ana-body" >
+            <div style="display: block">
+                <canvas baseChart [chartType]="chartTypeFunnel2" [datasets]="chartDatasetsFunnel2" [labels]="chartLabelsFunnel2"
+                    [colors]="chartColorsFunnel2" [options]="chartOptionsFunnel2" [legend]="true"
+                    (chartHover)="chartHoveredFunnel2($event)" (chartClick)="chartClickedFunnel2($event)">
+                </canvas>
+            </div>
+        </div>
+    </div>
+      
+      </div>
+    </div>
+
+    
+    <!-- <div class="col-sm-12 col-12 col mt-4">
+    
+       
+          <div class="card-ana">
+              <div class="card-ana-head ">
+                  <div class="flex-fill">
+                      <p class="">Email Count</p>
+                  </div>
+              </div>
+           
+              <div class="card-ana-body" >
+                  <div style="display: block">
+                      <canvas baseChart [chartType]="chartTypeFunnel2" [datasets]="chartDatasetsFunnel2" [labels]="chartLabelsFunnel2"
+                          [colors]="chartColorsFunnel2" [options]="chartOptionsFunnel2" [legend]="true"
+                          (chartHover)="chartHoveredFunnel2($event)" (chartClick)="chartClickedFunnel2($event)">
+                      </canvas>
+                  </div>
+              </div>
+          </div>
+      
+      </div> -->
+ <br>
+ <br>
+    <form [formGroup]="searchform" (ngSubmit)="searchData()">
+      <div class="row">
+          
+          <div class="col-12 col-md-3 col-lg-2 col-xl-2 col-sm-6">
+              <mat-form-field appearance="outline">
+                  <mat-label>Start Date</mat-label>
+                  <input matInput placeholder="Start Date" [matDatepicker]="startpicker" formControlName="startdate">
+                  <mat-datepicker-toggle matSuffix [for]="startpicker"></mat-datepicker-toggle>
+                  <mat-datepicker #startpicker tpicker></mat-datepicker>
+              </mat-form-field>
+          </div>
+          <div class="col-12 col-md-3 col-lg-2 col-xl-2 col-sm-6">
+              <mat-form-field appearance="outline">
+                  <mat-label>End Date</mat-label>
+                  <input matInput placeholder="End Date" [matDatepicker]="endpicker" formControlName="enddate">
+                  <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
+                  <mat-datepicker #endpicker tpicker></mat-datepicker>
+              </mat-form-field> 
+          </div>
+       
+          <div class="col-12 col-md-3 col-lg-2 col-xl-2 col-sm-6">
+              <button class="mt-2" mat-raised-button type="submit">Search</button>
+              <button class="ml-2" title="refresh" (click)="resetform()" mat-mini-fab color="warn" aria-label="Example icon button with a plus one icon">
+                  <span class="material-icons">refresh</span>
+              </button>
+          </div>
+      </div>
+  </form>
+    <!---- Table history ---->
+    <div class="card shadow mb-4 mt-3">
+
+      <!--Progress Bar-->
+      <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+
+      <div class="card-body">
+
+        <!--Add Segment Btn-->
+        <button mat-raised-button color="primary" (click)="createcontactdialog()" title="Add">Add Campaign</button>&nbsp;&nbsp;
+        <!-- <button mat-raised-button color="primary" routerLink="/email-template" title="Add Template">Add Template</button> -->
+        
+    
+        <div class="table-responsive mt-2">
+
+          <table mat-table [dataSource]="contactdataSource" matSort class="mat-elevation-z8">
+
+            <!--- Note that these columns can be defined in any order.
+                    The actual rendered columns are set as a property on the row definition" -->
+
+            <!-- Position Column -->
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef> Sr. No </th>
+              <td mat-cell *matCellDef="let row;let i = index;">
+                {{i+1+(contactpaginator.pageIndex * contactpaginator.pageSize)}}
+              </td>
+            </ng-container>
+
+            <!-- cam_name Column -->
+            <ng-container matColumnDef="cam_name">
+              <th mat-header-cell *matHeaderCellDef>Campaign </th>
+              <td mat-cell *matCellDef="let row">
+                {{row.cam_name}}
+              </td>
+            </ng-container>
+
+            <!-- sms_title Column -->
+            <ng-container matColumnDef="sms_title">
+              <th mat-header-cell *matHeaderCellDef>Template </th>
+              <td mat-cell *matCellDef="let row">
+                {{row.email_title}}
+              </td>
+            </ng-container>
+
+            <!--total mobilenumber-->
+            <ng-container matColumnDef="total">
+              <th mat-header-cell *matHeaderCellDef>Total Email </th>
+              <td mat-cell *matCellDef="let row">
+                {{row.total}}
+              </td>
+            </ng-container>
+
+            <!-- cam_date Column -->
+            <ng-container matColumnDef="cam_date">
+              <th mat-header-cell *matHeaderCellDef>Date </th>
+              <td mat-cell *matCellDef="let row">
+                {{row.cam_date | date: 'dd-MM-yyyy hh:mm:ss'}}
+              </td>
+            </ng-container>
+
+            <!-- Action Column -->
+            <ng-container matColumnDef="action">
+              <th mat-header-cell *matHeaderCellDef> Action </th>
+              <td mat-cell *matCellDef="let row">
+                <i routerLink="/email-campaign-detail/{{row.cid}}" class="fi-rr-stats"></i>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+
+        </div>
+
+        <!--Paginator-->
+        <mat-paginator #contactpaginator [length]="contactLength" [pageSize]="50" [pageSizeOptions]="[50,100,500]">
+        </mat-paginator>
+
+      </div>
+    </div>
+  </div>
+  <!-- /.container-fluid -->
+</div>

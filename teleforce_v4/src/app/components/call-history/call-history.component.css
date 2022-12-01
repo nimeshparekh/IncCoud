@@ -1,0 +1,123 @@
+.dilog-head
+{
+    border-bottom: 1px solid #ccc;
+}
+.close
+{
+    position: relative;
+}
+
+.History-inner
+{
+    position: relative;
+}
+.History-inner:before 
+{
+    content: "";
+    display: block;
+    position: absolute;
+    top: 7px;
+    bottom: 0;
+    left: 92px;
+    width: 1px;
+    background: #e3e3e3;
+}
+.maindate 
+{
+    color: #313949;
+    font-size: 14px;
+    margin-left: 34px;
+    background: #F2F6FA;
+    padding: 5px 18px;
+    z-index: 1;
+    position: relative;
+    border-radius: 6px;
+    font-weight: 600;
+    display: inline-block;
+    margin-bottom: 34px;
+    min-width: 88px;
+    text-align: center;
+}
+.timeLineHistDataList 
+{
+    z-index: 1;
+    padding: 0 30px 0 0;
+    margin: 0;
+    list-style: none;
+    position: relative;
+}
+.timeLineHistDataList:before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: -7px;
+    left: 92px;
+    width: 1px;
+    background: #e3e3e3;
+}
+.timeLineHistTime 
+{
+    font-size: 1.3rem;
+    color: #616E88;
+    padding-bottom: 5px;
+}
+.timeLineHistTime 
+{
+    position: relative;
+    text-align: center;
+    font-size: 14px;
+    padding-top: 1px;
+    padding-right: 50px;
+    font-weight: normal;
+}
+.timeLineHistDataList li 
+{
+    padding: 0 0 20px;
+    color: #111;
+    background: none;
+    margin-left: 0;
+}
+.timeLineHistTime:after 
+{
+    background: url(../../../assets/img/darts.png);
+    content: "";
+    display: block;
+    color: #fff;
+    position: absolute;
+    right: 2px;
+    top: -4px;
+    border-radius: 50%;
+    background-position: -97px -1575px;
+    background-color: #f2f6fa;
+    width: 30px;
+    text-align: center;
+    height: 30px;
+    z-index: 19;
+    line-height: 30px;
+    visibility: visible;
+    background-position: center;
+    background-size: contain;
+    border: 1px solid #ccc;
+}
+.timeLineHistDataList li:after 
+{
+    content: "";
+    display: block;
+    clear: both;
+}
+.timeLineHistdataline
+{
+    display: inline-block;
+    margin: 0px;
+    margin-left: 14px;
+    color: #394f58;
+    font-weight: 400;
+}
+.timeLineHistInfo
+{
+    color: #1ea4dd;
+    font-weight: 500;
+    margin-left: 6px;
+    letter-spacing: 0px;
+}

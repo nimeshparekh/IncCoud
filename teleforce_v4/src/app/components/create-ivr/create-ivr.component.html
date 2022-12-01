@@ -1,0 +1,415 @@
+<div mat-dialog-head class="dilog-head d-flex justify-content-between">
+    <h3 class="primary" *ngIf="addmode">Add IVR</h3>
+    <h3 class="primary" *ngIf="editmode">Edit IVR</h3>
+    <h3 class="primary" *ngIf="deletemode">Delete IVR</h3>
+    <div class="d-inline-block">
+        <a class="close" (click)="openDialog()"><i class="fi-rr-cross-small"></i></a>
+    </div>
+</div>
+<div *ngIf="addmode || editmode">
+    <form [formGroup]="addForm" (ngSubmit)="submit()">
+        <div mat-dialog-content>
+            <div class="row">
+                <div class="col-xl-3 col-md-3 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>IVR Name</mat-label>
+                        <input matInput placeholder="IVR Name" formControlName="ivrname" required>
+                        <mat-error *ngIf="addForm.controls.ivrname.hasError('required')">
+                            Please enter IVR name
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>IVR Description</mat-label>
+                        <textarea matInput placeholder="IVR Description" rows="1" formControlName="ivrdesc"
+                            required></textarea>
+                        <mat-error *ngIf="addForm.controls.ivrdesc.hasError('required')">
+                            Please enter IVR description
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Announcement</mat-label>
+                        <mat-select formControlName="announcement" required>
+                            <mat-option *ngFor="let sound of sounds" [value]="sound.id">{{sound.originalfilename}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="addForm.controls.announcement.hasError('required')">
+                            Please select announcement
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-6 col-12 mt-2">
+                    <mat-radio-group class="gender" formControlName="type">
+                        <div style="color:grey;">Type</div>
+                        <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="0"
+                            (change)="typeChange($event)">Play File
+                        </mat-radio-button>
+                        <mat-radio-button color="primary" style="padding:4px 0px 0px 24px;" [value]="1"
+                            (change)="typeChange($event)">DTMF
+                        </mat-radio-button>
+                        <mat-radio-button color="primary" style="padding:4px 0px 0px 24px;" [value]="2"
+                            (change)="typeChange($event)">Input
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-6 col-12 mt-2" *ngIf="inputmode">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Number of input digit</mat-label>
+                        <input type="number" matInput placeholder="Number of input digit" formControlName="noinputdigit" value="3">
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-6 col-12 mt-2" *ngIf="inputmode">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Verify API</mat-label>
+                        <mat-select formControlName="hitapi">
+                            <mat-option *ngFor="let temp of apitemp" [value]="temp.api_id">{{temp.api_name}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-6 col-12 mt-2" *ngIf="dtmfmode || inputmode">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Timeout</mat-label>
+                        <input matInput placeholder="Timeout" formControlName="timeout" value="22">
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-6 col-12 mt-2" *ngIf="dtmfmode || inputmode">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Timeout Recording</mat-label>
+                        <mat-select formControlName="timeoutrecording">
+                            <mat-option *ngFor="let sound of sounds" [value]="sound.id">{{sound.originalfilename}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-6 col-12 mt-2" *ngIf="dtmfmode">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Timeout Retries</mat-label>
+                        <mat-select formControlName="timeoutretries">
+                            <mat-option [value]="1">1</mat-option>
+                            <mat-option [value]="2">2</mat-option>
+                            <mat-option [value]="3">3</mat-option>
+                            <mat-option [value]="4">4</mat-option>
+                            <mat-option [value]="5">5</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-6 col-12 mt-2" *ngIf="dtmfmode">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Timeout Retry Recording</mat-label>
+                        <mat-select formControlName="timeoutretryrecording">
+                            <mat-option *ngFor="let sound of sounds" [value]="sound.id">{{sound.originalfilename}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-6 col-12 mt-2" *ngIf="dtmfmode">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Invalid Retry Recording</mat-label>
+                        <mat-select formControlName="invalidretryrecording">
+                            <mat-option *ngFor="let sound of sounds" [value]="sound.id">{{sound.originalfilename}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-6 col-12 mt-2" *ngIf="dtmfmode || inputmode">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Invalid Recording</mat-label>
+                        <mat-select formControlName="invalidrecording">
+                            <mat-option *ngFor="let sound of sounds" [value]="sound.id">{{sound.originalfilename}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-6 col-12 mt-2" *ngIf="dtmfmode || inputmode">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Invalid Retries</mat-label>
+                        <mat-select formControlName="invalidretries">
+                            <mat-option [value]="1">1</mat-option>
+                            <mat-option [value]="2">2</mat-option>
+                            <mat-option [value]="3">3</mat-option>
+                            <mat-option [value]="4">4</mat-option>
+                            <mat-option [value]="5">5</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row" *ngIf="dtmfmode || inputmode">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-2" >
+                    <div class="text-inside">
+                        <mat-label>Invalid Destination</mat-label>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Type</mat-label>
+                        <mat-select formControlName="invaliddestinationtype" (selectionChange)="changeaction($event.value,'invalid')">
+                            <mat-option [value]="0">Terminate Call</mat-option>
+                            <mat-option [value]="1">Announcement</mat-option>
+                            <mat-option [value]="2">Agents Group</mat-option>
+                            <mat-option [value]="3" *ngIf="ivr">IVR</mat-option>
+                            <mat-option [value]="4">Voice Mail</mat-option>
+                            <mat-option [value]="5">Time Condition</mat-option>
+                            <mat-option [value]="6" *ngIf="misscallservice">Miss Call</mat-option>
+                            <!-- <mat-option [value]="7">Conference</mat-option>
+                            <mat-option [value]="8">Recording Studio</mat-option>
+                            <mat-option [value]="9">Custom IVR</mat-option>
+                            <mat-option [value]="10">SIP Hard Phone</mat-option> -->
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Action</mat-label>
+                        <mat-select formControlName="invaliddestinationaction">
+                            <mat-option *ngFor="let action of actionarr['invalid']" [value]="action.value">
+                                {{action.name}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-2" >
+                    <div class="text-inside">
+                        <mat-label>Timeout Destination</mat-label>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Type</mat-label>
+                        <mat-select formControlName="timeoutdestinationtype" (selectionChange)="changeaction($event.value,'timeout')">
+                            <mat-option [value]="0">Terminate Call</mat-option>
+                            <mat-option [value]="1">Announcement</mat-option>
+                            <mat-option [value]="2">Agents Group</mat-option>
+                            <mat-option [value]="3" *ngIf="ivr">IVR</mat-option>
+                            <mat-option [value]="4">Voice Mail</mat-option>
+                            <mat-option [value]="5">Time Condition</mat-option>
+                            <mat-option [value]="6" *ngIf="misscallservice">Miss Call</mat-option>
+                            <!-- <mat-option [value]="7">Conference</mat-option>
+                            <mat-option [value]="8">Recording Studio</mat-option>
+                            <mat-option [value]="9">Custom IVR</mat-option>
+                            <mat-option [value]="10">SIP Hard Phone</mat-option> -->
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Action</mat-label>
+                        <mat-select formControlName="timeoutdestinationaction">
+                            <mat-option *ngFor="let action of actionarr['timeout']" [value]="action.value">
+                                {{action.name}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row" *ngIf="playfilemode || inputmode">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-2" >
+                    <div class="text-inside">
+                        <mat-label>Default Destination</mat-label>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Type</mat-label>
+                        <mat-select formControlName="defaultdestinationtype" (selectionChange)="changeaction($event.value,'default')">
+                            <mat-option [value]="0">Terminate Call</mat-option>
+                            <mat-option [value]="1">Announcement</mat-option>
+                            <mat-option [value]="2">Agents Group</mat-option>
+                            <mat-option [value]="3" *ngIf="ivr">IVR</mat-option>
+                            <mat-option [value]="4">Voice Mail</mat-option>
+                            <mat-option [value]="5">Time Condition</mat-option>
+                            <mat-option [value]="6" *ngIf="misscallservice">Miss Call</mat-option>
+                            <!-- <mat-option [value]="7">Conference</mat-option>
+                            <mat-option [value]="8">Recording Studio</mat-option>
+                            <mat-option [value]="9">Custom IVR</mat-option>
+                            <mat-option [value]="10">SIP Hard Phone</mat-option> -->
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Action</mat-label>
+                        <mat-select formControlName="defaultdestinationaction">
+                            <mat-option *ngFor="let action of actionarr['default']" [value]="action.value">
+                                {{action.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="table-responsive" *ngIf="dtmfmode">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>DTMF</th>
+                            <th colspan="5">Destination</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr formArrayName="dtmfDetails"
+                            *ngFor="let cd of addForm.controls.dtmfDetails.controls ;let i=index;">
+                            <td formGroupName={{i}}>
+                                <mat-form-field class="example-full-width">
+                                    <mat-label>DTMF</mat-label>
+                                    <mat-select formControlName="dtmf">
+                                        <mat-option [value]="1">1</mat-option>
+                                        <mat-option [value]="2">2</mat-option>
+                                        <mat-option [value]="3">3</mat-option>
+                                        <mat-option [value]="4">4</mat-option>
+                                        <mat-option [value]="5">5</mat-option>
+                                        <mat-option [value]="6">6</mat-option>
+                                        <mat-option [value]="7">7</mat-option>
+                                        <mat-option [value]="8">8</mat-option>
+                                        <mat-option [value]="9">9</mat-option>
+                                        <mat-option [value]="11">0</mat-option>
+
+                                    </mat-select>
+                                </mat-form-field>
+                            </td>
+                            <td formGroupName={{i}}>
+                                <mat-form-field class="example-full-width">
+                                    <mat-label>Type</mat-label>
+                                    <mat-select formControlName="dtmftype" (selectionChange)="changedigitaction($event.value,i)">
+                                        <mat-option [value]="0">Terminate Call</mat-option>
+                                        <mat-option [value]="1">Announcement</mat-option>
+                                        <mat-option [value]="2">Agents Group</mat-option>
+                                        <mat-option [value]="3" *ngIf="ivr">IVR</mat-option>
+                                        <mat-option [value]="4">Voice Mail</mat-option>
+                                        <mat-option [value]="5">Time Condition</mat-option>
+                                        <mat-option [value]="6" *ngIf="misscallservice">Miss Call</mat-option>
+                                        <!-- <mat-option [value]="7">Conference</mat-option>
+                                        <mat-option [value]="8">Recording Studio</mat-option>
+                                        <mat-option [value]="9">Custom IVR</mat-option>
+                                        <mat-option [value]="10">SIP Hard Phone</mat-option> -->
+                                    </mat-select>
+                                </mat-form-field>
+                            </td>
+                            <td formGroupName={{i}}>
+                                <mat-form-field class="example-full-width">
+                                    <mat-label>Action</mat-label>
+                                    <mat-select formControlName="dtmfaction">
+                                        <mat-option *ngFor="let action of digitactionarr[i]" [value]="action.value">{{action.name}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </td>
+                            <td formGroupName={{i}}>
+                                <mat-form-field class="example-full-width">
+                                    <mat-label>SMS</mat-label>
+                                    <mat-select formControlName="dtmfsms">
+                                        <mat-option *ngFor="let temp of smstemp" [value]="temp.sms_id">{{temp.sms_title}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </td>
+                            <td formGroupName={{i}}>
+                                <mat-form-field class="example-full-width">
+                                    <mat-label>Email</mat-label>
+                                    <mat-select formControlName="dtmfemail">
+                                        <mat-option *ngFor="let temp of emailtemp" [value]="temp.email_id">{{temp.email_title}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </td>
+                            <td formGroupName={{i}}>
+                                <mat-form-field class="example-full-width">
+                                    <mat-label>API</mat-label>
+                                    <mat-select formControlName="dtmfapi">
+                                        <mat-option *ngFor="let temp of apitemp" [value]="temp.api_id">{{temp.api_name}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="table-responsive" *ngIf="playfilemode">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Call Status</th>
+                            <th colspan="5">Destination</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr formArrayName="callstatues"
+                            *ngFor="let cd of addForm.controls.callstatues.controls ;let i=index;">
+                            <td formGroupName={{i}}>
+                                <mat-form-field class="example-full-width">
+                                    <mat-label>Call Status</mat-label>
+                                    <mat-select formControlName="dtmf">
+                                        <mat-option [value]="1">Answer</mat-option>
+                                        <mat-option [value]="2">Noanswer</mat-option>
+                                      
+                                    </mat-select>
+                                </mat-form-field>
+                            </td>
+                            <td formGroupName={{i}}>
+                                <mat-form-field class="example-full-width">
+                                    <mat-label>Type</mat-label>
+                                    <mat-select formControlName="dtmftype" (selectionChange)="changedigitaction($event.value,i)">
+                                        <mat-option [value]="0">Terminate Call</mat-option>
+                                        <mat-option [value]="1">Announcement</mat-option>
+                                        <mat-option [value]="2">Agents Group</mat-option>
+                                        <mat-option [value]="3" *ngIf="ivr">IVR</mat-option>
+                                        <mat-option [value]="4">Voice Mail</mat-option>
+                                        <mat-option [value]="5">Time Condition</mat-option>
+                                        <mat-option [value]="6" *ngIf="misscallservice">Miss Call</mat-option>
+                                        <!-- <mat-option [value]="7">Conference</mat-option>
+                                        <mat-option [value]="8">Recording Studio</mat-option>
+                                        <mat-option [value]="9">Custom IVR</mat-option>
+                                        <mat-option [value]="10">SIP Hard Phone</mat-option> -->
+                                    </mat-select>
+                                </mat-form-field>
+                            </td>
+                            <td formGroupName={{i}}>
+                                <mat-form-field class="example-full-width">
+                                    <mat-label>Action</mat-label>
+                                    <mat-select formControlName="dtmfaction">
+                                        <mat-option *ngFor="let action of digitactionarr[i]" [value]="action.value">{{action.name}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </td>
+                            <td formGroupName={{i}}>
+                                <mat-form-field class="example-full-width">
+                                    <mat-label>SMS</mat-label>
+                                    <mat-select formControlName="dtmfsms">
+                                        <mat-option *ngFor="let temp of smstemp" [value]="temp.sms_id">{{temp.sms_title}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </td>
+                            <td formGroupName={{i}}>
+                                <mat-form-field class="example-full-width">
+                                    <mat-label>Email</mat-label>
+                                    <mat-select formControlName="dtmfemail">
+                                        <mat-option *ngFor="let temp of emailtemp" [value]="temp.email_id">{{temp.email_title}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </td>
+                            <td formGroupName={{i}}>
+                                <mat-form-field class="example-full-width">
+                                    <mat-label>API</mat-label>
+                                    <mat-select formControlName="dtmfapi">
+                                        <mat-option *ngFor="let temp of apitemp" [value]="temp.api_id">{{temp.api_name}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="btn-sec" mat-dialog-actions>
+            <button mat-raised-button type="submit" color="primary" class="Update-btn" [disabled]="isDisabled">Save</button>
+            <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+        </div>
+    </form>
+</div>
+<div *ngIf="deletemode">
+    <h3 style="margin-top: 10px; font-weight: 500;">
+        Are you sure to delete?
+    </h3>
+    <div class="btn-sec">
+        <button mat-raised-button type="button" color="primary" class="Update-btn"
+        (click)="ivrdelete(ivrid)">Delete</button>
+        &nbsp;
+        <button mat-raised-button type="button" class="Discard-btn" (click)="openDialog()">Cancel</button>
+    </div>
+</div>

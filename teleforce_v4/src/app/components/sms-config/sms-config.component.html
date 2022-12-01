@@ -1,0 +1,80 @@
+<div class="warap-height pt-4"> 
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+        <!-- Page Heading -->
+        <h1 class="h3 mb-2 text-gray-800">       
+            SMS Configuration
+        </h1>
+        <p class="mb-4"></p>
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <div class="card-body">
+                <!-- <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar> -->
+                <form [formGroup]="addForm" (ngSubmit)="submit()">
+                    <div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <mat-form-field appearance="outline" class="example-full-width">
+                                    <mat-label>SMS Server</mat-label>
+                                    <mat-select formControlName="serverid" required>
+                                        <mat-option *ngFor="let server of smserver" [value]="server.sid">
+                                            {{server.server_name}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="addForm.controls.serverid.hasError('required')">
+                                        Please select sms server
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Event</th>
+                                    <th>Agent SMS Template</th>
+                                    <th >Caller SMS Template</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr formArrayName="configDetail"
+                                    *ngFor="let cd of configarr.controls ;let i=index;">
+                                    <td formGroupName={{i}}>
+                                        <mat-form-field appearance="outline" class="example-full-width">
+                                            <mat-label>Event</mat-label>
+                                            <input matInput placeholder="Username" formControlName="event" readonly>
+                                        </mat-form-field>
+                                    </td>
+                                    <td formGroupName={{i}}>
+                                        <mat-form-field appearance="outline" class="example-full-width">
+                                            <mat-label>SMS Template</mat-label>
+                                            <mat-select formControlName="agent_smstemp">
+                                                <mat-option *ngFor="let temp of smstemp" [value]="temp.sms_id">
+                                                    {{temp.sms_title}}</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </td>                               
+                                    <td formGroupName={{i}}>
+                                        <mat-form-field appearance="outline" class="example-full-width">
+                                            <mat-label>SMS Template</mat-label>
+                                            <mat-select formControlName="caller_smstemp">
+                                                <mat-option *ngFor="let temp of smstemp" [value]="temp.sms_id">
+                                                    {{temp.sms_title}}</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="btn-sec">
+                        <button mat-raised-button type="submit" color="primary" class="Update-btn">Save</button>
+                        &nbsp;
+                        <button mat-raised-button type="button" class="Discard-btn" (click)="openDialog()">Cancel</button>
+                    </div>
+                </form>        
+            </div>
+        </div>
+
+    </div>
+    <!-- /.container-fluid -->
+</div>

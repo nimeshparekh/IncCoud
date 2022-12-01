@@ -1,0 +1,50 @@
+<!-- Begin Page Content -->
+
+<div class="container-fluid" *ngIf="UserData.role=='2'">
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+      <h1 class="h3 mb-0 text-gray-800">
+        <a routerLink="/hourly-lead/{{index2}}/{{date}}" mat-mini-fab color="warn" title="Back">
+            <mat-icon>keyboard_return</mat-icon>
+        </a>&nbsp;
+        {{index1==0?'Interested':''}}
+        {{index1==1?'Not Interested':''}}
+        {{index1==2?'Schedule':''}}
+        {{index1==3?'Contacted':''}}
+        {{index1==4?'Not Contacted':''}}
+        {{index1==5?'Converted':''}}
+        {{index1==6?'Closed':''}}
+        Call Lead Agents for {{date | date:'dd-MM-yyyy'}}
+        ({{index2==0?'10 AM-11 AM':''}}
+        {{index2==1?'11 AM-12 PM':''}}
+        {{index2==2?'12 PM-01 PM':''}}
+        {{index2==3?'02 PM-03 PM':''}}
+        {{index2==4?'03 PM-04 PM':''}}
+        {{index2==5?'04 PM-05 PM':''}}
+        {{index2==6?'05 PM-06 PM':''}})
+    </h1>
+      <!-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a> -->
+    </div>
+  
+    <!-- Content Row -->
+    
+    <!-- Content Row -->
+  
+    <div class="row">
+      <!-- Pie Chart -->
+      <div class="col-xl-12 col-lg-12">
+        <div class="card shadow mb-4">
+          <!-- Card Header - Dropdown -->
+          
+          <!-- Card Body -->
+          <div class="card-body des-card">
+            <div style="display: block">
+            Total call lead : {{todaycall}}
+            <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType" >
+            </canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.container-fluid -->

@@ -1,0 +1,370 @@
+<div class="warap-height pt-4"> 
+  <!-- Begin Page Content -->
+  <div class="container-fluid">
+
+    <h1 class="h3 mb-2 text-gray-800">Account status </h1>
+
+    <!-- DataTales Example -->
+    <div class="card mb-4">             
+      <mat-tab-group>
+        <mat-tab label="All Users">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-4">
+                <mat-form-field appearance="outline">
+                  <mat-label>Type here to filter</mat-label>
+                  <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Type here to filter">
+                </mat-form-field>
+              </div>
+              <div class="col-sm-4">
+                <button mat-raised-button color="primary" class="mt-2" (click)="exporter.exportTable('csv', {fileName:'alluserlist', sheet: 'sheet_name'})">CSV</button>
+              </div>
+            </div>
+            <div class="table-responsive mt-3">
+              <!--Filter-->
+              <table mat-table class="lessons-table mat-elevation-z8" matTableExporter #exporter="matTableExporter"  [dataSource]="summarydataSource">
+                <ng-container matColumnDef="id">
+    
+                  <mat-header-cell *matHeaderCellDef>Sr. No</mat-header-cell>
+    
+                  <mat-cell class="description-cell" *matCellDef="let row;let i = index;" data-label="id">
+                    {{i+1+(summarypaginator.pageIndex * summarypaginator.pageSize)}}</mat-cell>
+    
+                </ng-container>
+                <ng-container matColumnDef="name">
+    
+                  <mat-header-cell *matHeaderCellDef> Username </mat-header-cell>
+    
+                  <mat-cell class="description-cell" *matCellDef="let row">{{row.account_name}}
+                  </mat-cell>
+    
+                </ng-container>
+    
+                <ng-container matColumnDef="email">
+    
+                  <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+    
+                  <mat-cell class="description-cell" *matCellDef="let row">
+                    {{row.email}}
+                  </mat-cell>
+    
+                </ng-container>
+    
+                <ng-container matColumnDef="mobile">
+    
+                  <mat-header-cell *matHeaderCellDef> Mobile </mat-header-cell>
+    
+                  <mat-cell class="description-cell" *matCellDef="let row">
+                    {{row.mobile}}
+                  </mat-cell>
+    
+                </ng-container>
+    
+                <ng-container matColumnDef="channel">
+    
+                  <mat-header-cell *matHeaderCellDef>DID </mat-header-cell>
+    
+                  <mat-cell class="description-cell" *matCellDef="let row">
+                    {{row.channels}}
+                  </mat-cell>
+    
+                </ng-container>
+    
+                <ng-container matColumnDef="users">
+    
+                  <mat-header-cell *matHeaderCellDef> Users </mat-header-cell>
+    
+                  <mat-cell class="description-cell" *matCellDef="let row">
+                    {{row.user_limit}}
+                  </mat-cell>
+    
+                </ng-container>
+    
+                <!--<ng-container matColumnDef="usedduration">
+    
+                  <mat-header-cell *matHeaderCellDef> Usages </mat-header-cell>
+    
+                  <mat-cell class="description-cell" *matCellDef="let row">
+                    {{row.duration}}
+                  </mat-cell>
+    
+                </ng-container>-->
+
+                <ng-container matColumnDef="packagename">
+    
+                    <mat-header-cell *matHeaderCellDef> Package Name </mat-header-cell>
+      
+                    <mat-cell class="description-cell" *matCellDef="let row">
+                      {{row.package_name}}
+                    </mat-cell>
+      
+                  </ng-container>
+                  <ng-container matColumnDef="SalesManager">
+      
+                    <mat-header-cell *matHeaderCellDef> Account Manager </mat-header-cell>
+      
+                    <mat-cell class="description-cell" *matCellDef="let row">
+                      {{row.SalesManager}}
+                    </mat-cell>
+      
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    
+                <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    
+              </table>
+            </div>
+            <mat-paginator #summarypaginator [length]="summaryLength" [pageSize]="50"
+            [pageSizeOptions]="[50,100,500]"></mat-paginator>
+          </div>
+        </mat-tab>
+        <mat-tab label="Active Plan User">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-4">
+                <mat-form-field appearance="outline">
+                  <mat-label>Type here to filter</mat-label>
+                  <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Type here to filter">
+                </mat-form-field>
+              </div>
+              <div class="col-sm-4">
+                <button mat-raised-button class="mt-2" color="primary" (click)="exporter1.exportTable('csv', {fileName:'activeuserlist', sheet: 'sheet_name'})">CSV</button>
+              </div>
+            </div>
+            <div class="table-responsive mt-3">
+              <table mat-table class="lessons-table mat-elevation-z8" matTableExporter #exporter1="matTableExporter"  [dataSource]="userdataSource">
+                  <ng-container matColumnDef="id">
+      
+                    <mat-header-cell *matHeaderCellDef>Sr. No</mat-header-cell>
+      
+                    <mat-cell class="description-cell" *matCellDef="let row;let i = index;" data-label="id">
+                      {{i+1+(logpaginator.pageIndex * logpaginator.pageSize)}}</mat-cell>
+      
+                  </ng-container>
+                  <ng-container matColumnDef="name">
+      
+                    <mat-header-cell *matHeaderCellDef> Username </mat-header-cell>
+      
+                    <mat-cell class="description-cell" *matCellDef="let row">{{row.account_name}}
+                    </mat-cell>
+      
+                  </ng-container>
+      
+                  <ng-container matColumnDef="email">
+      
+                    <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+      
+                    <mat-cell class="description-cell" *matCellDef="let row">
+                      {{row.email}}
+                    </mat-cell>
+      
+                  </ng-container>
+      
+                  <ng-container matColumnDef="mobile">
+      
+                    <mat-header-cell *matHeaderCellDef> Mobile </mat-header-cell>
+      
+                    <mat-cell class="description-cell" *matCellDef="let row">
+                      {{row.mobile}}
+                    </mat-cell>
+      
+                  </ng-container>
+      
+                  <ng-container matColumnDef="channel">
+      
+                    <mat-header-cell *matHeaderCellDef> DID </mat-header-cell>
+      
+                    <mat-cell class="description-cell" *matCellDef="let row">
+                      {{row.channels}}
+                    </mat-cell>
+      
+                  </ng-container>
+      
+                  <ng-container matColumnDef="users">
+      
+                    <mat-header-cell *matHeaderCellDef> Users </mat-header-cell>
+      
+                    <mat-cell class="description-cell" *matCellDef="let row">
+                      {{row.user_limit}}
+                    </mat-cell>
+      
+                  </ng-container>
+      
+                  <!--<ng-container matColumnDef="usedduration">
+      
+                    <mat-header-cell *matHeaderCellDef> Usages </mat-header-cell>
+      
+                    <mat-cell class="description-cell" *matCellDef="let row">
+                      {{row.duration}}
+                    </mat-cell>
+      
+                  </ng-container>-->
+
+                  <ng-container matColumnDef="packagename">
+      
+                      <mat-header-cell *matHeaderCellDef> Package Name </mat-header-cell>
+        
+                      <mat-cell class="description-cell" *matCellDef="let row">
+                        {{row.package_name}}
+                      </mat-cell>
+        
+                  </ng-container>
+      
+                  <ng-container matColumnDef="expirydate">
+      
+                    <mat-header-cell *matHeaderCellDef> Expiry Date </mat-header-cell>
+      
+                    <mat-cell class="description-cell" *matCellDef="let row">
+                      {{row.expiry_date | date:'dd-MM-yyyy HH:mm:ss'}}
+                    </mat-cell>
+      
+                  </ng-container>
+                  <ng-container matColumnDef="SalesManager">
+      
+                    <mat-header-cell *matHeaderCellDef> Account Manager </mat-header-cell>
+      
+                    <mat-cell class="description-cell" *matCellDef="let row">
+                      {{row.SalesManager}}
+                    </mat-cell>
+      
+                </ng-container>
+      
+                  <mat-header-row *matHeaderRowDef="expireremainColumns"></mat-header-row>
+      
+                  <mat-row *matRowDef="let row; columns: expireremainColumns"></mat-row>
+      
+              </table>
+            </div>
+            <mat-paginator #logpaginator [length]="ActiveLength" [pageSize]="50"
+                    [pageSizeOptions]="[50,100,500]"></mat-paginator>
+          </div>
+        </mat-tab>
+        <mat-tab label="Expire Plan User">
+          <div class="card-body">
+            <!--Filter-->
+            <div class="row">
+              <div class="col-sm-4">
+                <mat-form-field appearance="outline">
+                  <mat-label>Type here to filter</mat-label>
+                  <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Type here to filter">
+                </mat-form-field>
+              </div>
+              <div class="col-sm-4">
+                  <button mat-raised-button class="mt-2" color="primary" (click)="exporter2.exportTable('csv', {fileName:'expireplanlist', sheet: 'sheet_name'})">CSV</button>
+              </div>
+            </div>
+            <div class="table-responsive mt-3">
+              <table mat-table class="lessons-table mat-elevation-z8" matTableExporter #exporter2="matTableExporter"  [dataSource]="expiredataSource">
+                  <ng-container matColumnDef="id">
+      
+                    <mat-header-cell *matHeaderCellDef>Sr. No</mat-header-cell>
+      
+                    <mat-cell class="description-cell" *matCellDef="let row;let i = index;" data-label="id">
+                      {{i+1+(agentpaginator.pageIndex * agentpaginator.pageSize)}}</mat-cell>
+      
+                  </ng-container>
+                  <ng-container matColumnDef="name">
+      
+                    <mat-header-cell *matHeaderCellDef> Username </mat-header-cell>
+      
+                    <mat-cell class="description-cell" *matCellDef="let row">{{row.account_name}}
+                    </mat-cell>
+      
+                  </ng-container>
+      
+                  <ng-container matColumnDef="email">
+      
+                    <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+      
+                    <mat-cell class="description-cell" *matCellDef="let row">
+                      {{row.email}}
+                    </mat-cell>
+      
+                  </ng-container>
+      
+                  <ng-container matColumnDef="mobile">
+      
+                    <mat-header-cell *matHeaderCellDef> Mobile </mat-header-cell>
+      
+                    <mat-cell class="description-cell" *matCellDef="let row">
+                      {{row.mobile}}
+                    </mat-cell>
+      
+                  </ng-container>
+      
+                  <ng-container matColumnDef="channel">
+      
+                    <mat-header-cell *matHeaderCellDef> DID</mat-header-cell>
+      
+                    <mat-cell class="description-cell" *matCellDef="let row">
+                      {{row.channels}}
+                    </mat-cell>
+      
+                  </ng-container>
+      
+                  <ng-container matColumnDef="users">
+      
+                    <mat-header-cell *matHeaderCellDef> Users </mat-header-cell>
+      
+                    <mat-cell class="description-cell" *matCellDef="let row">
+                      {{row.user_limit}}
+                    </mat-cell>
+      
+                  </ng-container>
+      
+                  <!-- <ng-container matColumnDef="usedduration">
+      
+                    <mat-header-cell *matHeaderCellDef> Usages </mat-header-cell>
+      
+                    <mat-cell class="description-cell" *matCellDef="let row">
+                      {{row.duration}}
+                    </mat-cell>
+      
+                  </ng-container>-->
+
+                  <ng-container matColumnDef="packagename">
+      
+                      <mat-header-cell *matHeaderCellDef> Package Name </mat-header-cell>
+        
+                      <mat-cell class="description-cell" *matCellDef="let row">
+                        {{row.package_name}}
+                      </mat-cell>
+        
+                  </ng-container>
+      
+                  <ng-container matColumnDef="expirydate">
+      
+                    <mat-header-cell *matHeaderCellDef> Expiry Date </mat-header-cell>
+      
+                    <mat-cell class="description-cell" *matCellDef="let row">
+                      {{row.expiry_date | date:'dd-MM-yyyy HH:mm:ss'}}
+                    </mat-cell>
+      
+                  </ng-container>
+                  <ng-container matColumnDef="SalesManager">
+      
+                    <mat-header-cell *matHeaderCellDef> Account Manager </mat-header-cell>
+      
+                    <mat-cell class="description-cell" *matCellDef="let row">
+                      {{row.SalesManager}}
+                    </mat-cell>
+      
+                </ng-container>
+      
+                  <mat-header-row *matHeaderRowDef="expireColumns"></mat-header-row>
+      
+                  <mat-row *matRowDef="let row; columns: expireColumns"></mat-row>
+      
+              </table>
+            </div>
+            <mat-paginator #agentpaginator [length]="expireLength" [pageSize]="50"
+                    [pageSizeOptions]="[50,100,500]"></mat-paginator>
+          </div>
+        </mat-tab>
+
+      </mat-tab-group>
+    </div>
+
+  </div>
+  <!-- /.container-fluid -->
+</div>

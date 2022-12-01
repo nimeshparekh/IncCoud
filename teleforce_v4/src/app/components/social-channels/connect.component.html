@@ -1,0 +1,174 @@
+<div mat-dialog-head class="dilog-head d-flex justify-content-between">
+    <h5 class="dialog-head-h">Connect</h5>
+    <div class="d-inline-block">
+        <a class="close" (click)="onNoClick()"><i class="fi-rr-cross-small"></i></a>
+    </div>
+</div>
+
+<div mat-dialog-content>
+    <div class="row">
+        <div class="col-sm-12">
+            <p>Add a page</p>
+        </div>
+        <!-- <div class="col-sm-12 p-0">
+            <div class="search-result-item-header">
+                <img src="assets/images/icon/3.png">
+                <img class="search-result-chnlinfo" src="assets/images/icon/3.png">
+                <p>Garuda A<br>
+                    <span>Switch Account</span>
+                </p>
+            </div>
+        </div> -->
+    </div>
+
+    <div class="c-page" *ngIf="media=='facebook'">
+        <div class="row" *ngFor="let lan of pagelist_verify; let i = index">
+            <div class="col-sm-8">
+                <div class="search-result-item-header">
+                    <img [src]="pagelist_image[i]">
+                    <img class="search-result-chnlinfo" src="assets/images/icon/3.png">
+                    <p>{{lan.name}}<br>
+                    </p>
+                </div>
+            </div>
+            <div class="col-sm-4 text-right" (click)="selectfb(i)" *ngIf="lan.already!=true">
+                <button  mat-flat-button color="accent" class="mt-3"><span class="btn-icon">
+                    <i class="fi-rr-add"></i></span> 
+                    Add
+                </button>
+            </div>
+            <div class="col-sm-4 text-right" *ngIf="lan.already==true">
+                <button  mat-flat-button color="accent" (click)="DeleteConfirm(lan)" class="mt-3">
+                    <mat-icon>check</mat-icon>
+                </button>&nbsp;
+                <button  mat-flat-button color="accent" (click)="assign(lan)" class="mt-3">
+                    <mat-icon>support_agent</mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="c-page" *ngIf="media=='instagram'">
+        <div class="row" *ngFor="let lan of pagelist_verify; let i = index">
+            <div class="col-sm-8">
+                <div class="search-result-item-header">
+                    <img [src]="pagelist_image[i]">
+                    <img class="search-result-chnlinfo" src="assets/images/icon/2.png">
+                    <p>{{lan.name}}<br>
+                    </p>
+                </div>
+            </div>
+            <div class="col-sm-4 text-right" (click)="selectfb(i)" *ngIf="lan.already!=true">
+                <button  mat-flat-button color="accent" class="mt-3"><span class="btn-icon">
+                    <i class="fi-rr-add"></i></span> 
+                    Add
+                </button>
+            </div>
+            <div class="col-sm-4 text-right" *ngIf="lan.already==true">
+                <button  mat-flat-button color="accent" (click)="DeleteConfirm(lan)" class="mt-3">
+                    <mat-icon>check</mat-icon>
+                </button>&nbsp;
+                <button  mat-flat-button color="accent" (click)="assign(lan)" class="mt-3">
+                    <mat-icon>support_agent</mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="c-page" *ngIf="media=='linkedin'">
+        <div class="row" *ngFor="let lan of pagelist_verify; let i = index">
+            <div class="col-sm-8">
+                <div class="search-result-item-header">
+                    <img *ngIf="pagelist_image[i]" [src]="pagelist_image[i]">
+                    <img *ngIf="!pagelist_image[i]" src="assets/images/icon/1.png">
+                    <img class="search-result-chnlinfo" src="assets/images/icon/1.png">
+                    <p>{{lan['organization~'].localizedName}}   ({{lan.organization}})<br>
+                    </p>
+                </div>
+            </div>
+            <div class="col-sm-4 text-right" (click)="selectfb(i)" *ngIf="lan.already!=true">
+                <button  mat-flat-button color="accent" class="mt-3"><span class="btn-icon">
+                    <i class="fi-rr-add"></i></span> 
+                    Add
+                </button>
+            </div>
+            <div class="col-sm-4 text-right" (click)="DeleteConfirm(lan)" *ngIf="lan.already==true">
+                <button  mat-flat-button color="accent" class="mt-3">
+                    <mat-icon>check</mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="c-page" *ngIf="media=='youtube'">
+        <div class="row" *ngFor="let lan of pagelist_verify; let i = index">
+            <div class="col-sm-8">
+                <div class="search-result-item-header">
+                    <img [src]="pagelist_image[i]">
+                    <img class="search-result-chnlinfo" src="assets/images/icon/5.png">
+                    <p>{{lan.snippet.title}} ({{lan.id}})<br>
+                    </p>
+                </div>
+            </div>
+            <div class="col-sm-4 text-right" (click)="selectfb(i)" *ngIf="lan.already!=true">
+                <button  mat-flat-button color="accent" class="mt-3"><span class="btn-icon">
+                    <i class="fi-rr-add"></i></span> 
+                    Add
+                </button>
+            </div>
+            <div class="col-sm-4 text-right" (click)="DeleteConfirm(lan)" *ngIf="lan.already==true">
+                <button  mat-flat-button color="accent" class="mt-3">
+                    <mat-icon>check</mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="c-page" *ngIf="media=='twitter'">
+        <div class="row" *ngFor="let lan of pagelist_verify; let i = index">
+            <div class="col-sm-8">
+                <div class="search-result-item-header">
+                    <img src="assets/images/icon/4.png">
+                    <img class="search-result-chnlinfo" src="assets/images/icon/4.png">
+                    <p>{{lan.name}} ({{lan.id}})<br>
+                    </p>
+                </div>
+            </div>
+            <div class="col-sm-4 text-right" (click)="selectfb(i)" *ngIf="lan.already!=true">
+                <button  mat-flat-button color="accent" class="mt-3"><span class="btn-icon">
+                    <i class="fi-rr-add"></i></span> 
+                    Add
+                </button>
+            </div>
+            <div class="col-sm-4 text-right" (click)="DeleteConfirm(lan)" *ngIf="lan.already==true">
+                <button  mat-flat-button color="accent" class="mt-3">
+                    <mat-icon>check</mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="c-page" *ngIf="media=='google'">
+        <div class="row" *ngFor="let lan of pagelist_verify; let i = index">
+            <div class="col-sm-8">
+                <div class="search-result-item-header">
+                    <img src="assets/images/icon/social/google.png">
+                    <img class="search-result-chnlinfo" src="assets/images/icon/google.png">
+                    <p>{{lan.locationName}}<br>
+                    </p>
+                </div>
+            </div>
+            <div class="col-sm-4 text-right" (click)="selectfb(i)" *ngIf="lan.already!=true">
+                <button  mat-flat-button color="accent" class="mt-3"><span class="btn-icon">
+                    <i class="fi-rr-add"></i></span> 
+                    Add
+                </button>
+            </div>
+            <div class="col-sm-4 text-right" (click)="DeleteConfirm(lan)" *ngIf="lan.already==true">
+                <button  mat-flat-button color="accent" class="mt-3">
+                    <mat-icon>check</mat-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <div class="btn-sec" mat-dialog-actions>
+    <button mat-raised-button type="submit" color="primary" class="Update-btn">Submit</button>
+</div> -->
+
+

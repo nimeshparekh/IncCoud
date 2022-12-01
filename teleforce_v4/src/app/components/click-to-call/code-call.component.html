@@ -1,0 +1,19 @@
+<div mat-dialog-head class="dilog-head d-flex justify-content-between">
+  <h3 class="primary"> Copy Code </h3>
+  <div class="d-inline-block">
+      <a class="close" (click)="cancelDialog()"><i class="fi-rr-cross-small"></i></a>
+  </div>
+</div>
+<div mat-dialog-content>
+  <p class="mt-2">Copy below code in your website head section</p>
+  <pre>
+    <code>
+      &lt;script src="https://app.cloudX.in/assets/js/tfcall.js"&gt; &lt;/script&gt;
+      &lt;script&gt; tstag('{{clickid}}'); &lt;/script&gt;
+    </code>
+  </pre>
+</div>
+<!-- <div class="btn-sec">
+  <br>
+  <button mat-raised-button color="accent"  type="button" class="btn btn-default" (click)="cancelDialog()">Cancel</button>
+</div> -->

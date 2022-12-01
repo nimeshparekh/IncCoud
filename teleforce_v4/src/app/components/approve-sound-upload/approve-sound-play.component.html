@@ -1,0 +1,12 @@
+<div mat-dialog-head class="dilog-head d-flex justify-content-between">
+  <h3 class="primary">Play Sound</h3>
+  <div class="d-inline-block">
+    <a class="close" (click)="onNoClick()"><i class="fi-rr-cross-small"></i></a>
+  </div>
+</div>
+<div mat-dialog-content>
+  <audio controls class="mt-2">
+    <source src="api/sounds/{{filename}}" >
+  </audio>
+</div>
+

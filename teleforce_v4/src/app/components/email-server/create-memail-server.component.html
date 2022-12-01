@@ -1,0 +1,157 @@
+<div>
+  <div class="add-title">
+    <h2 class="primary" *ngIf="addmode">Add Email Server</h2>
+    <h2 class="primary" *ngIf="editmode">Edit Email Server</h2>
+    <h2 class="primary" *ngIf="deletemode">Delete Email Server</h2>
+  </div>
+  <div *ngIf="addmode || editmode">
+    <form [formGroup]="addForm" (ngSubmit)="submit()">
+
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="text-inside">
+            <mat-label>SMTP Setting</mat-label>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field class="example-full-width">
+            <div *ngIf="addmode || editmode">
+              <input matInput placeholder="SMTP Server Name" formControlName="server_name" required>
+            </div>
+            <mat-error *ngIf="addForm.controls.server_name.hasError('required')">
+              Please Enter SMTP Server Name
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field class="example-full-width">
+            <div *ngIf="addmode || editmode">
+              <input matInput placeholder="SMTP Server" formControlName="smtp_server" required>
+            </div>
+            <mat-error *ngIf="addForm.controls.smtp_server.hasError('required')">
+              Please Enter SMTP Server
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field class="example-full-width">
+            <div *ngIf="addmode || editmode">
+              <input matInput placeholder="SMTP Port" formControlName="smtp_port" required>
+            </div>
+            <mat-error *ngIf="addForm.controls.smtp_server.hasError('required')">
+              Please Enter SMTP Server
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field class="example-full-width">
+            <div *ngIf="addmode || editmode">
+              <input matInput placeholder="SMTP Username" formControlName="smtp_username" required>
+            </div>
+            <mat-error *ngIf="addForm.controls.smtp_server.hasError('required')">
+              Please Enter Username
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field class="example-full-width">
+            <div *ngIf="addmode || editmode">
+              <input type = "password" matInput placeholder="SMTP Password" formControlName="smtp_password" required>
+            </div>
+            <mat-error *ngIf="addForm.controls.smtp_server.hasError('required')">
+              Please Enter SMTP Password
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <!-- <div class="col-sm-6">
+          <mat-form-field class="example-full-width">
+            <div *ngIf="addmode || editmode">
+              <input matInput placeholder="Perday limit" formControlName="perday_limit" required>
+            </div>
+            <mat-error *ngIf="addForm.controls.smtp_server.hasError('required')">
+              Please Enter Perday limit
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field class="example-full-width">
+            <div *ngIf="addmode || editmode">
+              <input matInput placeholder="Attachment size" formControlName="attachment_size" required>
+            </div>
+            <mat-error *ngIf="addForm.controls.smtp_server.hasError('required')">
+              Please Enter Attachment size
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row"><br>
+        <div class="col-sm-12">
+          <div class="text-inside">
+            <mat-label>IMAP Setting</mat-label>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field class="example-full-width">
+            <div *ngIf="addmode || editmode">
+              <input matInput placeholder="IMAP Server" formControlName="imap_server" required>
+            </div>
+            <mat-error *ngIf="addForm.controls.imap_server.hasError('required')">
+              Please Enter IMAP Server
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field class="example-full-width">
+            <div *ngIf="addmode || editmode">
+              <input matInput placeholder="IMAP Port" formControlName="imap_port" required>
+            </div>
+            <mat-error *ngIf="addForm.controls.imap_port.hasError('required')">
+              Please Enter IMAP Server
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field class="example-full-width">
+            <div *ngIf="addmode || editmode">
+              <input matInput placeholder="IMAP Username" formControlName="imap_username" required>
+            </div>
+            <mat-error *ngIf="addForm.controls.imap_server.hasError('required')">
+              Please Enter IMAP Username
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field class="example-full-width">
+            <div *ngIf="addmode || editmode">
+              <input matInput placeholder="IMAP Password" formControlName="imap_password" required>
+            </div>
+            <mat-error *ngIf="addForm.controls.imap_server.hasError('required')">
+              Please Enter IMAP Password
+            </mat-error>
+          </mat-form-field>
+        </div>
+        
+        
+      </div> -->
+</div>
+      <div class="btn-sec mt-3">
+        <button mat-raised-button type="submit" color="primary" class="Update-btn" [disabled]="isDisabled">Save</button>
+        &nbsp;
+        <button mat-raised-button type="button" class="Discard-btn" (click)="openDialog()">Cancel</button>
+      </div>
+
+    </form>
+  </div>
+
+  <div *ngIf="deletemode">
+    <h4>
+      Are you sure to delete this ?
+    </h4>
+    <div class="btn-sec">
+      <button mat-raised-button type="button" color="primary" class="Update-btn"
+        (click)="deleteData(serverid)">Delete</button>
+      &nbsp;
+      <button mat-raised-button type="button" class="Discard-btn" (click)="openDialog()">Cancel</button>
+    </div>
+  </div>
+</div>

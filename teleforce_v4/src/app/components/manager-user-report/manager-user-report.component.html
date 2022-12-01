@@ -1,0 +1,64 @@
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Manager User Report</h1>
+    <p class="mb-4"></p>
+
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4 mt-3">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table width="100%">
+                    <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+                    <div fxLayout fxLayoutAlign="center center" class="mt-2">
+                        <button mat-raised-button color="primary"
+                            (click)="exporter.exportTable('csv', {fileName:'Manager-User-Report', sheet: 'sheet_name'})">CSV</button>
+                    </div><br>
+                    <mat-table class="lessons-table mat-elevation-z8" [dataSource]="dataSource" matTableExporter #exporter="matTableExporter">
+                        <ng-container matColumnDef="id">
+                            <mat-header-cell *matHeaderCellDef>Sr. No</mat-header-cell>
+                            <mat-cell class="description-cell" *matCellDef="let row;let i = index;" data-label="id">
+                                {{i+1+(paginator.pageIndex * paginator.pageSize)}}</mat-cell>
+                        </ng-container>                       
+                        <ng-container matColumnDef="client">
+                            <mat-header-cell *matHeaderCellDef> Manager Name </mat-header-cell>
+                            <mat-cell class="description-cell" *matCellDef="let row;let i = index;">
+                                {{row.account_name}}
+                            </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="userlimit">
+                            <mat-header-cell *matHeaderCellDef> User Limit </mat-header-cell>
+                            <mat-cell class="description-cell" *matCellDef="let row;let i = index;" maxlength="10">
+                                {{row.user_limit}}
+                            </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="currentuser">
+                            <mat-header-cell *matHeaderCellDef> Current User </mat-header-cell>
+                            <mat-cell class="description-cell" *matCellDef="let row"> 
+                                <button mat-icon-button *ngIf="row.currentuser==0" aria-label="Example icon button with a home icon"  >
+                                    {{row.currentuser}}
+                                    </button>                               
+                                <button mat-icon-button *ngIf="row.currentuser!=0" color="primary" aria-label="Example icon button with a home icon" title="Show Agent List" (click)="showAgents(row.account_id)">
+                                {{row.currentuser}}
+                                </button>
+                            </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="expirydate">
+                            <mat-header-cell *matHeaderCellDef> Expiry Date </mat-header-cell>
+                            <mat-cell class="description-cell" *matCellDef="let row">
+                                {{row.expiry_date | date:'dd-MM-yyyy'}}
+                            </mat-cell>
+                        </ng-container>
+                        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+                    </mat-table>
+                    <mat-paginator #paginator [length]="Length" [pageSize]="50" [pageSizeOptions]="[50,100,500]">
+                    </mat-paginator>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.container-fluid -->

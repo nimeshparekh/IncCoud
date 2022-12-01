@@ -1,0 +1,42 @@
+
+table 
+{
+    min-width: 1500px;
+}
+.action
+{
+    display: flow-root !important;
+}
+button:focus
+{
+   outline: none;
+}
+.Channel
+{
+   color: #fff;
+   font-size: 12px;
+   padding: 6px 14px 6px 14px;
+   background: #38bb42;
+   border-radius: 2px;
+   margin-left: 11px;
+   font-weight: 500;
+   text-decoration: none;
+   margin-top: 10px;
+}
+.Channel:hover
+{
+   background: #137a1b; 
+}
+.material-icons
+{
+   cursor: pointer;
+}
+.mat-icon-button {
+   padding: 0;
+   min-width: 0;
+   width: 30px;
+   height: 30px;
+   flex-shrink: 0;
+   line-height: 30px;
+   border-radius: 50%;
+}

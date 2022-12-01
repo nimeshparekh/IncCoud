@@ -1,0 +1,54 @@
+<div class="wlcome-dilog" mat-dialog-content>
+          <form [formGroup]="brandform">
+              <div class="row mt-3">
+                  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                      <div class="form-card">
+                          <div class="post-text">
+                              <div class="head">
+                                  <h2>Give Your Account Access</h2>
+                              </div>
+                              <span *ngIf="cmsg!=''" style="color:red">{{cmsg}}</span>                                    
+                              <div class="row" *ngIf="cmsg==''">
+                                  <div class="col-xl-3 col-lg-2 col-md-6 col-sm-6 col-12">
+                                      <div class="account-access-box" (click)="fblogin()">
+                                          <img src="assets/images/icon/squre-facebook.png" class="hvr-bob" *ngIf="fbactive">
+                                          <img src="assets/images/icon/squre-facebooktik.png" class="hvr-bob" *ngIf="fbactivetick">
+                                      </div>
+                                  </div>
+                                  <div class="col-xl-3 col-lg-2 col-md-6 col-sm-6 col-12">
+                                      <div class="account-access-box" (click)="twitterlogin()">
+                                          <img src="assets/images/icon/squre-twitter.png" class="hvr-bob">
+                                      </div>
+                                  </div>
+                                  <div class="col-xl-3 col-lg-2 col-md-6 col-sm-6 col-12">
+                                      <div class="account-access-box" (click)="linkedinlogin()">
+                                          <img src="assets/images/icon/squre-linkedin.png" class="hvr-bob" *ngIf="linkdinactive">
+                                          <img src="assets/images/icon/squre-linkedin1.png" class="hvr-bob" *ngIf="linkdinactivetick">
+                                      </div>
+                                  </div>
+                                  <div class="col-xl-3 col-lg-2 col-md-6 col-sm-6 col-12">
+                                      <div class="account-access-box" (click)="instagramlogin()">
+                                          <img src="assets/images/icon/squre-instagram.png" class="hvr-bob" *ngIf="instadinactive">
+                                          <img src="assets/images/icon/squre-instagram1.png" class="hvr-bob" *ngIf="instactivetick">
+                                      </div>
+                                  </div>
+                                  <!-- <div class="col-xl-2 col-lg-2 col-md-6 col-sm-6 col-12">
+                                      <div class="account-access-box" (click)="youtubelogin()">
+                                          <img src="assets/images/icon/social/youtube.png" class="hvr-bob">
+                                      </div>
+                                  </div>
+                                  <div class="col-xl-2 col-lg-2 col-md-6 col-sm-6 col-12">
+                                      <div class="account-access-box" (click)="goooglelogin()" id="googleBtn">
+                                          <img src="assets/images/icon/social/google.png" class="hvr-bob">
+                                      </div>
+                                  </div> -->
+                                 
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </form>
+   
+</div>
+<script src="https://apis.google.com/js/platform.js"></script>

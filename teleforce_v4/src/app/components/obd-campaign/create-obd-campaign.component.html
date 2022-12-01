@@ -1,0 +1,184 @@
+<div mat-dialog-head class="dilog-head d-flex justify-content-between">
+  <h3 class="primary">Create Campaign</h3>
+  <div class="d-inline-block">
+    <a class="close" (click)="openDialog()"><i class="fi-rr-cross-small"></i></a>
+  </div>
+
+</div>
+<div mat-dialog-content>
+  <!-- <form [formGroup]="addConForm" (change)="formChanged()"> -->
+  <form [formGroup]="addConForm" (ngSubmit)="campaignsubmit()">
+    <div class="row">
+      <div class="col-xl-6 col-md-6 col-sm-12 col-12 mt-2">
+        <mat-form-field class="example-full-width">
+          <mat-label>Choose a date</mat-label>
+          <input matInput formControlName="startdate" [matDatepicker]="picker">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="addConForm.controls.startdate.hasError('required')">
+            Please select date
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-xl-6 col-md-6 col-sm-12 col-12 mt-2">
+        <mat-form-field class="example-full-width">
+          <mat-label>Campaign Name</mat-label>
+          <input matInput formControlName="campaignname" placeholder="Campaign Name" value="">
+          <mat-error *ngIf="addConForm.controls.campaignname.hasError('required')">
+            Please enter name
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      
+      <div class="col-xl-6 col-md-6 col-sm-12 col-12 mt-2">
+        <mat-form-field class="example-full-width">
+          <mat-label>IVR List</mat-label>
+          <mat-select formControlName="ivr">
+            <mat-option *ngFor="let topping of ivr" [value]="topping.BuilderID">{{topping.IvrName}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      
+      <div class="col-xl-6 col-md-6 col-sm-12 col-12 mt-2">
+        <mat-form-field class="example-full-width">
+          <mat-label>Segements</mat-label>
+          <mat-select multiple formControlName="segments">
+            <mat-option *ngFor="let topping of csegments" [value]="topping.cont_id">{{topping.name}}
+              ({{topping.totalcontact}})</mat-option>
+          </mat-select>
+          <mat-error *ngIf="addConForm.controls.segments.hasError('required')">
+            Please select segment
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col-xl-6 col-md-6 col-sm-12 col-12 mt-2">
+        <mat-form-field class="example-full-width">
+          <mat-label>Assign DID</mat-label>
+          <mat-select  multiple formControlName="did" required>
+            <mat-option *ngFor="let topping of did" [value]="topping.did">{{topping.did_number}}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="addConForm.controls.did.hasError('required')">
+            Please select Did
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col-xl-6 col-md-6 col-sm-12 col-12 mt-2">
+        <mat-form-field class="example-full-width">
+          <mat-label>Retry Unanswered Call?</mat-label>
+          <mat-select formControlName="retryunansweredcall" (change)="changeretry($event.value)">
+            <mat-option value="no">No</mat-option>
+            <mat-option value="yes">Yes</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row"  *ngIf="retryunanswer" >
+      <div class="col-xl-6 col-md-6 col-sm-12 col-12 mt-2">
+        <mat-form-field class="example-full-width">
+          <mat-label>Status</mat-label>
+          <mat-select formControlName="retrystatus1">
+            <mat-option value="NOANSWER">NOANSWER</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-xl-6 col-md-6 col-sm-12 col-12 mt-2">
+        <mat-form-field class="example-full-width">
+          <mat-label>Time Interval</mat-label>
+          <mat-select formControlName="retrytime1">
+            <mat-option value="1">1 Hour</mat-option>
+            <mat-option value="2">2 Hour</mat-option>
+            <mat-option value="3">3 Hour</mat-option>
+            <mat-option value="4">4 Hour</mat-option>
+            <mat-option value="5">5 Hour</mat-option>
+            <mat-option value="6">6 Hour</mat-option>
+            <mat-option value="7">7 Hour</mat-option>
+            <mat-option value="8">8 Hour</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-xl-6 col-md-6 col-sm-12 col-12 mt-2">
+        <mat-form-field class="example-full-width">
+          <mat-label>Status</mat-label>
+          <mat-select formControlName="retrystatus2">
+            <mat-option value="BUSY">BUSY</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-xl-6 col-md-6 col-sm-12 col-12 mt-2">
+        <mat-form-field class="example-full-width">
+          <mat-label>Time Interval</mat-label>
+          <mat-select formControlName="retrytime2">
+            <mat-option value="1">1 Hour</mat-option>
+            <mat-option value="2">2 Hour</mat-option>
+            <mat-option value="3">3 Hour</mat-option>
+            <mat-option value="4">4 Hour</mat-option>
+            <mat-option value="5">5 Hour</mat-option>
+            <mat-option value="6">6 Hour</mat-option>
+            <mat-option value="7">7 Hour</mat-option>
+            <mat-option value="8">8 Hour</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-xl-6 col-md-6 col-sm-12 col-12 mt-2">
+        <mat-form-field class="example-full-width">
+          <mat-label>Status</mat-label>
+          <mat-select formControlName="retrystatus3">
+            <mat-option value="TEMPORARY_FAILUR">TEMPORARY_FAILUR</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-xl-6 col-md-6 col-sm-12 col-12 mt-2">
+        <mat-form-field class="example-full-width">
+          <mat-label>Time Interval</mat-label>
+          <mat-select formControlName="retrytime3">
+            <mat-option value="1">1 Hour</mat-option>
+            <mat-option value="2">2 Hour</mat-option>
+            <mat-option value="3">3 Hour</mat-option>
+            <mat-option value="4">4 Hour</mat-option>
+            <mat-option value="5">5 Hour</mat-option>
+            <mat-option value="6">6 Hour</mat-option>
+            <mat-option value="7">7 Hour</mat-option>
+            <mat-option value="8">8 Hour</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xl-6 col-md-6 col-sm-12 col-12 mt-2">
+        <mat-radio-group formControlName="smscallanswered" (change)="showSMSTemplate($event.value)">
+          <div style="color:grey;">SMS Call Answered</div>
+          <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="0">No
+          </mat-radio-button>
+          <mat-radio-button color="primary" style="padding:4px 0px 0px 24px;" [value]="1">Yes
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
+      <div class="col-xl-6 col-md-6 col-sm-12 col-12 mt-2" *ngIf="smstemplatemode">
+        <mat-form-field appearance="outline">
+          <mat-label>Select Template</mat-label>
+          <mat-select formControlName="smstemplateid">
+            <mat-option [value]="">None</mat-option>
+            <mat-option *ngFor="let sms of smslist" [value]="sms.sms_id">{{sms.sms_title}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="btn-sec">
+      <button mat-raised-button type="submit" color="primary" class="Update-btn">Save</button>&nbsp;
+      <button mat-raised-button type="button" class="Discard-btn" (click)="openDialog()">Cancel</button>
+    </div>
+  </form>
+</div>
+<div *ngIf="deletemode">
+  <h3 style="margin-top: 10px; font-weight: 500;">
+    Are you sure to delete <b>{{delagentname}}</b>?
+  </h3>
+  <div class="btn-sec">
+    <button mat-raised-button type="button" color="primary" class="Update-btn">Delete</button>
+    &nbsp;
+    <button mat-raised-button type="button" class="Discard-btn" (click)="openDialog()">Cancel</button>
+  </div>
+</div>

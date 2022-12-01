@@ -1,0 +1,53 @@
+<div mat-dialog-head class="dilog-head d-flex justify-content-between">
+    <h3 class="primary">Transfer Call</h3>
+    <div class="d-inline-block">
+        <a class="close" (click)="closeDialog()"><i class="fi-rr-cross-small"></i></a>
+    </div>
+</div>
+<div mat-dialog-content class="call-queue">
+    <br>
+    <table class="table table-bordered">
+        <tr>
+            <td>Conference with Manager</td>
+            <td>
+                <a href="javascript:void(0)">
+                    <span class="material-icons" (click)="conferencecall(cdrid)" title="Barge">
+                        call_merge
+                    </span>
+                </a>
+            </td>
+        </tr>
+    </table>
+    <table class="table table-bordered">
+        <tr>
+            <th>Agents</th>
+            <th>Transfer Extension (for transfer dial extension after #)</th>
+        </tr>
+        <tr *ngFor="let agent of allagentlist">
+            <td>{{agent.account_name}}</td>
+            <td>
+                {{agent.account_id}}
+                
+                <button  mat-icon-button color="info" title="Call Transfer" *ngIf="isvoipenable" >
+                <mat-icon (click)="transferdtmf(agent.account_id)" >logout</mat-icon>
+                </button>
+            </td>
+        </tr>
+    </table>
+    <table class="table table-bordered">
+        <tr>
+            <th>Groups</th>
+            <th>Transfer Extension (for transfer dial extension after #)</th>
+        </tr>
+        <tr *ngFor="let group of groupArr">
+            <td>{{group.groupname}}</td>
+            <td>
+                {{group.transferext}}
+                <button  mat-icon-button color="info" title="Call Transfer" *ngIf="isvoipenable" >
+                <mat-icon (click)="transferdtmf(group.transferext)" >logout</mat-icon>
+                </button>
+            </td>
+        </tr>
+    </table>
+</div>
+   

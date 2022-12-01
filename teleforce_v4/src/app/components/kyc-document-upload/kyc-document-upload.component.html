@@ -1,0 +1,158 @@
+<div class="container-fluid">
+
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">KYC Document Upload</h1>
+    <p class="mb-4"></p>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+
+        <div class="card-body">
+
+            <div class="example-table-container">
+                <div fxLayout fxLayoutAlign="center center">
+                    <div class="col-md-12">
+                        <mat-progress-bar mode="indeterminate" *ngIf="progressbar"></mat-progress-bar>
+                    </div>
+                    
+                    <div>
+                        <form [formGroup]="kycform" (ngSubmit)="submit()">
+                            <div class="row" >
+                                <div class="col-md-6">
+                                    KYC Document Status : &nbsp;
+                                    <span style="color:blue">{{kycstatus=='0'?'Pending':''}}</span>
+                                    <span *ngIf="kycstatus!=''&& kycstatus=='1'"
+                                        style="color:green">{{kycstatus=='1'?'Approve':''}}</span>
+    
+                                    <span *ngIf="kycstatus!=''&& kycstatus=='2'"
+                                        style="color:red">{{kycstatus=='2'?'Reject':''}}</span>
+                                </div>
+                                
+                            </div><br>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-label>Registration Certificate&nbsp;&nbsp;</mat-label><br>
+                                    <input type="file" name="registration_certi" formControlName="registration_certi"
+                                        id="registration_certi" accept="image/*,application/pdf"  />
+                                    <br>
+                                    <mat-error *ngIf="requiredRegistration()">
+                                        Please select Registration Certificate
+                                    </mat-error>
+                                    <br>
+                                    <div *ngIf="!registrationpdf">
+                                        <img width="100px" height="100px" src="api/kyc/{{registration_certiimg}}"
+                                            *ngIf="registration_certiimg!=''">
+                                        <img width="100px" height="100px" src="assets/img/no-image.jpg"
+                                            *ngIf="registration_certiimg==''">
+                                    </div>
+                                    <div *ngIf="registrationpdf">
+                                         <a href="api/kyc/{{registration_certiimg}}" target="_blank">
+                                            <img width="100px" height="100px" src="assets/img/pdf_icon.png" >
+                                         </a>
+                                    </div>
+                                    
+                                </div>
+
+                                <div class="col-md-6">
+                                    <mat-label>GST Certificate&nbsp;&nbsp;</mat-label><br>
+                                    <input type="file" name="gst_certificate" formControlName="gst_certificate"
+                                        id="gst_certificate" (change)="readFile($event)"
+                                        accept="image/*,application/pdf"  />
+                                    <br>
+                                    <mat-error *ngIf="requiredGST()">
+                                        Please select GST Certificate
+                                    </mat-error>
+                                    <br>
+                                    <div *ngIf="!gstpdf">
+                                        <img width="100px" height="100px" src="api/kyc/{{gst_certificateimg}}"
+                                            *ngIf="gst_certificateimg!=''">
+                                        <img width="100px" height="100px" src="assets/img/no-image.jpg"
+                                            *ngIf="gst_certificateimg==''">
+                                    </div>
+                                    <div *ngIf="gstpdf">
+                                        <a href="api/kyc/{{gst_certificateimg}}" target="_blank">
+                                           <img width="100px" height="100px" src="assets/img/pdf_icon.png" >
+                                        </a>
+                                   </div>
+                                </div>
+                                <div class="col-md-6"><br>
+                                    <mat-label>Agreement&nbsp;&nbsp;</mat-label><br>
+                                    <input type="file" name="agreement" formControlName="agreement" id="agreement"
+                                        (change)="readFile($event)" accept="image/*,application/pdf" />
+                                    <br>
+
+                                    <div *ngIf="!agreementpdf">
+                                        <img width="100px" height="100px" src="api/kyc/{{agreementimg}}"
+                                            *ngIf="agreementimg!=''">
+                                        <img width="100px" height="100px" src="assets/img/no-image.jpg"
+                                            *ngIf="agreementimg==''">
+                                    </div>
+                                    <div *ngIf="agreementpdf">
+                                        <a href="api/kyc/{{agreementimg}}" target="_blank">
+                                           <img width="100px" height="100px" src="assets/img/pdf_icon.png" >
+                                        </a>
+                                   </div>
+                                </div>
+
+                                <div class="col-md-6"><br>
+                                    <mat-label>Company PAN Card&nbsp;&nbsp;</mat-label><br>
+                                    <input type="file" name="pan_card" formControlName="pan_card" id="pan_card"
+                                        (change)="readFile($event)" accept="image/*,application/pdf"  />
+                                    <br>
+                                    <mat-error *ngIf="requiredPanCard()">
+                                        Please select Company PAN Card
+                                    </mat-error><br>
+                                    <div *ngIf="!pancardpdf">
+                                        <img width="100px" height="100px" src="api/kyc/{{pan_cardimg}}"
+                                            *ngIf="pan_cardimg!=''">
+                                        <img width="100px" height="100px" src="assets/img/no-image.jpg"
+                                            *ngIf="pan_cardimg==''">
+                                    </div>
+                                    <div *ngIf="pancardpdf">
+                                        <a href="api/kyc/{{pan_cardimg}}" target="_blank">
+                                           <img width="100px" height="100px" src="assets/img/pdf_icon.png" >
+                                        </a>
+                                   </div>
+                                </div>
+                                <br>
+                                <div class="col-md-6"><br>
+                                    <mat-label>Authorized Person Proof&nbsp;&nbsp;</mat-label><br>
+                                    <input type="file" name="authorized_person_proof"
+                                        formControlName="authorized_person_proof" id="authorized_person_proof"
+                                        (change)="readFile($event)" accept="image/*,application/pdf"  />
+                                    <br>
+                                    <mat-error *ngIf="requiredPersonProof()">
+                                        Please select Authorized Person Proof
+                                    </mat-error><br>
+                                    <div *ngIf="!personproofpdf">
+                                        <img width="100px" height="100px" src="api/kyc/{{authorized_person_proofimg}}"
+                                            *ngIf="authorized_person_proofimg!=''">
+                                        <img width="100px" height="100px" src="assets/img/no-image.jpg"
+                                            *ngIf="authorized_person_proofimg==''">
+                                    </div>
+                                    <div *ngIf="personproofpdf">
+                                        <a href="api/kyc/{{authorized_person_proofimg}}" target="_blank">
+                                           <img width="100px" height="100px" src="assets/img/pdf_icon.png" >
+                                        </a>
+                                   </div>
+                                </div>
+                               
+                                <div class="col-md-12">
+                                    <br>
+                                    <button mat-raised-button type="submit" color="primary"
+                                        class="Update-btn ">Submit</button>
+                                    <br>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+</div>

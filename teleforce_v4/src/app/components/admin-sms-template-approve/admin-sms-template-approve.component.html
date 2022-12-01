@@ -1,0 +1,72 @@
+<div class="container-fluid">
+
+  <!-- Page Heading -->
+  <h1 class="h3 mb-2 text-gray-800">SMS Template Approval</h1>
+  <p class="mb-4"></p>
+
+  <!-- DataTales Example -->
+
+  <form [formGroup]="form" (ngSubmit)="approve()">
+
+    <mat-radio-group formControlName="approve_status">
+      <div style="color:grey;">Status</div>
+      <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="1">Approve
+      </mat-radio-button>
+      <mat-radio-button color="primary" style="padding:4px 0px 0px 24px;" [value]="2">Reject
+      </mat-radio-button>
+    </mat-radio-group>
+    <mat-error *ngIf="form.controls.approve_status.hasError('required')">
+      Please select status
+    </mat-error>
+
+
+    <mat-form-field appearance="outline">
+      <mat-label>Template Id</mat-label>
+      <input matInput placeholder="Template Id" formControlName="templateid" required>
+      <mat-error *ngIf="form.controls.templateid.hasError('required')">
+        Please enter Template Id
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Content Id</mat-label>
+      <input matInput placeholder="Template Id" formControlName="contentid" required>
+      <mat-error *ngIf="form.controls.contentid.hasError('required')">
+        Please enter Content Id
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Sender Id</mat-label>
+      <input matInput placeholder="Sender Id" formControlName="senderid" required>
+      <mat-error *ngIf="form.controls.senderid.hasError('required')">
+        Please enter Sender Id
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Template type</mat-label>
+      <mat-select formControlName="templatetype">        
+        <mat-option  value="otp">OTP</mat-option>
+        <mat-option  value="promotional">
+            Promotional</mat-option>
+        <mat-option  value="transactional">Transactional</mat-option>
+    </mat-select>  
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Entity Id</mat-label>
+      <input matInput placeholder="Entity Id" formControlName="entityid" >
+      <mat-error *ngIf="form.controls.entityid.hasError('required')">
+        Please enter Entity Id
+      </mat-error>
+    </mat-form-field> 
+    <mat-form-field appearance="outline">
+      <mat-label>Note</mat-label>
+      <textarea matInput placeholder="note" formControlName="note" id="note" name="note"></textarea>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary">Submit</button>
+    <button mat-button mat-dialog-close>Cancel</button>
+
+  </form>
+
+</div>

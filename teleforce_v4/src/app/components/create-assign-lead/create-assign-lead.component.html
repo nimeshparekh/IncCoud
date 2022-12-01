@@ -1,0 +1,61 @@
+<div>
+    <div class="add-title">
+        <h2 class="primary" >Assign Lead</h2>
+    </div>
+    <div >
+        <form [formGroup]="addForm" (ngSubmit)="submit()">
+            <mat-grid-list [cols]="2" rowHeight="85px">
+               
+                <mat-grid-tile>
+                    <div class="text-inside">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Camapign</mat-label>
+                            <mat-select   formControlName="campaignid">
+                              <mat-option *ngFor="let cam of campaigns" [value]="cam.camid">{{cam.cam_name}}</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="addForm.controls.campaignid.hasError('required')">
+                              Please select campaign
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <div class="text-inside">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Agent</mat-label>
+                            <mat-select   formControlName="agentid">
+                              <mat-option *ngFor="let agent of agents" [value]="agent.account_id">{{agent.account_name}}</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="addForm.controls.agentid.hasError('required')">
+                              Please select agent
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <div class="text-inside">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Segements</mat-label>
+                            <mat-select   formControlName="segmentid">
+                              <mat-option *ngFor="let topping of csegments" [value]="topping.cont_id">{{topping.name}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="addForm.controls.segmentid.hasError('required')">
+                              Please select segment
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </mat-grid-tile>
+            </mat-grid-list>
+            <div class="btn-sec">
+                <button mat-raised-button type="submit" color="primary" class="Update-btn">Save</button>
+                &nbsp;
+                <button mat-raised-button type="button" class="Discard-btn" (click)="openDialog()">Cancel</button>
+            </div>
+
+        </form>
+    </div>
+
+    
+    
+</div>

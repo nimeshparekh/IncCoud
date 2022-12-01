@@ -1,0 +1,935 @@
+
+> api@1.0.0 start /var/www/app_cloudX/server
+> node app.js
+
+Connected to port 3000
+Datbase connected succesfully.
+
+> api@1.0.0 start /var/www/app_cloudX/server
+> node app.js
+
+events.js:174
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use :::3000
+    at Server.setupListenHandle [as _listen2] (net.js:1280:14)
+    at listenInCluster (net.js:1328:12)
+    at Server.listen (net.js:1415:7)
+    at Function.listen (/var/www/app_cloudX/server/node_modules/express/lib/application.js:618:24)
+    at Object.<anonymous> (/var/www/app_cloudX/server/app.js:71:20)
+    at Module._compile (internal/modules/cjs/loader.js:778:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:789:10)
+    at Module.load (internal/modules/cjs/loader.js:653:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+    at Function.Module.runMain (internal/modules/cjs/loader.js:831:12)
+    at startup (internal/bootstrap/node.js:283:19)
+    at bootstrapNodeJSCore (internal/bootstrap/node.js:623:3)
+Emitted 'error' event at:
+    at emitErrorNT (net.js:1307:8)
+    at process._tickCallback (internal/process/next_tick.js:63:19)
+    at Function.Module.runMain (internal/modules/cjs/loader.js:834:11)
+    at startup (internal/bootstrap/node.js:283:19)
+    at bootstrapNodeJSCore (internal/bootstrap/node.js:623:3)
+npm ERR! code ELIFECYCLE
+npm ERR! errno 1
+npm ERR! api@1.0.0 start: `node app.js`
+npm ERR! Exit status 1
+npm ERR! 
+npm ERR! Failed at the api@1.0.0 start script.
+npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /root/.npm/_logs/2020-10-28T17_01_39_942Z-debug.log
+{ Error: ER_WRONG_FIELD_WITH_GROUP: Expression #1 of ORDER BY clause is not in GROUP BY clause and contains nonaggregated column 'db_cloudX.tf_channelusages.id' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+    at Query.Sequence._packetToError (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/sequences/Sequence.js:47:14)
+    at Query.ErrorPacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/sequences/Query.js:79:18)
+    at Protocol._parsePacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Protocol.js:291:23)
+    at Parser._parsePacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Parser.js:433:10)
+    at Parser.write (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Parser.js:43:10)
+    at Protocol.write (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Protocol.js:38:16)
+    at Socket.<anonymous> (/var/www/app_cloudX/server/node_modules/mysql/lib/Connection.js:88:28)
+    at Socket.<anonymous> (/var/www/app_cloudX/server/node_modules/mysql/lib/Connection.js:526:10)
+    at Socket.emit (events.js:198:13)
+    at Socket.EventEmitter.emit (domain.js:448:20)
+    at addChunk (_stream_readable.js:288:12)
+    at readableAddChunk (_stream_readable.js:269:11)
+    at Socket.Readable.push (_stream_readable.js:224:10)
+    at TCP.onStreamRead [as onread] (internal/stream_base_commons.js:94:17)
+    --------------------
+    at Pool.query (/var/www/app_cloudX/server/node_modules/mysql/lib/Pool.js:199:23)
+    at Object.getchannelstat (/var/www/app_cloudX/server/model/admin.js:391:23)
+    at /var/www/app_cloudX/server/routes/admin.routes.js:1556:11
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:137:13)
+    at module.exports (/var/www/app_cloudX/server/middlewares/auth.js:8:9)
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:137:13)
+    at Route.dispatch (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:112:3)
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at /var/www/app_cloudX/server/node_modules/express/lib/router/index.js:281:22
+    at Function.process_params (/var/www/app_cloudX/server/node_modules/express/lib/router/index.js:335:12)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/index.js:275:10)
+    at Immediate.<anonymous> (/var/www/app_cloudX/server/node_modules/express-session/index.js:502:7)
+    at runCallback (timers.js:706:11)
+    at tryOnImmediate (timers.js:676:5)
+  code: 'ER_WRONG_FIELD_WITH_GROUP',
+  errno: 1055,
+  sqlMessage:
+   'Expression #1 of ORDER BY clause is not in GROUP BY clause and contains nonaggregated column \'db_cloudX.tf_channelusages.id\' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by',
+  sqlState: '42000',
+  index: 0,
+  sql:
+   'SELECT MAX(count) as totalchannel,DATE_FORMAT(date,\'%H:%i\') as time FROM `tf_channelusages` WHERE date like \'%2020-10-28%\' GROUP BY time ORDER BY `id` ASC' }
+{ Error: ER_WRONG_FIELD_WITH_GROUP: Expression #1 of ORDER BY clause is not in GROUP BY clause and contains nonaggregated column 'db_cloudX.tf_channelusages.id' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+    at Query.Sequence._packetToError (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/sequences/Sequence.js:47:14)
+    at Query.ErrorPacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/sequences/Query.js:79:18)
+    at Protocol._parsePacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Protocol.js:291:23)
+    at Parser._parsePacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Parser.js:433:10)
+    at Parser.write (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Parser.js:43:10)
+    at Protocol.write (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Protocol.js:38:16)
+    at Socket.<anonymous> (/var/www/app_cloudX/server/node_modules/mysql/lib/Connection.js:88:28)
+    at Socket.<anonymous> (/var/www/app_cloudX/server/node_modules/mysql/lib/Connection.js:526:10)
+    at Socket.emit (events.js:198:13)
+    at Socket.EventEmitter.emit (domain.js:448:20)
+    at addChunk (_stream_readable.js:288:12)
+    at readableAddChunk (_stream_readable.js:269:11)
+    at Socket.Readable.push (_stream_readable.js:224:10)
+    at TCP.onStreamRead [as onread] (internal/stream_base_commons.js:94:17)
+    --------------------
+    at Pool.query (/var/www/app_cloudX/server/node_modules/mysql/lib/Pool.js:199:23)
+    at Object.getchannelstat (/var/www/app_cloudX/server/model/admin.js:391:23)
+    at /var/www/app_cloudX/server/routes/admin.routes.js:1556:11
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:137:13)
+    at module.exports (/var/www/app_cloudX/server/middlewares/auth.js:8:9)
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:137:13)
+    at Route.dispatch (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:112:3)
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at /var/www/app_cloudX/server/node_modules/express/lib/router/index.js:281:22
+    at Function.process_params (/var/www/app_cloudX/server/node_modules/express/lib/router/index.js:335:12)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/index.js:275:10)
+    at Immediate.<anonymous> (/var/www/app_cloudX/server/node_modules/express-session/index.js:502:7)
+    at runCallback (timers.js:706:11)
+    at tryOnImmediate (timers.js:676:5)
+  code: 'ER_WRONG_FIELD_WITH_GROUP',
+  errno: 1055,
+  sqlMessage:
+   'Expression #1 of ORDER BY clause is not in GROUP BY clause and contains nonaggregated column \'db_cloudX.tf_channelusages.id\' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by',
+  sqlState: '42000',
+  index: 0,
+  sql:
+   'SELECT MAX(count) as totalchannel,DATE_FORMAT(date,\'%H:%i\') as time FROM `tf_channelusages` WHERE date like \'%2020-10-28%\' GROUP BY time ORDER BY `id` ASC' }
+{ Error: ER_WRONG_FIELD_WITH_GROUP: Expression #1 of ORDER BY clause is not in GROUP BY clause and contains nonaggregated column 'db_cloudX.tf_channelusages.id' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+    at Query.Sequence._packetToError (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/sequences/Sequence.js:47:14)
+    at Query.ErrorPacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/sequences/Query.js:79:18)
+    at Protocol._parsePacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Protocol.js:291:23)
+    at Parser._parsePacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Parser.js:433:10)
+    at Parser.write (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Parser.js:43:10)
+    at Protocol.write (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Protocol.js:38:16)
+    at Socket.<anonymous> (/var/www/app_cloudX/server/node_modules/mysql/lib/Connection.js:88:28)
+    at Socket.<anonymous> (/var/www/app_cloudX/server/node_modules/mysql/lib/Connection.js:526:10)
+    at Socket.emit (events.js:198:13)
+    at Socket.EventEmitter.emit (domain.js:448:20)
+    at addChunk (_stream_readable.js:288:12)
+    at readableAddChunk (_stream_readable.js:269:11)
+    at Socket.Readable.push (_stream_readable.js:224:10)
+    at TCP.onStreamRead [as onread] (internal/stream_base_commons.js:94:17)
+    --------------------
+    at Pool.query (/var/www/app_cloudX/server/node_modules/mysql/lib/Pool.js:199:23)
+    at Object.getchannelstat (/var/www/app_cloudX/server/model/admin.js:391:23)
+    at /var/www/app_cloudX/server/routes/admin.routes.js:1556:11
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:137:13)
+    at module.exports (/var/www/app_cloudX/server/middlewares/auth.js:8:9)
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:137:13)
+    at Route.dispatch (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:112:3)
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at /var/www/app_cloudX/server/node_modules/express/lib/router/index.js:281:22
+    at Function.process_params (/var/www/app_cloudX/server/node_modules/express/lib/router/index.js:335:12)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/index.js:275:10)
+    at Immediate.<anonymous> (/var/www/app_cloudX/server/node_modules/express-session/index.js:502:7)
+    at runCallback (timers.js:706:11)
+    at tryOnImmediate (timers.js:676:5)
+  code: 'ER_WRONG_FIELD_WITH_GROUP',
+  errno: 1055,
+  sqlMessage:
+   'Expression #1 of ORDER BY clause is not in GROUP BY clause and contains nonaggregated column \'db_cloudX.tf_channelusages.id\' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by',
+  sqlState: '42000',
+  index: 0,
+  sql:
+   'SELECT MAX(count) as totalchannel,DATE_FORMAT(date,\'%H:%i\') as time FROM `tf_channelusages` WHERE date like \'%2020-10-28%\' GROUP BY time ORDER BY `id` ASC' }
+{ Error: ER_WRONG_FIELD_WITH_GROUP: Expression #1 of ORDER BY clause is not in GROUP BY clause and contains nonaggregated column 'db_cloudX.tf_channelusages.id' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+    at Query.Sequence._packetToError (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/sequences/Sequence.js:47:14)
+    at Query.ErrorPacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/sequences/Query.js:79:18)
+    at Protocol._parsePacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Protocol.js:291:23)
+    at Parser._parsePacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Parser.js:433:10)
+    at Parser.write (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Parser.js:43:10)
+    at Protocol.write (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Protocol.js:38:16)
+    at Socket.<anonymous> (/var/www/app_cloudX/server/node_modules/mysql/lib/Connection.js:88:28)
+    at Socket.<anonymous> (/var/www/app_cloudX/server/node_modules/mysql/lib/Connection.js:526:10)
+    at Socket.emit (events.js:198:13)
+    at Socket.EventEmitter.emit (domain.js:448:20)
+    at addChunk (_stream_readable.js:288:12)
+    at readableAddChunk (_stream_readable.js:269:11)
+    at Socket.Readable.push (_stream_readable.js:224:10)
+    at TCP.onStreamRead [as onread] (internal/stream_base_commons.js:94:17)
+    --------------------
+    at Pool.query (/var/www/app_cloudX/server/node_modules/mysql/lib/Pool.js:199:23)
+    at Object.getchannelstat (/var/www/app_cloudX/server/model/admin.js:391:23)
+    at /var/www/app_cloudX/server/routes/admin.routes.js:1556:11
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:137:13)
+    at module.exports (/var/www/app_cloudX/server/middlewares/auth.js:8:9)
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:137:13)
+    at Route.dispatch (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:112:3)
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at /var/www/app_cloudX/server/node_modules/express/lib/router/index.js:281:22
+    at Function.process_params (/var/www/app_cloudX/server/node_modules/express/lib/router/index.js:335:12)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/index.js:275:10)
+    at Immediate.<anonymous> (/var/www/app_cloudX/server/node_modules/express-session/index.js:502:7)
+    at runCallback (timers.js:706:11)
+    at tryOnImmediate (timers.js:676:5)
+  code: 'ER_WRONG_FIELD_WITH_GROUP',
+  errno: 1055,
+  sqlMessage:
+   'Expression #1 of ORDER BY clause is not in GROUP BY clause and contains nonaggregated column \'db_cloudX.tf_channelusages.id\' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by',
+  sqlState: '42000',
+  index: 0,
+  sql:
+   'SELECT MAX(count) as totalchannel,DATE_FORMAT(date,\'%H:%i\') as time FROM `tf_channelusages` WHERE date like \'%2020-10-28%\' GROUP BY time ORDER BY `id` ASC' }
+{ Error: ER_WRONG_FIELD_WITH_GROUP: Expression #1 of ORDER BY clause is not in GROUP BY clause and contains nonaggregated column 'db_cloudX.tf_channelusages.id' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+    at Query.Sequence._packetToError (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/sequences/Sequence.js:47:14)
+    at Query.ErrorPacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/sequences/Query.js:79:18)
+    at Protocol._parsePacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Protocol.js:291:23)
+    at Parser._parsePacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Parser.js:433:10)
+    at Parser.write (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Parser.js:43:10)
+    at Protocol.write (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Protocol.js:38:16)
+    at Socket.<anonymous> (/var/www/app_cloudX/server/node_modules/mysql/lib/Connection.js:88:28)
+    at Socket.<anonymous> (/var/www/app_cloudX/server/node_modules/mysql/lib/Connection.js:526:10)
+    at Socket.emit (events.js:198:13)
+    at Socket.EventEmitter.emit (domain.js:448:20)
+    at addChunk (_stream_readable.js:288:12)
+    at readableAddChunk (_stream_readable.js:269:11)
+    at Socket.Readable.push (_stream_readable.js:224:10)
+    at TCP.onStreamRead [as onread] (internal/stream_base_commons.js:94:17)
+    --------------------
+    at Pool.query (/var/www/app_cloudX/server/node_modules/mysql/lib/Pool.js:199:23)
+    at Object.getchannelstat (/var/www/app_cloudX/server/model/admin.js:391:23)
+    at /var/www/app_cloudX/server/routes/admin.routes.js:1556:11
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:137:13)
+    at module.exports (/var/www/app_cloudX/server/middlewares/auth.js:8:9)
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:137:13)
+    at Route.dispatch (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:112:3)
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at /var/www/app_cloudX/server/node_modules/express/lib/router/index.js:281:22
+    at Function.process_params (/var/www/app_cloudX/server/node_modules/express/lib/router/index.js:335:12)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/index.js:275:10)
+    at Immediate.<anonymous> (/var/www/app_cloudX/server/node_modules/express-session/index.js:502:7)
+    at runCallback (timers.js:706:11)
+    at tryOnImmediate (timers.js:676:5)
+  code: 'ER_WRONG_FIELD_WITH_GROUP',
+  errno: 1055,
+  sqlMessage:
+   'Expression #1 of ORDER BY clause is not in GROUP BY clause and contains nonaggregated column \'db_cloudX.tf_channelusages.id\' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by',
+  sqlState: '42000',
+  index: 0,
+  sql:
+   'SELECT MAX(count) as totalchannel,DATE_FORMAT(date,\'%H:%i\') as time FROM `tf_channelusages` WHERE date like \'%2020-10-28%\' GROUP BY time ORDER BY `id` ASC' }
+{ Error: ER_WRONG_FIELD_WITH_GROUP: Expression #1 of ORDER BY clause is not in GROUP BY clause and contains nonaggregated column 'db_cloudX.tf_channelusages.id' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+    at Query.Sequence._packetToError (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/sequences/Sequence.js:47:14)
+    at Query.ErrorPacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/sequences/Query.js:79:18)
+    at Protocol._parsePacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Protocol.js:291:23)
+    at Parser._parsePacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Parser.js:433:10)
+    at Parser.write (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Parser.js:43:10)
+    at Protocol.write (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Protocol.js:38:16)
+    at Socket.<anonymous> (/var/www/app_cloudX/server/node_modules/mysql/lib/Connection.js:88:28)
+    at Socket.<anonymous> (/var/www/app_cloudX/server/node_modules/mysql/lib/Connection.js:526:10)
+    at Socket.emit (events.js:198:13)
+    at Socket.EventEmitter.emit (domain.js:448:20)
+    at addChunk (_stream_readable.js:288:12)
+    at readableAddChunk (_stream_readable.js:269:11)
+    at Socket.Readable.push (_stream_readable.js:224:10)
+    at TCP.onStreamRead [as onread] (internal/stream_base_commons.js:94:17)
+    --------------------
+    at Pool.query (/var/www/app_cloudX/server/node_modules/mysql/lib/Pool.js:199:23)
+    at Object.getchannelstat (/var/www/app_cloudX/server/model/admin.js:391:23)
+    at /var/www/app_cloudX/server/routes/admin.routes.js:1556:11
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:137:13)
+    at module.exports (/var/www/app_cloudX/server/middlewares/auth.js:8:9)
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:137:13)
+    at Route.dispatch (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:112:3)
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at /var/www/app_cloudX/server/node_modules/express/lib/router/index.js:281:22
+    at Function.process_params (/var/www/app_cloudX/server/node_modules/express/lib/router/index.js:335:12)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/index.js:275:10)
+    at Immediate.<anonymous> (/var/www/app_cloudX/server/node_modules/express-session/index.js:502:7)
+    at runCallback (timers.js:706:11)
+    at tryOnImmediate (timers.js:676:5)
+  code: 'ER_WRONG_FIELD_WITH_GROUP',
+  errno: 1055,
+  sqlMessage:
+   'Expression #1 of ORDER BY clause is not in GROUP BY clause and contains nonaggregated column \'db_cloudX.tf_channelusages.id\' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by',
+  sqlState: '42000',
+  index: 0,
+  sql:
+   'SELECT MAX(count) as totalchannel,DATE_FORMAT(date,\'%H:%i\') as time FROM `tf_channelusages` WHERE date like \'%2020-10-28%\' GROUP BY time ORDER BY `id` ASC' }
+{ Error: ER_WRONG_FIELD_WITH_GROUP: Expression #1 of ORDER BY clause is not in GROUP BY clause and contains nonaggregated column 'db_cloudX.tf_channelusages.id' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+    at Query.Sequence._packetToError (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/sequences/Sequence.js:47:14)
+    at Query.ErrorPacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/sequences/Query.js:79:18)
+    at Protocol._parsePacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Protocol.js:291:23)
+    at Parser._parsePacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Parser.js:433:10)
+    at Parser.write (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Parser.js:43:10)
+    at Protocol.write (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Protocol.js:38:16)
+    at Socket.<anonymous> (/var/www/app_cloudX/server/node_modules/mysql/lib/Connection.js:88:28)
+    at Socket.<anonymous> (/var/www/app_cloudX/server/node_modules/mysql/lib/Connection.js:526:10)
+    at Socket.emit (events.js:198:13)
+    at Socket.EventEmitter.emit (domain.js:448:20)
+    at addChunk (_stream_readable.js:288:12)
+    at readableAddChunk (_stream_readable.js:269:11)
+    at Socket.Readable.push (_stream_readable.js:224:10)
+    at TCP.onStreamRead [as onread] (internal/stream_base_commons.js:94:17)
+    --------------------
+    at Pool.query (/var/www/app_cloudX/server/node_modules/mysql/lib/Pool.js:199:23)
+    at Object.getchannelstat (/var/www/app_cloudX/server/model/admin.js:391:23)
+    at /var/www/app_cloudX/server/routes/admin.routes.js:1556:11
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:137:13)
+    at module.exports (/var/www/app_cloudX/server/middlewares/auth.js:8:9)
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:137:13)
+    at Route.dispatch (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:112:3)
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at /var/www/app_cloudX/server/node_modules/express/lib/router/index.js:281:22
+    at Function.process_params (/var/www/app_cloudX/server/node_modules/express/lib/router/index.js:335:12)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/index.js:275:10)
+    at Immediate.<anonymous> (/var/www/app_cloudX/server/node_modules/express-session/index.js:502:7)
+    at runCallback (timers.js:706:11)
+    at tryOnImmediate (timers.js:676:5)
+  code: 'ER_WRONG_FIELD_WITH_GROUP',
+  errno: 1055,
+  sqlMessage:
+   'Expression #1 of ORDER BY clause is not in GROUP BY clause and contains nonaggregated column \'db_cloudX.tf_channelusages.id\' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by',
+  sqlState: '42000',
+  index: 0,
+  sql:
+   'SELECT MAX(count) as totalchannel,DATE_FORMAT(date,\'%H:%i\') as time FROM `tf_channelusages` WHERE date like \'%2020-10-28%\' GROUP BY time ORDER BY `id` ASC' }
+{ Error: ER_WRONG_FIELD_WITH_GROUP: Expression #1 of ORDER BY clause is not in GROUP BY clause and contains nonaggregated column 'db_cloudX.tf_channelusages.id' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+    at Query.Sequence._packetToError (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/sequences/Sequence.js:47:14)
+    at Query.ErrorPacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/sequences/Query.js:79:18)
+    at Protocol._parsePacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Protocol.js:291:23)
+    at Parser._parsePacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Parser.js:433:10)
+    at Parser.write (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Parser.js:43:10)
+    at Protocol.write (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Protocol.js:38:16)
+    at Socket.<anonymous> (/var/www/app_cloudX/server/node_modules/mysql/lib/Connection.js:88:28)
+    at Socket.<anonymous> (/var/www/app_cloudX/server/node_modules/mysql/lib/Connection.js:526:10)
+    at Socket.emit (events.js:198:13)
+    at Socket.EventEmitter.emit (domain.js:448:20)
+    at addChunk (_stream_readable.js:288:12)
+    at readableAddChunk (_stream_readable.js:269:11)
+    at Socket.Readable.push (_stream_readable.js:224:10)
+    at TCP.onStreamRead [as onread] (internal/stream_base_commons.js:94:17)
+    --------------------
+    at Pool.query (/var/www/app_cloudX/server/node_modules/mysql/lib/Pool.js:199:23)
+    at Object.getchannelstat (/var/www/app_cloudX/server/model/admin.js:391:23)
+    at /var/www/app_cloudX/server/routes/admin.routes.js:1556:11
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:137:13)
+    at module.exports (/var/www/app_cloudX/server/middlewares/auth.js:8:9)
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:137:13)
+    at Route.dispatch (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:112:3)
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at /var/www/app_cloudX/server/node_modules/express/lib/router/index.js:281:22
+    at Function.process_params (/var/www/app_cloudX/server/node_modules/express/lib/router/index.js:335:12)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/index.js:275:10)
+    at session (/var/www/app_cloudX/server/node_modules/express-session/index.js:475:7)
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/var/www/app_cloudX/server/node_modules/express/lib/router/index.js:317:13)
+  code: 'ER_WRONG_FIELD_WITH_GROUP',
+  errno: 1055,
+  sqlMessage:
+   'Expression #1 of ORDER BY clause is not in GROUP BY clause and contains nonaggregated column \'db_cloudX.tf_channelusages.id\' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by',
+  sqlState: '42000',
+  index: 0,
+  sql:
+   'SELECT MAX(count) as totalchannel,DATE_FORMAT(date,\'%H:%i\') as time FROM `tf_channelusages` WHERE date like \'%2020-10-28%\' GROUP BY time ORDER BY `id` ASC' }
+{ Error: ER_WRONG_FIELD_WITH_GROUP: Expression #1 of ORDER BY clause is not in GROUP BY clause and contains nonaggregated column 'db_cloudX.tf_channelusages.id' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+    at Query.Sequence._packetToError (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/sequences/Sequence.js:47:14)
+    at Query.ErrorPacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/sequences/Query.js:79:18)
+    at Protocol._parsePacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Protocol.js:291:23)
+    at Parser._parsePacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Parser.js:433:10)
+    at Parser.write (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Parser.js:43:10)
+    at Protocol.write (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Protocol.js:38:16)
+    at Socket.<anonymous> (/var/www/app_cloudX/server/node_modules/mysql/lib/Connection.js:88:28)
+    at Socket.<anonymous> (/var/www/app_cloudX/server/node_modules/mysql/lib/Connection.js:526:10)
+    at Socket.emit (events.js:198:13)
+    at Socket.EventEmitter.emit (domain.js:448:20)
+    at addChunk (_stream_readable.js:288:12)
+    at readableAddChunk (_stream_readable.js:269:11)
+    at Socket.Readable.push (_stream_readable.js:224:10)
+    at TCP.onStreamRead [as onread] (internal/stream_base_commons.js:94:17)
+    --------------------
+    at Pool.query (/var/www/app_cloudX/server/node_modules/mysql/lib/Pool.js:199:23)
+    at Object.getchannelstat (/var/www/app_cloudX/server/model/admin.js:391:23)
+    at /var/www/app_cloudX/server/routes/admin.routes.js:1556:11
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:137:13)
+    at module.exports (/var/www/app_cloudX/server/middlewares/auth.js:8:9)
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:137:13)
+    at Route.dispatch (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:112:3)
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at /var/www/app_cloudX/server/node_modules/express/lib/router/index.js:281:22
+    at Function.process_params (/var/www/app_cloudX/server/node_modules/express/lib/router/index.js:335:12)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/index.js:275:10)
+    at Immediate.<anonymous> (/var/www/app_cloudX/server/node_modules/express-session/index.js:502:7)
+    at runCallback (timers.js:706:11)
+    at tryOnImmediate (timers.js:676:5)
+  code: 'ER_WRONG_FIELD_WITH_GROUP',
+  errno: 1055,
+  sqlMessage:
+   'Expression #1 of ORDER BY clause is not in GROUP BY clause and contains nonaggregated column \'db_cloudX.tf_channelusages.id\' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by',
+  sqlState: '42000',
+  index: 0,
+  sql:
+   'SELECT MAX(count) as totalchannel,DATE_FORMAT(date,\'%H:%i\') as time FROM `tf_channelusages` WHERE date like \'%2020-10-28%\' GROUP BY time ORDER BY `id` ASC' }
+{ Error: ER_WRONG_FIELD_WITH_GROUP: Expression #1 of ORDER BY clause is not in GROUP BY clause and contains nonaggregated column 'db_cloudX.tf_channelusages.id' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+    at Query.Sequence._packetToError (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/sequences/Sequence.js:47:14)
+    at Query.ErrorPacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/sequences/Query.js:79:18)
+    at Protocol._parsePacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Protocol.js:291:23)
+    at Parser._parsePacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Parser.js:433:10)
+    at Parser.write (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Parser.js:43:10)
+    at Protocol.write (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Protocol.js:38:16)
+    at Socket.<anonymous> (/var/www/app_cloudX/server/node_modules/mysql/lib/Connection.js:88:28)
+    at Socket.<anonymous> (/var/www/app_cloudX/server/node_modules/mysql/lib/Connection.js:526:10)
+    at Socket.emit (events.js:198:13)
+    at Socket.EventEmitter.emit (domain.js:448:20)
+    at addChunk (_stream_readable.js:288:12)
+    at readableAddChunk (_stream_readable.js:269:11)
+    at Socket.Readable.push (_stream_readable.js:224:10)
+    at TCP.onStreamRead [as onread] (internal/stream_base_commons.js:94:17)
+    --------------------
+    at Pool.query (/var/www/app_cloudX/server/node_modules/mysql/lib/Pool.js:199:23)
+    at Object.getchannelstat (/var/www/app_cloudX/server/model/admin.js:391:23)
+    at /var/www/app_cloudX/server/routes/admin.routes.js:1556:11
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:137:13)
+    at module.exports (/var/www/app_cloudX/server/middlewares/auth.js:8:9)
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:137:13)
+    at Route.dispatch (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:112:3)
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at /var/www/app_cloudX/server/node_modules/express/lib/router/index.js:281:22
+    at Function.process_params (/var/www/app_cloudX/server/node_modules/express/lib/router/index.js:335:12)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/index.js:275:10)
+    at Immediate.<anonymous> (/var/www/app_cloudX/server/node_modules/express-session/index.js:502:7)
+    at runCallback (timers.js:706:11)
+    at tryOnImmediate (timers.js:676:5)
+  code: 'ER_WRONG_FIELD_WITH_GROUP',
+  errno: 1055,
+  sqlMessage:
+   'Expression #1 of ORDER BY clause is not in GROUP BY clause and contains nonaggregated column \'db_cloudX.tf_channelusages.id\' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by',
+  sqlState: '42000',
+  index: 0,
+  sql:
+   'SELECT MAX(count) as totalchannel,DATE_FORMAT(date,\'%H:%i\') as time FROM `tf_channelusages` WHERE date like \'%2020-10-28%\' GROUP BY time ORDER BY `id` ASC' }
+{ Error: ER_WRONG_FIELD_WITH_GROUP: Expression #1 of ORDER BY clause is not in GROUP BY clause and contains nonaggregated column 'db_cloudX.tf_channelusages.id' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+    at Query.Sequence._packetToError (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/sequences/Sequence.js:47:14)
+    at Query.ErrorPacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/sequences/Query.js:79:18)
+    at Protocol._parsePacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Protocol.js:291:23)
+    at Parser._parsePacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Parser.js:433:10)
+    at Parser.write (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Parser.js:43:10)
+    at Protocol.write (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Protocol.js:38:16)
+    at Socket.<anonymous> (/var/www/app_cloudX/server/node_modules/mysql/lib/Connection.js:88:28)
+    at Socket.<anonymous> (/var/www/app_cloudX/server/node_modules/mysql/lib/Connection.js:526:10)
+    at Socket.emit (events.js:198:13)
+    at Socket.EventEmitter.emit (domain.js:448:20)
+    at addChunk (_stream_readable.js:288:12)
+    at readableAddChunk (_stream_readable.js:269:11)
+    at Socket.Readable.push (_stream_readable.js:224:10)
+    at TCP.onStreamRead [as onread] (internal/stream_base_commons.js:94:17)
+    --------------------
+    at Pool.query (/var/www/app_cloudX/server/node_modules/mysql/lib/Pool.js:199:23)
+    at Object.getchannelstat (/var/www/app_cloudX/server/model/admin.js:391:23)
+    at /var/www/app_cloudX/server/routes/admin.routes.js:1556:11
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:137:13)
+    at module.exports (/var/www/app_cloudX/server/middlewares/auth.js:8:9)
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:137:13)
+    at Route.dispatch (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:112:3)
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at /var/www/app_cloudX/server/node_modules/express/lib/router/index.js:281:22
+    at Function.process_params (/var/www/app_cloudX/server/node_modules/express/lib/router/index.js:335:12)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/index.js:275:10)
+    at Immediate.<anonymous> (/var/www/app_cloudX/server/node_modules/express-session/index.js:502:7)
+    at runCallback (timers.js:706:11)
+    at tryOnImmediate (timers.js:676:5)
+  code: 'ER_WRONG_FIELD_WITH_GROUP',
+  errno: 1055,
+  sqlMessage:
+   'Expression #1 of ORDER BY clause is not in GROUP BY clause and contains nonaggregated column \'db_cloudX.tf_channelusages.id\' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by',
+  sqlState: '42000',
+  index: 0,
+  sql:
+   'SELECT MAX(count) as totalchannel,DATE_FORMAT(date,\'%H:%i\') as time FROM `tf_channelusages` WHERE date like \'%2020-10-28%\' GROUP BY time ORDER BY `id` ASC' }
+{ Error: ER_WRONG_FIELD_WITH_GROUP: Expression #1 of ORDER BY clause is not in GROUP BY clause and contains nonaggregated column 'db_cloudX.tf_channelusages.id' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+    at Query.Sequence._packetToError (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/sequences/Sequence.js:47:14)
+    at Query.ErrorPacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/sequences/Query.js:79:18)
+    at Protocol._parsePacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Protocol.js:291:23)
+    at Parser._parsePacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Parser.js:433:10)
+    at Parser.write (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Parser.js:43:10)
+    at Protocol.write (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Protocol.js:38:16)
+    at Socket.<anonymous> (/var/www/app_cloudX/server/node_modules/mysql/lib/Connection.js:88:28)
+    at Socket.<anonymous> (/var/www/app_cloudX/server/node_modules/mysql/lib/Connection.js:526:10)
+    at Socket.emit (events.js:198:13)
+    at Socket.EventEmitter.emit (domain.js:448:20)
+    at addChunk (_stream_readable.js:288:12)
+    at readableAddChunk (_stream_readable.js:269:11)
+    at Socket.Readable.push (_stream_readable.js:224:10)
+    at TCP.onStreamRead [as onread] (internal/stream_base_commons.js:94:17)
+    --------------------
+    at Pool.query (/var/www/app_cloudX/server/node_modules/mysql/lib/Pool.js:199:23)
+    at Object.getchannelstat (/var/www/app_cloudX/server/model/admin.js:391:23)
+    at /var/www/app_cloudX/server/routes/admin.routes.js:1556:11
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:137:13)
+    at module.exports (/var/www/app_cloudX/server/middlewares/auth.js:8:9)
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:137:13)
+    at Route.dispatch (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:112:3)
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at /var/www/app_cloudX/server/node_modules/express/lib/router/index.js:281:22
+    at Function.process_params (/var/www/app_cloudX/server/node_modules/express/lib/router/index.js:335:12)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/index.js:275:10)
+    at Immediate.<anonymous> (/var/www/app_cloudX/server/node_modules/express-session/index.js:502:7)
+    at runCallback (timers.js:706:11)
+    at tryOnImmediate (timers.js:676:5)
+  code: 'ER_WRONG_FIELD_WITH_GROUP',
+  errno: 1055,
+  sqlMessage:
+   'Expression #1 of ORDER BY clause is not in GROUP BY clause and contains nonaggregated column \'db_cloudX.tf_channelusages.id\' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by',
+  sqlState: '42000',
+  index: 0,
+  sql:
+   'SELECT MAX(count) as totalchannel,DATE_FORMAT(date,\'%H:%i\') as time FROM `tf_channelusages` WHERE date like \'%2020-10-28%\' GROUP BY time ORDER BY `id` ASC' }
+{ Error: ER_WRONG_FIELD_WITH_GROUP: Expression #1 of ORDER BY clause is not in GROUP BY clause and contains nonaggregated column 'db_cloudX.tf_channelusages.id' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+    at Query.Sequence._packetToError (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/sequences/Sequence.js:47:14)
+    at Query.ErrorPacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/sequences/Query.js:79:18)
+    at Protocol._parsePacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Protocol.js:291:23)
+    at Parser._parsePacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Parser.js:433:10)
+    at Parser.write (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Parser.js:43:10)
+    at Protocol.write (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Protocol.js:38:16)
+    at Socket.<anonymous> (/var/www/app_cloudX/server/node_modules/mysql/lib/Connection.js:88:28)
+    at Socket.<anonymous> (/var/www/app_cloudX/server/node_modules/mysql/lib/Connection.js:526:10)
+    at Socket.emit (events.js:198:13)
+    at Socket.EventEmitter.emit (domain.js:448:20)
+    at addChunk (_stream_readable.js:288:12)
+    at readableAddChunk (_stream_readable.js:269:11)
+    at Socket.Readable.push (_stream_readable.js:224:10)
+    at TCP.onStreamRead [as onread] (internal/stream_base_commons.js:94:17)
+    --------------------
+    at Pool.query (/var/www/app_cloudX/server/node_modules/mysql/lib/Pool.js:199:23)
+    at Object.getchannelstat (/var/www/app_cloudX/server/model/admin.js:391:23)
+    at /var/www/app_cloudX/server/routes/admin.routes.js:1556:11
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:137:13)
+    at module.exports (/var/www/app_cloudX/server/middlewares/auth.js:8:9)
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:137:13)
+    at Route.dispatch (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:112:3)
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at /var/www/app_cloudX/server/node_modules/express/lib/router/index.js:281:22
+    at Function.process_params (/var/www/app_cloudX/server/node_modules/express/lib/router/index.js:335:12)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/index.js:275:10)
+    at Immediate.<anonymous> (/var/www/app_cloudX/server/node_modules/express-session/index.js:502:7)
+    at runCallback (timers.js:706:11)
+    at tryOnImmediate (timers.js:676:5)
+  code: 'ER_WRONG_FIELD_WITH_GROUP',
+  errno: 1055,
+  sqlMessage:
+   'Expression #1 of ORDER BY clause is not in GROUP BY clause and contains nonaggregated column \'db_cloudX.tf_channelusages.id\' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by',
+  sqlState: '42000',
+  index: 0,
+  sql:
+   'SELECT MAX(count) as totalchannel,DATE_FORMAT(date,\'%H:%i\') as time FROM `tf_channelusages` WHERE date like \'%2020-10-28%\' GROUP BY time ORDER BY `id` ASC' }
+{ Error: ER_WRONG_FIELD_WITH_GROUP: Expression #1 of ORDER BY clause is not in GROUP BY clause and contains nonaggregated column 'db_cloudX.tf_channelusages.id' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+    at Query.Sequence._packetToError (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/sequences/Sequence.js:47:14)
+    at Query.ErrorPacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/sequences/Query.js:79:18)
+    at Protocol._parsePacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Protocol.js:291:23)
+    at Parser._parsePacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Parser.js:433:10)
+    at Parser.write (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Parser.js:43:10)
+    at Protocol.write (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Protocol.js:38:16)
+    at Socket.<anonymous> (/var/www/app_cloudX/server/node_modules/mysql/lib/Connection.js:88:28)
+    at Socket.<anonymous> (/var/www/app_cloudX/server/node_modules/mysql/lib/Connection.js:526:10)
+    at Socket.emit (events.js:198:13)
+    at Socket.EventEmitter.emit (domain.js:448:20)
+    at addChunk (_stream_readable.js:288:12)
+    at readableAddChunk (_stream_readable.js:269:11)
+    at Socket.Readable.push (_stream_readable.js:224:10)
+    at TCP.onStreamRead [as onread] (internal/stream_base_commons.js:94:17)
+    --------------------
+    at Pool.query (/var/www/app_cloudX/server/node_modules/mysql/lib/Pool.js:199:23)
+    at Object.getchannelstat (/var/www/app_cloudX/server/model/admin.js:391:23)
+    at /var/www/app_cloudX/server/routes/admin.routes.js:1556:11
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:137:13)
+    at module.exports (/var/www/app_cloudX/server/middlewares/auth.js:8:9)
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:137:13)
+    at Route.dispatch (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:112:3)
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at /var/www/app_cloudX/server/node_modules/express/lib/router/index.js:281:22
+    at Function.process_params (/var/www/app_cloudX/server/node_modules/express/lib/router/index.js:335:12)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/index.js:275:10)
+    at Immediate.<anonymous> (/var/www/app_cloudX/server/node_modules/express-session/index.js:502:7)
+    at runCallback (timers.js:706:11)
+    at tryOnImmediate (timers.js:676:5)
+  code: 'ER_WRONG_FIELD_WITH_GROUP',
+  errno: 1055,
+  sqlMessage:
+   'Expression #1 of ORDER BY clause is not in GROUP BY clause and contains nonaggregated column \'db_cloudX.tf_channelusages.id\' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by',
+  sqlState: '42000',
+  index: 0,
+  sql:
+   'SELECT MAX(count) as totalchannel,DATE_FORMAT(date,\'%H:%i\') as time FROM `tf_channelusages` WHERE date like \'%2020-10-28%\' GROUP BY time ORDER BY `id` ASC' }
+{ Error: ER_WRONG_FIELD_WITH_GROUP: Expression #1 of ORDER BY clause is not in GROUP BY clause and contains nonaggregated column 'db_cloudX.tf_channelusages.id' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+    at Query.Sequence._packetToError (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/sequences/Sequence.js:47:14)
+    at Query.ErrorPacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/sequences/Query.js:79:18)
+    at Protocol._parsePacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Protocol.js:291:23)
+    at Parser._parsePacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Parser.js:433:10)
+    at Parser.write (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Parser.js:43:10)
+    at Protocol.write (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Protocol.js:38:16)
+    at Socket.<anonymous> (/var/www/app_cloudX/server/node_modules/mysql/lib/Connection.js:88:28)
+    at Socket.<anonymous> (/var/www/app_cloudX/server/node_modules/mysql/lib/Connection.js:526:10)
+    at Socket.emit (events.js:198:13)
+    at Socket.EventEmitter.emit (domain.js:448:20)
+    at addChunk (_stream_readable.js:288:12)
+    at readableAddChunk (_stream_readable.js:269:11)
+    at Socket.Readable.push (_stream_readable.js:224:10)
+    at TCP.onStreamRead [as onread] (internal/stream_base_commons.js:94:17)
+    --------------------
+    at Pool.query (/var/www/app_cloudX/server/node_modules/mysql/lib/Pool.js:199:23)
+    at Object.getchannelstat (/var/www/app_cloudX/server/model/admin.js:391:23)
+    at /var/www/app_cloudX/server/routes/admin.routes.js:1556:11
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:137:13)
+    at module.exports (/var/www/app_cloudX/server/middlewares/auth.js:8:9)
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:137:13)
+    at Route.dispatch (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:112:3)
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at /var/www/app_cloudX/server/node_modules/express/lib/router/index.js:281:22
+    at Function.process_params (/var/www/app_cloudX/server/node_modules/express/lib/router/index.js:335:12)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/index.js:275:10)
+    at Immediate.<anonymous> (/var/www/app_cloudX/server/node_modules/express-session/index.js:502:7)
+    at runCallback (timers.js:706:11)
+    at tryOnImmediate (timers.js:676:5)
+  code: 'ER_WRONG_FIELD_WITH_GROUP',
+  errno: 1055,
+  sqlMessage:
+   'Expression #1 of ORDER BY clause is not in GROUP BY clause and contains nonaggregated column \'db_cloudX.tf_channelusages.id\' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by',
+  sqlState: '42000',
+  index: 0,
+  sql:
+   'SELECT MAX(count) as totalchannel,DATE_FORMAT(date,\'%H:%i\') as time FROM `tf_channelusages` WHERE date like \'%2020-10-28%\' GROUP BY time ORDER BY `id` ASC' }
+{ Error: ER_WRONG_FIELD_WITH_GROUP: Expression #1 of ORDER BY clause is not in GROUP BY clause and contains nonaggregated column 'db_cloudX.tf_channelusages.id' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+    at Query.Sequence._packetToError (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/sequences/Sequence.js:47:14)
+    at Query.ErrorPacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/sequences/Query.js:79:18)
+    at Protocol._parsePacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Protocol.js:291:23)
+    at Parser._parsePacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Parser.js:433:10)
+    at Parser.write (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Parser.js:43:10)
+    at Protocol.write (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Protocol.js:38:16)
+    at Socket.<anonymous> (/var/www/app_cloudX/server/node_modules/mysql/lib/Connection.js:88:28)
+    at Socket.<anonymous> (/var/www/app_cloudX/server/node_modules/mysql/lib/Connection.js:526:10)
+    at Socket.emit (events.js:198:13)
+    at Socket.EventEmitter.emit (domain.js:448:20)
+    at addChunk (_stream_readable.js:288:12)
+    at readableAddChunk (_stream_readable.js:269:11)
+    at Socket.Readable.push (_stream_readable.js:224:10)
+    at TCP.onStreamRead [as onread] (internal/stream_base_commons.js:94:17)
+    --------------------
+    at Pool.query (/var/www/app_cloudX/server/node_modules/mysql/lib/Pool.js:199:23)
+    at Object.getchannelstat (/var/www/app_cloudX/server/model/admin.js:391:23)
+    at /var/www/app_cloudX/server/routes/admin.routes.js:1556:11
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:137:13)
+    at module.exports (/var/www/app_cloudX/server/middlewares/auth.js:8:9)
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:137:13)
+    at Route.dispatch (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:112:3)
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at /var/www/app_cloudX/server/node_modules/express/lib/router/index.js:281:22
+    at Function.process_params (/var/www/app_cloudX/server/node_modules/express/lib/router/index.js:335:12)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/index.js:275:10)
+    at Immediate.<anonymous> (/var/www/app_cloudX/server/node_modules/express-session/index.js:502:7)
+    at runCallback (timers.js:706:11)
+    at tryOnImmediate (timers.js:676:5)
+  code: 'ER_WRONG_FIELD_WITH_GROUP',
+  errno: 1055,
+  sqlMessage:
+   'Expression #1 of ORDER BY clause is not in GROUP BY clause and contains nonaggregated column \'db_cloudX.tf_channelusages.id\' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by',
+  sqlState: '42000',
+  index: 0,
+  sql:
+   'SELECT MAX(count) as totalchannel,DATE_FORMAT(date,\'%H:%i\') as time FROM `tf_channelusages` WHERE date like \'%2020-10-28%\' GROUP BY time ORDER BY `id` ASC' }
+{ Error: ER_WRONG_FIELD_WITH_GROUP: Expression #1 of ORDER BY clause is not in GROUP BY clause and contains nonaggregated column 'db_cloudX.tf_channelusages.id' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+    at Query.Sequence._packetToError (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/sequences/Sequence.js:47:14)
+    at Query.ErrorPacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/sequences/Query.js:79:18)
+    at Protocol._parsePacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Protocol.js:291:23)
+    at Parser._parsePacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Parser.js:433:10)
+    at Parser.write (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Parser.js:43:10)
+    at Protocol.write (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Protocol.js:38:16)
+    at Socket.<anonymous> (/var/www/app_cloudX/server/node_modules/mysql/lib/Connection.js:88:28)
+    at Socket.<anonymous> (/var/www/app_cloudX/server/node_modules/mysql/lib/Connection.js:526:10)
+    at Socket.emit (events.js:198:13)
+    at Socket.EventEmitter.emit (domain.js:448:20)
+    at addChunk (_stream_readable.js:288:12)
+    at readableAddChunk (_stream_readable.js:269:11)
+    at Socket.Readable.push (_stream_readable.js:224:10)
+    at TCP.onStreamRead [as onread] (internal/stream_base_commons.js:94:17)
+    --------------------
+    at Pool.query (/var/www/app_cloudX/server/node_modules/mysql/lib/Pool.js:199:23)
+    at Object.getchannelstat (/var/www/app_cloudX/server/model/admin.js:391:23)
+    at /var/www/app_cloudX/server/routes/admin.routes.js:1556:11
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:137:13)
+    at module.exports (/var/www/app_cloudX/server/middlewares/auth.js:8:9)
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:137:13)
+    at Route.dispatch (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:112:3)
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at /var/www/app_cloudX/server/node_modules/express/lib/router/index.js:281:22
+    at Function.process_params (/var/www/app_cloudX/server/node_modules/express/lib/router/index.js:335:12)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/index.js:275:10)
+    at Immediate.<anonymous> (/var/www/app_cloudX/server/node_modules/express-session/index.js:502:7)
+    at runCallback (timers.js:706:11)
+    at tryOnImmediate (timers.js:676:5)
+  code: 'ER_WRONG_FIELD_WITH_GROUP',
+  errno: 1055,
+  sqlMessage:
+   'Expression #1 of ORDER BY clause is not in GROUP BY clause and contains nonaggregated column \'db_cloudX.tf_channelusages.id\' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by',
+  sqlState: '42000',
+  index: 0,
+  sql:
+   'SELECT MAX(count) as totalchannel,DATE_FORMAT(date,\'%H:%i\') as time FROM `tf_channelusages` WHERE date like \'%2020-10-28%\' GROUP BY time ORDER BY `id` ASC' }
+{ Error: ER_WRONG_FIELD_WITH_GROUP: Expression #1 of ORDER BY clause is not in GROUP BY clause and contains nonaggregated column 'db_cloudX.tf_channelusages.id' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+    at Query.Sequence._packetToError (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/sequences/Sequence.js:47:14)
+    at Query.ErrorPacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/sequences/Query.js:79:18)
+    at Protocol._parsePacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Protocol.js:291:23)
+    at Parser._parsePacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Parser.js:433:10)
+    at Parser.write (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Parser.js:43:10)
+    at Protocol.write (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Protocol.js:38:16)
+    at Socket.<anonymous> (/var/www/app_cloudX/server/node_modules/mysql/lib/Connection.js:88:28)
+    at Socket.<anonymous> (/var/www/app_cloudX/server/node_modules/mysql/lib/Connection.js:526:10)
+    at Socket.emit (events.js:198:13)
+    at Socket.EventEmitter.emit (domain.js:448:20)
+    at addChunk (_stream_readable.js:288:12)
+    at readableAddChunk (_stream_readable.js:269:11)
+    at Socket.Readable.push (_stream_readable.js:224:10)
+    at TCP.onStreamRead [as onread] (internal/stream_base_commons.js:94:17)
+    --------------------
+    at Pool.query (/var/www/app_cloudX/server/node_modules/mysql/lib/Pool.js:199:23)
+    at Object.getchannelstat (/var/www/app_cloudX/server/model/admin.js:391:23)
+    at /var/www/app_cloudX/server/routes/admin.routes.js:1556:11
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:137:13)
+    at module.exports (/var/www/app_cloudX/server/middlewares/auth.js:8:9)
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:137:13)
+    at Route.dispatch (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:112:3)
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at /var/www/app_cloudX/server/node_modules/express/lib/router/index.js:281:22
+    at Function.process_params (/var/www/app_cloudX/server/node_modules/express/lib/router/index.js:335:12)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/index.js:275:10)
+    at Immediate.<anonymous> (/var/www/app_cloudX/server/node_modules/express-session/index.js:502:7)
+    at runCallback (timers.js:706:11)
+    at tryOnImmediate (timers.js:676:5)
+  code: 'ER_WRONG_FIELD_WITH_GROUP',
+  errno: 1055,
+  sqlMessage:
+   'Expression #1 of ORDER BY clause is not in GROUP BY clause and contains nonaggregated column \'db_cloudX.tf_channelusages.id\' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by',
+  sqlState: '42000',
+  index: 0,
+  sql:
+   'SELECT MAX(count) as totalchannel,DATE_FORMAT(date,\'%H:%i\') as time FROM `tf_channelusages` WHERE date like \'%2020-10-28%\' GROUP BY time ORDER BY `id` ASC' }
+{ Error: ER_WRONG_FIELD_WITH_GROUP: Expression #1 of ORDER BY clause is not in GROUP BY clause and contains nonaggregated column 'db_cloudX.tf_channelusages.id' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+    at Query.Sequence._packetToError (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/sequences/Sequence.js:47:14)
+    at Query.ErrorPacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/sequences/Query.js:79:18)
+    at Protocol._parsePacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Protocol.js:291:23)
+    at Parser._parsePacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Parser.js:433:10)
+    at Parser.write (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Parser.js:43:10)
+    at Protocol.write (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Protocol.js:38:16)
+    at Socket.<anonymous> (/var/www/app_cloudX/server/node_modules/mysql/lib/Connection.js:88:28)
+    at Socket.<anonymous> (/var/www/app_cloudX/server/node_modules/mysql/lib/Connection.js:526:10)
+    at Socket.emit (events.js:198:13)
+    at Socket.EventEmitter.emit (domain.js:448:20)
+    at addChunk (_stream_readable.js:288:12)
+    at readableAddChunk (_stream_readable.js:269:11)
+    at Socket.Readable.push (_stream_readable.js:224:10)
+    at TCP.onStreamRead [as onread] (internal/stream_base_commons.js:94:17)
+    --------------------
+    at Pool.query (/var/www/app_cloudX/server/node_modules/mysql/lib/Pool.js:199:23)
+    at Object.getchannelstat (/var/www/app_cloudX/server/model/admin.js:391:23)
+    at /var/www/app_cloudX/server/routes/admin.routes.js:1556:11
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:137:13)
+    at module.exports (/var/www/app_cloudX/server/middlewares/auth.js:8:9)
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:137:13)
+    at Route.dispatch (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:112:3)
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at /var/www/app_cloudX/server/node_modules/express/lib/router/index.js:281:22
+    at Function.process_params (/var/www/app_cloudX/server/node_modules/express/lib/router/index.js:335:12)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/index.js:275:10)
+    at Immediate.<anonymous> (/var/www/app_cloudX/server/node_modules/express-session/index.js:502:7)
+    at runCallback (timers.js:706:11)
+    at tryOnImmediate (timers.js:676:5)
+  code: 'ER_WRONG_FIELD_WITH_GROUP',
+  errno: 1055,
+  sqlMessage:
+   'Expression #1 of ORDER BY clause is not in GROUP BY clause and contains nonaggregated column \'db_cloudX.tf_channelusages.id\' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by',
+  sqlState: '42000',
+  index: 0,
+  sql:
+   'SELECT MAX(count) as totalchannel,DATE_FORMAT(date,\'%H:%i\') as time FROM `tf_channelusages` WHERE date like \'%2020-10-28%\' GROUP BY time ORDER BY `id` ASC' }
+{ Error: ER_WRONG_FIELD_WITH_GROUP: Expression #1 of ORDER BY clause is not in GROUP BY clause and contains nonaggregated column 'db_cloudX.tf_channelusages.id' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+    at Query.Sequence._packetToError (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/sequences/Sequence.js:47:14)
+    at Query.ErrorPacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/sequences/Query.js:79:18)
+    at Protocol._parsePacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Protocol.js:291:23)
+    at Parser._parsePacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Parser.js:433:10)
+    at Parser.write (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Parser.js:43:10)
+    at Protocol.write (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Protocol.js:38:16)
+    at Socket.<anonymous> (/var/www/app_cloudX/server/node_modules/mysql/lib/Connection.js:88:28)
+    at Socket.<anonymous> (/var/www/app_cloudX/server/node_modules/mysql/lib/Connection.js:526:10)
+    at Socket.emit (events.js:198:13)
+    at Socket.EventEmitter.emit (domain.js:448:20)
+    at addChunk (_stream_readable.js:288:12)
+    at readableAddChunk (_stream_readable.js:269:11)
+    at Socket.Readable.push (_stream_readable.js:224:10)
+    at TCP.onStreamRead [as onread] (internal/stream_base_commons.js:94:17)
+    --------------------
+    at Pool.query (/var/www/app_cloudX/server/node_modules/mysql/lib/Pool.js:199:23)
+    at Object.getchannelstat (/var/www/app_cloudX/server/model/admin.js:391:23)
+    at /var/www/app_cloudX/server/routes/admin.routes.js:1556:11
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:137:13)
+    at module.exports (/var/www/app_cloudX/server/middlewares/auth.js:8:9)
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:137:13)
+    at Route.dispatch (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:112:3)
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at /var/www/app_cloudX/server/node_modules/express/lib/router/index.js:281:22
+    at Function.process_params (/var/www/app_cloudX/server/node_modules/express/lib/router/index.js:335:12)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/index.js:275:10)
+    at Immediate.<anonymous> (/var/www/app_cloudX/server/node_modules/express-session/index.js:502:7)
+    at runCallback (timers.js:706:11)
+    at tryOnImmediate (timers.js:676:5)
+  code: 'ER_WRONG_FIELD_WITH_GROUP',
+  errno: 1055,
+  sqlMessage:
+   'Expression #1 of ORDER BY clause is not in GROUP BY clause and contains nonaggregated column \'db_cloudX.tf_channelusages.id\' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by',
+  sqlState: '42000',
+  index: 0,
+  sql:
+   'SELECT MAX(count) as totalchannel,DATE_FORMAT(date,\'%H:%i\') as time FROM `tf_channelusages` WHERE date like \'%2020-10-28%\' GROUP BY time ORDER BY `id` ASC' }
+{ Error: ER_WRONG_FIELD_WITH_GROUP: Expression #1 of ORDER BY clause is not in GROUP BY clause and contains nonaggregated column 'db_cloudX.tf_channelusages.id' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+    at Query.Sequence._packetToError (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/sequences/Sequence.js:47:14)
+    at Query.ErrorPacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/sequences/Query.js:79:18)
+    at Protocol._parsePacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Protocol.js:291:23)
+    at Parser._parsePacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Parser.js:433:10)
+    at Parser.write (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Parser.js:43:10)
+    at Protocol.write (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Protocol.js:38:16)
+    at Socket.<anonymous> (/var/www/app_cloudX/server/node_modules/mysql/lib/Connection.js:88:28)
+    at Socket.<anonymous> (/var/www/app_cloudX/server/node_modules/mysql/lib/Connection.js:526:10)
+    at Socket.emit (events.js:198:13)
+    at Socket.EventEmitter.emit (domain.js:448:20)
+    at addChunk (_stream_readable.js:288:12)
+    at readableAddChunk (_stream_readable.js:269:11)
+    at Socket.Readable.push (_stream_readable.js:224:10)
+    at TCP.onStreamRead [as onread] (internal/stream_base_commons.js:94:17)
+    --------------------
+    at Pool.query (/var/www/app_cloudX/server/node_modules/mysql/lib/Pool.js:199:23)
+    at Object.getchannelstat (/var/www/app_cloudX/server/model/admin.js:391:23)
+    at /var/www/app_cloudX/server/routes/admin.routes.js:1556:11
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:137:13)
+    at module.exports (/var/www/app_cloudX/server/middlewares/auth.js:8:9)
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:137:13)
+    at Route.dispatch (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:112:3)
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at /var/www/app_cloudX/server/node_modules/express/lib/router/index.js:281:22
+    at Function.process_params (/var/www/app_cloudX/server/node_modules/express/lib/router/index.js:335:12)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/index.js:275:10)
+    at session (/var/www/app_cloudX/server/node_modules/express-session/index.js:475:7)
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/var/www/app_cloudX/server/node_modules/express/lib/router/index.js:317:13)
+  code: 'ER_WRONG_FIELD_WITH_GROUP',
+  errno: 1055,
+  sqlMessage:
+   'Expression #1 of ORDER BY clause is not in GROUP BY clause and contains nonaggregated column \'db_cloudX.tf_channelusages.id\' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by',
+  sqlState: '42000',
+  index: 0,
+  sql:
+   'SELECT MAX(count) as totalchannel,DATE_FORMAT(date,\'%H:%i\') as time FROM `tf_channelusages` WHERE date like \'%2020-10-28%\' GROUP BY time ORDER BY `id` ASC' }
+{ Error: ER_WRONG_FIELD_WITH_GROUP: Expression #1 of ORDER BY clause is not in GROUP BY clause and contains nonaggregated column 'db_cloudX.tf_channelusages.id' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+    at Query.Sequence._packetToError (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/sequences/Sequence.js:47:14)
+    at Query.ErrorPacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/sequences/Query.js:79:18)
+    at Protocol._parsePacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Protocol.js:291:23)
+    at Parser._parsePacket (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Parser.js:433:10)
+    at Parser.write (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Parser.js:43:10)
+    at Protocol.write (/var/www/app_cloudX/server/node_modules/mysql/lib/protocol/Protocol.js:38:16)
+    at Socket.<anonymous> (/var/www/app_cloudX/server/node_modules/mysql/lib/Connection.js:88:28)
+    at Socket.<anonymous> (/var/www/app_cloudX/server/node_modules/mysql/lib/Connection.js:526:10)
+    at Socket.emit (events.js:198:13)
+    at Socket.EventEmitter.emit (domain.js:448:20)
+    at addChunk (_stream_readable.js:288:12)
+    at readableAddChunk (_stream_readable.js:269:11)
+    at Socket.Readable.push (_stream_readable.js:224:10)
+    at TCP.onStreamRead [as onread] (internal/stream_base_commons.js:94:17)
+    --------------------
+    at Pool.query (/var/www/app_cloudX/server/node_modules/mysql/lib/Pool.js:199:23)
+    at Object.getchannelstat (/var/www/app_cloudX/server/model/admin.js:391:23)
+    at /var/www/app_cloudX/server/routes/admin.routes.js:1556:11
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:137:13)
+    at module.exports (/var/www/app_cloudX/server/middlewares/auth.js:8:9)
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:137:13)
+    at Route.dispatch (/var/www/app_cloudX/server/node_modules/express/lib/router/route.js:112:3)
+    at Layer.handle [as handle_request] (/var/www/app_cloudX/server/node_modules/express/lib/router/layer.js:95:5)
+    at /var/www/app_cloudX/server/node_modules/express/lib/router/index.js:281:22
+    at Function.process_params (/var/www/app_cloudX/server/node_modules/express/lib/router/index.js:335:12)
+    at next (/var/www/app_cloudX/server/node_modules/express/lib/router/index.js:275:10)
+    at Immediate.<anonymous> (/var/www/app_cloudX/server/node_modules/express-session/index.js:502:7)
+    at runCallback (timers.js:706:11)
+    at tryOnImmediate (timers.js:676:5)
+  code: 'ER_WRONG_FIELD_WITH_GROUP',
+  errno: 1055,
+  sqlMessage:
+   'Expression #1 of ORDER BY clause is not in GROUP BY clause and contains nonaggregated column \'db_cloudX.tf_channelusages.id\' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by',
+  sqlState: '42000',
+  index: 0,
+  sql:
+   'SELECT MAX(count) as totalchannel,DATE_FORMAT(date,\'%H:%i\') as time FROM `tf_channelusages` WHERE date like \'%2020-10-28%\' GROUP BY time ORDER BY `id` ASC' }
+Terminated
+npm ERR! code ELIFECYCLE
+npm ERR! errno 143
+npm ERR! api@1.0.0 start: `node app.js`
+npm ERR! Exit status 143
+npm ERR! 
+npm ERR! Failed at the api@1.0.0 start script.
+npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /root/.npm/_logs/2020-10-28T17_16_44_311Z-debug.log

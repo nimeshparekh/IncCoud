@@ -1,0 +1,283 @@
+<div mat-dialog-head class="dilog-head d-flex justify-content-between">
+    <h3 class="primary">Add Opportunity</h3>
+    <div class="d-inline-block">
+        <a class="close" (click)="openDialog()"><i class="fi-rr-cross-small"></i></a>
+    </div>
+
+</div>
+<div>
+    <form [formGroup]="addForm" (ngSubmit)="createopp()">
+        <div mat-dialog-content>
+            <div class="row">
+                <!-- <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Series</mat-label>
+                        <input matInput placeholder="Enter Series" formControlName="series">
+                    </mat-form-field>
+                </div> -->
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Opportunity Type</mat-label>
+                        <mat-select formControlName="opportunity_type">
+                            <mat-option  *ngFor="let lan of Opportunity_Type; let i = index" [value]="Opportunity_Type[i].name">{{Opportunity_Type[i].name}}</mat-option>
+                        </mat-select>
+
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Opportunity Form</mat-label>
+                        <mat-select formControlName="opportunity_from">
+                            <mat-option value="Lead" (click)="Leadform()">Lead
+                            </mat-option>
+                            <mat-option value="Customer" (click)="Customerform()">Customer
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2" *ngIf="leadstart">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Lead</mat-label>
+                        <input formControlName="party_name" matInput [(ngModel)]='query' [ngModelOptions]="{standalone: true}" placeholder="Search" [matAutocomplete]="auto">
+                        <mat-icon matSuffix (click)='search(false)'>search</mat-icon>
+                        <mat-autocomplete #auto="matAutocomplete">
+                            <mat-option *ngFor="let option of Searching_data; let i = index" [value]="Searching_data[i].name">
+                              <b class="searchop2">{{Searching_data[i].name}}</b>
+                              <b class="searchop">{{Searching_data[i].lead_name}},{{Searching_data[i].lead_owner}},{{Searching_data[i].status}}</b>
+                            </mat-option>
+                        </mat-autocomplete>
+                        
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2" *ngIf="customerstart">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Customer</mat-label>
+                        <mat-select formControlName="party_name">
+                            <mat-option  *ngFor="let lan of customer; let i = index" [value]="customer[i].name">{{customer[i].name}}</mat-option>
+                        </mat-select>
+
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Status</mat-label>
+                        <mat-select formControlName="status">
+                            <mat-option selected value="Open">Open </mat-option>
+                            <mat-option value="Quotation">Quotation </mat-option>
+                            <mat-option value="Converted">Converted </mat-option>
+                            <mat-option value="Lost">Lost </mat-option>
+                            <mat-option value="Replied">Replied </mat-option>
+                            <mat-option value="Closed">Closed </mat-option>
+                        </mat-select>
+
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Converted By</mat-label>
+                        <mat-select formControlName="converted_by">
+                            <mat-option *ngFor="let lan of Converted; let i = index" [value]="Converted[i].name">{{Converted[i].name}}
+                            </mat-option>
+                        </mat-select>
+
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Sales Stage</mat-label>
+                        <mat-select formControlName="sales_stage">
+                            <mat-option *ngFor="let lan of sales_stage; let i = index" [value]="sales_stage[i].name">{{sales_stage[i].name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Expected Closing Date</mat-label>
+                        <input matInput placeholder="Enter Closing Date" [matDatepicker]="closing_datepicker"
+                            formControlName="expected_closing">
+                        <!--<mat-error *ngIf="addConForm.controls.name.hasError('required')">
+                        Please enter Segment name
+                      </mat-error>-->
+                        <mat-datepicker-toggle matSuffix [for]="closing_datepicker"></mat-datepicker-toggle>
+                        <mat-datepicker #closing_datepicker tpicker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-2">
+                    <div class="text-inside">
+                        <mat-label>Follow Up</mat-label>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Next Contact By</mat-label>
+                        <mat-select formControlName="contact_by">
+                            <mat-option *ngFor="let lan of Converted; let i = index" [value]="Converted[i].name">{{Converted[i].name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Next Contact Date</mat-label>
+                        <input matInput placeholder="Enter Contact Date" [matDatepicker]="contact_datepicker"
+                            formControlName="contact_date">
+                        <!--<mat-error *ngIf="addConForm.controls.name.hasError('required')">
+                        Please enter Segment name
+                      </mat-error>-->
+                        <mat-datepicker-toggle matSuffix [for]="contact_datepicker"></mat-datepicker-toggle>
+                        <mat-datepicker #contact_datepicker tpicker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>To Discuss</mat-label>
+                        <textarea matInput placeholder="Enter Detail" formControlName="to_discuss" rows="3"></textarea>
+                        <!--<mat-error *ngIf="addConForm.controls.name.hasError('required')">
+                        Please enter Segment name
+                      </mat-error>-->
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-2">
+                    <div class="text-inside">
+                        <mat-label>Sales</mat-label>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Currency</mat-label>
+                        <mat-select formControlName="currency">
+                            <mat-option *ngFor="let lan of Currency; let i = index" [value]="Currency[i].name">{{Currency[i].name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Probability(%)</mat-label>
+                        <input matInput placeholder="Enter Probability" formControlName="probability" value="">
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Opportunity Amount</mat-label>
+                        <input matInput placeholder="Enter Opportunity Amount" formControlName="opportunity_amount">
+                    </mat-form-field>
+                </div>
+            </div>
+            <!--<div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-2">
+                    <div class="text-inside">
+                        <div>
+                            <mat-checkbox id="withitem" class="withitem mt-2" color="primary"
+                                formControlName="withitem" value="1" (change)="withitem($event)">
+                                with Item
+                            </mat-checkbox>
+                        </div>
+                        <div class="table-view" *ngIf="showitem">
+                            <div class="table-responsive">
+                                <table mat-table [dataSource]="dataSource">
+
+                                   
+                                    <ng-container matColumnDef="id">
+                                        <th mat-header-cell *matHeaderCellDef> </th>
+                                        <td mat-cell *matCellDef="let element;let i = index;"></td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="itemcode">
+                                        <th mat-header-cell *matHeaderCellDef> Item Code </th>
+                                        <td mat-cell *matCellDef="let element;let i = index;"> </td>
+                                    </ng-container>
+
+
+                                    <ng-container matColumnDef="qty">
+                                        <th mat-header-cell *matHeaderCellDef> Qty</th>
+                                        <td mat-cell *matCellDef="let element;let i = index;"> </td>
+                                    </ng-container>
+
+                                    
+                                    <ng-container matColumnDef="itemname">
+                                        <th mat-header-cell *matHeaderCellDef> Item Name </th>
+                                        <td mat-cell *matCellDef="let element;let i = index;">
+
+                                        </td>
+                                    </ng-container>
+
+                                   
+                                    <ng-container matColumnDef="action">
+                                        <th mat-header-cell *matHeaderCellDef> Action </th>
+                                        <td mat-cell *matCellDef="let element;let i = index">
+                                            <button (click)="updatedialog(i)" title="Edit" mat-icon-button color="primary" aria-label="Edit">
+                                            <i class="fi-rr-pencil"></i>
+                                          </button>&nbsp;
+                                          <button (click)="deletedialog(element._id)" title="delete" mat-icon-button color="primary" aria-label="delete">
+                                            <i class="fa fa-times"></i>
+                                          </button> 
+                                             <a class="pencil"><i class="fi-rr-pencil"></i></a>
+                                        </td>
+                                    </ng-container>
+
+                                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                </table>
+                            </div>
+
+                        </div>
+                        <br>
+                        <button mat-raised-button class="ml-2" color="default" title="Add" *ngIf="showitem">Add
+                            Multiple</button>
+                        <button mat-raised-button class="ml-2" color="default" title="Add" *ngIf="showitem">Add
+                            Row</button>
+                    </div>
+                </div>
+            </div>-->
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-2">
+                    <div class="text-inside">
+                        <mat-label>Source</mat-label>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Source</mat-label>
+                        <mat-select formControlName="source">
+                            <mat-option *ngFor="let lan of Source; let i = index" [value]="Source[i].name">{{Source[i].name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Company</mat-label>
+                        <mat-select formControlName="company">
+                            <mat-option *ngFor="let lan of Company; let i = index" [value]="Company[i].name">{{Company[i].name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Opportunity Date</mat-label>
+                        <input matInput placeholder="Enter Opportunity Date" [matDatepicker]="opp_datepicker"
+                            formControlName="transaction_date">
+                        <!--<mat-error *ngIf="addConForm.controls.name.hasError('required')">
+                        Please enter Segment name
+                      </mat-error>-->
+                        <mat-datepicker-toggle matSuffix [for]="opp_datepicker"></mat-datepicker-toggle>
+                        <mat-datepicker #opp_datepicker tpicker></mat-datepicker>
+                    </mat-form-field>
+                </div>                
+            </div>            
+        </div>
+        <div class="btn-sec" mat-dialog-actions>
+            <button mat-raised-button type="submit" color="primary" class="Update-btn" [disabled]="isDisabled">Save</button>
+            <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+        </div>
+    </form>
+</div>

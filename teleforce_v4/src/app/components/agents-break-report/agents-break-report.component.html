@@ -1,0 +1,220 @@
+<div class="warap-height pt-4">
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <h1 class="h3 mb-2 text-gray-800">Agent Break Time Report</h1>
+        <p class="mb-2"></p>
+        <form [formGroup]="searchform">  
+            <div class="row">
+                <div class="col-sm-3">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Agent</mat-label>
+                      <mat-select formControlName="agentid" >
+                        <mat-option  value="">All</mat-option>
+                        <mat-option *ngFor="let agent of agents" value="{{agent.account_id}}">
+                          {{agent.account_name | titlecase}}</mat-option>
+                      </mat-select>
+                     
+                    </mat-form-field>
+                  </div>
+                <div class="col-sm-3">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Choose a date</mat-label>
+                        <input matInput placeholder="From Date" [matDatepicker]="startpicker" formControlName="startdate" required>
+                        <mat-datepicker-toggle matSuffix [for]="startpicker"></mat-datepicker-toggle>
+                        <mat-datepicker #startpicker tpicker></mat-datepicker>
+                        <mat-error *ngIf="searchform.controls.startdate.hasError('required')">
+                            Please select From Date
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-3">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Choose a date</mat-label>
+                        <input matInput placeholder="To Date" [matDatepicker]="endpicker" formControlName="enddate" required>
+                        <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
+                        <mat-datepicker #endpicker tpicker></mat-datepicker>
+                        <mat-error *ngIf="searchform.controls.enddate.hasError('required')">
+                            Please select To Date
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                
+
+                <div class="col-sm-3">
+                    <button mat-raised-button class="mt-2" type="submit" (click)="searchData()" [disabled]="isDisabled">Search</button>&nbsp;
+
+                </div>
+            </div>      
+        </form>
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4 mt-3">
+
+            <!-- <div class="card-body">
+                <div class="table-responsive">
+                    <table width="100%">
+                        <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+                        <div fxLayout fxLayoutAlign="center center" class="mt-2">
+                            <button mat-raised-button color="primary"
+                                (click)="exporter.exportTable('csv', {fileName:'Agent-Activity-Report', sheet: 'sheet_name'})">CSV</button>
+                        </div><br>
+                        <mat-table class="lessons-table mat-elevation-z8" matTableExporter #exporter="matTableExporter" [dataSource]="dataSource">
+                            
+                            <ng-container matColumnDef="id">
+        
+                                <mat-header-cell *matHeaderCellDef >Sr. No</mat-header-cell>
+                    
+                                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" data-label="id">
+                                {{i+1+(paginator.pageIndex * paginator.pageSize)}}</mat-cell>
+                    
+                            </ng-container>
+                            
+                            <ng-container matColumnDef="date">
+
+                                <mat-header-cell *matHeaderCellDef > Date </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.DATE | date:'dd-MM-yyyy HH:mm:ss':timezone}}
+                                </mat-cell>
+
+                            </ng-container>  
+                            
+                            <ng-container matColumnDef="break_start_time">
+
+                                <mat-header-cell *matHeaderCellDef > Start Time </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.break_start_time  | date:'dd-MM-yyyy HH:mm:ss':timezone}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="break_end_time">
+
+                                <mat-header-cell *matHeaderCellDef > End Time </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.break_end_time | date:'dd-MM-yyyy HH:mm:ss':timezone}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="break_duration">
+
+                                <mat-header-cell *matHeaderCellDef > Break Duration </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.break_duration}}
+                                </mat-cell>
+                                <mat-footer-cell *matFooterCellDef> Total</mat-footer-cell>
+                            </ng-container>
+
+                          
+
+                            
+                            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+                            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+                        </mat-table>
+                        <mat-paginator #paginator [length]="Length" [pageSize]="50" [pageSizeOptions]="[50,100,500]">
+                        </mat-paginator>
+                    </table> 
+                </div>
+            </div> -->
+            <div class="card-body">
+          
+                <div fxLayout fxLayoutAlign="center center">
+                  <button mat-raised-button color="primary" (click)="exporter.exportTable('csv', {fileName:'Agent-Breaktime-report', sheet: 'sheet_name'})">CSV</button>
+                </div> 
+        
+                
+                <!--Table Data-->
+                <div class="table-responsive mt-2">
+                  
+                  <table mat-table matTableExporter #exporter="matTableExporter" [dataSource]="dataSource" matSort class="mat-elevation-z8">
+                          
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="id">
+                        <th mat-header-cell *matHeaderCellDef> Sr. No. </th>
+                        <td mat-cell *matCellDef="let row;let i = index;" data-label="id">
+                          {{i+1+(paginator.pageIndex * paginator.pageSize)}}
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef><b>Total</b>  </td>
+                    </ng-container>
+                
+                    <!-- did Column -->
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef  mat-sort-header>  Agent </th>
+                        <td mat-cell *matCellDef="let row">
+                            {{row.account_name}}
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef>  </td>
+      
+                    </ng-container>
+                    
+                    <ng-container matColumnDef="date">
+                        <th mat-header-cell *matHeaderCellDef  mat-sort-header>  Date </th>
+                        <td mat-cell *matCellDef="let row">
+                            {{row.break_start_time | date:'dd-MM-yyyy HH:mm:ss':timezone}}
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef>  </td>
+      
+                    </ng-container>
+                    <ng-container matColumnDef="type">
+                        <th mat-header-cell *matHeaderCellDef  mat-sort-header>  Break Type </th>
+                        <td mat-cell *matCellDef="let row">
+                            {{row.reason_name}}
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef>  </td>
+      
+                    </ng-container>
+                
+                    <!-- calltime Column -->
+                    <ng-container matColumnDef="break_start_time">
+                        <th mat-header-cell *matHeaderCellDef> Start Time </th>
+                        <td mat-cell *matCellDef="let row"> 
+                            {{row.break_start_time  | date:'dd-MM-yyyy HH:mm:ss':timezone}}
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef> 
+                      </td>
+      
+                    </ng-container>
+                    <ng-container matColumnDef="break_end_time">
+                      <th mat-header-cell *matHeaderCellDef> End Time </th>
+                      <td mat-cell *matCellDef="let row"> 
+                        {{row.break_end_time | date:'dd-MM-yyyy HH:mm:ss':timezone}}
+                    </td>
+                      <td mat-footer-cell *matFooterCellDef> 
+                      </td>
+                  </ng-container>
+                  <ng-container matColumnDef="break_duration">
+                    <th mat-header-cell *matHeaderCellDef> Total Break Time </th>
+                    <td mat-cell *matCellDef="let row"> 
+                      {{row.break_duration }}
+                  </td>
+                  
+                    <td mat-footer-cell *matFooterCellDef> 
+                        {{total}}
+                    </td>
+                </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    <tr mat-footer-row *matFooterRowDef="displayedColumns; sticky: true"></tr>
+      
+                  </table>
+                  
+                </div>
+        
+                <mat-paginator #paginator [length]="Length" [pageSize]="50" [pageSizeOptions]="[50,100,500]"></mat-paginator>
+        
+                
+             
+              </div>
+        </div>
+
+    </div>
+    <!-- /.container-fluid -->
+</div>

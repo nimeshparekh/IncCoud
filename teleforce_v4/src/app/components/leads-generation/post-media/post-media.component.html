@@ -1,0 +1,46 @@
+<div mat-dialog-head class="dilog-head d-flex justify-content-between">
+    <h5 class="dialog-head-h">Media Library</h5>
+    <div class="d-inline-block">
+        <!-- <a class="close" (click)="close()"><i class="fi-rr-cross-small"></i></a> -->
+       
+        <button mat-stroked-button (click)="add_media()">
+            <mat-icon>add</mat-icon>
+        </button>
+        <button mat-stroked-button (click)="close()" class="ml-2">
+            <mat-icon>close</mat-icon>
+        </button>
+        <!-- <a class="close" (click)="add_media()"><i class="fa fa-plus"></i></a> -->
+    </div>
+</div>
+<form class="mt-2">
+    <div mat-dialog-content>
+        <!-- <mat-spinner *ngIf="loadingfile" ></mat-spinner> -->
+        <mat-progress-bar mode="indeterminate" *ngIf="loadingfile" ></mat-progress-bar>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="select-media row">
+                    <div class="col-xl-2 col-md-3 col-sm-4 col-6 mt-2" *ngFor='let checkbox of filedata, let i = index'>
+                        <div class="" data-toggle="tooltip" data-placement="bottom" [title]="checkbox.media_name +' ('+ checkbox.media_type +')'" >
+                            <input type="checkbox" [id]="checkbox.media_id" [(ngModel)]="media_checked[i]" [ngModelOptions]="{standalone: true}"/>
+                            <label class="position-relative" [for]="checkbox.media_id">
+                                <img *ngIf="checkbox.media_type.includes('image')" [src]="checkbox.media_link"  style="object-fit: cover;
+                                object-position: center;" />
+                                <video  width="200" height="auto" controls *ngIf="checkbox.media_type.includes('video')">
+                                    <source [src]="checkbox.media_link"  type='video/mp4'  style="object-fit: cover;
+                                    object-position: center;" />
+                                        Your browser does not support the video tag.
+                                </video>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <!-- <ul class="medialist">
+                    <li *ngFor="let item of filedata" >
+                        <img *ngIf="item.mimetype.includes('image')" width="200" height="200"  [src]="this.sanitizer.bypassSecurityTrustUrl('data:'+item.mimetype+';base64,' + item.buffer)" />
+                    </li>
+                </ul> -->
+            </div>
+        </div>
+    </div>
+</form>
+

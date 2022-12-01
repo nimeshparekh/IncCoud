@@ -1,0 +1,447 @@
+<div class="warap-height pt-4"> 
+  <!-- Begin Page Content -->
+  <div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">
+      <button routerLink="/settings" mat-icon-button title="Back" color="accent"
+        aria-label="Example icon button with a menu icon">
+        <mat-icon>keyboard_backspace</mat-icon>
+      </button>
+      Agents</h1>
+
+    <!--heading filter form-->
+    <form [formGroup]="searchform" class="mt-3">
+      <div class="row">
+        <div class="col-12 col-md-3 col-lg-2 col-xl-2 col-sm-6">
+          <mat-form-field appearance="outline">
+            <mat-label>DID</mat-label>
+            <mat-select formControlName="did">
+              <mat-option value="">All</mat-option>
+              <mat-option *ngFor="let arr of didarr" value="{{arr.did}}">
+                {{arr.did}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-3 col-lg-2 col-xl-2 col-sm-6">
+          <mat-form-field appearance="outline">
+            <mat-label>Agent Name</mat-label>
+            <input matInput placeholder="Agent Name" formControlName="agentname">    
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-3 col-lg-2 col-xl-2 col-sm-6">
+          <mat-form-field appearance="outline">
+            <mat-label>Agent Mobile No</mat-label>
+            <input matInput placeholder="Agent Mobile No" formControlName="agentnumber">
+          </mat-form-field>    
+        </div>
+        <!-- <div class="col-12 col-md-3 col-lg-2 col-xl-2 col-sm-6">
+          <mat-form-field appearance="outline">
+            <mat-label>Status</mat-label>
+            <mat-select formControlName="current_status">
+              <mat-option value="">All</mat-option>
+
+              <mat-option value="0">Active</mat-option>
+              <mat-option value="1">Inactive</mat-option>
+
+            </mat-select>
+          </mat-form-field>
+        </div> -->
+        <div class="col-12 col-md-4 col-lg-4 col-xl-3 col-sm-6">
+          
+          <button mat-raised-button class="mt-2" type="submit" (click)="searchData()" [disabled]="isDisabled">Search</button>&nbsp;
+          <button mat-raised-button class="mt-2" color="warn" class="Update-btn" (click)="resetform()">Reset</button>&nbsp;
+          <button class="mt-2" (click)="resetform()" mat-mini-fab color="primary" aria-label="Example icon button with a plus one icon">
+            <span class="material-icons">refresh</span>
+          </button>    
+        </div>
+      </div>
+    </form>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4 mt-2">
+
+      <!--Progress Bar-->
+     <!-- // <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar> -->
+
+      <div class="card-body">
+
+        <!--Add Agent Btn-->
+        <button *ngIf="agentcount<userlimit" mat-raised-button color="accent" (click)="Createdialog()" title="Add">Add
+          Agent
+        </button>
+
+        <!--Table Data-->
+<div>
+  <mat-tab-group (selectedTabChange)="onTabClick($event)">
+    <!-- History of Missed--> 
+    <!-- <mat-tab-group> -->
+        <mat-tab label="Active">
+            <!--Process Bar-->
+            <mat-progress-bar mode="dataSource" *ngIf="isLoading"></mat-progress-bar>
+            <div fxLayout fxLayoutAlign="center center" class="mt-2">
+              <button mat-raised-button color="primary"
+                  (click)="exporter.exportTable('csv', {fileName:'active-agent', sheet: 'sheet_name'})">CSV</button>
+          </div><br>
+            <div class="table-responsive mt-2">
+        
+        <table mat-table  matTableExporter #exporter="matTableExporter" [dataSource]="dataSource" matSort class="mat-elevation-z8">
+         
+          <!-- Position Column -->
+          <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef> Sr. No. </th>
+              <td mat-cell *matCellDef="let row;let i = index;" data-label="id">
+                {{i+1+(paginator.pageIndex * paginator.pageSize)}}
+              </td>
+          </ng-container>
+      
+          <!-- Username Column -->
+          <ng-container matColumnDef="account_name">
+              <th mat-header-cell *matHeaderCellDef  mat-sort-header>  Username </th>
+              <td mat-cell *matCellDef="let row">
+                {{row.account_name}}
+              </td>
+          </ng-container>
+      
+          <!-- UserID Column -->
+          <ng-container matColumnDef="account_id">
+              <th mat-header-cell *matHeaderCellDef> UserID </th>
+              <td mat-cell *matCellDef="let row"> 
+                {{row.account_id}}
+              </td>
+          </ng-container>
+      
+          <!-- email Column -->
+          <ng-container matColumnDef="email">
+              <th mat-header-cell *matHeaderCellDef>Email</th>
+              <td mat-cell *matCellDef="let row">
+                {{row.email}}
+              </td>
+          </ng-container>
+
+          <!-- mobile Column -->
+          <ng-container matColumnDef="mobile">
+              <th mat-header-cell *matHeaderCellDef> Mobile </th>
+              <td mat-cell *matCellDef="let row">
+                {{row.mobile}}
+              </td>
+          </ng-container>
+
+          <!-- Authorised Person Column -->
+          <ng-container matColumnDef="authorised_person_name">
+              <th mat-header-cell *matHeaderCellDef> Authorised Person </th>
+              <td mat-cell *matCellDef="let row">
+                {{row.authorised_person_name}}
+              </td>
+          </ng-container>
+
+          <!-- current_status Column -->
+          <ng-container matColumnDef="current_status">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+              <td mat-cell *matCellDef="let row">
+                {{row.current_status==0?'Active':'Inactive'}}
+              </td>
+          </ng-container>
+
+          <!-- Login Status Column -->
+          <ng-container matColumnDef="is_loggedin">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Login Status </th>
+              <td mat-cell *matCellDef="let row">
+                {{row.is_loggedin=='yes'?'Online':'Offline'}}
+              </td>
+          </ng-container>
+
+
+
+          <!-- Action Column -->
+          <ng-container matColumnDef="action">
+              <th mat-header-cell *matHeaderCellDef> Action </th>
+              <td mat-cell *matCellDef="let row">
+                <button  mat-icon-button color="info" title="Login" *ngIf="row.account_role==2">
+                  <mat-icon (click)="directlogin(row.account_name)" >login</mat-icon>
+                </button>
+                <button *ngIf="row.account_role==2" (click)="assignagents(row.account_id)" title="Assign Agent" mat-icon-button color="primary" aria-label="Example icon button with a home icon">
+                  <mat-icon>assignment_ind</mat-icon>
+                </button>
+                <!-- below button only for set all buttons-->
+                <button *ngIf="row.account_role!=2"  mat-icon-button color="primary" aria-label="Example icon button with a home icon">
+                  
+                </button>
+                <button (click)="menudialog(row.account_id)" title="List" mat-icon-button color="primary" aria-label="Example icon button with a home icon">
+                  <mat-icon>menu</mat-icon>
+                </button>
+
+                <button (click)="updatedialog(row.account_id)" title="Edit" mat-icon-button color="primary" aria-label="Example icon button with a home icon">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button  mat-icon-button color="warn" (click)="deleteData(row.account_id)" title="Delete " aria-label="Example icon button with a home icon">
+                    <mat-icon>delete</mat-icon>
+
+                </button>
+                <button (click)="changepassword(row.account_id)" title="Change Password" mat-icon-button color="accent" aria-label="Example icon button with a menu icon">
+                  <mat-icon>settings</mat-icon>
+                </button>
+                <button  mat-icon-button color="info" title="Force Logout">
+                  <mat-icon (click)="forcelogout(row.account_id)" >logout</mat-icon>
+                </button>
+   
+              </td>
+          </ng-container>
+      
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+      </div>
+
+      <!--Paginator-->
+      <mat-paginator #paginator [length]="Length" [pageSize]="50" [pageSizeOptions]="[50,100,500]"></mat-paginator>
+        </mat-tab>
+        <mat-tab label="InActive">
+          <!--Process Bar-->
+          <mat-progress-bar mode="inactivedataSource" *ngIf="inactiveisLoading"></mat-progress-bar>
+          <div fxLayout fxLayoutAlign="center center" class="mt-2">
+            <button mat-raised-button color="primary"
+                (click)="exporter.exportTable('csv', {fileName:'inactive-agent', sheet: 'sheet_name'})">CSV</button>
+        </div><br>
+          <div class="table-responsive mt-2">
+      
+      <table mat-table [dataSource]="inactivedataSource" matSort matTableExporter #exporter="matTableExporter" class="mat-elevation-z8">
+       
+        <!-- Position Column -->
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> Sr. No. </th>
+            <td mat-cell *matCellDef="let row;let i = index;" data-label="id">
+              {{i+1+(paginator.pageIndex * paginator.pageSize)}}
+            </td>
+        </ng-container>
+    
+        <!-- Username Column -->
+        <ng-container matColumnDef="account_name">
+            <th mat-header-cell *matHeaderCellDef  mat-sort-header>  Username </th>
+            <td mat-cell *matCellDef="let row">
+              {{row.account_name}}
+            </td>
+        </ng-container>
+    
+        <!-- UserID Column -->
+        <ng-container matColumnDef="account_id">
+            <th mat-header-cell *matHeaderCellDef> UserID </th>
+            <td mat-cell *matCellDef="let row"> 
+              {{row.account_id}}
+            </td>
+        </ng-container>
+    
+        <!-- email Column -->
+        <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef>Email</th>
+            <td mat-cell *matCellDef="let row">
+              {{row.email}}
+            </td>
+        </ng-container>
+
+        <!-- mobile Column -->
+        <ng-container matColumnDef="mobile">
+            <th mat-header-cell *matHeaderCellDef> Mobile </th>
+            <td mat-cell *matCellDef="let row">
+              {{row.mobile}}
+            </td>
+        </ng-container>
+
+        <!-- Authorised Person Column -->
+        <ng-container matColumnDef="authorised_person_name">
+            <th mat-header-cell *matHeaderCellDef> Authorised Person </th>
+            <td mat-cell *matCellDef="let row">
+              {{row.authorised_person_name}}
+            </td>
+        </ng-container>
+
+        <!-- current_status Column -->
+        <ng-container matColumnDef="current_status">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+            <td mat-cell *matCellDef="let row">
+              {{row.current_status==0?'Active':'Inactive'}}
+            </td>
+        </ng-container>
+
+        <!-- Login Status Column -->
+        <ng-container matColumnDef="is_loggedin">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Login Status </th>
+            <td mat-cell *matCellDef="let row">
+              {{row.is_loggedin=='yes'?'Online':'Offline'}}
+            </td>
+        </ng-container>
+
+
+
+        <!-- Action Column -->
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef> Action </th>
+          <td mat-cell *matCellDef="let row">
+            <button *ngIf="row.account_role==2" (click)="assignagents(row.account_id)" title="Assign Agent" mat-icon-button color="primary" aria-label="Example icon button with a home icon">
+              <mat-icon>assignment_ind</mat-icon>
+            </button>
+            <button *ngIf="row.account_role!=2"  mat-icon-button color="primary" aria-label="Example icon button with a home icon">
+              
+            </button>
+            <button (click)="menudialog(row.account_id)" title="List" mat-icon-button color="primary" aria-label="Example icon button with a home icon">
+              <mat-icon>menu</mat-icon>
+            </button>
+
+            <button (click)="updatedialog(row.account_id)" title="Edit" mat-icon-button color="primary" aria-label="Example icon button with a home icon">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button  mat-icon-button color="warn" (click)="deleteData(row.account_id)" title="Delete " aria-label="Example icon button with a home icon">
+                <mat-icon>delete</mat-icon>
+
+            </button>
+            <button (click)="changepassword(row.account_id)" title="Change Password" mat-icon-button color="accent" aria-label="Example icon button with a menu icon">
+              <mat-icon>settings</mat-icon>
+            </button>
+            <button  mat-icon-button color="info" title="Force Logout">
+              <mat-icon (click)="forcelogout(row.account_id)" >logout</mat-icon>
+            </button>
+          </td>
+      </ng-container>
+    
+        <tr mat-header-row *matHeaderRowDef="inactivedisplayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: inactivedisplayedColumns;"></tr>
+      </table>
+
+    </div>
+
+    <!--Paginator-->
+    <mat-paginator #inactivepaginator [length]="inactiveLength" [pageSize]="50" [pageSizeOptions]="[50,100,500]"></mat-paginator>
+      </mat-tab>
+      <mat-tab label="Deleted">
+        <!--Process Bar-->
+        <mat-progress-bar mode="deletedataSource" *ngIf="deleteisLoading"></mat-progress-bar>
+  <div class="table-responsive mt-2">
+    
+    <table mat-table [dataSource]="deletedataSource" matSort class="mat-elevation-z8">
+              
+      <!-- Position Column -->
+      <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> Sr. No. </th>
+          <td mat-cell *matCellDef="let row;let i = index;" data-label="id">
+            {{i+1+(paginator.pageIndex * paginator.pageSize)}}
+          </td>
+      </ng-container>
+  
+      <!-- Username Column -->
+      <ng-container matColumnDef="account_name">
+          <th mat-header-cell *matHeaderCellDef  mat-sort-header>  Username </th>
+          <td mat-cell *matCellDef="let row">
+            {{row.account_name}}
+          </td>
+      </ng-container>
+  
+      <!-- UserID Column -->
+      <ng-container matColumnDef="account_id">
+          <th mat-header-cell *matHeaderCellDef> UserID </th>
+          <td mat-cell *matCellDef="let row"> 
+            {{row.account_id}}
+          </td>
+      </ng-container>
+  
+      <!-- email Column -->
+      <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef>Email</th>
+          <td mat-cell *matCellDef="let row">
+            {{row.email}}
+          </td>
+      </ng-container>
+
+      <!-- mobile Column -->
+      <ng-container matColumnDef="mobile">
+          <th mat-header-cell *matHeaderCellDef> Mobile </th>
+          <td mat-cell *matCellDef="let row">
+            {{row.mobile}}
+          </td>
+      </ng-container>
+
+      <!-- Authorised Person Column -->
+      <ng-container matColumnDef="authorised_person_name">
+          <th mat-header-cell *matHeaderCellDef> Authorised Person </th>
+          <td mat-cell *matCellDef="let row">
+            {{row.authorised_person_name}}
+          </td>
+      </ng-container>
+
+      <!-- current_status Column -->
+      <ng-container matColumnDef="current_status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+          <td mat-cell *matCellDef="let row">
+            {{row.current_status==0?'Active':'Inactive'}}
+          </td>
+      </ng-container>
+
+      <!-- Login Status Column -->
+      <ng-container matColumnDef="is_loggedin">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Login Status </th>
+          <td mat-cell *matCellDef="let row">
+            {{row.is_loggedin=='yes'?'Online':'Offline'}}
+          </td>
+      </ng-container>
+
+      <!-- Login Status Column -->
+      <ng-container matColumnDef="lead_count">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Lead Count </th>
+        <td mat-cell *matCellDef="let row">
+          {{row.lead_count}}
+          <button *ngIf="row.lead_count>0" (click)="assignleads(row.account_id)" title="Assign Leads" mat-icon-button color="primary" aria-label="Example icon button with a home icon">
+            <i class="fi-rr-id-badge"></i>
+          </button>
+        </td>
+    </ng-container>
+
+
+      <!-- Action Column -->
+ <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef> Action </th>
+          <td mat-cell *matCellDef="let row">
+            <!-- <button *ngIf="row.account_role==2" (click)="assignagents(row.account_id)" title="Assign Agent" mat-icon-button color="primary" aria-label="Example icon button with a home icon">
+              <mat-icon>assignment_ind</mat-icon>
+            </button>
+            <button *ngIf="row.account_role!=2"  mat-icon-button color="primary" aria-label="Example icon button with a home icon">
+              
+            </button>
+            <button (click)="menudialog(row.account_id)" title="List" mat-icon-button color="primary" aria-label="Example icon button with a home icon">
+              <mat-icon>menu</mat-icon>
+            </button>
+
+              <button  mat-icon-button color="warn" (click)="deleteData(row.account_id)" title="Delete " aria-label="Example icon button with a home icon">
+                <mat-icon>delete</mat-icon>
+
+            </button> -->
+          
+            <button (click)="updatedialog(row.account_id)" title="Edit" mat-icon-button color="primary" aria-label="Example icon button with a home icon">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <!-- <button (click)="changepassword(row.account_id)" title="Change Password" mat-icon-button color="accent" aria-label="Example icon button with a menu icon">
+              <mat-icon>settings</mat-icon>
+            </button>
+            <button  mat-icon-button color="info" title="Force Logout">
+              <mat-icon (click)="forcelogout(row.account_id)" >logout</mat-icon>
+            </button>
+          </td> -->
+      </ng-container> -
+  
+      <tr mat-header-row *matHeaderRowDef="deletedisplayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: deletedisplayedColumns;"></tr>
+    </table>
+
+  </div>
+
+  <!--Paginator-->
+  <mat-paginator #deletepaginator [length]="deleteLength" [pageSize]="50" [pageSizeOptions]="[50,100,500]"></mat-paginator>
+    </mat-tab>
+    </mat-tab-group>
+</div>
+       
+      </div>
+    </div>
+
+  </div>
+  <!-- /.container-fluid -->
+</div>

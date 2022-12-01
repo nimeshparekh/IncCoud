@@ -1,0 +1,105 @@
+.medialist li {
+    padding : 6px 10px 6px 10px;
+    list-style-type: none;
+    float: left;
+}
+.select-media ul 
+{
+    list-style-type: none;
+    padding-left: 0px;
+    display: inline-block;
+    margin: 0px;
+}
+  
+.select-media li 
+{
+    margin-left: 0px;
+    float: left;
+}
+.select-media input[type="checkbox"]
+{
+    box-sizing: border-box;
+    padding: 0;
+    display: none;
+}
+.select-media input[type="checkbox"][id^="myCheckbox"] 
+{
+    display: none;
+}
+
+.select-media label 
+{
+    border: 1px solid #fff;
+    /* padding: 6px; */
+    display: block;
+    position: relative;
+    /* margin: 10px; */
+    cursor: pointer;
+}
+
+.select-media label:before 
+{
+    background-color: white;
+    color: white;
+    content: " ";
+    display: block;
+    border-radius: 50%;
+    border: 1px solid #b9c4c7;
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 18px;
+    height: 18px;
+    text-align: center;
+    line-height: 28px;
+    transition-duration: 0.4s;
+    transform: scale(0);
+}
+/* .create-post-form {
+    max-height: 440px;
+    overflow-y: scroll;
+} */
+.select-media label img,.select-media label video
+{
+    height: 143px;
+    width: 100%;
+    transition-duration: 0.2s;
+    transform-origin: 50% 50%;
+    transition: -webkit-filter .5s ease-in-out;
+    transition: filter .5s ease-in-out;
+    transition: filter .5s ease-in-out, -webkit-filter .5s ease-in-out;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+}
+/* .select-media label img 
+{
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -ms-filter: grayscale(100%);
+    filter: grayscale(100%);
+    filter: gray; 
+} */
+
+.select-media :checked + label 
+{
+    border-color: #d8eaf0;
+    border-radius: 12px;
+}
+
+.select-media :checked + label:before 
+{
+    content: "✓";
+    background-color: #38c6f8;
+    transform: scale(1);
+    line-height: 16px;
+    font-size: 8px;
+    font-weight: bold;
+}
+
+.select-media :checked + label img,.select-media :checked + label video 
+{
+    transform: scale(0.9);
+    /* box-shadow: 0 0 5px #333; */
+    z-index: -1;
+    filter: none;
+}

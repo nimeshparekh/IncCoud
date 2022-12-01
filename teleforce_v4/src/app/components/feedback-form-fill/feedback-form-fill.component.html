@@ -1,0 +1,48 @@
+<div mat-dialog-head class="dilog-head d-flex justify-content-between">
+    <h3 class="primary">Fill Feedback</h3>
+    <div class="d-inline-block">
+        <a class="close" (click)="closeDialog()"><i class="fi-rr-cross-small"></i></a>
+    </div>
+</div>
+<div>
+    <form [formGroup]="addForm" (ngSubmit)="formsubmit()" class="mt-2">
+        <div mat-dialog-content>
+            <mat-form-field appearance="outline">
+                <mat-label>Select Forms</mat-label>
+                <mat-select matInput placeholder="Forms" formControlName="formsid" required (selectionChange)="loadform()">
+                  <mat-option *ngFor="let form of feedbackforms" [value]="form.fid">
+                    {{form.form_name}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="addForm.controls.formsid.hasError('required')">
+                  Please select forms
+                </mat-error>
+            </mat-form-field> 
+            <div formArrayName="items" *ngFor="let item of addForm.get('items')['controls']; let i = index;">
+            <div class="row mt-2" [formGroupName]="i">
+              <div class="col-sm-12 col-12">
+                  <p>{{metaArray[i].form_title}}</p>                  
+              </div>
+              <div class="col-sm-12 col-12">
+                    <mat-form-field appearance="outline" *ngIf="metaArray[i].form_type=='text'">
+                        <input matInput placeholder="Fill Answer" formControlName="formvalue">
+                    </mat-form-field>
+                    <mat-radio-group formControlName="formvalue" *ngIf="metaArray[i].form_type=='radio'">
+                        <mat-radio-button color="primary" *ngFor="let item of metaArray[i].form_value.split(',')"  style="padding:4px 4px 0px 0px;" [value]="item">{{item}}</mat-radio-button>
+                    </mat-radio-group>
+                    <mat-form-field appearance="outline" *ngIf="metaArray[i].form_type=='select'">
+                        <mat-select matInput placeholder="Select Answer" formControlName="formvalue">
+                            <mat-option *ngFor="let item of metaArray[i].form_value.split(',')" [value]="item">
+                              {{item}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+              </div>              
+            </div>
+          </div>
+        </div>
+        <div class="btn-sec" mat-dialog-actions>
+          <button mat-raised-button type="submit" color="primary" class="Update-btn">Submit</button>
+        </div>
+      </form>
+</div>

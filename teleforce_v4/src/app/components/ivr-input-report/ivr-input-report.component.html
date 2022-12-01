@@ -1,0 +1,222 @@
+<div class="warap-height pt-4">
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <h1 class="h3 mb-2 text-gray-800">IVR Input Report</h1>
+        <p class="mb-2"></p>
+        <form [formGroup]="searchform"> 
+            <div class="row">
+                <div class="col-sm-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>IVR</mat-label>
+                        <mat-select formControlName="ivrid" (ngModelChange)='getIVRExtension($event)'>
+                            <mat-option value=''>All</mat-option>
+                            <mat-option *ngFor="let ivr of ivrlist" [value]="ivr.BuilderID">
+                                {{ivr.IvrName}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>IVR Extesion</mat-label>
+                        <mat-select formControlName="extensionid" >
+                            <mat-option *ngFor="let extesion of ivrextension" [value]="extesion.Extension">
+                                {{extesion.Extension}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-2" *ngIf="campaignmode">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Campaign</mat-label>
+                        <mat-select formControlName="campaignid" >
+                            <mat-option value=''>All</mat-option>
+                            <mat-option *ngFor="let cam of campaignArr" [value]="cam.camid">
+                                {{cam.cam_name}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Choose a date</mat-label>
+                        <input matInput placeholder="From Date" [matDatepicker]="startpicker" formControlName="startdate" >
+                        <mat-datepicker-toggle matSuffix [for]="startpicker"></mat-datepicker-toggle>
+                        <mat-datepicker #startpicker tpicker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Choose a date</mat-label>
+                        <input matInput placeholder="To Date" [matDatepicker]="endpicker" formControlName="enddate" >
+                        <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
+                        <mat-datepicker #endpicker tpicker></mat-datepicker>
+                    </mat-form-field> 
+                </div>
+                <div class="col-sm-2">
+                    <button mat-raised-button type="submit" (click)="searchData()"  [disabled]="isDisabled">Search</button>&nbsp;
+                </div>
+            </div>            
+        </form>     
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4 mt-3">
+
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table width="100%">
+                        <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+                        <div fxLayout fxLayoutAlign="center center" class="mt-2">
+                            <button mat-raised-button color="primary"
+                                (click)="exporter.exportTable('csv', {fileName:'IVR-Input-Report', sheet: 'sheet_name'})">CSV</button>
+                        </div><br>
+                        <mat-table class="lessons-table mat-elevation-z8" matTableExporter #exporter="matTableExporter"  [dataSource]="dataSource">
+                            <ng-container matColumnDef="id">
+
+                                <mat-header-cell *matHeaderCellDef>Sr. No</mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" data-label="id">
+                                    {{i+1+(paginator.pageIndex * paginator.pageSize)}}</mat-cell>
+
+                            </ng-container>
+                            <ng-container matColumnDef="DID">
+
+                                <mat-header-cell *matHeaderCellDef > DID </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" maxlength="10">
+                                {{row.DID}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="extension">
+
+                                <mat-header-cell *matHeaderCellDef > Extension </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" maxlength="10">
+                                {{row.extension}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="IvrName">
+
+                                <mat-header-cell *matHeaderCellDef > Ivr </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" maxlength="10">
+                                {{row.IvrName}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="campaigname">
+
+                                <mat-header-cell *matHeaderCellDef > Campaign Name </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" maxlength="10">
+                                {{row.cam_name}}
+                                </mat-cell>
+
+                            </ng-container>
+
+
+                            <ng-container matColumnDef="AgentName">
+
+                                <mat-header-cell *matHeaderCellDef > Agent Name </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" maxlength="10">
+                                {{row.AgentName}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="CallStartTime">
+
+                                <mat-header-cell *matHeaderCellDef > Call Time </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" maxlength="10">
+                                    {{row.CallStartTime | date: 'dd-MM-yyyy H:mm:s':timezone}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="CallerName">
+
+                                <mat-header-cell *matHeaderCellDef > Caller Name</mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" maxlength="10">
+                                    {{row.CallerName}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="CallerNumber">
+
+                                <mat-header-cell *matHeaderCellDef > Caller Number</mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.CallerNumber}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="CallTalkTime">
+
+                                <mat-header-cell *matHeaderCellDef > Duration </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.CallTalkTime}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="CallStatus">
+
+                                <mat-header-cell *matHeaderCellDef > Status </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.CallStatus}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="CallType">
+
+                                <mat-header-cell *matHeaderCellDef > Call Type </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.CallType | titlecase}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="recording">
+
+                                <mat-header-cell *matHeaderCellDef > Recording </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    <a href="javascript:void(0)" class="cursor-pointer">
+                                        <span (click)="openrecording(row.RecPath)" title="Listen Audio">
+                                        <mat-icon>headset</mat-icon>
+                                        </span>
+                                    </a>&nbsp;&nbsp;
+                                </mat-cell>
+
+                            </ng-container>
+
+                            
+
+                            
+                            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+                            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+                        </mat-table>
+                        <mat-paginator #paginator [length]="Length" [pageSize]="50" [pageSizeOptions]="[50,100,500]">
+                        </mat-paginator>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /.container-fluid -->
+</div>    

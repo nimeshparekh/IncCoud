@@ -1,0 +1,167 @@
+<div>
+    <div class="add-title">
+        <h2 class="primary" *ngIf="addmode">Add Package</h2>
+        <h2 class="primary" *ngIf="editmode">Edit Package</h2>
+        <h2 class="primary" *ngIf="deletemode">Delete Package</h2>
+    </div>
+    <div *ngIf="addmode || editmode">
+        <form [formGroup]="addForm" (ngSubmit)="submit()">
+            <mat-grid-list [cols]="2" rowHeight="85px">
+                <mat-grid-tile>
+                    <div class="text-inside">
+                        <mat-form-field>
+                            <input matInput placeholder="Package Name" formControlName="name" required>
+                            <mat-error *ngIf="addForm.controls.name.hasError('required')">
+                                Please enter package name
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                    <div class="text-inside">
+                        <mat-form-field>
+                            <input matInput placeholder="Price" formControlName="price" required>
+                            <mat-error *ngIf="addForm.controls.price.hasError('required')">
+                                Please enter package price
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <div class="text-inside">
+                        <mat-form-field>
+                            <input type="number" matInput placeholder="User Limit" formControlName="userlimit" required
+                                min="0">
+                            <mat-error *ngIf="addForm.controls.userlimit.hasError('required')">
+                                Please enter user limit
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <div class="text-inside">
+                        <mat-form-field>
+                            <input type="number" matInput placeholder="Channels" formControlName="channels" min="0">
+                            <mat-error *ngIf="addForm.controls.channels.hasError('required')">
+                                Please enter no. of channels
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </mat-grid-tile>
+            </mat-grid-list>
+            <mat-grid-list [cols]="1" rowHeight="85px">
+                <mat-grid-tile>
+                    <div class="text-inside">
+                        <mat-radio-group formControlName="validity">
+                            <div style="color:grey;">Validity</div>
+                            <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="0">Monthly
+                            </mat-radio-button>
+                            <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="2">Quarterly
+                            </mat-radio-button>
+                            <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="3">Half Yearly
+                            </mat-radio-button>
+                            <mat-radio-button color="primary" style="padding:4px 0px 0px 24px;" [value]="1">Yearly
+                            </mat-radio-button>
+                        </mat-radio-group>
+                        <mat-error *ngIf="addForm.controls.validity.hasError('required')">
+                            Please select package validity
+                        </mat-error>
+                    </div>
+                </mat-grid-tile>
+            </mat-grid-list>
+            <mat-grid-list [cols]="2" rowHeight="85px">
+                <mat-grid-tile>
+                    <div class="text-inside">
+                        <mat-radio-group formControlName="type" (change)="showService($event.value)">
+                            <div style="color:grey;">Type</div>
+                            <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="0">Incoming
+                            </mat-radio-button>
+                            <mat-radio-button color="primary" style="padding:4px 0px 0px 24px;" [value]="1">Outgoing
+                            </mat-radio-button>
+                            <mat-radio-button color="primary" style="padding:4px 0px 0px 24px;" [value]="2">All
+                            </mat-radio-button>
+                        </mat-radio-group>
+                        <mat-error *ngIf="addForm.controls.type.hasError('required')">
+                            Please select package type
+                        </mat-error>
+                    </div>
+                </mat-grid-tile>
+
+                <mat-grid-tile *ngIf="incoming||outgoing">
+                    <div class="text-inside">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Services</mat-label>
+                            <mat-select formControlName="service" multiple>
+                                <mat-option [value]="0" *ngIf="incoming">IVR</mat-option>
+                                <mat-option [value]="1" *ngIf="incoming">Miss Call</mat-option>
+                                <mat-option [value]="2" *ngIf="incoming">Conference</mat-option>
+                                <mat-option [value]="3" *ngIf="outgoing">Dialer</mat-option>
+                                <mat-option [value]="4" *ngIf="outgoing">Click to Call</mat-option>
+                                <mat-option [value]="5" *ngIf="outgoing">Campaigns</mat-option>
+                                <mat-option [value]="6" *ngIf="outgoing">Progressive Dialer</mat-option>
+                                <mat-option [value]="7" *ngIf="outgoing">Bulk SMS</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <div class="text-inside">
+                        <mat-radio-group formControlName="packagetype" (change)="showMinuteDiv($event.value)">
+                            <div style="color:grey;">Unlimited or Minutes ?</div>
+                            <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="0">Unlimited
+                            </mat-radio-button>
+                            <mat-radio-button color="primary" style="padding:4px 0px 0px 24px;" [value]="1">Minutes
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </mat-grid-tile>
+                <mat-grid-tile *ngIf="showminutes">
+                    <div class="text-inside">
+                        <mat-form-field class="example-full-width">
+                            <input matInput placeholder="Package Minutes" formControlName="minutes">
+                        </mat-form-field>
+                    </div>
+                </mat-grid-tile>
+                <mat-grid-tile >
+                    <div class="text-inside">
+                        <mat-form-field class="example-full-width">
+                            <textarea matInput placeholder="Package Description" formControlName="description"></textarea>
+                        </mat-form-field>
+                    </div>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <div class="text-inside">
+                        <mat-radio-group formControlName="published_web" >
+                            <div style="color:grey;">Published on Web ?</div>
+                            <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="0">No
+                            </mat-radio-button>
+                            <mat-radio-button color="primary" style="padding:4px 0px 0px 24px;" [value]="1">Yes
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                </mat-grid-tile>
+                
+
+            </mat-grid-list><br>
+            <div class="btn-sec">
+                <button mat-raised-button type="submit" color="primary" class="Update-btn">Save</button>
+                &nbsp;
+                <button mat-raised-button type="button" class="Discard-btn" (click)="openDialog()">Cancel</button>
+            </div>
+
+        </form>
+    </div>
+
+    <div *ngIf="deletemode">
+        <h4>
+            Are you sure to delete this ?
+        </h4>
+        <div class="btn-sec">
+            <button mat-raised-button type="button" color="primary" class="Update-btn"
+                (click)="deleteData(adminid)">Delete</button>
+            &nbsp;
+            <button mat-raised-button type="button" class="Discard-btn" (click)="openDialog()">Cancel</button>
+        </div>
+    </div>
+</div>

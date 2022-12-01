@@ -1,0 +1,23 @@
+.cursor-pointer
+{
+    cursor: pointer;
+}
+button:focus
+{
+  outline: none;
+}
+/* .mat-cell {
+  text-align: center;
+  justify-content:center;
+} */
+
+.mat-form-field
+{
+    width: 100%;
+}
+
+table 
+{
+    width: 100%;
+    min-width: 1000px;
+}

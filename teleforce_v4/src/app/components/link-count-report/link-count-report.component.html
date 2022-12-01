@@ -1,0 +1,100 @@
+<div class="warap-height pt-4">
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <h1 class="h3 mb-2 text-gray-800">Link Count Report</h1>
+        <p class="mb-2"></p>
+        <form [formGroup]="searchform"> 
+            <div class="row">
+                <div class="col-sm-2">
+                    <mat-form-field appearance="outline" class="outline-field">
+                        <mat-label>Mobile Number</mat-label>
+                        <input matInput placeholder="Mobile Number" formControlName="mobile">
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-2">
+                    <mat-form-field appearance="outline" class="outline-field">
+                        <mat-label>Campaign Name</mat-label>
+                        <input matInput placeholder="Campaign Name" formControlName="cam_name">
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-2" >
+                    <mat-form-field appearance="outline" class="outline-field">
+                        <mat-label>Hit Count</mat-label>
+                        <input matInput placeholder="Count" formControlName="hit_count">
+                    </mat-form-field>
+                </div>
+                
+                <div class="col-sm-2">
+                    <button mat-raised-button type="submit" class="mt-1 mob-btn" (click)="searchData()" [disabled]="isDisabled">Search</button>&nbsp;
+                    
+                </div>
+            </div>            
+        </form>     
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4 mt-3">
+
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table width="100%">
+                        <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+                        <div fxLayout fxLayoutAlign="center center" class="mt-2">
+                            <button mat-raised-button color="primary"
+                                (click)="exporter.exportTable('csv', {fileName:'link-count-Report', sheet: 'sheet_name'})">CSV</button>
+                        </div><br>
+                        <mat-table class="lessons-table mat-elevation-z8" matTableExporter #exporter="matTableExporter"  [dataSource]="dataSource">
+                            <ng-container matColumnDef="id">
+
+                                <mat-header-cell *matHeaderCellDef>Sr. No</mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" data-label="id">
+                                    {{i+1+(paginator.pageIndex * paginator.pageSize)}}</mat-cell>
+
+                            </ng-container>
+                            <ng-container matColumnDef="cam_name">
+
+                                <mat-header-cell *matHeaderCellDef > Campaign Name </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" maxlength="10">
+                                {{row.cam_name}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="mobile">
+
+                                <mat-header-cell *matHeaderCellDef > Mobile </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" maxlength="10">
+                                {{row.mobile}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="hit_count">
+
+                                <mat-header-cell *matHeaderCellDef > Hit Count </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" maxlength="10">
+                                    {{row.visitor}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            
+                            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+                            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+                        </mat-table>
+                        <mat-paginator #paginator [length]="Length" [pageSize]="50" [pageSizeOptions]="[50,100,500]">
+                        </mat-paginator>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /.container-fluid -->
+</div>    

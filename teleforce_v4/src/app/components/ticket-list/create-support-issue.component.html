@@ -1,0 +1,56 @@
+<div mat-dialog-head class="dilog-head d-flex justify-content-between">
+    <h3 class="primary" >Reply Ticket</h3>
+    <div class="d-inline-block">
+        <a class="close" (click)="openDialog()"><i class="fi-rr-cross-small"></i></a>
+    </div>
+
+</div>
+<div>
+    <form [formGroup]="addForm" (ngSubmit)="createissue()" *ngIf="addForm">
+        <div mat-dialog-content>
+            
+            <div class="row">
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Status</mat-label>
+                        <mat-select formControlName="status">
+                            <mat-option value="Working">Working </mat-option>
+                            <mat-option value="Closed">Closed </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <div class="row">
+                        <div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-2">
+                            <input type="file" id="fileupload" style="display:none;" accept="image/*" />
+                            <a mat-raised-button (click)="onUploadHeaderImage()" style="width:200px">Upload Image</a>
+                        </div>
+                        <div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-2">
+                            <!-- <img src="{{image}}" height="50" width="50" > -->
+                            <div *ngIf="image && image !== ''" style="margin-left: 30px;">
+                                <img src="{{baseUrl}}{{apiUrl}}/ticket/{{image}}" height="70" width="70">
+                                <i class="fa fa-window-close" style="font-size:20px;" (click)="removeimage()">
+        
+                                </i>
+                            </div>
+                        </div>
+                    </div>                    
+                </div>
+                
+                
+            </div>
+            <div class="row">
+                
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Description</mat-label>
+                        <textarea matInput formControlName="description" rows="5"></textarea>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="btn-sec" mat-dialog-actions>
+            <button mat-raised-button type="submit" color="primary" class="Update-btn">Save</button>
+        </div>
+    </form>
+</div>

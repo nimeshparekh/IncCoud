@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Online Payment Receipt</title>
+    <link rel="icon" type="image/x-icon" href=" assets/images/favi2.png">
+	<style type="text/css">
+		body
+		{
+			margin: 0px;
+			padding: 0px;
+		}
+		.head-part
+		{
+			background: url(' assets/images/banner-bg.png');
+			background-attachment: fixed;
+			background-repeat: no-repeat;
+			background-size: cover;
+			padding: 30px 200px 30px 200px;
+		}
+		.logo-head
+		{
+			display: inline-block;
+			width: 100%;
+		}
+		.logo-head img
+		{	
+			width: 250px;
+			float: right;
+		}
+		.monkey-head
+		{
+			text-align: left;
+		}
+		.monkey-head img
+		{
+			width: 70%;
+		}
+		.text-part
+		{
+			padding: 30px 200px 30px 200px;
+		}
+		.name p
+		{
+			font-size: 24px;
+		}
+		.details p
+		{
+			font-size: 24px;
+		}
+		.faithfool p
+		{
+			font-size: 24px;
+			float: right;
+		}
+		@media (min-width:992px) and (max-width:1200px)
+		{
+				.head-part
+				{
+					padding: 30px 100px 30px 100px;
+				}
+					.text-part
+				{
+					padding: 30px 100px 30px 100px;
+				}
+		}
+		@media (min-width:768px) and (max-width:991px)
+		{
+				.head-part
+				{
+					padding: 30px 70px 30px 70px;
+				}
+					.text-part
+				{
+					padding: 30px 70px 30px 70px;
+				}
+		}
+		@media (min-width:576px) and (max-width:767px)
+		{
+				.head-part
+				{
+					padding: 30px 30px 30px 30px;
+				}
+				.text-part
+				{
+					padding: 30px 30px 30px 30px;
+				}
+		}
+		@media (min-width:320px) and (max-width:575px)
+		{		
+				.logo-head img
+				{	
+					width: 150px;
+					float: right;
+				}
+				.head-part
+				{
+					padding: 30px 30px 30px 30px;
+				}
+				.text-part
+				{
+					padding: 30px 30px 30px 30px;
+				}
+				.name p
+				{
+					font-size: 20px;
+				}
+				.details p
+				{
+					font-size: 20px;
+					text-align: justify;
+				}
+				.faithfool p
+				{
+					font-size: 20px;
+					float: right;
+				}
+				.monkey-head img
+				{
+					width: 100%;
+				}
+		}
+		@media (min-width:50px) and (max-width:320px)
+		{		
+				.logo-head img
+				{	
+					width: 150px;
+					float: right;
+				}
+				.head-part
+				{
+					padding: 30px 30px 30px 30px;
+				}
+				.text-part
+				{
+					padding: 30px 30px 30px 30px;
+				}
+				.name p
+				{
+					font-size: 20px;
+				}
+				.details p
+				{
+					font-size: 20px;
+					text-align: justify;
+				}
+				.monkey-head img
+				{
+					width: 100%;
+				}
+				.faithfool p
+				{
+					font-size: 20px;
+					float: right;
+				}
+		}
+	</style>
+</head>
+<body>
+	<div class="head-part">
+		<div class="logo-head">
+			<img src=" assets/images/new-logo1.png">
+		</div>
+	</div>
+	<div class="text-part">
+		<div class="name">
+			<p><b>Dear Customer,</b></p>
+		</div>
+		<div class="details">
+			<p>
+                Payment failed for your payment of Rs. <%= amount %> made online with Transaction ID <%= txnid %>. Please try again.
+                <br><br>
+				If you have any question please feel free to contact us.
+                <br><br>
+                Thank you for connecting with us!<br><br>
+                Regards,<br> Customer Service Team
+                <br><br>
+                <div class="dv">
+                 <span class="text"><a href="https://agent.cloudX.in" alt="Close">Back to Website</a></span>    
+                </div>
+			</p>
+		</div>
+	</div>
+</body>
+</html>

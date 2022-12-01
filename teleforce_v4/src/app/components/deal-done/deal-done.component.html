@@ -1,0 +1,249 @@
+<div mat-dialog-head class="dilog-head d-flex justify-content-between">
+    <h3 class="primary">Deal Done</h3>
+    <div class="d-inline-block">
+        <a class="close" (click)="closeDialog()"><i class="fi-rr-cross-small"></i></a>
+    </div>
+</div>
+<div>
+    <form [formGroup]="addForm" (ngSubmit)="submit()">
+        <div mat-dialog-content>
+            <div class="row">
+                <div class="col-xl-16 col-md-4 col-sm-12 col-12 mt-2">
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Deal Done date</mat-label>
+                        <input matInput formControlName="dealdonedate" [matDatepicker]="picker">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                        <mat-error *ngIf="addForm.controls.dealdonedate.hasError('required')">
+                            Please select date
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-16 col-md-4 col-sm-12 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Name</mat-label>
+                        <input matInput placeholder="Name" formControlName="name" required>
+                        <mat-error *ngIf="addForm.controls.name.hasError('required')">
+                            Please enter name
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-16 col-md-4 col-sm-12 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Email</mat-label>
+                        <input matInput placeholder="Email" formControlName="email" required>
+                        <mat-error *ngIf="addForm.controls.email.hasError('required')">
+                            Please enter email
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-16 col-md-4 col-sm-12 col-12 mt-2">
+                    <mat-form-field class="example-full-width">
+                        <mat-label>DOB</mat-label>
+                        <input matInput formControlName="dob" [matDatepicker]="picker2">
+                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <mat-datepicker #picker2></mat-datepicker>
+                        <mat-error *ngIf="addForm.controls.dealdonedate.hasError('required')">
+                            Please select date
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-16 col-md-4 col-sm-12 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Address</mat-label>
+                        <textarea matInput placeholder="Address" formControlName="address" required></textarea>
+                        <mat-error *ngIf="addForm.controls.address.hasError('required')">
+                            Please enter address
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-16 col-md-4 col-sm-12 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>City</mat-label>
+                        <input matInput placeholder="City" formControlName="city" required>
+                        <mat-error *ngIf="addForm.controls.city.hasError('required')">
+                            Please enter city
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-16 col-md-4 col-sm-12 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Pincode</mat-label>
+                        <input matInput placeholder="pincode" formControlName="pincode" required>
+                        <mat-error *ngIf="addForm.controls.pincode.hasError('required')">
+                            Please enter pincode
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-16 col-md-4 col-sm-12 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Country</mat-label>
+                        <input matInput placeholder="Country" formControlName="country" required>
+                        <mat-error *ngIf="addForm.controls.country.hasError('required')">
+                            Please enter country
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-16 col-md-4 col-sm-12 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Company</mat-label>
+                        <mat-select placeholder="Company" formControlName="company" (ngModelChange)="getProject($event)">
+                            <mat-option [value]="com.id" *ngFor="let com of companies">{{com.name}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-16 col-md-4 col-sm-12 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Dealer</mat-label>
+                        <mat-select placeholder="Dealer" formControlName="dealerid" >
+                            <mat-option value="0">None</mat-option>
+                            <mat-option [value]="dealer.id" *ngFor="let dealer of dealers">{{dealer.name}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-16 col-md-4 col-sm-12 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Lead Generator</mat-label>
+                        <mat-select placeholder="Dealer" formControlName="refclient" >
+                            <mat-option value="0">None</mat-option>
+                            <mat-option [value]="gen.id" *ngFor="let gen of leadgenerators">{{gen.name}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-16 col-md-4 col-sm-12 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Project</mat-label>
+                        <mat-select placeholder="Project" formControlName="project" (ngModelChange)="getPlotNumber($event)">
+                            <mat-option value="0">None</mat-option>
+                            <mat-option [value]="project.id+'-'+project.pname" *ngFor="let project of projects">{{project.pname}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-16 col-md-4 col-sm-12 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Plot Number</mat-label>
+                        <mat-select placeholder="Plot Number" formControlName="plotnumber">
+                            <mat-option value="0">None</mat-option>
+                            <mat-option [value]="num.plotno" *ngFor="let num of plotnumbers">{{num.plotno}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-16 col-md-4 col-sm-12 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Proposal</mat-label>
+                        <mat-select placeholder="Proposal" formControlName="proposal">
+                            <mat-option value="1">Plan A</mat-option>
+                            <mat-option value="2">Plan B</mat-option>
+                            <mat-option value="3">Plan C</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-16 col-md-4 col-sm-12 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Scheme</mat-label>
+                        <mat-select placeholder="Scheme" formControlName="scheme">
+                            <mat-option value="0">None</mat-option>
+                            <mat-option [value]="scheme.id" *ngFor="let scheme of schemes">{{scheme.schemename}}</mat-option>                        </mat-select>
+                    </mat-form-field>
+                </div>
+                
+                <div class="col-xl-16 col-md-4 col-sm-12 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Phase Number</mat-label>
+                        <mat-select placeholder="Phase Number" formControlName="phaseno">
+                            <mat-option value="A" >A</mat-option>
+                            <mat-option value="B" >B</mat-option>
+                            <mat-option value="C" >C</mat-option>
+                            <mat-option value="D" >D</mat-option>
+                            <mat-option value="1" >1</mat-option>
+                            <mat-option value="2" >2</mat-option>
+                            <mat-option value="3" >3</mat-option>
+                            <mat-option value="4" >4</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-16 col-md-4 col-sm-12 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Plot Area</mat-label>
+                        <input matInput placeholder="Plot Area" formControlName="plotarea">
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-16 col-md-4 col-sm-12 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Plot Rate</mat-label>
+                        <input matInput placeholder="Plot Rate" formControlName="plotrate">
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-16 col-md-4 col-sm-12 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Total Plot Value</mat-label>
+                        <input matInput placeholder="Total Plot Value" formControlName="plotvalue">
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-16 col-md-4 col-sm-12 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Discount Value</mat-label>
+                        <input matInput placeholder="Discount Value" formControlName="discountvalue">
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-16 col-md-4 col-sm-12 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Booking Amount</mat-label>
+                        <input matInput placeholder="Booking Amount" formControlName="bookingamount">
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-16 col-md-4 col-sm-12 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Payment Mode</mat-label>
+                        <mat-select placeholder="Payment Mode" formControlName="paymentmode">
+                            <mat-option value="Cash">Cash</mat-option>
+                            <mat-option value="Cheque">Cheque</mat-option>
+                            <mat-option value="RTGS">RTGS</mat-option>
+                            <mat-option value="NEFT">NEFT</mat-option>
+                            <mat-option value="ECS">ECS</mat-option>
+                            <mat-option value="Debit/Credit Card">Debit/Credit Card</mat-option>
+                            <mat-option value="Net Banking">Net Banking</mat-option>
+                            <mat-option value="Barter">Barter</mat-option>
+                            <mat-option value="Free Plot">Free Plot</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-16 col-md-4 col-sm-12 col-12 mt-2">
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Date Of Payment</mat-label>
+                        <input matInput formControlName="paymentdate" [matDatepicker]="picker1">
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                                
+            </div>
+            <div class="row">
+                <div class="col-xl-16 col-md-12 col-sm-12 col-12 mt-2">
+                    <h4>Nominee Details</h4>
+                </div>
+                <div class="col-xl-16 col-md-4 col-sm-12 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Nominee Name</mat-label>
+                        <input matInput placeholder="Nominee Name" formControlName="nomineename">
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-16 col-md-4 col-sm-12 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Relation</mat-label>
+                        <input matInput placeholder="Relation" formControlName="nomineerelation">
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-16 col-md-4 col-sm-12 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Phone No</mat-label>
+                        <input matInput placeholder="Phone No." formControlName="nomineephoneno">
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="btn-sec" mat-dialog-actions>
+            <button mat-raised-button type="submit" color="primary" class="Update-btn" [disabled]="disabled">Save</button>
+        </div>
+    </form>
+</div>

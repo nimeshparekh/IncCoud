@@ -1,0 +1,94 @@
+<div>
+    <div class="add-title">
+        <h2 class="primary" *ngIf="addmode">Add SMS</h2>
+        <h2 class="primary" *ngIf="editmode">Edit SMS</h2>
+        <h2 class="primary" *ngIf="deletemode">Delete SMS</h2>
+    </div>
+    <div *ngIf="addmode || editmode">
+        <form [formGroup]="addForm" (ngSubmit)="submit()">
+            <div mat-dialog-content>
+                <div class="row">
+                    <div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-2">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Sms Title</mat-label>
+
+                            <input matInput placeholder="SMS Title" formControlName="sms_title" required>
+                            <mat-error *ngIf="addForm.controls.sms_text.hasError('required')">
+                                Please enter title
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-2">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Sms text</mat-label>
+
+                            <textarea matInput placeholder="Sms Text" formControlName="sms_text" rows="6" cols="100"
+                                matTextareaAutosize required [keyup]="countcharacter()"></textarea>
+                            <mat-error *ngIf="addForm.controls.sms_text.hasError('required')">
+                                Please enter text
+                            </mat-error>
+                        </mat-form-field>
+                        <br>
+                        <strong style="color: red;"><span id="chars" name="chars" style="color:#336600; ">{{msgcharcnt}}
+                                {{chartxt}}</span></strong>
+                        <br>
+                        <div *ngIf="!msgunicode">
+                            <strong>For Text Message</strong><br>
+                            1-160 characters = 1 SMS Credit.<br>
+                            161-306 characters = 2 SMS Credits.<br>
+                            307-459 characters = 3 SMS Credits.
+                        </div>
+                        <div *ngIf="msgunicode">
+                            <strong>For Unicode Message</strong><br>
+                            1-70 characters = 1 SMS Credit.<br>
+                            71-134 characters = 2 SMS Credits.<br>
+                            135-201 characters = 3 SMS Credits.
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-2">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Sms Credit</mat-label>
+
+                            <input matInput placeholder="SMS Credits" formControlName="sms_credits" readonly>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-2">
+
+                        <input type="checkbox" name="isschedulemeeting" formControlName="isschedulemeeting"
+                            id="isschedulemeeting" />
+                        <label class="page-checkbox-alias" for="sms">
+                            <p>&nbsp;&nbsp;Is Schedule Meeting Template</p>
+                        </label>
+
+                    </div>
+                </div>
+
+                <div class="btn-sec" mat-dialog-action>
+                    <button mat-raised-button type="submit" color="primary" class="Update-btn">Save</button>
+                    &nbsp;
+                    <button mat-raised-button type="button" class="Discard-btn" (click)="openDialog()">Cancel</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div *ngIf="deletemode">
+        <h4>
+            Are you sure to delete this ?
+        </h4>
+        <div class="btn-sec">
+            <button mat-raised-button type="button" color="primary" class="Update-btn"
+                (click)="deleteData(adminid)">Delete</button>
+            &nbsp;
+            <button mat-raised-button type="button" class="Discard-btn" (click)="openDialog()">Cancel</button>
+        </div>
+    </div>
+</div>

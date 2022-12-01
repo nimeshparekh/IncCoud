@@ -1,0 +1,32 @@
+.form-card
+{
+    background: #eeeff2!important;
+    border-radius: .75rem!important;
+    box-shadow: 0 1px 15px rgb(0 0 0/4%),0 1px 6px rgb(0 0 0/4%)!important;
+    padding: 8px 12px 8px 12px;
+    margin-top: 16px;
+    margin-bottom: 20px;
+    border: 1px solid #b3b6b9;
+}
+.preview
+{
+    border: 1px dashed #ccc;
+    height: 200px;
+    padding: 10px;
+    overflow-y: scroll;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    background: #fff;
+}
+.w-100
+{
+    width: 100% !important;
+}
+.uploadimg
+{
+    border: 1px solid #ccc;
+    padding: 11px;
+    margin-bottom: 16px;
+    width: 100%;
+    border-radius: 4px;
+}

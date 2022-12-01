@@ -1,0 +1,154 @@
+<div class="warap-height pt-4">    
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <h1 class="h3 mb-2 text-gray-800">Minutes Assign Response</h1>
+        <p class="mb-2"></p>  
+        <form [formGroup]="searchform">
+            <div class="row">
+                <div class="col-sm-3">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Campaign</mat-label>
+                        <mat-select formControlName="campid" >
+                            <mat-option *ngFor="let cam of campaigns" [value]="cam.camid">
+                                {{cam.cam_name}}</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="searchform.controls.campid.hasError('required')">
+                            Please select Campaign
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-3">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Choose a date</mat-label>
+                        <input matInput placeholder="From Date" [matDatepicker]="startpicker" formControlName="startdate" required>
+                        <mat-datepicker-toggle matSuffix [for]="startpicker"></mat-datepicker-toggle>
+                        <mat-datepicker #startpicker tpicker></mat-datepicker>
+                        <mat-error *ngIf="searchform.controls.startdate.hasError('required')">
+                            Please select From Date
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-3">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Choose a date</mat-label>
+                        <input matInput placeholder="To Date" [matDatepicker]="endpicker" formControlName="enddate" required>
+                        <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
+                        <mat-datepicker #endpicker tpicker></mat-datepicker>
+                        <mat-error *ngIf="searchform.controls.enddate.hasError('required')">
+                            Please select To Date
+                        </mat-error>
+                    </mat-form-field>
+                </div>   
+            </div>
+            <button mat-raised-button type="submit" (click)="searchData()">Search</button>&nbsp;
+        </form>     
+        <!-- DataTales Example -->
+        <p *ngIf="msg!=''" style="color:red">{{msg}}</p>
+    
+        <div class="card shadow mb-4 mt-3">
+
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table width="100%">
+                        <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+                        <div fxLayout fxLayoutAlign="center center" class="mt-2">
+                            <button mat-raised-button color="primary"
+                                (click)="exporter.exportTable('csv', {fileName:'Minutes-Assign-Report', sheet: 'sheet_name'})">CSV</button>
+                        </div><br>
+                        <mat-table class="lessons-table mat-elevation-z8" matTableExporter #exporter="matTableExporter"  [dataSource]="dataSource">
+                            <ng-container matColumnDef="id">
+
+                                <mat-header-cell *matHeaderCellDef>Sr. No</mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" data-label="id">
+                                    {{i+1+(paginator.pageIndex * paginator.pageSize)}}</mat-cell>
+
+                            </ng-container>
+                            <ng-container matColumnDef="name">
+
+                                <mat-header-cell *matHeaderCellDef > Campaign Name </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" maxlength="10">
+                                {{row.cam_name}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="callername">
+
+                                <mat-header-cell *matHeaderCellDef > Caller Name </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" maxlength="10">
+                                {{row.CallerName}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="callerno">
+
+                                <mat-header-cell *matHeaderCellDef > Caller Number </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" maxlength="10">
+                                {{row.CallerNumber}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="agentname">
+
+                                <mat-header-cell *matHeaderCellDef > Agent Name </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" maxlength="10">
+                                {{row.AgentName}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="created_date">
+
+                                <mat-header-cell *matHeaderCellDef > Assign Date Time</mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                {{row.create_date | date:'dd-MM-yyyy HH:mm:ss'}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="complete_time">
+
+                                <mat-header-cell *matHeaderCellDef > Complete Date Time </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                {{row.starttime | date:'dd-MM-yyyy HH:mm:ss'}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="diff">
+
+                                <mat-header-cell *matHeaderCellDef > Time Difference </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                {{row.timediff}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            
+                            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+                            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+                        </mat-table>
+                        <mat-paginator #paginator [length]="Length" [pageSize]="50" [pageSizeOptions]="[50,100,500]">
+                        </mat-paginator>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /.container-fluid -->
+</div>

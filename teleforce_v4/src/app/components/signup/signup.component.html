@@ -1,0 +1,252 @@
+<div class="bg pt-5" style="margin-left: -100px;">
+  <div class="container">
+
+    <!-- Outer Row -->
+    <div class="row justify-content-center">
+
+      <div class="col-xl-10 col-lg-12 col-md-9">
+
+        <div class="card o-hidden border-0 shadow-lg">
+          <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+              
+              <div class="col-lg-12">
+                <div class="p-5">
+                  <div class="text-center">
+                    <h1 class="h4 text-gray-900 mb-4 sign-head"><img src="assets/img/b-logo.png"></h1>
+                  </div>
+                  <mat-horizontal-stepper  [linear]="true" #stepper="matHorizontalStepper">
+                    <mat-step label="Singup" [stepControl]="firstFormGroup">
+                        <form [formGroup]="firstFormGroup">
+                          <div class="z-index-22">
+                              <div class="stepper-inner">
+                                  <div class="signupform">
+                                      <ng-template matStepLabel>Sign Up</ng-template>
+                                      <div class="d-flex">
+                                        <div class="row form-padding">
+                                          
+                                          <div class="col-sm-6">
+                                            <mat-form-field class="width-100" appearance="outline">
+                                              <mat-label>First Name</mat-label>
+                                              <input matInput placeholder="First name" required formControlName="fname">
+                                              <mat-error *ngIf="firstFormGroup.controls.fname.hasError('required')">
+                                                Please enter First Name
+                                              </mat-error>
+                                            </mat-form-field>
+                                          </div>
+                                          <div class="col-sm-6">
+                                            <mat-form-field class="width-100" appearance="outline">
+                                              <mat-label>Last Name</mat-label>
+                                              <input matInput placeholder="Last Name" required formControlName="lname">
+                                              <mat-error *ngIf="firstFormGroup.controls.lname.hasError('required')">
+                                                Please enter Last Name
+                                              </mat-error>
+                                            </mat-form-field>
+                                          </div>
+                                          <div class="col-sm-12">
+                                            <mat-form-field class="width-100" appearance="outline">
+                                              <mat-label>Username</mat-label>
+                                              <input matInput placeholder="Username" required formControlName="username">
+                                              <mat-error *ngIf="firstFormGroup.controls.username.hasError('required')">
+                                                Please enter Username
+                                              </mat-error>
+                                            </mat-form-field>
+                                            
+                                            <mat-error *ngIf="firstFormGroup.controls.username.hasError('maxlength')">
+                                              Maximum 12 character allowed
+                                            </mat-error>
+                                            <mat-error *ngIf="invalidUserName()">
+                                                Username already exists. please try other
+                                            </mat-error>
+                                          </div>
+                                          <div class="col-sm-6">
+                                            <mat-form-field class="width-100" appearance="outline"> 
+                                              <mat-label>Password</mat-label>
+                                              <input type="password" matInput placeholder="Password" required formControlName="password"> 
+                                              <mat-error *ngIf="firstFormGroup.controls.password.hasError('required')">
+                                                Please enter Password
+                                              </mat-error>
+                                            </mat-form-field>
+                                          </div>
+                                          <div class="col-sm-6">
+                                            <mat-form-field class="width-100" appearance="outline"> 
+                                              <mat-label>Confirm Password</mat-label>
+                                              <input type="password" matInput placeholder="Confirm Password" required formControlName="confirmpassword"> 
+                                              <mat-error *ngIf="firstFormGroup.controls.confirmpassword.hasError('required')">
+                                                Please enter Confirm Password
+                                              </mat-error>
+                                            </mat-form-field>
+                                          </div>
+                                          <div class="col-sm-12">
+                                            <p class="input-info">Use 8 or more characters with lowercase letters,uppercase letters, numbers & symbols</p>
+                                          </div>
+                                          <div class="col-sm-12">
+                                            <div class="m-t-10">
+                                              <button mat-raised-button color="primary"   matStepperNext>Next</button>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                       </form>
+                    </mat-step>
+                    <mat-step  label="Personal Detail" [stepControl]="secondFormGroup">
+                      <form [formGroup]="secondFormGroup">
+                        <div class="z-index-22">
+                            <div class="stepper-inner">
+                                <div class="signupform">
+                                    <ng-template matStepLabel>Personal Details</ng-template>
+                                    <div class="d-flex">
+                                      <div class="row form-padding">
+                                        <div class="col-sm-12">
+                                          <mat-form-field class="width-100" appearance="outline">
+                                            <mat-label>Mobile</mat-label>
+                                            <input matInput placeholder="Mobile" required formControlName="mobile" (change)="sendotp()">
+                                            <mat-error *ngIf="secondFormGroup.controls.mobile.hasError('required')">
+                                              Please enter Mobile
+                                            </mat-error>
+                                          </mat-form-field>
+                                        </div>
+                                        <div class="col-sm-12"  *ngIf="otpsend">
+                                          <mat-form-field class="width-100" appearance="outline">
+                                            <mat-label>OTP</mat-label>
+                                            <input matInput placeholder="OTP" required formControlName="otp" (change)="checkotp()">
+                                            <mat-error *ngIf="secondFormGroup.controls.otp.hasError('required')">
+                                              Please enter OTP
+                                            </mat-error>
+                                          </mat-form-field>
+                                        </div>
+                                        <div class="col-sm-12">
+                                          <mat-form-field class="width-100" appearance="outline">
+                                            <mat-label>Email</mat-label>
+                                            <input matInput placeholder="Email Address" required formControlName="email">
+                                            <mat-error *ngIf="secondFormGroup.controls.email.hasError('required')">
+                                              Please enter Email
+                                            </mat-error>
+                                          </mat-form-field>
+                                        </div>
+                                        <div class="col-sm-12">
+                                          <div class="m-t-10">
+                                            <button mat-raised-button color="accent" matStepperPrevious>Back</button>
+                                            <button mat-raised-button color="primary"    matStepperNext>Next</button>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                     </form>
+                    </mat-step>
+                    <mat-step  label="Privacy and Terms">              
+                        <div class="z-index-22">
+                            <div class="stepper-inner">
+                                <div class="signupform">
+                                    <ng-template matStepLabel>Privacy and Terms</ng-template>
+                                    <div class="d-flex">
+                                      <div class="row form-padding">
+                                        
+                                        <div class="col-sm-12">
+                                          <div class="loginpage-privacy-terms">
+                                            <p>
+                                              To create a cloudX Account, you’ll need to agree to the <a routerLink="/terms-and-conditions">Terms of Service</a> below.
+                                            </p>
+                                            <p>
+                                              In addition, when you create an account, we process your information as described in our <a routerLink="/privacy-policy">Privacy Policy,</a> including these key points:
+                                            </p>
+                                            <h5>
+                                              Description of Product (terms-and-conditions)
+                                            </h5>
+                                            <p>
+                                              When we refer to our “Product” in this Agreement, we mean:
+                                            </p>
+                                            <ul>
+                                              <li>
+                                                (i) Telephone numbers that we assign to you (hereinafter referred to as “GAPL phone Numbers”);
+                                              </li>
+                                              <li>
+                                                (ii) Our platform, user interface along with the related application programme interfaces (hereinafter referred to as “API(s)”);
+                                              </li>
+                                              <li>
+                                                (iii) Our mobile phone application; and
+                                              </li>
+                                              <li>
+                                                (iv) Any document made available by GAPL to you relating to the Product or its use (hereinafter referred to as “Documentation”).
+                                              </li>
+                                            </ul>
+                                            <p>
+                                              <b>Explanation:</b>
+                                            </p>
+                                            <p>
+                                              By 
+                                              <b>“APIs”</b> we mean a set of routines, protocols and tools enabled by GAPL which allows its customers to develop programs as per their requirements and/ or customize the Product to suit their needs. A list of our APIs is available at our web page <a href="https://www.cloudX.in">https://www.cloudX.in</a> as may be notified from time to time.
+                                            </p>
+                                            <p>
+                                              By <b>“GAPL Numbers”</b> we mean the telephone numbers provided by the telecommunications service providers to GAPL. In order to enable the use of the Product by GAPL’s customers, GAPL assigns GAPL Numbers to its customers.
+                                            </p>
+                                            <p>
+                                              We are a cloud communications platform. Our products include the platform itself (as APIs), the user interfaces, mobile app and other SDKs. GAPL numbers are phone numbers that have been temporarily assigned to you so that you can use it as an endpoint for using the products and services. GAPL is not a replacement for your phone. It only works along with another valid telecommunication resource like a landline or a mobile phone connection.
+                                            </p>
+                                            <a href=" terms-and-conditions" target="_blank">Read More...</a>
+                                            <h5>privacy-policy</h5>
+                                            <p>
+                                              <b>I. Background</b> Garuda Advertising Private Limited (the “Company”) adheres strictly to information technology and data protection laws, rules and regulations, including but not limited to, the Information Technology Act, 2000 and the Information Technology (Reasonable security practices and procedures and sensitive personal data or information) Rules, 2011. In order to ensure compliance with the same, the Company has implemented this privacy policy which may be amended as and when required by the Company at its own sole discretion (the “Privacy Policy”). The Company understands the importance of and prioritizes the protection of sensitive personal data or information. This Privacy Policy specifies the manner in which sensitive personal data or information is collected, received, stored, processed, disclosed, transferred, dealt with and handled by the Company in relation to your use of the website <a href="https://www.cloudX.in">https://www.cloudX.in</a> or the Garuda Advertising Private Limited application for mobile devices (each referred to as the “Website”) and cloud telephony services offered by the Company (the “Services”).
+                                            </p>
+                                            <p>
+                                              <b>II. Customer</b> DataThis Privacy Policy governs the Company’s collection, receipt, storage, processing, disclosure, transfer, dealing with and handling of the Customer Data, which includes but is not limited to, information the Company:
+                                            </p>
+                                            <p>
+                                              (a) collects from you when you register on the Website for a trial or a full account for use of the Services, when you convert your trial account to a full account, or when configure your details within the Company’s systems, such as your name, electronic mail address, password, phone number, business name and other details of your business;
+                                            </p>
+                                            <p>
+                                              (b) collects from you related to the manner and mode of payment of fees for the use of the Website and Services, such as details of your bank account, credit card, debit card, net banking, etc.;
+                                            </p>
+                                            <p>
+                                              (c) stores regarding your calls and SMSs and content thereof, received or initiated using the Services, including but not limited to, details of the phone numbers that interact with your account, IVR content and call recordings; and
+                                            </p>
+                                            <p>
+                                              (d) automatically receives and records on its server logs from your internet browser, including but not limited to, your IP address, cookie information and details of the web pages you request. In order to register on the Website and use the Services, you are required to share the Customer Data for the effective performance of the Services.
+                                            </p>
+                                            <a href=" privacy-policy" target="_blank">Read More...</a>
+                                          </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                          <section class="example-section" style="margin-top: 20px;">
+                                            <mat-checkbox class="example-margin">I agree for all Privacy and Terms</mat-checkbox>
+                                          </section>
+                                        </div>
+                                        <div class="col-sm-12">
+                                          <div class="m-t-10">
+                                            <button mat-raised-button color="accent" matStepperPrevious>Cancel</button>
+                                            <button mat-raised-button color="primary" (click)="submit()"  matStepperNext>I agree</button>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                  
+                    </mat-step>
+                    
+                  </mat-horizontal-stepper>
+                  <a href="#" routerLink="/signin">You are already Registered?</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+

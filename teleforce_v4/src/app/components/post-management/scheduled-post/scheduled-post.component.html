@@ -1,0 +1,99 @@
+<div class="page-maindiv warap-height post-management">
+    <div class="row m-0">
+        <div class="col-xs-2 col-lg-2 col-md-3 col-sm-4 col-4 p-0">
+            <div class="post-mng-sidenav">
+                <ul class="post-mng-sidenav-list">
+                    <li routerLink="/post-management">
+                        <i class="fa fa-paper-plane-o" aria-hidden="true"></i> <span>Published Post</span>
+                    </li>
+                    <li class="active" routerLink="/scheduled-post">
+                        <i class="fa fa-clock-o" aria-hidden="true"></i> <span>Scheduled Post</span>
+                    </li>
+                    <!--<li routerLink="/draft-post">
+                        <i class="fa fa-floppy-o" aria-hidden="true"></i> <span>Draft Post</span>
+                    </li>-->
+                    <li routerLink="/createpost">
+                        <i class="fa fa-plus" aria-hidden="true"></i> <span>Create Post</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-xs-12 col-lg-10 col-md-9 col-sm-8 col-8 p-0">
+            <div class="">
+                <div class="card-body">
+                    <div class="my">
+                        <div class="table-responsive">
+                            <table mat-table [dataSource]="dataSource">
+
+                                <!--- Note that these columns can be defined in any order.
+                                    The actual rendered columns are set as a property on the row definition" -->
+                            
+                                <!-- published-on Column -->
+                                <ng-container matColumnDef="no">
+                                    <th mat-header-cell *matHeaderCellDef> Sr No .</th>
+                                    <td mat-cell *matCellDef="let element;let i = index;">{{i+1}}</td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="createdtime">
+                                    <th mat-header-cell *matHeaderCellDef> Created Time</th>
+                                    <td mat-cell *matCellDef="let element"> {{element.created_time | date:'medium'}} </td>
+                                </ng-container>
+                                <!-- media Column -->
+                                <ng-container matColumnDef="channels">
+                                    <th mat-header-cell *matHeaderCellDef> Channels </th>
+                                    <td mat-cell *matCellDef="let element;let i = index;"> 
+                                        <div class="table-thumnail" *ngFor="let channel of element['channel_arr']" >
+                                            <img class="table-thum-channel-img" *ngIf="channel.channel_thumbnail" [src]="checkimagepath(channel.channel_thumbnail)" [title]="channel['channel_name']+'('+channel['access_media']+')'"/> 
+                                            <div class="tablesocial-img-div">
+                                                <img class="tablesocial-img" *ngIf="channel.access_media=='facebook'" src="assets/images/icon/3.png">
+                                                <img class="tablesocial-img" *ngIf="channel.access_media=='twitter'" src="assets/images/icon/4.png">
+                                                <img class="tablesocial-img" *ngIf="channel.access_media=='instagram'" src="assets/images/icon/2.png">
+                                                <img class="tablesocial-img" *ngIf="channel.access_media=='linkedin'" src="assets/images/icon/1.png">
+                                            </div>
+                                        </div> 
+                                    </td>
+                                </ng-container>
+
+                                <!-- media Column -->
+                                <ng-container matColumnDef="media">
+                                    <th mat-header-cell *matHeaderCellDef> Media </th>
+                                    <td mat-cell *matCellDef="let element;let i = index;"> 
+                                        <img  class="tbl-post-img ml-1" *ngIf = "element.file_preview" src="{{media_path}}{{element.file_preview}}/{{element.file_name}}">
+                                        <img  class="tbl-post-img ml-1" *ngIf = "!element.file_preview" src="assets/images/icon/imgload.png">
+                                    </td>
+                                </ng-container>
+                            
+                                <!-- post-content Column -->
+                                <ng-container matColumnDef="postContent">
+                                    <th mat-header-cell *matHeaderCellDef> Content </th>
+                                    <td mat-cell *matCellDef="let element"> 
+                                        <span class="tbl-post-text">{{element.message.substring(0,50)}}..</span>
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="scheduledtime">
+                                    <th mat-header-cell *matHeaderCellDef> Schedule Time </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.schedule_time | date:'medium'}} </td>
+                                </ng-container>
+
+                                <!-- action Column -->
+                                <ng-container matColumnDef="action">
+                                    <th mat-header-cell *matHeaderCellDef> Action </th>
+                                    <td mat-cell *matCellDef="let element;let i = index"> 
+                                        <a [routerLink]="['/createpost']"
+                                        [queryParams]="{ id: element.sid}" class="pencil" ><i class="fa fa-edit" aria-hidden="true"></i></a>
+                                        &nbsp;&nbsp;
+                                        <a   class="trash"><i class="fa fa-trash" aria-hidden="true" (click)="DeleteConfirm(element.sid)" ></i></a>
+                                    </td>
+                                </ng-container>
+                            
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>  
+        </div>
+    </div>
+</div>

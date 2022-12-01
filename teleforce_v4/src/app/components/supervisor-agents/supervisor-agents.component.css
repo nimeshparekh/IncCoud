@@ -1,0 +1,12 @@
+table 
+{
+    width: 100%;
+    min-width: 700px;
+}
+.select-number-input
+{
+    width: 150px !important;
+    border: 1px solid #ccc;
+    padding: 6px 10px 6px 10px;
+    border-radius: 5px;
+}

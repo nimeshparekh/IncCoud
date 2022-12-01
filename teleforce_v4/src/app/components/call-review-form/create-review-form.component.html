@@ -1,0 +1,41 @@
+<div>
+    <div class="add-title">
+        <h2 class="primary" *ngIf="addmode">Add Parameter</h2>
+        <h2 class="primary" *ngIf="editmode">Edit Parameter</h2>
+        <h2 class="primary" *ngIf="deletemode">Delete Parameter</h2>
+    </div>
+    <div *ngIf="addmode || editmode">
+        <form [formGroup]="addForm" (ngSubmit)="submit()">
+            <mat-grid-list [cols]="2" rowHeight="100px">
+                <mat-grid-tile>
+                    <div class="text-inside">
+                        <mat-form-field>
+                            <input matInput placeholder="Parameter Name" formControlName="form_parameter" required>
+                            <mat-error *ngIf="addForm.controls.form_parameter.hasError('required')">
+                                Please enter parameter name
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </mat-grid-tile>                            
+            </mat-grid-list><br>
+            <div class="btn-sec">
+                <button mat-raised-button type="submit" color="primary" class="Update-btn">Save</button>
+                &nbsp;
+                <button mat-raised-button type="button" class="Discard-btn" (click)="openDialog()">Cancel</button>
+            </div>
+
+        </form>
+    </div>
+
+    <div *ngIf="deletemode">
+        <h4>
+            Are you sure to delete this ?
+        </h4>
+        <div class="btn-sec">
+            <button mat-raised-button type="button" color="primary" class="Update-btn"
+                (click)="deleteData(packageid)">Delete</button>
+            &nbsp;
+            <button mat-raised-button type="button" class="Discard-btn" (click)="openDialog()">Cancel</button>
+        </div>
+    </div>
+</div>

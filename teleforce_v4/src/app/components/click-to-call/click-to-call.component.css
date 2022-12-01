@@ -1,0 +1,15 @@
+mat-form-field {
+    width: 100%;
+  }
+
+
+
+  table 
+  {
+      width: 100%;
+      min-width: 700px;
+  }
+.material-icons
+{
+    cursor: pointer;
+}

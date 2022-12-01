@@ -1,0 +1,48 @@
+<div class="row charts">
+    <div class="col-sm-6 col-12 mt-3">
+        <div class="card-ana">
+            <div class="card-ana-head d-flex">
+                <div class="flex-fill">
+                    <p class="">Mail Openers</p>
+                </div>
+            </div>
+            <div class="card-ana-body">
+                <div style="display: block">
+                    <canvas baseChart
+                        [chartType]="chartTypeB"
+                        [datasets]="chartDatasetsB"
+                        [labels]="chartLabelsB"
+                        [colors]="chartColorsB"
+                        [options]="chartOptionsB"
+                        [legend]="true"
+                        (chartHover)="chartHoveredB($event)"
+                        (chartClick)="chartClickedB($event)">
+                    </canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-12 mt-3">
+        <div class="card-ana">
+            <div class="card-ana-head d-flex">
+                <div class="flex-fill ">
+                    <p class="">Campaign Summary</p>
+                </div>
+            </div>
+            <div class="card-ana-body">
+                <div style="display: block">
+                    <canvas baseChart
+                        [chartType]="chartTypeC"
+                        [datasets]="chartDatasetsC"
+                        [labels]="chartLabelsC"
+                        [colors]="chartColorsC"
+                        [options]="chartOptionsC"
+                        [legend]="true"
+                        (chartHover)="chartHoveredC($event)"
+                        (chartClick)="chartClickedC($event)">
+                    </canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

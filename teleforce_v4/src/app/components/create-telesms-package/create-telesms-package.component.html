@@ -1,0 +1,114 @@
+<div>
+    <div class="add-title">
+        <h2 class="primary" *ngIf="addmode">Add Package</h2>
+        <h2 class="primary" *ngIf="editmode">Edit Package</h2>
+        <h2 class="primary" *ngIf="deletemode">Delete Package</h2>
+    </div>
+    <div *ngIf="addmode || editmode">
+        <form [formGroup]="addForm" (ngSubmit)="submit()">
+            <mat-grid-list [cols]="2" rowHeight="100px">
+                <mat-grid-tile>
+                    <div class="text-inside">
+                        <mat-form-field>
+                            <input matInput placeholder="Package Name" formControlName="name" required>
+                            <mat-error *ngIf="addForm.controls.name.hasError('required')">
+                                Please enter package name
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </mat-grid-tile>                
+
+                <!-- <mat-grid-tile>
+                    <div class="text-inside">
+                        <mat-form-field>
+                            <input type="number" matInput placeholder="Transaction Rate" formControlName="transrate" required (change)="countPackageValue()">
+                            <mat-error *ngIf="addForm.controls.transrate.hasError('required')">
+                                Please enter transaction rate
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </mat-grid-tile> -->
+
+                <!-- <mat-grid-tile>
+                    <div class="text-inside">
+                        <mat-form-field>
+                            <input type="number" matInput placeholder="Transaction No" formControlName="transno" required (change)="countPackageValue()">
+                            <mat-error *ngIf="addForm.controls.transno.hasError('required')">
+                                Please enter transaction no
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </mat-grid-tile> -->
+
+
+                <mat-grid-tile>
+                    <div class="text-inside">
+                        <mat-form-field>
+                            <input type="number" matInput placeholder="Promotional Rate" formControlName="pr_rate" required (change)="countPackageValue()">
+                            <mat-error *ngIf="addForm.controls.pr_rate.hasError('required')">
+                                Please enter promotional rate
+                            </mat-error>                           
+                        </mat-form-field>
+                    </div>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <div class="text-inside">
+                        <mat-form-field>
+                            <input type="number" matInput placeholder="Promotional No" formControlName="pr_no" (change)="countPackageValue()">                                                   
+                            <mat-error *ngIf="addForm.controls.pr_no.hasError('required')">
+                                Please enter promotional no
+                            </mat-error>  
+                        </mat-form-field>
+                    </div>
+                </mat-grid-tile>
+                
+                <!-- <mat-grid-tile>
+                    <div class="text-inside">
+                        <mat-form-field>
+                            <input type="number" matInput placeholder="OTP Rate" formControlName="otp_rate" required (change)="countPackageValue()">
+                            <mat-error *ngIf="addForm.controls.otp_rate.hasError('required')">
+                                Please enter promotional rate
+                            </mat-error>                           
+                        </mat-form-field>
+                    </div>
+                </mat-grid-tile> -->
+                
+                <!-- <mat-grid-tile>
+                    <div class="text-inside">
+                        <mat-form-field>
+                            <input type="number" matInput placeholder="OTP No" formControlName="otp_no" (change)="countPackageValue()">                                                   
+                            <mat-error *ngIf="addForm.controls.otp_no.hasError('required')">
+                                Please enter promotional no
+                            </mat-error>  
+                        </mat-form-field>
+                    </div>
+                </mat-grid-tile> -->
+                
+                <mat-grid-tile>
+                    <div class="text-inside">
+                        <mat-label>Package Value : {{packagevalue}}</mat-label>                            
+                    </div>
+                </mat-grid-tile>                
+                
+            </mat-grid-list><br>
+            <div class="btn-sec">
+                <button mat-raised-button type="submit" color="primary" class="Update-btn">Save</button>
+                &nbsp;
+                <button mat-raised-button type="button" class="Discard-btn" (click)="openDialog()">Cancel</button>
+            </div>
+
+        </form>
+    </div>
+
+    <div *ngIf="deletemode">
+        <h4>
+            Are you sure to delete this ?
+        </h4>
+        <div class="btn-sec">
+            <button mat-raised-button type="button" color="primary" class="Update-btn"
+                (click)="deleteData(adminid)">Delete</button>
+            &nbsp;
+            <button mat-raised-button type="button" class="Discard-btn" (click)="openDialog()">Cancel</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,172 @@
+<div class="warap-height pt-4">
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <h1 class="h3 mb-2 text-gray-800">OBD Pulse Report</h1>
+        <p class="mb-2"></p>
+        <form [formGroup]="searchform"> 
+            <div class="row">
+               
+                <div class="col-sm-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Choose a date</mat-label>
+                        <input matInput placeholder="From Date" [matDatepicker]="startpicker" formControlName="startdate" >
+                        <mat-datepicker-toggle matSuffix [for]="startpicker"></mat-datepicker-toggle>
+                        <mat-datepicker #startpicker tpicker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Choose a date</mat-label>
+                        <input matInput placeholder="To Date" [matDatepicker]="endpicker" formControlName="enddate" >
+                        <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
+                        <mat-datepicker #endpicker tpicker></mat-datepicker>
+                    </mat-form-field> 
+                </div>
+                <div class="col-sm-2">
+                    <button mat-raised-button type="submit" (click)="searchData()"  [disabled]="isDisabled">Search</button>&nbsp;
+                </div>
+            </div>            
+        </form>     
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4 mt-3">
+
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table width="100%">
+                        <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+                        <div fxLayout fxLayoutAlign="center center" class="mt-2">
+                            <button mat-raised-button color="primary"
+                                (click)="exporter.exportTable('csv', {fileName:'obd-pulse-Report', sheet: 'sheet_name'})">CSV</button>
+                        </div><br>
+                        <mat-table class="lessons-table mat-elevation-z8" matTableExporter #exporter="matTableExporter"  [dataSource]="dataSource">
+                            <ng-container matColumnDef="id">
+
+                                <mat-header-cell *matHeaderCellDef>Sr. No</mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" data-label="id">
+                                    {{i+1+(paginator.pageIndex * paginator.pageSize)}}</mat-cell>
+
+                            </ng-container>
+                            <ng-container matColumnDef="pulses">
+
+                                <mat-header-cell *matHeaderCellDef > Pulses </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" maxlength="10">
+                                {{row.pulses}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="Pressed1">
+
+                                <mat-header-cell *matHeaderCellDef > Pressed1 </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" maxlength="10">
+                                {{row.Pressed1}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="Pressed2">
+
+                                <mat-header-cell *matHeaderCellDef > Pressed2 </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" maxlength="10">
+                                {{row.Pressed2}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="Pressed3">
+
+                                <mat-header-cell *matHeaderCellDef > Pressed3 </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" maxlength="10">
+                                {{row.Pressed3}}
+                                </mat-cell>
+
+                            </ng-container>
+
+
+                            <ng-container matColumnDef="Pressed4">
+
+                                <mat-header-cell *matHeaderCellDef > Pressed4 </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" maxlength="10">
+                                {{row.Pressed4}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="Pressed5">
+
+                                <mat-header-cell *matHeaderCellDef >Pressed5 </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" maxlength="10">
+                                    {{row.Pressed5 }}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="Pressed6">
+
+                                <mat-header-cell *matHeaderCellDef > Pressed6</mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" maxlength="10">
+                                    {{row.Pressed6}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="Pressed7">
+
+                                <mat-header-cell *matHeaderCellDef > Pressed7</mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.Pressed7}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="Pressed8">
+
+                                <mat-header-cell *matHeaderCellDef > Pressed8 </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.Pressed8}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="Pressed9">
+
+                                <mat-header-cell *matHeaderCellDef > Pressed9 </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.Pressed9}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                           
+
+                            
+
+                            
+                            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+                            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+                        </mat-table>
+                        <mat-paginator #paginator [length]="Length" [pageSize]="50" [pageSizeOptions]="[50,100,500]">
+                        </mat-paginator>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /.container-fluid -->
+</div>    

@@ -1,0 +1,229 @@
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Renewal Report ( {{currentdate | date:'dd-MM-yyyy'}} )</h1>
+    <p class="mb-4"></p>
+    <br><br>
+    <form [formGroup]="searchform">
+        <mat-form-field>
+            <mat-label>Expired In</mat-label>
+            <mat-select formControlName="type" required >
+                <mat-option [value]="30">30 Days</mat-option>
+                <mat-option [value]="7">7 Days</mat-option>
+                <mat-option [value]="3">3 Days</mat-option>
+                <mat-option [value]="1">1 Day</mat-option>
+            </mat-select>
+            <mat-error *ngIf="searchform.controls.type.hasError('required')">
+                Please select day
+            </mat-error>
+        </mat-form-field>&nbsp;&nbsp;
+        <button mat-raised-button type="submit" (click)="searchData()" [disabled]="isDisabled">Search</button>&nbsp;
+    </form> 
+    
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4 mt-3">
+
+        <div class="card-body">
+            <div fxLayout fxLayoutAlign="center center" class="mt-2">
+                <button mat-raised-button color="primary"
+                    (click)="exporter.exportTable('csv', {fileName:'Renewal-Report', sheet: 'sheet_name'})">CSV</button>
+            </div><br>
+            <div class="table-responsive">
+                <table width="100%">
+                    <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+                
+                    <mat-table class="lessons-table mat-elevation-z8"  [dataSource]="dataSource" matTableExporter #exporter="matTableExporter">
+                        <ng-container matColumnDef="id" sticky>
+
+                            <mat-header-cell *matHeaderCellDef>Sr. No</mat-header-cell>
+
+                            <mat-cell class="description-cell" *matCellDef="let row;let i = index;" data-label="id">
+                                {{i+1+(paginator.pageIndex * paginator.pageSize)}}</mat-cell>
+
+                        </ng-container>
+
+                        <ng-container matColumnDef="name">
+
+                            <mat-header-cell *matHeaderCellDef > Name </mat-header-cell>
+
+                            <mat-cell class="description-cell" *matCellDef="let row;let i = index;">
+                                {{row.account_name}}
+                            </mat-cell>
+
+                        </ng-container>
+
+                        <ng-container matColumnDef="email">
+
+                            <mat-header-cell *matHeaderCellDef > Email / Mobile </mat-header-cell>
+
+                            <mat-cell class="description-cell" *matCellDef="let row;let i = index;" maxlength="10">
+                                {{row.email}}<br>{{row.mobile}}
+                            </mat-cell>
+
+                        </ng-container>
+
+                        
+                        <ng-container matColumnDef="plan_name">
+
+                            <mat-header-cell *matHeaderCellDef > Plan Name </mat-header-cell>
+
+                            <mat-cell class="description-cell" *matCellDef="let row">
+                                {{row.package_name}}
+                            </mat-cell>
+
+                        </ng-container>
+
+                        <ng-container matColumnDef="plan_status">
+
+                            <mat-header-cell *matHeaderCellDef> Plan Status </mat-header-cell>
+
+                            <mat-cell class="description-cell" *matCellDef="let row" >                                
+                                <label *ngIf="row.package_id!=0">{{(row.days>=0)?'Active':'Expired'}}</label> 
+                            </mat-cell>
+                            
+
+                        </ng-container>
+
+                        <ng-container matColumnDef="plan_type">
+
+                            <mat-header-cell *matHeaderCellDef> Plan Type </mat-header-cell>
+
+                            <mat-cell class="description-cell" *matCellDef="let row">
+                                {{row.package_validity}}
+                            </mat-cell>
+
+                        </ng-container>
+
+                        <ng-container matColumnDef="startingdate">
+
+                            <mat-header-cell *matHeaderCellDef> First Starting Date </mat-header-cell>
+
+                            <mat-cell class="description-cell" *matCellDef="let row">
+                                {{row.create_date | date:'dd-MM-yyyy'}}
+                            </mat-cell>
+
+                        </ng-container>
+
+                        <ng-container matColumnDef="renewcount">
+
+                            <mat-header-cell *matHeaderCellDef> Renew Count </mat-header-cell>
+
+                            <mat-cell class="description-cell" *matCellDef="let row">
+                                {{row.total_renew!=null?row.total_renew:0}}
+                            </mat-cell>
+
+                        </ng-container>
+
+                        <ng-container matColumnDef="lastrenewdate">
+
+                            <mat-header-cell *matHeaderCellDef> Last Renew Date </mat-header-cell>
+
+                            <mat-cell class="description-cell" *matCellDef="let row">
+                                {{row.last_modify_date | date:'dd-MM-yyyy'}}
+                            </mat-cell>
+
+                        </ng-container>
+
+                        <ng-container matColumnDef="expiredate">
+
+                            <mat-header-cell *matHeaderCellDef> Expired Date </mat-header-cell>
+
+                            <mat-cell class="description-cell" *matCellDef="let row">
+                                {{row.expiry_date | date:'dd-MM-yyyy'}}
+                            </mat-cell>
+
+                        </ng-container>
+                        <ng-container matColumnDef="usercount">
+
+                            <mat-header-cell *matHeaderCellDef> User Count </mat-header-cell>
+
+                            <mat-cell class="description-cell" *matCellDef="let row">
+                               {{row.usercount!=null?row.usercount:'-'}}
+                            </mat-cell>
+
+                        </ng-container>
+                        <ng-container matColumnDef="channelcount">
+
+                            <mat-header-cell *matHeaderCellDef> Channels </mat-header-cell>
+
+                            <mat-cell class="description-cell" *matCellDef="let row">
+                               {{row.planchannel}}
+                            </mat-cell>
+
+                        </ng-container>
+                        <ng-container matColumnDef="totalamount">
+
+                            <mat-header-cell *matHeaderCellDef> Total Amount </mat-header-cell>
+
+                            <mat-cell class="description-cell" *matCellDef="let row">
+                                {{row.totalamount}}
+                            </mat-cell>
+
+                        </ng-container>
+                        <ng-container matColumnDef="billingdiscount">
+
+                            <mat-header-cell *matHeaderCellDef> Billing Discount </mat-header-cell>
+
+                            <mat-cell class="description-cell" *matCellDef="let row">
+                               {{row.bill_discount}}
+                            </mat-cell>
+
+                        </ng-container>
+                        <ng-container matColumnDef="renew_account_manager">
+
+                            <mat-header-cell *matHeaderCellDef> Account Manager </mat-header-cell>
+
+                            <mat-cell class="description-cell" *matCellDef="let row">
+                               {{row.SalesManager}}
+                            </mat-cell>
+
+                        </ng-container>
+
+                       <!-- <ng-container matColumnDef="7day">
+
+                            <mat-header-cell *matHeaderCellDef> Expire Within 7 Days </mat-header-cell>
+
+                            <mat-cell class="description-cell" *matCellDef="let row">
+                                {{(row.days<=7 && row.days>=4)?'Yes':'No'}}
+                            </mat-cell>
+
+                        </ng-container>
+
+                        <ng-container matColumnDef="3day">
+
+                            <mat-header-cell *matHeaderCellDef> Expire Within 3 Days </mat-header-cell>
+
+                            <mat-cell class="description-cell" *matCellDef="let row">
+                                {{(row.days<=3 && row.days>1)?'Yes':'No'}}
+                            </mat-cell>
+
+                        </ng-container>
+
+                        <ng-container matColumnDef="nextday">
+
+                            <mat-header-cell *matHeaderCellDef> Expire Next Days </mat-header-cell>
+
+                            <mat-cell class="description-cell" *matCellDef="let row">
+                                {{(row.days==1 && row.days>0)?'Yes':'No'}}
+                            </mat-cell>
+
+                        </ng-container>-->
+
+
+
+                        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+                        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+                    </mat-table>
+                    <mat-paginator #paginator [length]="Length" [pageSize]="50" [pageSizeOptions]="[50,100,500]">
+                    </mat-paginator>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- /.container-fluid -->

@@ -1,0 +1,10 @@
+<div mat-dialog-head class="dilog-head d-flex justify-content-between">
+    <h2 class="dialog-head-h">Are you sure ?</h2>
+</div>
+<div mat-dialog-content>
+    <p>You want to delete this scheduled post?</p>
+</div>
+<div class="btn-sec" mat-dialog-actions>
+    <button mat-flat-button color="accent" (click)="onNoClick()">No</button>
+    <button mat-flat-button color="warn" (click)="deleteschedulepost()" >Yes</button>
+</div>

@@ -1,0 +1,57 @@
+.dashboard-head
+{
+    border-bottom: 1px solid #ececec;
+    padding-bottom: 10px;
+}
+.top-right-button-container
+{
+    float: right;
+    position: relative;
+}
+.card-body 
+{
+    padding: 1.75rem !important;
+}
+h6 
+{
+    font-weight: 400;
+    font-size: 1rem !important;
+    color: #404040;
+}
+h2 {
+    font-size: 1.4rem !important;
+}
+h2 .text-primary 
+{
+    color: #005c8a !important;
+    font-size: 30px;
+    margin-top: 0px;
+}
+.dashboard-icon .text-primary 
+{
+    color: #005c8a !important;
+    font-size: 30px;
+    margin-top: 0px;
+}
+.text-primary 
+{
+    color: #005c8a !important;
+}
+.card {
+    border: initial !important;;
+    background: #fff !important;;
+    border-radius: .75rem !important;;
+    box-shadow: 0 1px 15px rgb(0 0 0 / 4%), 0 1px 6px rgb(0 0 0 / 4%) !important;;
+}
+.dashboard-text i
+{
+    font-size: 18px;
+}
+.dashboard-text p
+{
+    font-weight: 100;
+}
+.custom-button {
+    cursor: pointer;
+    flex: 1;
+}

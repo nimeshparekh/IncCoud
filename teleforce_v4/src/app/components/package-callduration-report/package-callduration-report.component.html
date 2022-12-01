@@ -1,0 +1,109 @@
+<div class="warap-height pt-4">   
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <h1 class="h3 mb-2 text-gray-800">Plan Call Duration Report</h1>
+        <p class="mb-4"></p>
+
+
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4 mt-3">
+
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>Plan Minutes</th>
+                            <th>Free Minutes</th>
+                            <th>Available Minutes</th>
+                            <th>Used Minutes</th>
+                        </tr>
+                        <tr>
+                            <td>{{showtotal.Plan_minuits}}</td>
+                            <td>{{showtotal.free_minuites}}</td>
+                            <td>{{(total_minuites)-(used)}}</td>
+                            <td>{{used}}</td>
+                        </tr>
+
+                    </table>
+                    <table width="100%">
+                        <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+                        <div fxLayout fxLayoutAlign="center center" class="mt-2">
+                            <button mat-raised-button color="primary"
+                                (click)="exporter.exportTable('csv', {fileName:'Plan-CallDuration-Report', sheet: 'sheet_name'})">CSV</button>
+                        </div><br>
+                        <mat-table class="lessons-table mat-elevation-z8" matTableExporter #exporter="matTableExporter" [dataSource]="dataSource">
+                            <ng-container matColumnDef="id">
+
+                                <mat-header-cell *matHeaderCellDef>Sr. No</mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" data-label="id">
+                                    {{i+1+(paginator.pageIndex * paginator.pageSize)}}</mat-cell>
+
+                            </ng-container>
+                        
+                            <ng-container matColumnDef="packagedate">
+
+                                <mat-header-cell *matHeaderCellDef> Plan Date </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row;let i = index;">
+                                    {{row.Bill_Date | date:'dd-MM-yyyy'}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="expdate">
+
+                                <mat-header-cell *matHeaderCellDef> Plan Expired Date </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" maxlength="10">
+                                    {{row.Plan_expire_Date | date:'dd-MM-yyyy'}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="incoming">
+
+                                <mat-header-cell *matHeaderCellDef> Incoming Call Duration </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.incoming}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="outgoing">
+
+                                <mat-header-cell *matHeaderCellDef> Outgoing Call Duration </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.outgoing}}
+                                </mat-cell>
+
+                            </ng-container>
+                            <ng-container matColumnDef="dialer">
+
+                                <mat-header-cell *matHeaderCellDef> Dialer Call Duration </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.dialer}}
+                                </mat-cell>
+
+                            </ng-container>                           
+
+                            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+                            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+                        </mat-table>
+                        <mat-paginator #paginator [length]="Length" [pageSize]="50" [pageSizeOptions]="[50,100,500]">
+                        </mat-paginator>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /.container-fluid -->
+</div> 

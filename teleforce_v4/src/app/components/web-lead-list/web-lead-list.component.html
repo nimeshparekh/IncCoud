@@ -1,0 +1,82 @@
+<div class="warap-height pt-4">   
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <h1 class="h3 mb-2 text-gray-800">Assigned Web Lead</h1>
+       
+        <!-- Lead Table -->
+        <div class="card shadow mb-4">
+            <!--Progress Bar-->
+            <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>      
+            <div class="card-body">
+
+                <!--Excel Btn-->
+                <div fxLayout fxLayoutAlign="center center" class="mt-2">
+                    <button mat-raised-button color="primary"
+                        (click)="exporter.exportTable('csv', {fileName:'agent-web-lead', sheet: 'sheet_name'})">CSV</button>
+                </div>
+                
+                <!--Table Content-->
+
+                <div class="table-responsive mt-3">
+                    <table mat-table [dataSource]="interestdataSource" matSort class="mat-elevation-z8" matTableExporter #exporter="matTableExporter">
+                    
+                        <!-- Position Column -->
+                        <ng-container matColumnDef="id">
+                            <th mat-header-cell *matHeaderCellDef> Sr. No. </th>
+                            <td mat-cell *matCellDef="let row;let i = index;" data-label="id">
+                                {{i+1+(interestpaginator.pageIndex * interestpaginator.pageSize)}}
+                            </td>
+                        </ng-container>
+                    
+                        <!-- CallStartTime Column -->
+                        <ng-container matColumnDef="name">
+                            <th mat-header-cell *matHeaderCellDef  mat-sort-header>Name</th>
+                            <td mat-cell *matCellDef="let row">
+                                {{row.name}}
+                            </td>
+                        </ng-container>
+                    
+                        <!-- CallerName Column -->
+                        <ng-container matColumnDef="mobile">
+                            <th mat-header-cell *matHeaderCellDef> Mobile </th>
+                            <td mat-cell *matCellDef="let row"> 
+                                {{row.mobile}}
+                            </td>
+                        </ng-container>
+                    
+                        <!-- CallerNumber Column -->
+                        <ng-container matColumnDef="email">
+                            <th mat-header-cell *matHeaderCellDef> Email-ID </th>
+                            <td mat-cell *matCellDef="let row">
+                                {{row.email}}
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="action">
+                            <th mat-header-cell *matHeaderCellDef> Action </th>
+                            <td mat-cell *matCellDef="let row">
+                                <button mat-icon-button color="primary">
+                                    <span (click)="clicktocall(row.agent_id,row.mobile)" title="Call">
+                                        <mat-icon>call</mat-icon>
+                                    </span>
+                                </button>
+                            </td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="interestColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: interestColumns;"></tr>
+                    </table>
+                </div>   
+
+                <!--Paginator-->
+                <mat-paginator #interestpaginator [length]="interestLength" [pageSize]="50"
+                [pageSizeOptions]="[50,100,500]"></mat-paginator>       
+                
+                
+            </div>
+        </div>
+
+    </div>
+    <!-- /.container-fluid -->
+</div>
+    

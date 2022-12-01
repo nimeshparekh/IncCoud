@@ -1,0 +1,1087 @@
+#main
+{
+    margin-left: 80px;
+    transition: margin-left .5s;
+    position: relative;
+}
+.warap-height
+{
+    height: calc(100vh - 114px);
+    overflow-y: scroll;
+}
+.call
+{
+    text-decoration: none;
+    color: #fff;
+    /* margin-top: -10px; */
+    height: 30px;
+    width: 30px;
+    text-align: center;
+    /* margin-left: 6px; */
+    line-height: 42px;
+    font-size: 6px;
+    background: #43a80f;
+    border-radius: 50px;
+    display: inline-block;
+    cursor: pointer;
+}
+.call span{
+    font-size: 17px;
+    text-align: center;
+}
+.icon-logo img
+{
+    width: 36px;
+}
+.icon-logo1 img
+{
+    width: 100px;
+    margin-left: -24px;
+}
+a {
+    color: #333333 !important;
+    font-size: 13px !important;
+    text-decoration: none;
+    background-color: transparent;
+}
+.manu-item a
+{
+    padding: 16px 0px 16px 0;
+}
+.bg
+{
+   background: url(../../../assets/img/bg.png);
+   background-repeat: no-repeat; 
+   background-size: cover;
+}
+.bg-white 
+{
+    background-color: #fff3!important;
+}
+.clr-fff
+{
+    color: #fff !important;
+}
+.search
+{
+    border: 1px solid #ccc!important;
+}
+.search:focus
+{
+    outline: none !important;
+}
+.sidebar .nav-item .collapse .collapse-inner .collapse-item:hover, .sidebar .nav-item .collapsing .collapse-inner .collapse-item:hover {
+    background-color: #eaecf400;
+}
+
+#responsivemenu
+{
+    display: block;
+    margin-left: 14px;
+    color: #145388;
+    margin-left: 2px;
+}
+
+.manu-close
+{
+    margin-left: 18px;
+    margin-top: 16px;
+    color: #fff;
+}
+.sidenav 
+{
+    height: 100%;
+    width: 80px;
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    background-color: #145388;
+    overflow-x: hidden;
+    transition: 0.5s;
+}
+.sidenav ul
+{
+    list-style-type: none;
+    padding: 0px;
+}
+.sidenav a 
+{
+    text-decoration: none;
+    font-size: 12px;
+    display: block;
+    transition: 0.3s;
+    color: #fff;
+}
+
+.sidenav a:hover 
+{
+    color: #f1f1f1;
+}
+
+.sidenav .closebtn 
+{
+    position: absolute;
+    top: 16px;
+    right: 8px;
+    height: 30px;
+    width: 30px;
+    text-align: center;
+    line-height: 30px;
+    background: #fff;
+    padding: 0;
+    color: #145388;
+    border-radius: 50px;
+}
+  
+.sidenav .sidebar-heading 
+{
+    color: rgba(255,255,255,.4);
+    padding-left: 10px;
+}
+.sidenav .nav-item .nav-link 
+{
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 1rem;
+    width: 14rem;
+    color: rgba(255,255,255,.8);
+}
+.sidenav .nav-item .nav-link i 
+{
+    font-size: .85rem;
+    margin-right: .25rem;
+    color: rgba(255,255,255,.3);
+}
+.sidenav .nav-item .nav-link span
+{
+    font-size: .85rem;
+    display: inline;
+}
+.sidenav hr.sidebar-divider 
+{
+    margin: 0 1rem 1rem;
+}
+.sidenav .sidebar-brand-icon.icon-logo 
+{
+    margin-left: -78px;
+}
+.sidenav .nav-item .collapse 
+{
+    position: relative;
+    left: 0;
+    z-index: 1;
+    top: 0;
+    margin: 0 1rem;
+    animation: none;
+}
+.sidenav .nav-item .collapse .collapse-inner .collapse-item, 
+.sidenav .nav-item .collapsing .collapse-inner .collapse-item 
+{
+    padding: .5rem 1rem;
+    margin: 0 .5rem;
+    display: block;
+    color: #3a3b45;
+    text-decoration: none;
+    border-radius: .35rem;
+    white-space: nowrap;
+    color: #fff !important;
+}
+.sidenav .nav-item .collapse .collapse-inner, .sidebar .nav-item .collapsing .collapse-inner 
+{
+    min-width: 10rem;
+    font-size: .85rem;
+    margin: 0;   
+}
+.sidebar .nav-item .collapse .collapse-inner, .sidebar .nav-item .collapsing .collapse-inner 
+{
+    min-width: 10rem;
+    font-size: .85rem;
+    margin: 0;
+}
+
+
+.menu-list
+{
+    margin-top: 16px;
+    height: calc(100vh - 70px);
+    overflow-y: scroll;
+}
+.menu-item
+{
+    text-align: center;
+    padding: 10px 0 10px 0px;
+    border-bottom: 1px solid #062d4e;
+    cursor: pointer;
+}
+.menu-item:focus
+{
+    outline: none;
+}
+.menu-item:first-child
+{
+    /* box-shadow: inset 0 7px 9px -7px rgba(0,0,0,0.4); */
+    box-shadow: inset 0 5px 7px -7px rgb(0 0 0 / 40%)
+}
+.menu-name
+{
+    font-size: 10px;
+    color: #e2e6e8;
+    margin: 0px;
+    padding: 0px;
+    line-height: 15px;
+}
+.menu-icon
+{
+    margin: 0px;
+    padding: 0px;
+    font-size: 20px;
+    color: #ffffff;
+}
+
+/*--------------- RESPONSIVE ----------------*/
+/* @media (min-width:992px) and (max-width:1200px)
+{
+    #responsivemenu
+    {
+        display: none;
+    }
+}
+@media (min-width:768px) and (max-width:991px)
+{
+    #responsivemenu
+    {
+        display: none;
+    }
+}
+@media (min-width:576px) and (max-width:767px)
+{
+    #accordionSidebar
+    {
+        display: none
+    }   
+    #responsivemenu
+    {
+        display: block;
+    }
+}
+@media (min-width:410px) and (max-width:575px)
+{
+    #accordionSidebar
+    {
+        display: none
+    }   
+    #responsivemenu
+    {
+        display: block;
+    }
+}
+@media (min-width:50px) and (max-width:410px)
+{
+    #accordionSidebar
+    {
+        display: none
+    }   
+    #responsivemenu
+    {
+        display: block;
+    }
+} */
+@media (min-width:50px) and (max-width:575px)
+{
+    .top-info img
+    {
+        width:88px ;
+    }
+    .sidebar .nav-item .nav-link .img-profile, .topbar .nav-item .nav-link .img-profile {
+        height: 1rem;
+        width: 1rem;
+    }
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 4px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #145388; 
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #1f6baa; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #0d4574; 
+}
+
+  .top-info 
+  {
+    font-size: 14px;
+    color: #9a9fab !important;
+    font-weight: 600;
+}
+.head-info
+{
+
+}
+.head-info ul
+{
+    padding-left: 0px;
+    margin-bottom: 0px;
+}
+.head-info ul li
+{
+    list-style-type: none;
+    display: inline;
+    margin-left: 14px;
+}
+/************************Dialer CSS*******************************/
+
+.call-dial-screen
+{
+    position: fixed;
+    bottom: 0;
+    z-index: 99;
+    right: 0;
+    max-width: 300px;
+}
+.dialer-card
+{
+    border: 1px solid #eaeaea;
+    background: #ffffff!important;
+    border-radius: .75rem!important;
+    box-shadow: 0 1px 15px rgb(0 0 0/4%),0 1px 6px rgb(0 0 0/4%)!important;
+    max-width: 300px;
+    margin: 18px auto;
+    overflow: hidden;
+    cursor: move;
+}
+.dialer-name-no
+{
+    display: block;
+    text-align: left;
+    margin: 8px auto;
+    padding: 0px 16px 0px 8px;
+}
+.dialer-name-no label
+{
+    font-size: 14px;
+    font-weight: bold;
+    color: #6e848d;
+    margin: 0px;
+    font-family: 'Nunito', sans-serif;
+    letter-spacing: 1px;
+}
+.dialer-name-no p
+{
+    margin: 0px;
+    color: #8ba1aa;
+    font-size: 12px;
+    margin-bottom: 0px;
+}
+.dialer-name-no span
+{
+    font-size: 11px;
+    color: #a1b2b9;
+}
+.dialer-name-no h6
+{
+    margin: 0px;
+    font-size: 10px;
+    color: #9daeb5;
+    margin-top: -6px;
+}
+.dial-action .running-call
+{
+    background: rgb(207, 22, 22);
+    border: none;
+    width: 40px;
+    height: 40px;
+    color: #fff;
+    border-radius: 50px;
+    line-height: 40px;
+}
+.dial-action .disconnect-call
+{
+    background: rgb(211, 207, 7);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50px;
+    line-height: 40px;
+}
+.running-call img
+{
+    width: 80px;
+}
+.runningcall-contact-details
+{
+    padding: 2px 12px 2px 14px;
+}
+.runningcall-contact-details h5
+{
+    font-weight: bold;
+    margin: 0px;
+    font-size: 13px;
+    color: #6d6d6d;
+}
+.runningcall-contact-details td
+{
+    font-size: 11px;
+}
+.runningcall-contact-details table
+{
+    border-collapse: separate;
+    border-spacing: 12px 0px;
+}
+.mat-menu-item a
+{
+    display: block;
+    padding: 0 16px;
+}
+.mat-menu-item
+{
+    padding: 0 0;
+}
+.call-result-btn
+{
+    margin-bottom: 10px;
+    font-size: 13px;
+    height: 28px;
+    line-height: 28px;
+}
+.callpopup-acion-btns
+{
+    display: block;
+    border-bottom: 1px solid #eaeaea;
+}
+.callpopup-acion-btns ul
+{
+    padding: 0px;
+    margin: 0px;
+    display: flex;
+}
+.callpopup-acion-btns ul li:first-child
+{
+    border-left: none;
+}
+.callpopup-acion-btns ul li:first-child
+{
+    border-left: none;
+}
+.callpopup-acion-btns ul li
+{
+    padding: 0px;
+    margin: 0px;
+    list-style-type: none;
+    text-align: center;
+    width: 41px;
+    height: 38px;
+    line-height: 42px;
+    background: #fffefe;
+    border-right: 1px solid #eaeaea;
+}
+.callpopup-acion-btns ul li:hover
+{
+    box-shadow: inset 0 0 10px #eaeaea;
+}
+.callpopup-acion-btns ul li i
+{
+    font-size: 18px !important;
+    padding: 12px 12px 8px 12px;
+    cursor: pointer;
+}
+.call-popup-head
+{
+    position: relative;
+}
+.popup-close-mini
+{
+    position: absolute;
+    right: 1px;
+    top: 3px;
+}
+.popup-close-mini-box
+{
+    width: 17px;
+    height: 17px;
+    background: #0ea9ea;
+    text-align: center;
+    line-height: 14px;
+    font-size: 8px;
+    border-radius: 50px;
+    margin-right: 1px;
+    float: left;
+    border: 1px solid #f0f1f4;
+    cursor: pointer;
+}
+.popup-close-mini-box i
+{
+    color: rgb(255 255 255);
+    font-size: 6px;
+    padding-left: 1px;
+}
+.modal-title
+{
+    margin-bottom: 0px;
+}
+.badge-custom
+{
+    width: 12px;
+    height: 12px;
+    border-radius: 50px;
+    text-align: center;
+    background-color: #e63c3c;
+    line-height: 12px;
+    font-size: 8px;
+    position: absolute;
+    color: #fff;
+    top: 3px;
+    right: 4px;
+}
+.topbar .dropdown-list .dropdown-header
+{
+    margin-bottom: 0px;
+}
+
+.callInfo {
+    width: 190px;
+    height: 70px;
+    float: left;
+}
+#connectedCall .callInfo {
+    width: 240px;
+}
+#dialPad div{
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    
+    /*
+    Introduced in IE 10.
+    See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+    */
+    -ms-user-select: none;
+    user-select: none;
+}
+.callInfo h3 {
+    color: #389400;
+    margin: 10px 0 10px 0;
+}
+.callInfo p {
+    margin: 0px 25px 0px 0px;
+    float: left;
+}
+#answer, #hangUp, #reject, #connectCall, #mute {
+    color: #FFF;
+    background-color: #389400;
+    width: 50px;
+    height: 50px;
+    float: right;
+    text-align: center;
+    font-size: 30px;
+    margin: 10px 0px 10px 0px;
+    border-radius: 25px 25px 25px 25px;
+    -moz-border-radius: 25px 25px 25px 25px;
+    -webkit-border-radius: 25px 25px 25px 25px;
+    cursor: pointer;
+    cursor: hand;
+}
+#mute:active, #connectCall:active, #reject:active, #hangUp:active, #answer:active {
+    background-color: #B6B6B6;
+    -webkit-box-shadow: 0px 1px 7px 2px rgba(0, 0, 0, 0.45);
+    -moz-box-shadow: 0px 1px 7px 2px rgba(0, 0, 0, 0.45);
+    box-shadow: 0px 1px 7px 2px rgba(0, 0, 0, 0.45);
+    border: none;
+}
+#hangUp, #reject {
+    -ms-transform: rotate(135deg);
+    /* IE 9 */
+    -webkit-transform: rotate(135deg);
+    /* Chrome, Safari, Opera */
+    transform: rotate(135deg);
+}
+#hangUp {
+    background-color: #A90002;
+}
+#reject {
+    background-color: #FFF;
+    color: #A90002;
+    margin-right: 10px;
+}
+#connectCall, #mute {
+    color: #FFF;
+    background-color: #389400;
+    width:260px;
+    height: 50px;
+    font-size: 30px;
+    text-align: center;
+    margin: 20px 20px 0px 20px;
+    border-radius: 5px 5px 5px 5px;
+    -moz-border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+    cursor: pointer;
+    cursor: hand;
+}
+#mute {
+    color: #545454;
+    margin: 0 auto;
+    width: 50px;
+    height: 50px;
+    margin: 15px 125px 10px 20px;
+    border-radius: 25px 25px 25px 25px;
+    -moz-border-radius: 25px 25px 25px 25px;
+    -webkit-border-radius: 25px 25px 25px 25px;
+    background-color: #FFF;
+}
+.muteActive {
+    color: #FFF;
+    background-color:#389400;
+}
+#to {
+    border-bottom: 2px solid #BBBBBB;
+}
+#toField {
+    margin-top: 20px;
+    padding-left: 10px;
+    font-size: 1em;
+    font-family:'Open Sans', sans-serif;
+    width: 300px;
+    height: 40px;
+    border-radius: 2px 2px 2px 2px;
+    -moz-border-radius: 2px 2px 2px 2px;
+    -webkit-border-radius: 2px 2px 2px 2px;
+    border: 0px solid #B8B8B8;
+}
+#dialPad {
+    width: 240px;
+    height: 308px;
+    margin:0 auto;
+}
+#dialPad div {
+    float: left;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    font-size: 26px;
+    margin: 25px 15px 0px 15px;
+    box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    border-radius: 25px 25px 25px 25px;
+    -moz-border-radius: 25px 25px 25px 25px;
+    -webkit-border-radius: 25px 25px 25px 25px;
+    border: 1px solid #E8E8E8;
+    padding-top: 5px;
+}
+#dialPad div:hover {
+    background-color: #389400;
+    color: #FFF;
+    cursor: pointer;
+    cursor: hand;
+}
+#dialPad div:active {
+    background-color: #B2B2B2;
+    -webkit-box-shadow: 0px 1px 7px 2px rgba(0, 0, 0, 0.45);
+    -moz-box-shadow: 0px 1px 7px 2px rgba(0, 0, 0, 0.45);
+    box-shadow: 0px 1px 7px 2px rgba(0, 0, 0, 0.45);
+    border: none;
+}
+/* .fa {
+    margin-top: 11px;
+} */
+#answer .fa {
+    -webkit-animation: callp 1s;
+    animation: callp 1s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-direction: alternate;
+    -webkit-animation-play-state: running;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-play-state: running;
+}
+@-webkit-keyframes callp {
+    from {
+        color: #FFF;
+    }
+    to {
+        color: #389400;
+    }
+}
+@keyframes callp {
+    from {
+        color: #FFF;
+    }
+    to {
+        color: #389400;
+    }
+}
+#answer {
+    -webkit-animation: call 1s;
+    animation: call 1s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-direction: alternate;
+    -webkit-animation-play-state: running;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-play-state: running;
+}
+@-webkit-keyframes call {
+    from {
+        background: #389400;
+    }
+    to {
+        background: #FFF;
+    }
+}
+@keyframes call {
+    from {
+        background: #389400;
+    }
+    to {
+        background: #FFF;
+    }
+}
+.call-voip-screen
+{
+    position: fixed;
+    bottom: 0;
+    z-index: 9;
+    right: 10;
+}
+.callbtn
+{
+  background: #259609;
+  text-decoration: none;
+  color: #fff;
+  border: 1px solid #259609;
+  width: 45px;
+  height: 45px;
+  text-align: center;
+  line-height: 35px;
+  border-radius: 50px;
+  margin: 0 auto;
+}
+.callbtn:hover
+{
+  background: #fff;
+  color: #259609;
+}
+.CallViopPopup
+{
+    display: block;
+    border-bottom: 1px solid #eaeaea;
+    padding: 12px 12px 11px 12px;
+}
+.CallViopPopup-textbox
+{
+    border: 1px solid #efefef;
+    padding: 6px 14px 6px 14px;
+    color: #515151;
+    border-radius: 5px;
+    font-size: 12px;
+}
+.CallViopPopup-textbox:focus
+{
+    outline: none;
+}
+.CallViopPopup-textbox::placeholder
+{
+    color: rgb(121, 121, 121);
+}
+.click-call
+{
+    width: 30px;
+    height: 30px;
+    font-size: 12px;
+    margin-left: 10px;
+    border-radius: 50px;
+    border: 1px solid #1c7107;
+    background: #259609;
+    color: #fff;
+    line-height: 26px;
+    margin-top: 2px;
+}
+
+.click-call i
+{
+    transform: rotate(90deg);
+}
+.CallViopPopup-dial-details
+{
+        padding: 12px 0px 0px 2px;
+        display: inline-block;
+        width: 100%;
+}
+.dial-details-name-num
+{
+    float: left;
+}
+.dial-details-name
+{
+    margin: 0px;
+    font-weight: 500;
+}
+.dial-details-num
+{
+    margin-top: -4px;
+    font-weight: 100;
+    font-size: 11px;
+    margin: 0px;
+}
+.dial-details-num span
+{
+    color: #ccc;
+}
+.clickdiscoonect-call
+{
+    width: 30px;
+    height: 30px;
+    font-size: 12px;
+    margin-left: 4px;
+    border-radius: 50px;
+    border: 1px solid #f31919;
+    background: #ffffff;
+    color: #f31919;
+    line-height: 26px;
+    margin-top: 2px;
+}
+.clickdiscoonect-call:active 
+{
+    margin-top: 2px;
+    background: #f31919;
+    color: #fff;   
+}
+.clickdiscoonect-call i
+{
+    transform: rotate( 225deg);
+    margin-left: 1px;
+}
+.clickmute-call
+{
+    width: 30px;
+    height: 30px;
+    font-size: 12px;
+    margin-left: 0px;
+    border-radius: 50px;
+    border: 1px solid #607d8b;
+    background: #fff;
+    color: #607d8b;
+    line-height: 26px;
+    margin-top: 2px;
+}
+.CallViopPopup-buttons
+{
+    float: right;
+}
+.clickmute-call:active
+{
+    margin-top: 2px;
+    background: #607d8b;
+    color: #fff;
+}
+.click-call-line
+{
+    width: 30px;
+    height: 30px;
+    font-size: 12px;
+    margin-left: 10px;
+    border-radius: 50px;
+    border: 1px solid #1c7107;
+    background: #fff;
+    color: #259609;
+    line-height: 26px;
+    margin-top: 2px;
+}
+.click-call-line i
+{
+    transform: rotate(90deg);
+}
+.click-call-line:active 
+{
+    margin-top: 2px;
+    background: #259609;
+    color: #fff;
+}
+.callpopupFeedback
+{
+    font-size: 12px;
+    line-height: 3;
+    margin: 0px;
+    margin-top: 1px;
+    color: #145388;
+}
+
+/*****************/
+
+
+.span4
+{
+  width: 50px;
+  float: left;
+  margin: 0 8px 10px 8px;
+}
+
+.phone
+{
+    margin-top: 15px;
+    background: #fff;
+}
+.tel
+{
+  font-size: 2.5em;
+  color: #145388;
+  text-align: center;
+  float: left;
+  border: navajowhite;
+  height: 48px;
+  line-height: 48px;
+  width: 300px;
+  border-bottom: 1px solid #ccc;
+  border-radius: 12px;
+  width: 100%;
+  margin-bottom: 18px;
+}
+.tel:focus
+{
+  outline: none;
+}
+.num-pad
+{
+  width: 200px;
+  margin: 0 auto;
+  display: flow-root;
+}
+
+
+.num
+{
+  border: 1px solid #9e9e9e;
+  border-radius: 999px;
+  -moz-border-radius: 999px;
+  height: 50px;
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+}
+.num:hover
+{
+    background-color: #9e9e9e;
+    color: #fff;
+    transition-property: background-color .2s linear 0s;
+    -moz-transition: background-color .2s linear 0s;
+    -webkit-transition: background-color .2s linear 0s;
+    -o-transition: background-color .2s linear 0s;
+}
+.txt
+{
+  font-size: 14px;
+  text-align: center;
+  margin-top: 3px;
+  font-family: 'Lato' , sans-serif;
+  line-height: 30px;
+  color: #333;
+}
+.small
+{
+    font-size: 15px;
+}
+
+.btn
+{
+    font-weight: bold;
+    -webkit-transition: .1s ease-in background-color;
+    -webkit-font-smoothing: antialiased;
+    letter-spacing: 1px;
+}
+.btn:hover
+{
+    transition-property: background-color .2s linear 0s;
+    -moz-transition: background-color .2s linear 0s;
+    -webkit-transition: background-color .2s linear 0s;
+    -o-transition: background-color .2s linear 0s;
+}
+.spanicons
+{
+    width: 72px;
+    float: left;
+    text-align: center;
+    margin-top: 40px;
+    color: #9e9e9e;
+    font-size: 30px;
+    cursor: pointer;
+}
+.spanicons:hover
+{
+    color: #3498db;
+    transition-property: color .2s linear 0s;
+    -moz-transition: color .2s linear 0s;
+    -webkit-transition: color .2s linear 0s;
+    -o-transition: color .2s linear 0s;
+}
+.active
+{
+    color: #3498db;
+}
+.txt p {
+  margin: -15px 0 0px 0 !important;
+  font-size: 8px;
+}
+.form-control:focus
+{
+  outline: none;
+}
+.callbtn
+{
+  background: #259609;
+  text-decoration: none;
+  color: #fff;
+  border: 1px solid #259609;
+  width: 64px;
+  height: 64px;
+  text-align: center;
+  line-height: 52px;
+  border-radius: 50px;
+  margin: 0 auto;
+}
+.callbtn:hover
+{
+  background: #fff;
+  color: #259609;
+}
+.click-call-dial-btn
+{
+    width: 30px;
+    height: 30px;
+    font-size: 12px;
+    margin-left: 4px;
+    border-radius: 50px;
+    border: 1px solid #6a7107;
+    background: #b6b90a;
+    color: #fff;
+    line-height: 26px;
+    margin-top: 2px;
+}
+.dialpademini
+{
+    position: absolute;
+    margin-top: 10px;
+    left: 50px;
+    padding: 8px 0px 0px 0px;
+    border: 1px solid #eaeaea;
+    background: #ffffff2b!important;
+    backdrop-filter: blur(5px);
+    border-radius: .75rem!important;
+    box-shadow: 0 1px 15px rgb(0 0 0/4%),0 1px 6px rgb(0 0 0/4%)!important;
+    z-index: 9;
+    top: -175px;
+}
+.myClass{
+    color : red;
+  }

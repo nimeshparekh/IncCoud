@@ -1,0 +1,171 @@
+<div class="page-maindiv warap-height brand-info">
+    <div class="brand-head">
+        <div class="d-flex container-fluid">
+            <div class="flex-fill">
+                <p class="brand-head-text">Channels</p>
+            </div>
+            <div class="flex-row-reverse">
+            </div>
+        </div>         
+    </div>
+    
+    <div class="brand-details">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="flex-fill">
+                        <div class="row" >
+                            <div class="col-sm-3">
+                                <button mat-button [matMenuTriggerFor]="Brand">
+                                    <div class="brand-profile">
+                                        <div class="d-flex">
+                                            <div>
+                                                <img src="assets/images/icon/profile.png">
+                                            </div>
+                                            <div class="ml-2 brand-name">
+                                                {{current_brand}}  <i class="fa fa-angle-down" aria-hidden="true"></i>
+                                            </div>
+                                        </div>      
+                                    </div>
+                                </button>
+                                <mat-menu #Brand="matMenu" >
+                                    <button mat-menu-item *ngFor="let lan of brand_names; let i = index"> 
+                                        <div class="brand-profile-item" >
+                                            <div class="d-flex" (click)="savePage(i)" >
+                                                <div>
+                                                    <img src="assets/images/icon/profile.png">
+                                                </div>
+                                                <div class="ml-2 brand-name" >
+                                                    {{brand_names[i].brand_name}}
+                                                </div>
+                                            </div>      
+                                        </div>
+                                    </button>
+                                </mat-menu>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="brand-canvas-footer">
+                                    <div class="text-right">
+                                        <button mat-flat-button style="font-size: 12px;" (click)="openDialog_channel()">
+                                            <i style="font-size: 10px;" class="fa fa-plus" aria-hidden="true"></i>
+                                            Add Channel
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="flex-fill">
+                        <div class="row" >
+                            <div class="col-sm-8">
+                                <span class="account-access-box"><img src="assets/images/icon/squre-facebook.png" class="hvr-bob"> Facebook Page</span>
+                                <div *ngFor="let lan of facebook_channel; let i = index">
+                                    <br>Connected Channel : {{lan}}
+                                </div>
+                            </div>
+                            <div class="col-sm-4 text-right" *ngIf="facebook != null">
+                                <button mat-raised-button class="ml-2 mt-4" color="primary" (click)="openDialog(facebook,'facebook')">Connect</button>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <div class="col-sm-6">
+                    <div class="flex-fill">
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <span class="account-access-box" ><img src="assets/images/icon/squre-instagram.png" class="hvr-bob"> Instagram Business </span>
+                                <div *ngFor="let lan of instagram_channel; let i = index">
+                                    <br>Connected Channel : {{lan}}
+                                </div>
+                            </div>
+                            <div class="col-sm-4 text-right" *ngIf="instagram != null">
+                                <button mat-raised-button class="ml-2 mt-4" color="primary" (click)="openDialog(instagram,'instagram')">Connect</button>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <div class="col-sm-6">
+                    <div class="flex-fill">
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <span class="account-access-box" ><img src="assets/images/icon/squre-twitter.png" class="hvr-bob"> Twitter Profile</span>
+                                <div *ngFor="let lan of twitter_channel; let i = index">
+                                    <br>Connected Channel : {{lan}}
+                                </div>
+                            </div>
+                            <div class="col-sm-4 text-right" *ngIf="twitter !=null">
+                                <button mat-raised-button class="ml-2 mt-4" color="primary" (click)="openDialog(twitter,'twitter')">Connect</button>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <div class="col-sm-6">
+                    <div class="flex-fill">
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <span class="account-access-box" ><img src="assets/images/icon/squre-linkedin.png" class="hvr-bob"> LinkedIn Company Page</span>
+                                <div *ngFor="let lan of linkdin_channel; let i = index">
+                                    <br>Connected Channel : {{lan}}
+                                </div>
+                            </div>
+                            <div class="col-sm-4 text-right" *ngIf="linkdin !=null">
+                                <button mat-raised-button class="ml-2 mt-4" color="primary" (click)="openDialog(linkdin,'linkdin')">Connect</button>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <!-- <div class="col-sm-6">
+                    <div class="flex-fill">
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <span class="account-access-box" ><img src="assets/images/icon/squre-youtube.png" class="hvr-bob"> Youtube Channel (Beta)</span>
+                                <div *ngFor="let lan of youtube_channel; let i = index">
+                                    <br>Connected Channel : {{lan}}
+                                </div>
+                            </div>
+                            <div class="col-sm-4 text-right" *ngIf="youtube !=null">
+                                <button mat-raised-button class="ml-2 mt-4" color="primary" (click)="openDialog(youtube,'youtube')">Connect</button>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <div class="col-sm-6">
+                    <div class="flex-fill">
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <span class="account-access-box" ><img src="assets/images/icon/social/google.png" class="hvr-bob"> Google My Business (Beta)</span>
+                                <div *ngFor="let lan of google_channel; let i = index">
+                                    <br>Connected Channel : {{lan}}
+                                </div>
+                            </div>
+                            <div class="col-sm-4 text-right" *ngIf="google !=null">
+                                <button mat-raised-button class="ml-2 mt-4" color="primary" (click)="openDialog(google,'google')">Connect</button>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                </div> -->
+                <!-- <div class="col-sm-6">
+                    <div class="flex-fill">
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <span class="account-access-box" ><img src="assets/images/icon/squre-google.png" class="hvr-bob"> Google My Business (Beta)</span>
+                            </div>
+                            <div class="col-sm-4 text-right">
+                                <button mat-raised-button class="ml-2 mt-4" color="primary">Connect</button>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                </div> -->
+            </div>
+        </div>
+    </div>
+</div>

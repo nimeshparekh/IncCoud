@@ -1,0 +1,637 @@
+
+  
+  h2{
+    color:#B2B2B2;
+    padding-top: 5px;
+  }
+  
+  a{
+    text-decoration: none;
+  }
+
+  
+ul{
+    margin-bottom: 0px;
+}
+.line ul{
+    width: 100%;
+    padding-left: 0px;
+}
+/*   
+
+  .dial-pad{
+    // float: left; 
+    width: 100%;
+    height: 100%;
+    background: white;
+    margin: 0;
+  }
+  
+  .top, .line{
+    width: 100%;
+    height: 16%;
+  }
+  
+  .line
+  {
+    padding: 5px 28px;
+    margin-left: 0px;
+    width: 300px;
+    margin: 0 auto;
+    margin-bottom: 0px;
+  }
+  
+  .top{
+    padding: 0 0 16px 0px;
+    width: 344px;
+    display: flow-root;
+    margin: 0 auto;
+  }
+  
+  #call{
+    font-size: 2.5em;
+    color: #3c63d2;
+    text-align: center;
+    float: left;
+    height: 48px;
+    line-height: 48px;
+    width: 300px;
+    border-bottom: 1px solid #ccc;
+    border-radius: 12px;
+    width: 100%;
+  }
+  
+  .edit {
+    padding: 0;
+    width: 20px;
+    height: 48px;
+    line-height: 48px;
+    text-align: center;
+    float: left;
+  }
+  
+  .edit a{
+    display:block;
+    color: #fff;
+    font-size: 1.5em;
+  }
+  
+  .line li, .top li{
+    display: inline-block;
+  }
+  
+  .digit li{
+    display: flow-root;
+    padding: 6px;
+    cursor: pointer;
+  }
+  
+  .digit{
+    padding-left: .5%
+  }
+  
+  .middle{
+    margin: 0 46px;
+  }
+  
+  .line li a{
+    margin: 0px; 
+    display: block;
+  }
+  .number{
+    font-size:3em;
+  }
+  
+  .digit{
+    width: 50px;
+  }
+  
+  .digit a .number {
+    color: #666666;
+    text-align: center;
+  }
+  
+  .digit a .letter{
+    color: #B3B3B3;
+    text-align: center;
+  }
+  
+  .letter{
+    text-transform: uppercase;
+    white-space: pre;
+  }
+  
+  .dialer{
+    width: 15%;
+    margin: 0 auto;
+  }
+  
+  .select{
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .select::after{
+    content: '';
+    position: absolute;
+    top: 5px;
+    transition: 0.25s;
+    height: 0;
+    width: 0;
+    border-radius: 50%;
+  }
+  
+  .select:hover::after{
+    background: rgba(1,1,1,.1);
+    height: 80px;
+    width: 80px;
+    transform: scale(1,1);
+    transform: translate(-25%, -25%);
+    left: 6px;
+  }
+  .select::placeholder
+  {
+      color:rgb(230, 230, 230) !important;
+  }
+  .select:active::after{
+    border: 3px solid rgba(1,1,1,.3);
+    transition: 0s;
+  }
+  
+  .call
+  {
+    width: 60px;
+    height: 60px;
+    background: #259609;
+    line-height: 60px;
+    border-radius: 50px;
+    text-align: center;
+    cursor: pointer;
+  }
+  .call a{
+      text-decoration: none;
+      color: #fff;
+      font-size: 20px;
+  }
+  .v-hidden
+  {
+    visibility: hidden;
+  }
+  .clear-btn
+  {
+    width: 45px;
+    height: 45px;
+    line-height: 45px;
+    background: #c1ac22;
+    border-radius: 50px;
+    float: left;
+    margin-top: 8px;
+    cursor: pointer;
+  }
+  .delete-btn
+  {
+    width: 45px;
+    height: 45px;
+    line-height: 45px;
+    background: #4d8ba7;
+    border-radius: 50px;
+    float: left;
+    margin-top: 8px;
+    cursor: pointer;
+  }
+
+.plr-0
+{
+    padding-left: 0px;
+    padding-right: 0px;
+} */
+
+/****************************************/
+.contact-box
+{
+    background:#eff1f8;
+    border-radius: 8px;
+    border: 2px solid #d0d0d0;
+}
+.contact-Search-box
+{
+    /* padding: 8px; */
+    border-radius: 8px 8px 0px 0px;
+    background: #fff;
+}
+.search {
+  border: none;
+  width: 100%;
+  height: auto;
+  border-radius: 38px;
+  padding: 10px 0px 10px 10px;
+  color: #1ea4dd;
+  font-weight: 100;
+  /* border-bottom: 1px solid #ccc;*/
+}
+.search:focus
+{
+    outline: none;
+}
+.contact-Search-box
+{
+    /* position: relative; */
+}
+.search-icon
+{
+    position: absolute;
+    font-size: 18px;
+    top: 14px;
+    left: 18px;
+    color: #8e9598;
+} 
+.contact-list
+{
+    height: 404px;
+    overflow-y: scroll;
+    padding: 8px;
+}
+/* width */
+::-webkit-scrollbar {
+    width: 4px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: rgb(213, 218, 231); 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(162, 162, 175); 
+  }
+
+
+.contact-list-box
+{
+    background-color: #fff;
+    padding: 6px 6px 6px 7px;
+    display: flow-root;
+    margin-top: 8px;
+    box-shadow: inset 0 0 7px #aeaeae;
+    box-shadow: 0 1px 6px rgb(0 0 0/4%),0 1px 6px rgb(0 0 0/4%)!important;
+    border-radius: 8px;
+}
+.profile-img
+{
+    width: 40px;
+    height: 40px;
+    background: #cdcdcd;
+    border-radius: 50px;
+    float: left;
+    text-align: center;
+    line-height: 50px;
+    font-size: 37px;
+    overflow: hidden;
+}
+.contact-details
+{
+    float: left;
+    margin-left: 10px;
+    margin-top: 2px;
+    text-transform: capitalize;
+}
+.contact-details p
+{
+    margin: 0px;
+    font-size: 12px;
+}
+.contact-details label
+{
+  font-weight: 400;
+  font-size: 16px;
+  margin-bottom: 0px;
+  color: #1ea4dd;
+}
+.contactCallBtn
+{
+    float: right;
+    width: 35px;
+    height: 35px;
+    background: #fff;
+    line-height: 37px;
+    border-radius: 50px;
+    text-align: center;
+    cursor: pointer;
+    color: #259609;
+    margin-top: 3px;
+    margin-right: 10px;
+}
+.contactCallBtn:hover
+{
+    background: #259609;
+    color: #fff;
+}
+.historycontactCallBtn
+{
+  margin-top: 4px !important;
+}
+.call-history-img
+{
+    width: 40px;
+    height: 40px;
+    background: #ecf1f3;
+    border-radius: 50px;
+    float: left;
+    text-align: center;
+    line-height: 36px;
+    font-size: 37px;
+    overflow: hidden;  
+    margin-top: 1px;
+}
+.call-history-img img
+{
+    width: 27px;
+}
+
+
+
+
+/****************New Dialer Css********************/
+.span4
+{
+  width: 64px;
+  float: left;
+  margin: 0 8px 10px 8px;
+}
+
+.phone
+{
+    margin-top: 15px;
+    background: #fff;
+}
+.tel
+{
+  font-size: 2.5em;
+  color: #1ea4dd;
+  text-align: center;
+  float: left;
+  border: navajowhite;
+  height: 48px;
+  line-height: 48px;
+  width: 300px;
+  border-bottom: 1px solid #ccc;
+  border-radius: 12px;
+  width: 100%;
+  margin-bottom: 18px;
+}
+.tel:focus
+{
+  outline: none;
+}
+.num-pad
+{
+  width: 240px;
+  margin: 0 auto;
+  display: flow-root;
+}
+
+
+.num
+{
+  border: 1px solid #9e9e9e;
+  border-radius: 999px;
+  -moz-border-radius: 999px;
+  height: 64px;
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+}
+.num:hover
+{
+    background-color: #9e9e9e;
+    color: #fff;
+    transition-property: background-color .2s linear 0s;
+    -moz-transition: background-color .2s linear 0s;
+    -webkit-transition: background-color .2s linear 0s;
+    -o-transition: background-color .2s linear 0s;
+}
+.txt
+{
+  font-size: 23px;
+  text-align: center;
+  margin-top: 11px;
+  font-family: 'Lato' , sans-serif;
+  line-height: 30px;
+  color: #333;
+}
+.small
+{
+    font-size: 15px;
+}
+
+.btn
+{
+    font-weight: bold;
+    -webkit-transition: .1s ease-in background-color;
+    -webkit-font-smoothing: antialiased;
+    letter-spacing: 1px;
+}
+.btn:hover
+{
+    transition-property: background-color .2s linear 0s;
+    -moz-transition: background-color .2s linear 0s;
+    -webkit-transition: background-color .2s linear 0s;
+    -o-transition: background-color .2s linear 0s;
+}
+.spanicons
+{
+    width: 72px;
+    float: left;
+    text-align: center;
+    margin-top: 40px;
+    color: #9e9e9e;
+    font-size: 30px;
+    cursor: pointer;
+}
+.spanicons:hover
+{
+    color: #3498db;
+    transition-property: color .2s linear 0s;
+    -moz-transition: color .2s linear 0s;
+    -webkit-transition: color .2s linear 0s;
+    -o-transition: color .2s linear 0s;
+}
+.active
+{
+    color: #3498db;
+}
+.txt p {
+  margin: -15px 0 0px 0 !important;
+  font-size: 10px;
+}
+.form-control:focus
+{
+  outline: none;
+}
+.callbtn
+{
+  background: #259609;
+  text-decoration: none;
+  color: #fff;
+  border: 1px solid #259609;
+  width: 64px;
+  height: 64px;
+  text-align: center;
+  line-height: 52px;
+  border-radius: 50px;
+  margin: 0 auto;
+}
+.callbtn:hover
+{
+  background: #fff;
+  color: #259609;
+}
+.mycard
+{
+  border: initial!important;
+  background: #fff!important;
+  border-radius: .75rem!important;
+  box-shadow: 0 1px 15px rgb(0 0 0/4%),0 1px 6px rgb(0 0 0/4%)!important;
+}
+.mycard-body{
+  padding: 1.75rem!important;
+}
+
+.mycard-body {
+  flex: 1 1 auto;
+  min-height: 1px;
+  padding: 1.25rem;
+}
+.mycard-body .name-count p
+{
+  margin: 0px;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+.mycard-body .name-count label
+{
+  font-size: 48px;
+  margin-top: 4px;
+  color: #1ea4dd;
+  font-weight: 400;;
+}
+.mycard-icon
+{
+  font-size: 30px !important;
+}
+
+[class^="flaticon-"]:before, [class*=" flaticon-"]:before, [class^="flaticon-"]:after, [class*=" flaticon-"]:after {
+  font-family: Flaticon;
+  font-size: 36px;
+  font-style: normal;
+  margin-left: 20px;
+}
+
+
+.history-icon
+{
+  display: block;
+  line-height: 28px;
+}
+.history-icon::before
+{
+  margin-left: 0px;
+  font-size: 18px;
+}
+
+.contactProductBtn
+{
+    float: right;
+    width: 30px;
+    height: 30px;
+    background: #fff;
+    line-height: 31px;
+    border-radius: 50px;
+    text-align: center;
+    cursor: pointer;
+    color: #a7a7a7;
+    margin-top: 7px;
+    margin-right: 1px;
+}
+.contactProductBtn:hover
+{
+    background: #a7a7a7;
+    color: #fff;
+}
+.product-thumnail-img
+{
+  width: 40px;
+    height: 40px;
+    background: #fff;
+    border-radius: 50px;
+    float: left;
+    text-align: center;
+    line-height: 36px;
+    font-size: 37px;
+    overflow: hidden;
+    margin-top: 1px;
+}
+
+.product-thumnail-icon
+{
+  display: block;
+  line-height: 34px;
+}
+.product-thumnail-icon::before
+{
+  margin-left: 0px;
+  font-size: 24px;
+}
+.dilog-head
+{
+    border-bottom: 1px solid #ccc;
+}
+.product-details h4
+{
+  margin: 0px;
+  padding: 6px;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 12px;
+  background: #f3f3f3;
+}
+.product-details p
+{
+  margin: 0px;
+  font-size: 12px;
+}
+.callhangbtn
+{
+  background: #e92705;
+  text-decoration: none;
+  color: #fff;
+  border: 1px solid #e92705;
+  width: 64px;
+  height: 64px;
+  text-align: center;
+  line-height: 52px;
+  border-radius: 50px;
+  margin: 0 auto;
+}
+.example-form
+{
+  margin-top: 6px;
+  margin-left: 12px;
+}
+.emailhtml
+{
+  min-width: 450px;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.sms_design
+{
+  padding: 12px;
+  font-size: 12px;
+}

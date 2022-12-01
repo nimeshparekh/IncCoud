@@ -1,0 +1,182 @@
+<div class="warap-height pt-4">   
+  <!-- Begin Page Content -->
+  <div class="container-fluid">
+
+      <!-- Page Heading -->
+      <h1 class="h3 mb-2 text-gray-800">Sound Upload </h1>
+ 
+      <!-- DataTales Example -->
+      <div class="card mb-4">
+        
+        <div>
+          <mat-tab-group>
+            <mat-tab label="Approve List">
+              <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table mat-table [dataSource]="dataSource">
+                    <ng-container matColumnDef="id">
+            
+                      <mat-header-cell *matHeaderCellDef>Sr. No</mat-header-cell>
+            
+                      <mat-cell class="description-cell" *matCellDef="let row;let i = index;" data-label="id">
+                        {{i+1+(paginator.pageIndex * paginator.pageSize)}}</mat-cell>
+            
+                    </ng-container>
+                    <ng-container matColumnDef="name">
+            
+                      <mat-header-cell *matHeaderCellDef> Account Name </mat-header-cell>
+            
+                      <mat-cell class="description-cell" *matCellDef="let row">
+                        {{row.account_name}}
+              
+                      </mat-cell>
+            
+                    </ng-container>
+            
+                    <ng-container matColumnDef="file">
+            
+                      <mat-header-cell *matHeaderCellDef> Audio File </mat-header-cell>
+            
+                      <mat-cell class="description-cell pt-1 pb-1" *matCellDef="let row">
+                        <!-- <audio controls>
+                            <source src="api/sounds/{{row.filename}}" >
+                        </audio><br> -->
+                      
+                        <span (click)="openDialog(row.filename)" class="material-icons">
+                          headset
+                        </span>
+                      
+                      </mat-cell>
+            
+                    </ng-container>
+
+                    <ng-container matColumnDef="upload">
+                        <mat-header-cell *matHeaderCellDef>Upload Date</mat-header-cell>
+                        <mat-cell class="description-cell" *matCellDef="let row">{{row.addDate |date: 'dd-MM-yyyy H:mm:s' }}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="approve">
+                      <mat-header-cell *matHeaderCellDef>Approve Date</mat-header-cell>
+                      <mat-cell class="description-cell" *matCellDef="let row">{{row.approved_date | date: 'dd-MM-yyyy H:mm:s'}}</mat-cell>
+                      </ng-container>
+                      <ng-container matColumnDef="note">
+                        <mat-header-cell *matHeaderCellDef>Note</mat-header-cell>
+                        <mat-cell class="description-cell" *matCellDef="let row">{{row.note}}</mat-cell>
+                      </ng-container>
+                      <ng-container matColumnDef="status">
+                        <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+                        <mat-cell class="description-cell" *matCellDef="let row" >
+                          {{row.status==0?'Upload':''}}{{row.status==1?'Approve':''}}{{row.status==2?'Reject':''}}
+                        </mat-cell>
+                      </ng-container>
+                    
+                      <!-- <ng-container matColumnDef="action">
+                        <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+        
+                        <mat-cell class="description-cell" *matCellDef="let row">
+                          
+                            <button (click)="approvedialoag(row.id)"  mat-flat-button color="primary">Status</button>
+                            
+                          
+                        </mat-cell>
+              
+                      </ng-container> -->
+            
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            
+                    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+            
+                  </table>
+                </div>
+                <mat-paginator #paginator [length]="Length" [pageSize]="50" [pageSizeOptions]="[50,100,500]"></mat-paginator>
+              </div>
+            </mat-tab>
+            <mat-tab label="Pending List">
+              <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+              <div class="card-body ">
+                <div class="table-responsive">
+                  <table mat-table [dataSource]="pendingdataSource">
+                    <ng-container matColumnDef="id">
+            
+                      <mat-header-cell *matHeaderCellDef>Sr. No</mat-header-cell>
+            
+                      <mat-cell class="description-cell" *matCellDef="let row;let i = index;" data-label="id">
+                        {{i+1+(paginator.pageIndex * paginator.pageSize)}}</mat-cell>
+            
+                    </ng-container>
+                    <ng-container matColumnDef="name">
+            
+                      <mat-header-cell *matHeaderCellDef> Account Name </mat-header-cell>
+            
+                      <mat-cell class="description-cell" *matCellDef="let row">
+                        {{row.account_name}}
+              
+                      </mat-cell>
+            
+                    </ng-container>
+            
+                    <ng-container matColumnDef="file">
+            
+                      <mat-header-cell *matHeaderCellDef> Audio File </mat-header-cell>
+            
+                      <mat-cell class="description-cell pt-1 pb-1" *matCellDef="let row">
+                        <!-- <audio controls>
+                            <source src="api/sounds/{{row.filename}}" >
+                        </audio><br> -->
+                      
+                        <span (click)="openDialog(row.filename)" class="material-icons">
+                          headset
+                        </span>
+                      
+                      </mat-cell>
+            
+                    </ng-container>
+
+                    <ng-container matColumnDef="upload">
+                        <mat-header-cell *matHeaderCellDef>Upload Date</mat-header-cell>
+                        <mat-cell class="description-cell" *matCellDef="let row">{{row.addDate |date: 'dd-MM-yyyy H:mm:s' }}</mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="approve">
+                      <mat-header-cell *matHeaderCellDef>Approve Date</mat-header-cell>
+                      <mat-cell class="description-cell" *matCellDef="let row">{{row.approved_date | date: 'dd-MM-yyyy H:mm:s'}}</mat-cell>
+                      </ng-container>
+                      <ng-container matColumnDef="note">
+                        <mat-header-cell *matHeaderCellDef>Note</mat-header-cell>
+                        <mat-cell class="description-cell" *matCellDef="let row">{{row.note}}</mat-cell>
+                      </ng-container>
+                      <ng-container matColumnDef="status">
+                        <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+                        <mat-cell class="description-cell" *matCellDef="let row" >
+                          {{row.status==0?'Upload':''}}{{row.status==1?'Approve':''}}{{row.status==2?'Reject':''}}
+                        </mat-cell>
+                      </ng-container>
+                    
+                      <ng-container matColumnDef="action">
+                        <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+        
+                        <mat-cell class="description-cell" *matCellDef="let row">
+                          
+                            <button (click)="approvedialoag(row.id)"  mat-flat-button color="primary">Status</button>
+                            
+                          
+                        </mat-cell>
+              
+                      </ng-container>
+            
+                    <mat-header-row *matHeaderRowDef="pendingdisplayedColumns"></mat-header-row>
+            
+                    <mat-row *matRowDef="let row; columns: pendingdisplayedColumns"></mat-row>
+            
+                  </table>
+                </div>
+                <mat-paginator #pendingpaginator [length]="pendingLength" [pageSize]="50" [pageSizeOptions]="[50,100,500]"></mat-paginator>
+              </div>
+            </mat-tab>
+          </mat-tab-group>
+        </div>
+
+      </div>
+
+  </div>
+  <!-- /.container-fluid -->
+</div>

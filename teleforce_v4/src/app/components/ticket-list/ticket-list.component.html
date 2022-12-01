@@ -1,0 +1,365 @@
+<div class="warap-height">
+  <div class="pt-3 d-flex container-fluid" style="background: #fff;">
+    <h1 class="h3 mb-2 text-gray-800 flex-fill">Raise Ticket List</h1>
+  </div>
+  <div class="member-list">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-12 mt-3">
+          <div class="mycard">
+            <div class="mycard-body">
+              <div class="d-flex flex-row">
+                <div class="flex-fill ellipsis">
+                  <div class="name-count">
+                    <p [ngStyle]="{'color':'#ed1607'}" class="ellipsis" title="Test" style="width: 90%;">
+                      Open
+                    </p>
+                    <label>{{opencount}}</label>
+                  </div>
+                </div>
+                <div class="flex-row-reverse ng-star-inserted">
+                  <a><i class="mycard-icon fas fa-user-clock text-large text-primary"></i></a>
+                </div>
+              </div>
+              <div class="flex-row-reverse mt-3">
+                <div class="d-flex dashboard-text">
+                  <i class="fi-rr-info mt-1 mr-1"></i>
+                  <p class="mb-0 box-p">Number of received </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-12 mt-3">
+          <div class="mycard">
+            <div class="mycard-body">
+              <div class="d-flex flex-row">
+                <div class="flex-fill ellipsis">
+                  <div class="name-count">
+                    <p [ngStyle]="{'color':'#e87c2a'}" class="ellipsis" title="Test" style="width: 90%;">
+                      Working
+                    </p>
+                    <label>{{workingcount}}</label>
+                  </div>
+                </div>
+                <div class="flex-row-reverse ng-star-inserted">
+                  <a><i class="mycard-icon fas fa-user-clock text-large text-primary"></i></a>
+                </div>
+              </div>
+              <div class="flex-row-reverse mt-3">
+                <div class="d-flex dashboard-text">
+                  <i class="fi-rr-info mt-1 mr-1"></i>
+                  <p class="mb-0 box-p">Number of received </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-12 mt-3">
+          <div class="mycard">
+            <div class="mycard-body">
+              <div class="d-flex flex-row">
+                <div class="flex-fill ellipsis">
+                  <div class="name-count">
+                    <p [ngStyle]="{'color':'#1c8710'}" class="ellipsis" title="Test" style="width: 90%;">
+                      Closed
+                    </p>
+                    <label>{{closedcount}}</label>
+                  </div>
+                </div>
+                <div class="flex-row-reverse ng-star-inserted">
+                  <a><i class="mycard-icon fas fa-user-clock text-large text-primary"></i></a>
+                </div>
+              </div>
+              <div class="flex-row-reverse mt-3">
+                <div class="d-flex dashboard-text">
+                  <i class="fi-rr-info mt-1 mr-1"></i>
+                  <p class="mb-0 box-p">Number of received </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <form [formGroup]="searchform" (ngSubmit)="searchData()" *ngIf="searchform">
+        <div class="row">
+          <div class="col-12 col-md-4 col-lg-3 col-xl-2 col-sm-6 mt-2" *ngIf="showmanagername">
+            <mat-form-field appearance="outline">
+              <mat-label>Manager</mat-label>
+              <mat-select formControlName="account_id" (selectionChange)="getAgents($event.value)">
+                <mat-option value="">All</mat-option>
+                <mat-option *ngFor="let manager of managers" value="{{manager.account_id}}">
+                  {{manager.account_name | titlecase}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-md-4 col-lg-3 col-xl-2 col-sm-6 mt-2" *ngIf="showagentname">
+            <mat-form-field appearance="outline">
+              <mat-label>Agent</mat-label>
+              <mat-select multiple formControlName="agent" (selectionChange)="agentchange($event.value)">
+                <mat-option value="">All</mat-option>
+                <mat-option *ngFor="let agent of agents" value="{{agent.account_id}}">
+                  {{agent.account_name | titlecase}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="col-12 col-md-4 col-lg-3 col-xl-2 col-sm-6 mt-2">
+            <mat-form-field appearance="outline">
+              <mat-label>Priority</mat-label>
+              <mat-select multiple formControlName="priority" (selectionChange)="prioritychange($event.value)">
+                <mat-option value="">All</mat-option>
+                <mat-option value="High">High</mat-option>
+                <mat-option value="Medium">Medium</mat-option>
+                <mat-option value="Low">Low</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+
+          <div class="col-12 col-md-4 col-lg-3 col-xl-2 col-sm-6 mt-2">
+            <mat-form-field appearance="outline">
+              <mat-label>Start Date</mat-label>
+              <input matInput placeholder="Start Date" [matDatepicker]="startpicker" formControlName="startdate">
+
+              <mat-datepicker-toggle matSuffix [for]="startpicker"></mat-datepicker-toggle>
+              <mat-datepicker #startpicker tpicker></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-md-4 col-lg-3 col-xl-2 col-sm-6 mt-2">
+            <mat-form-field appearance="outline">
+              <mat-label>End Date</mat-label>
+              <input matInput placeholder="End Date" [matDatepicker]="endpicker" formControlName="enddate">
+
+              <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
+              <mat-datepicker #endpicker tpicker></mat-datepicker>
+            </mat-form-field>
+          </div>
+
+          <div class="col-12 col-md-2 col-lg-3 col-xl-2 col-sm-2 mt-2">
+            <button mat-raised-button type="submit" color="primary" class="Update-btn mt-2"
+              [disabled]="isDisabled">Search</button>&nbsp;
+            <button title="refresh" class="mt-2" (click)="resetform()" mat-mini-fab color="warn"
+              aria-label="Example icon button with a plus one icon">
+              <span class="material-icons">refresh</span>
+            </button>
+          </div>
+
+        </div>
+      </form>
+      <button mat-raised-button  color="accent" class="Update-btn mt-2" *ngIf="notassigntickets>0" (click)="assignagent()"
+              >Assign Agent</button>&nbsp;
+      <br><br>
+
+      <div class="table-view">
+        <div class="card-body">
+
+          <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+
+          <div class="table-responsive mt-2">
+
+            <table mat-table  [dataSource]="dataSource" >
+              <ng-container matColumnDef="id">
+
+                <mat-header-cell *matHeaderCellDef>Sr. No</mat-header-cell>
+
+                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" data-label="id">
+                  <span
+                    [ngStyle]="row.status=='Closed'?'':row.priority=='Low'?{'color':'#279605'}:row.priority=='Medium'?{'color':'#e37a02'}:row.priority=='High'?{'color':'#e31005'}:''">
+                    {{i+1+(paginator.pageIndex * paginator.pageSize)}}
+                  </span>
+                </mat-cell>
+
+              </ng-container>
+
+              <ng-container matColumnDef="date">
+
+                <mat-header-cell *matHeaderCellDef > Date </mat-header-cell>
+
+                <mat-cell class="description-cell" *matCellDef="let row">
+                  <span
+                    [ngStyle]="row.status=='Closed'?'':row.priority=='Low'?{'color':'#279605'}:row.priority=='Medium'?{'color':'#e37a02'}:row.priority=='High'?{'color':'#e31005'}:''">
+                    {{row.created_date |  date : 'medium'}}
+                  </span>
+                </mat-cell>
+
+              </ng-container>
+
+              <ng-container matColumnDef="manager">
+
+                <mat-header-cell *matHeaderCellDef > Manager </mat-header-cell>
+
+                <mat-cell class="description-cell" *matCellDef="let row">
+                  <span
+                    [ngStyle]="row.status=='Closed'?'':row.priority=='Low'?{'color':'#279605'}:row.priority=='Medium'?{'color':'#e37a02'}:row.priority=='High'?{'color':'#e31005'}:''">
+                    {{row.account_name}}
+                  </span>
+                </mat-cell>
+
+              </ng-container>
+
+              <ng-container matColumnDef="agent">
+
+                <mat-header-cell *matHeaderCellDef >Agent </mat-header-cell>
+
+                <mat-cell class="description-cell" *matCellDef="let row">
+                  <span
+                    [ngStyle]="row.status=='Closed'?'':row.priority=='Low'?{'color':'#279605'}:row.priority=='Medium'?{'color':'#e37a02'}:row.priority=='High'?{'color':'#e31005'}:''">
+                    {{row.agentname}}
+                  </span>
+                </mat-cell>
+
+              </ng-container>
+
+              <ng-container matColumnDef="assignagent">
+
+                <mat-header-cell *matHeaderCellDef >Assign Agent </mat-header-cell>
+
+                <mat-cell class="description-cell" *matCellDef="let row">
+                  <span
+                    [ngStyle]="row.status=='Closed'?'':row.priority=='Low'?{'color':'#279605'}:row.priority=='Medium'?{'color':'#e37a02'}:row.priority=='High'?{'color':'#e31005'}:''">
+                    {{row.assignagentname}}
+                  </span>
+                </mat-cell>
+
+              </ng-container>
+
+              <ng-container matColumnDef="contactno">
+
+                <mat-header-cell *matHeaderCellDef > Contact No </mat-header-cell>
+
+                <mat-cell class="description-cell" *matCellDef="let row">
+                  <span
+                    [ngStyle]="row.status=='Closed'?'':row.priority=='Low'?{'color':'#279605'}:row.priority=='Medium'?{'color':'#e37a02'}:row.priority=='High'?{'color':'#e31005'}:''">
+                    {{row.contact_no}}
+                  </span>
+                </mat-cell>
+
+              </ng-container>
+
+              <ng-container matColumnDef="email">
+
+                <mat-header-cell *matHeaderCellDef > Email </mat-header-cell>
+
+                <mat-cell class="description-cell" *matCellDef="let row">
+                  <span
+                    [ngStyle]="row.status=='Closed'?'':row.priority=='Low'?{'color':'#279605'}:row.priority=='Medium'?{'color':'#e37a02'}:row.priority=='High'?{'color':'#e31005'}:''">
+                    {{row.email}}
+                  </span>
+                </mat-cell>
+
+              </ng-container>
+
+
+
+              <ng-container matColumnDef="subject">
+
+                <mat-header-cell *matHeaderCellDef > Subject </mat-header-cell>
+
+                <mat-cell class="description-cell" *matCellDef="let row">
+                  <span
+                    [ngStyle]="row.status=='Closed'?'':row.priority=='Low'?{'color':'#279605'}:row.priority=='Medium'?{'color':'#e37a02'}:row.priority=='High'?{'color':'#e31005'}:''">
+                    {{row.subject}}
+                  </span>
+                </mat-cell>
+
+              </ng-container>
+
+              <ng-container matColumnDef="status">
+
+                <mat-header-cell *matHeaderCellDef > Status </mat-header-cell>
+
+                <mat-cell class="description-cell" *matCellDef="let row">
+                  <span
+                    [ngStyle]="row.status=='Closed'?'':row.priority=='Low'?{'color':'#279605'}:row.priority=='Medium'?{'color':'#e37a02'}:row.priority=='High'?{'color':'#e31005'}:''">
+                    {{row.status}}
+                  </span>
+                </mat-cell>
+
+              </ng-container>
+
+              <ng-container matColumnDef="priority">
+
+                <mat-header-cell *matHeaderCellDef > Priority </mat-header-cell>
+
+                <mat-cell class="description-cell" *matCellDef="let row">
+                  <span
+                    [ngStyle]="row.status=='Closed'?'':row.priority=='Low'?{'color':'#279605'}:row.priority=='Medium'?{'color':'#e37a02'}:row.priority=='High'?{'color':'#e31005'}:''">
+                    {{row.priority}}
+                  </span>
+                </mat-cell>
+
+              </ng-container>
+
+              <ng-container matColumnDef="issuetype">
+
+                <mat-header-cell *matHeaderCellDef > Issue Type </mat-header-cell>
+
+                <mat-cell class="description-cell" *matCellDef="let row">
+                  <span
+                    [ngStyle]="row.status=='Closed'?'':row.priority=='Low'?{'color':'#279605'}:row.priority=='Medium'?{'color':'#e37a02'}:row.priority=='High'?{'color':'#e31005'}:''">
+                    {{row.issue_name}}
+                  </span>
+                </mat-cell>
+
+              </ng-container>
+
+
+              <ng-container matColumnDef="action">
+
+                <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+
+                <mat-cell class="description-cell" *matCellDef="let row">
+                  <button (click)="ticketdetail(row.ticket_id)" title="View Detail" mat-icon-button color="primary"
+                    aria-label="View">
+                    <i class="fa fa-eye" [ngStyle]="row.status=='Closed'?'':row.priority=='Low'?{'color':'#279605'}:row.priority=='Medium'?{'color':'#e37a02'}:row.priority=='High'?{'color':'#e31005'}:''"></i>
+                  </button>
+                  <button (click)="updatedialog(row.ticket_id)" title="Edit" mat-icon-button *ngIf="managerid==48&&row.status!='Closed'"
+                  aria-label="View">
+                  <i class="fa fa-edit" [ngStyle]="row.status=='Closed'?'':row.priority=='Low'?{'color':'#279605'}:row.priority=='Medium'?{'color':'#e37a02'}:row.priority=='High'?{'color':'#e31005'}:''"></i>
+                  
+                </button>
+                  <button (click)="clicktocall(row.contact_no,row.assign_to)" title="Call" mat-icon-button *ngIf="managerid==48&&row.status!='Closed'"
+                    aria-label="View">
+                    <i class="fas fa-phone-alt" [ngStyle]="row.status=='Closed'?'':row.priority=='Low'?{'color':'#279605'}:row.priority=='Medium'?{'color':'#e37a02'}:row.priority=='High'?{'color':'#e31005'}:''"></i>
+                  </button>
+                  <button (click)="smsSend(row.contact_no,row.ticket_id)" title="Share Via SMS" mat-icon-button *ngIf="managerid==48&&row.status!='Closed'"
+                                     aria-label="View">
+                    <i class="fa fa-sms" [ngStyle]="row.status=='Closed'?'':row.priority=='Low'?{'color':'#279605'}:row.priority=='Medium'?{'color':'#e37a02'}:row.priority=='High'?{'color':'#e31005'}:''"></i>
+                  </button>
+                  <button (click)="emailSend(row)" title="Share Via Email" mat-icon-button *ngIf="managerid==48&&row.status!='Closed'"
+                    aria-label="View">
+                    <i class="fa fa-envelope" [ngStyle]="row.status=='Closed'?'':row.priority=='Low'?{'color':'#279605'}:row.priority=='Medium'?{'color':'#e37a02'}:row.priority=='High'?{'color':'#e31005'}:''"></i>
+                  </button>
+                  <button (click)="sendwhatsapp(row.contact_no,row.ticket_id)" title="Share Via Whatsapp" mat-icon-button *ngIf="managerid==48&&row.status!='Closed'"
+                    aria-label="View">
+                    <i class="fab fa-whatsapp" [ngStyle]="row.status=='Closed'?'':row.priority=='Low'?{'color':'#279605'}:row.priority=='Medium'?{'color':'#e37a02'}:row.priority=='High'?{'color':'#e31005'}:''"></i>
+                  </button>
+                 
+                  <!--<button mat-icon-button (click)="deleteData(row.ticket_id)" color="warn" aria-label="Example icon button with a heart icon">
+                            <mat-icon>delete</mat-icon>
+                          </button>  -->
+                </mat-cell>
+
+              </ng-container>
+
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+              <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+            </table>
+
+          </div>
+
+          <mat-paginator #paginator [length]="Length" [pageSize]="50" [pageSizeOptions]="[50,100,500]"></mat-paginator>
+
+
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!-- </div> -->
+</div>

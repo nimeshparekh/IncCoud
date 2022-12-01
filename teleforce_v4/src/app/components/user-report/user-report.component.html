@@ -1,0 +1,85 @@
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">User Report </h1>
+    <p class="mb-4"></p>
+    <br><br>
+    <form [formGroup]="searchform">
+        <!-- <mat-form-field>
+            <mat-label>Start Month</mat-label>
+            <mat-select formControlName="start" required >
+                <mat-option [value]="7">7 Days</mat-option>
+                <mat-option [value]="3">3 Days</mat-option>
+                <mat-option [value]="1">1 Day</mat-option>
+            </mat-select>
+            <mat-error *ngIf="searchform.controls.start.hasError('required')">
+                Please select month
+            </mat-error>
+        </mat-form-field>&nbsp;&nbsp;
+        <mat-form-field>
+            <mat-label>End Month</mat-label>
+            <mat-select formControlName="end" required >
+                <mat-option [value]="7">7 Days</mat-option>
+                <mat-option [value]="3">3 Days</mat-option>
+                <mat-option [value]="1">1 Day</mat-option>
+            </mat-select>
+            <mat-error *ngIf="searchform.controls.end.hasError('required')">
+                Please select month
+            </mat-error>
+        </mat-form-field>&nbsp;&nbsp; -->
+        <!-- <mat-form-field appearance="fill">
+            <mat-label>Month and Year</mat-label>
+            <input matInput [matDatepicker]="dp" [formControl]="date">
+            <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+            <mat-datepicker #dp
+                            startView="multi-year"
+                            (yearSelected)="chosenYearHandler($event)"
+                            (monthSelected)="chosenMonthHandler($event, dp)"
+                            panelClass="example-month-picker">
+            </mat-datepicker>
+          </mat-form-field> -->
+        <mat-form-field>
+            <input matInput placeholder="Start month" [matDatepicker]="startpicker" [formControl]="date">
+            <mat-datepicker-toggle matSuffix [for]="startpicker"></mat-datepicker-toggle>
+            <mat-datepicker #startpicker tpicker startView="multi-year"
+            (yearSelected)="chosenYearHandler($event)"
+            (monthSelected)="chosenMonthHandler($event,startpicker)" ></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="end month" [matDatepicker]="endpicker" [formControl]="enddate">
+            <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
+            <mat-datepicker #endpicker tpicker startView="multi-year"
+            (yearSelected)="endchosenYearHandler($event)"
+            (monthSelected)="endchosenMonthHandler($event,endpicker)" ></mat-datepicker>
+        </mat-form-field> 
+        <!-- <button mat-raised-button type="submit" >Search</button>&nbsp; -->
+
+        <button mat-raised-button type="submit" (click)="searchData()">Search</button>&nbsp;
+    </form> 
+    
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4 mt-3">
+
+        <div class="card-body">
+         
+            <div class="table-responsive">
+                <div>
+                    <div style="display: block">
+                      <canvas baseChart
+                              [datasets]="barChartData"
+                              [labels]="barChartLabels"
+                              [options]="barChartOptions"
+                              [legend]="barChartLegend"
+                              [chartType]="barChartType">
+                      </canvas>
+                    </div>
+                  </div>
+              
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- /.container-fluid -->

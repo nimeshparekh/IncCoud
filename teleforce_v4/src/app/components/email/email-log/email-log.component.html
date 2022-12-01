@@ -1,0 +1,159 @@
+<div class="warap-height pt-4">
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <h1 class="h3 mb-2 text-gray-800">Email Log</h1>
+        <!-- DataTales Example -->
+        <form [formGroup]="searchform" (ngSubmit)="searchData()">
+            <div class="row">
+                
+                <div class="col-12 col-md-3 col-lg-2 col-xl-2 col-sm-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Start Date</mat-label>
+                        <input matInput placeholder="Start Date" [matDatepicker]="startpicker" formControlName="startdate">
+                        <mat-datepicker-toggle matSuffix [for]="startpicker"></mat-datepicker-toggle>
+                        <mat-datepicker #startpicker tpicker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-3 col-lg-2 col-xl-2 col-sm-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>End Date</mat-label>
+                        <input matInput placeholder="End Date" [matDatepicker]="endpicker" formControlName="enddate">
+                        <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
+                        <mat-datepicker #endpicker tpicker></mat-datepicker>
+                    </mat-form-field> 
+                </div>
+                <div class="col-md-2">
+                    <mat-form-field appearance="outline" class="outline-field">
+                        <mat-label class="mat-label">Email</mat-label>
+                        <input type="text" matInput placeholder="email" formControlName="email">
+                    </mat-form-field> 
+                </div>
+                <div class="col-md-2">
+                    <mat-form-field appearance="outline" class="outline-field">
+                        <mat-label class="mat-label">Status</mat-label>
+                        <mat-select matInput formControlName="status">
+                            <mat-option value="">All</mat-option>
+
+                            <mat-option value="0">Sent</mat-option>
+                            <mat-option value="1">Delivered</mat-option>
+                            <mat-option value="2">Open</mat-option>
+                            <mat-option value="3">Click</mat-option>
+                            <mat-option value="4">Bounce</mat-option>
+        
+                            </mat-select>
+                    </mat-form-field> 
+                </div>
+                <!--<div class="col-12 col-md-3 col-lg-2 col-xl-2 col-sm-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Mobile</mat-label>
+                        <input matInput placeholder="Caller Number" formControlName="mobile">
+                    </mat-form-field>
+                </div>
+                <div class="col-12 col-md-3 col-lg-2 col-xl-2 col-sm-6">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Status</mat-label>
+                        <mat-select formControlName="status">
+                            <mat-option [value]="">All</mat-option>
+                            <mat-option *ngFor="let status of smstatus" [value]="status.sms_status">{{status.sms_status}}</mat-option>
+                            </mat-select>
+                    </mat-form-field>
+                </div>-->
+                <div class="col-12 col-md-3 col-lg-2 col-xl-2 col-sm-6">
+                    <button class="mt-2" mat-raised-button type="submit">Search</button>
+                    <button class="ml-2" title="refresh" (click)="resetform()" mat-mini-fab color="warn" aria-label="Example icon button with a plus one icon">
+                        <span class="material-icons">refresh</span>
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        
+        <div class="card shadow mb-4">
+
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table>
+                        <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+                        <mat-table class="lessons-table mat-elevation-z8"  [dataSource]="dataSource">
+                            <ng-container matColumnDef="id">
+
+                                <mat-header-cell *matHeaderCellDef>Sr. No</mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" data-label="id">
+                                    {{i+1+(paginator.pageIndex * paginator.pageSize)}}</mat-cell>
+
+                            </ng-container>
+                            <ng-container matColumnDef="cname">
+
+                                <mat-header-cell *matHeaderCellDef > Campaign Name</mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.cam_name}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="date">
+
+                                <mat-header-cell *matHeaderCellDef >  Date</mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.date | date:'dd-MM-yyyy HH:MM:SS'}}
+                                </mat-cell>
+
+                            </ng-container>
+                            
+                            <ng-container matColumnDef="deliverydate">
+
+                                <mat-header-cell *matHeaderCellDef >Delivery Date </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.delivery_date!='0000-00-00 00:00:00'?(row.delivery_date | date:'dd-MM-yyyy HH:MM:SS'):''}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="email">
+
+                                <mat-header-cell *matHeaderCellDef >Email Id</mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.emailid}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="status">
+
+                                <mat-header-cell *matHeaderCellDef >Status</mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.email_status==1?'Delivered':''}}
+                                    {{row.email_status==0?'Sent':''}}
+                                    {{row.email_status==2?'Open':''}}
+                                    {{row.email_status==3?'Click':''}}
+                                    {{row.email_status==4?'Bounce':''}}
+
+
+
+                                </mat-cell>
+
+                            </ng-container>
+                            
+
+                            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+                            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+                        </mat-table>
+                        <mat-paginator #paginator [length]="Length" [pageSize]="50" [pageSizeOptions]="[50,100,500]">
+                        </mat-paginator>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.container-fluid -->

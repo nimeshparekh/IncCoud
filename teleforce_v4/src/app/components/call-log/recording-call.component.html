@@ -1,0 +1,15 @@
+<div mat-dialog-head class="dilog-head d-flex justify-content-between">
+  <h3 class="primary">Recording</h3>
+  <div class="d-inline-block">
+      <a class="close" (click)="cancelDialog()"><i class="fi-rr-cross-small"></i></a>
+  </div>
+</div>
+<div mat-dialog-content>
+    <audio controls class="mt-2">
+        <source src="api/call/audio/{{audioid}}" type="audio/wav">
+    </audio>
+    
+</div>
+<div mat-dialog-content> 
+  <button mat-raised-button color="accent"  type="button" class="btn btn-default" (click)="cancelDialog()">Cancel</button>
+</div>

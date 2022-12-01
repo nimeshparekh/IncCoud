@@ -1,0 +1,743 @@
+<div class="warap-height lead-detail">    
+    <!-- Begin Page Content -->
+    <div class="leaddetails-header  pt-2">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-4">
+                    <!-- Page Heading -->
+                    <h1 class="h3 text-gray-800 d-flex">
+                        <button routerLink="/lms" mat-icon-button title="Back" color="accent" aria-label="Example icon button with a menu icon">
+                            <mat-icon >keyboard_backspace</mat-icon>
+                        </button>
+                        <div class="rcc-profile-pic">
+                            <img src="assets/img/user.png" width="20px">
+                        </div>
+                        <div style="margin-top: 4px; margin-left: 6px;">
+                            <b>{{lead?.lead_name}}</b>
+                        </div>
+                        <div style="margin-top: 4px; margin-left: 6px;" *ngIf="lead?.customer_name&&!lead?.lead_name">
+                            <b>{{lead?.customer_name}}</b>
+                        </div>
+                        <div style="margin-top: 4px; margin-left: 6px;" *ngIf="!lead?.customer_name&&!lead?.lead_name">
+                            <b>{{lead?.name}}</b>
+                        </div>
+                        <button  mat-icon-button title="Next Lead" color="accent" aria-label="Example icon button with a menu icon" (click)="nextlead(lead?.creation)">
+                            <mat-icon >keyboard_tab</mat-icon>
+                        </button>
+                    </h1>
+                    <p class="owner-name">
+                        <b>{{lead?.name}}</b>
+                    </p>
+                    <p class="lead-header-status">
+                        Status : <b>{{lead?.newstatus}}</b>  <span *ngIf="showcreateddate">  Created Date : <b>{{lead?.creation | date : "medium"}}</b> </span>
+                    </p>
+                </div>
+                <div class="col-8">
+                    <div class="text-right">
+                        <button *ngIf="lead?.User_id==2656"  mat-flat-button class="mt-2 mr-2 sms-btn-color" title="Deal Done" (click)="openDialogDealdone(lead?.l_id)"  >
+                            <span class="btn-icon">
+                                <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                            </span>
+                        </button>
+                        <button mat-flat-button color="primary" class="ml-2 mt-2" (click)="refresh()" >
+                            <mat-icon>cached</mat-icon>
+                        </button> &nbsp;
+                        <button mat-flat-button class="mt-2 mr-2 call-btn-color" title="Call" (click)="clicktocall(lead?.mobile_no)" > 
+                            <span class="btn-icon">
+                                <i class="fas fa-phone-alt"></i>
+                            </span>
+                            <!-- Call -->
+                        </button>
+                        <!--for agent-->
+                        <button mat-flat-button class="mt-2 mr-2 sms-btn-color" title="SMS" (click)="openDialogLeadSmsSend(lead?.mobile_no,lead?.l_id)" *ngIf="lead?.show_no_id==0&&isagent"> 
+                            <span class="btn-icon">
+                                <i class="fa fa-sms" aria-hidden="true"></i>
+                            </span>
+                            <!-- SMS -->
+                        </button>
+                        <button mat-flat-button class="mt-2 mt-2 mail-btn-color" title="Mail" (click)="openDialogLeadMailSend(lead)" *ngIf="lead?.show_no_id==0&&isagent"> 
+                            <span class="btn-icon">
+                                <i class="fa fa-envelope" aria-hidden="true"></i>
+                            </span>
+                            <!-- Mail -->
+                        </button>
+                        <button mat-flat-button class="mt-2 ml-2 whatsapp-btn-color" title="Whatsapp" (click)="whatsappdialog(lead.mobile_no,lead?.l_id,lead?.show_no_id)" *ngIf="lead?.whatsup_access==0&&isagent"> 
+                            <b><span class="btn-icon">
+                                <i class="fab fa-whatsapp"></i>
+                            </span></b>
+                            <!-- Whatsapp -->
+                        </button>
+                        <!--for manager-->
+                        <button mat-flat-button class="mt-2 mr-2 sms-btn-color" title="SMS" (click)="openDialogLeadSmsSend(lead?.mobile_no,lead?.l_id)" *ngIf="!isagent"> 
+                            <span class="btn-icon">
+                                <i class="fa fa-sms" aria-hidden="true"></i>
+                            </span>
+                            <!-- SMS -->
+                        </button>
+                        <button mat-flat-button class="mt-2 mt-2 mail-btn-color" title="Mail" (click)="openDialogLeadMailSend(lead)" *ngIf="!isagent"> 
+                            <span class="btn-icon">
+                                <i class="fa fa-envelope" aria-hidden="true"></i>
+                            </span>
+                            <!-- Mail -->
+                        </button>
+                        <button mat-flat-button class="mt-2 ml-2 whatsapp-btn-color" title="Whatsapp" (click)="whatsappdialog(lead.mobile_no,lead?.l_id,0)" *ngIf="!isagent"> 
+                            <b><span class="btn-icon">
+                                <i class="fab fa-whatsapp"></i>
+                            </span></b>
+                            <!-- Whatsapp -->
+                        </button>
+                        
+                        <button mat-flat-button color="primary" class="ml-2 mt-2" (click)="editlead(lead.l_id)" >
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                        <!-- <button mat-flat-button color="accent" class="ml-2 mt-2" aria-label="Example icon button with a plus one icon" title="Create Sale Order" (click)="openSaleOrderDialog()">
+                            <mat-icon>add</mat-icon>
+                            Sales Order
+                        </button> -->
+                        <button mat-flat-button class="ml-2 mt-2 Quo-btn-color" (click)="QuotationForm()"> 
+                            <span class="btn-icon">
+                                <i class="far fa-file-alt"></i>
+                            </span>
+                            Quotation
+                        </button>
+                        <button mat-flat-button class="ml-2 mt-2 sms-btn-color" (click)="openSchedule(lead.l_id)"> 
+                            <span class="btn-icon">
+                                <i class="fa fa-calendar" aria-hidden="true"></i>
+                            </span>
+                            Schedule Meeting
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+       
+    <!-- /.container-fluid -->
+
+    <div class="leaddetails-body">
+        <div class="row m-0">
+            <div class="col-sm-4 p-0">
+                <div class="related-data">
+                    <div class="releted-contact">
+                        <h4>Related Contact</h4>
+                        <div class="d-flex mt-3 info-card" *ngIf="lead?.company_name">
+                            <div class="rcc-icon">
+                                <i class="fa fa-home" aria-hidden="true"></i>
+                            </div>
+                            <div class="rcc-name">
+                              <b>{{lead?.company_name}}</b>
+                            </div>
+                        </div>
+                        <div class="d-flex mt-3 info-card" *ngIf="lead?.email_id&&lead?.show_no_id==0">
+                            <div class="rcc-icon">
+                                <i class="fa fa-envelope" aria-hidden="true"></i>
+                            </div>
+                            <div class="rcc-name">
+                               Email ID: <b>{{lead?.email_id}}</b>
+                            </div>
+                        </div>
+                        <div class="d-flex mt-2 info-card" *ngIf="lead?.mobile_no">
+                            <div class="rcc-icon">
+                                <i class="fa fa-mobile" aria-hidden="true"></i>
+                            </div>
+                            <div class="rcc-name">
+                               Mobile No: <b>{{lead?.mobileno}}</b>
+                            </div>
+                        </div>
+                        <div class="d-flex mt-2" *ngIf="lead?.fax">
+                            <div class="rcc-icon">
+                                <i class="fa fa-fax" aria-hidden="true"></i>
+                            </div>
+                            <div class="rcc-name">
+                                <b>{{lead?.fax}}</b>
+                            </div>
+                        </div>
+                        <div class="d-flex mt-2" *ngIf="lead?.gender">
+                            <div class="rcc-icon">
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                            </div>
+                            <div class="rcc-name">
+                                <b>{{lead?.gender}}</b>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="releted-contact mt-3" *ngIf="lead?.lead_owner || lead?.company">
+                        <h4>Lead Assign</h4>
+                        <!-- <div class="rc-contactname d-flex">
+                            <div class="rcc-profile-pic">
+                                W
+                            </div>
+                            <div class="rcc-profile-name">
+                                ABC
+                            </div>
+                        </div> -->
+                        <div class="d-flex mt-3 info-card" *ngIf="lead?.lead_owner">
+                            <div class="rcc-icon">
+                                <i class="fa fa-address-card" aria-hidden="true"></i>
+                            </div>
+                            <div class="rcc-name">
+                                Lead Owner : <b>{{lead?.agentname}}</b>
+                            </div>
+                        </div>
+                        <div class="d-flex mt-3 info-card" *ngIf="lead?.priority">
+                            <div class="rcc-icon">
+                                <i class="fa fa-address-card" aria-hidden="true"></i>
+                            </div>
+                            <div class="rcc-name">
+                                Lead Priority : <b>{{lead?.priority}}</b>
+                            </div>
+                        </div>
+                        <div class="d-flex mt-3 info-card" *ngIf="lead?.expected_closing">
+                            <div class="rcc-icon">
+                                <i class="fa fa-address-card" aria-hidden="true"></i>
+                            </div>
+                            <div class="rcc-name">
+                                Lead Completed Date : <b>{{lead?.expected_closing | date : 'dd-MM-yyyy '}}</b>
+                            </div>
+                        </div>
+                        <!-- <div class="d-flex mt-2 info-card" *ngIf="lead?.company">
+                            <div class="rcc-icon">
+                                <i class="fa fa-university" aria-hidden="true"></i>
+                            </div>
+                            <div class="rcc-name">
+                                Company : <b>{{lead?.company}}</b>
+                            </div>
+                        </div> -->
+                    </div>
+                    
+                    <div class="releted-contact mt-3" *ngIf="lead?.modified || lead?.modified_by">
+                        <h4>Description</h4>
+                        <div class="d-flex mt-3 info-card">
+                            <div class="rcc-name">
+                                Ads Name : {{lead?.ads_name}}
+                            </div>
+                        </div>
+                        <div class="d-flex mt-3 info-card">
+                            <div class="rcc-name">
+                                Ads Keyword : {{lead?.ads_keyword}}
+                            </div>
+                        </div>
+                        <div class="d-flex mt-3 info-card" *ngIf="lead?.modified">
+                            <div class="rcc-icon">
+                                <i class="fa fa-history" aria-hidden="true"></i>
+                            </div>
+                            <div class="rcc-name">
+                                Last Modified on <b>{{lead?.modified | date : "medium"}}</b>
+                            </div>
+                        </div>
+                        <div class="d-flex mt-2 info-card" *ngIf="lead?.modified_by">
+                            <div class="rcc-icon">
+                                <i class="fa fa-check" aria-hidden="true"></i>
+                            </div>
+                            <div class="rcc-name">
+                                Modified By <b>{{lead?.modified_by}}</b>
+                            </div>
+                        </div>
+                        <div class="d-flex mt-2 info-card" *ngIf="lead?.modified_by">
+                            <div class="rcc-icon">
+                                <i class="fa fa-check" aria-hidden="true"></i>
+                            </div>
+                            <div class="rcc-name">
+                               Segment <b>{{segmentname}}</b>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="releted-contact mt-3" *ngIf="lead?.sales_order_id">
+                        <h4>Sales Order</h4>
+                        <div class="d-flex mt-2 info-card">
+                            <div class="rcc-icon">
+                                <i class="fa fa-check" aria-hidden="true"></i>
+                            </div>
+                            <div class="rcc-name">
+                                Sales Order ID <b>{{lead?.sales_order_id}}</b>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="releted-contact mt-3" *ngIf="lead?.contact_by || lead?.contact_date || lead?.product || lead?.market_segment || lead?.website || lead?.request_type || lead?.industry">
+                        <!-- <div class="rcc-profile-name">
+                            Last Modified on {{lead.modified}}
+                        </div> -->
+                        <div class="d-flex mt-3" *ngIf="lead?.contact_by">
+                            <div class="rcc-icon">
+                                <i class="fa fa-address-card" aria-hidden="true"></i>
+                            </div>
+                            <div class="rcc-name">
+                                Next Contact By : <b>{{lead?.contact_by}}.</b>
+                            </div>
+                        </div>
+                        <div class="d-flex mt-3" *ngIf="lead?.contact_date">
+                            <div class="rcc-icon">
+                                <i class="fa fa-history" aria-hidden="true"></i>
+                            </div>
+                            <div class="rcc-name">
+                                Next Contact Date :  <b>{{lead?.contact_date | date : "medium"}}</b>
+                            </div>
+                        </div> 
+                        <div class="d-flex mt-3" *ngIf="lead?.market_segment">
+                            <div class="rcc-icon">
+                                <i class="fa fa-road" aria-hidden="true"></i>
+                            </div>
+                            <div class="rcc-name">
+                                Market Segment :  <b>{{lead?.market_segment}}</b>
+                            </div>
+                        </div>
+                        <div class="d-flex mt-3" *ngIf="lead?.industry">
+                            <div class="rcc-icon">
+                                <i class="fa fa-home" aria-hidden="true"></i>
+                            </div>
+                            <div class="rcc-name">
+                                Industry :  <b>{{lead?.industry}}</b>
+                            </div>
+                        </div> 
+                        <div class="d-flex mt-3" *ngIf="lead?.request_type">
+                            <div class="rcc-icon">
+                                <i class="fa fa-reply" aria-hidden="true"></i>
+                            </div>
+                            <div class="rcc-name">
+                                Request Type :  <b>{{lead?.request_type}}</b>
+                            </div>
+                        </div>
+                        <div class="d-flex mt-3" *ngIf="lead?.website">
+                            <div class="rcc-icon">
+                                <i class="fa fa-globe" aria-hidden="true"></i>
+                            </div>
+                            <div class="rcc-name">
+                                Website :  <b>{{lead?.website}}</b>
+                            </div>
+                        </div>  
+                        <div class="d-flex mt-3" *ngIf="lead?.product">
+                            <div class="rcc-icon">
+                                <i class="fa fa-product-hunts" aria-hidden="true"></i>
+                            </div>
+                            <div class="rcc-name">
+                                Product :  <b>{{lead?.product}}</b>
+                            </div>
+                        </div>                      
+                    </div>
+                    
+                    <div class="releted-contact mt-3">
+                        <h4 *ngIf="lead?.address">Address</h4>
+                        <div class="d-flex mt-2 info-card" *ngIf="lead?.address || lead?.city || lead?.state">
+                            <div class="rcc-icon">
+                                <i class="fa fa-address-book" aria-hidden="true"></i>
+                            </div>
+                            <div class="rcc-name">
+                               <b><span *ngIf="lead?.address">{{lead?.address}}</span><span *ngIf="lead?.city">,{{lead?.city}}</span><span *ngIf="lead?.state"> - {{lead?.state}}</span></b>
+                          </div>
+                        </div>
+                        <h4>Other Detail</h4>
+                        <div class="d-flex mt-3" *ngFor="let mdata of contactmetadata" >
+                            <div class="rcc-icon">
+                                <i class="fa fa-check" aria-hidden="true"></i>
+                            </div>
+                            <div class="rcc-name">
+                                
+                                {{mdata.meta_key}} : <b><ngx-edit-inline [value]=mdata.meta_value   [type]="'text'"  [saveOption]="'onedit'" [placeholder]="mdata.meta_value" [debounceTime]="500"  [selectText]="true"  (change)="changedValue($event,mdata.meta_id)"></ngx-edit-inline></b>
+                                
+                                <!-- {{mdata.meta_key?.mdata.meta_key}} : <b>{{mdata.meta_value?.mdata.meta_value}}.</b> -->
+                            </div>
+                        </div>
+                        
+                        <p *ngIf="contactmetadata.length==0" >
+                            No information found.
+                        </p>
+                    </div>
+                </div>
+            </div>  
+            <div class="col-sm-8 p-0">
+                <div>
+                    <mat-tab-group (selectedTabChange)="tabClick($event)">
+                        <mat-tab label="Notes" *ngIf="timelinetab"> 
+                            <ng-template mat-tab-label>
+                                Notes
+                            </ng-template>
+                            <div class="tab-inner">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <div class="">
+                                            <div class="float-left mt-1"><b>Notes</b></div>
+                                            <div class="float-right">
+                                               <div class="addnote-btn" (click)="NoteForm()">
+                                                    Add Note
+                                               </div> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div>
+                                            <div *ngIf="commentnodata && commentList.length == 0" class="position-relative no-data-main">
+                                                <div class="no-data">
+                                                    <img src="../../../assets/img/no-data.gif">
+                                                    <div class="mt-3 nodata-text">
+                                                        No data
+                                                    </div>
+                                                </div>
+                                                <!-- <div class="card-body">
+                                                    <div class="History-inner position-relative" > -->
+                                                        <!-- <div class="maindate">
+                                                           Today
+                                                           
+                                                        </div> -->
+                                                        <!-- <ul class="timeLineHistDataList">
+                                                            <li class="d-flex" *ngFor="let comment of commentList" >
+                                                                <span class="timeLineHistTime ">
+                                                                    {{comment.c_date | date:'medium'}}
+                                                                </span>
+                                                                <p class="timeLineHistdataline">
+                                                                    <b>{{comment.title}} - </b>
+                                                                    {{comment.comment}}
+                                                                    <br>
+                                                                    By {{comment.comment_by}}
+                                                                </p>
+                                                            </li>
+                                                        </ul> -->
+                                                    <!-- </div>
+                                                </div> -->
+
+                                            </div>
+                                            <form *ngIf="commentform" class="note-add-form" [formGroup]="commentAddForm" (ngSubmit)="commentsubmit()">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <!-- <mat-form-field appearance="outline">
+                                                            <mat-label>Title</mat-label>
+                                                            <input matInput placeholder="Title" formControlName="title" required>
+                                                            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                                                            <mat-error *ngIf="commentAddForm.controls.title.hasError('required')">
+                                                                Please enter Title
+                                                              </mat-error>
+                                                        </mat-form-field> -->
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <mat-form-field appearance="outline">
+                                                            <mat-label>Note</mat-label>
+                                                            <textarea matInput placeholder="Note" formControlName="note" required></textarea>
+                                                            <mat-error *ngIf="commentAddForm.controls.note.hasError('required')">
+                                                                Please enter Title
+                                                              </mat-error>
+                                                            <!-- <mat-icon matSuffix>sentiment_very_satisfied</mat-icon> -->
+                                                        </mat-form-field>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="text-right">
+                                                            <button mat-flat-button class="mt-2 my-btn" color="primary"  type="submit"> 
+                                                                <span class="btn-icon">
+                                                                    <i class="fas fa-save"></i>
+                                                                </span>
+                                                                Save
+                                                            </button>
+                                                            <button mat-flat-button class="mt-2 ml-2 my-btn" color="warn" (click) = "closeTab()"> 
+                                                                <span class="btn-icon">
+                                                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                                                </span>
+                                                                Cancel
+                                                            </button>
+                                                            <!-- <button mat-flat-button class="mt-2 ml-2 my-btn" color="accent"> 
+                                                                <span class="btn-icon">
+                                                                    <i class="fa fa-paperclip" aria-hidden="true"></i>
+                                                                </span>
+                                                                Attech file
+                                                            </button> -->
+                                                           
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                            <div class="note-data mt-2" *ngIf="commentnodata && commentList.length > 0">
+                                                <div class="note-data-item"  *ngFor="let comment of commentList" >
+                                                    <img src="assets/img/pin.png">
+                                                    <!-- <h4>{{comment.title}}</h4> -->
+                                                    <p>{{comment.comment}}</p>
+                                                    <div class="note-footer">
+                                                        <div class="note-add-time float-left">
+                                                            {{comment.c_date | date:'medium'}} <b>By {{comment.comment_by}}</b>
+                                                        </div>
+                                                        <!-- <div class="note-action d-flex float-right">
+                                                            <div class="mr-2">
+                                                                <i class="fas fa-pen-fancy"></i>
+                                                            </div>
+                                                            <div>
+                                                                <i class="far fa-trash-alt"></i>
+                                                            </div>
+                                                        </div> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="Timeline" *ngIf="timelinetab">
+                            <ng-template mat-tab-label (click)="getleadtimeline(lead?.l_id)" >
+                                Timeline
+                            </ng-template>
+                            <div class="tab-inner">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <b>History</b>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="History-inner position-relative" >
+                                            <!-- <div class="maindate">
+                                               Today
+                                            </div> -->
+                                            <ul class="timeLineHistDataList">
+                                                <li class="d-flex" *ngFor="let timeline of leadtimeline_feedback">
+                                                    <span class="timeLineHistTime ">
+                                                        {{timeline.created_time | date : 'medium'}}
+                                                    </span>
+                                                    <p class="timeLineHistdataline"> Current status :
+                                                        <span class="timeLineHistInfo">
+                                                            {{timeline.current_status}}
+                                                        </span>
+                                                        <br>
+                                                       {{timeline.notes}}
+                                                    </p>  <br>
+                                                    <span (click)="feedbackform(timeline.form_id,timeline.cdrid)"  title="Lead Feedback">
+                                                        <mat-icon>book</mat-icon>
+                                                    </span>                                                 
+                                                </li>
+                                            </ul>
+                                            <ul class="timeLineHistDataList">
+                                                <li class="d-flex" *ngFor="let timeline of leadtimeline_status">
+                                                    <span class="timeLineHistTime ">
+                                                        {{timeline.created_time | date : 'medium'}}
+                                                    </span>
+                                                    <p class="timeLineHistdataline"> Current status :
+                                                    <span class="timeLineHistInfo">
+                                                        {{timeline.current_status}}
+                                                    </span>
+                                                    <br *ngIf="timeline.previous_status != null">
+                                                        <span *ngIf="timeline.previous_status != null">
+                                                        Previous status :
+                                                        </span>
+                                                        <span class="timeLineHistInfo" *ngIf="timeline.previous_status != null">
+                                                            {{timeline.previous_status}}
+                                                        </span>
+                                                        <br>
+                                                       {{timeline.notes}}
+                                                    </p>
+
+                                                    <!-- <span *ngIf="timeline.action_id>0"  (click)="openrecording(timeline.action_id)"  title="Listen Audio">
+                                                        <mat-icon>headset</mat-icon>
+                                                    </span> -->
+                                                    <!-- by {{call.AgentName}} -->
+
+                                                    
+                                                    <!-- <p class="timeLineHistdataline" *ngIf="timeline.previous_status != null"> Previous status :
+                                                    <span class="timeLineHistInfo">
+                                                        {{timeline.previous_status}}
+                                                    </span>
+                                                    <br>
+                                                    </p> -->                                                    
+                                                </li>
+                                            </ul>
+                                            <!-- <ul class="timeLineHistDataList">
+                                                <li class="d-flex" *ngFor="let call of leadtimeline" >
+                                                    <span class="timeLineHistTime ">
+                                                        {{call.CallStartTime | date : 'medium'}}
+                                                    </span>
+                                                    <p class="timeLineHistdataline">{{call.CallType}} call to
+                                                        <span class="timeLineHistInfo">
+                                                            {{call.CallerName}} - ({{call.CallTalkTime}}) 
+                                                        </span>                                            
+                                                    <br>
+                                                        by {{call.AgentName}}
+                                                        <span (click)="openrecording(call.id,call.RecPath)"  title="Listen Audio">
+                                                            <mat-icon>headset</mat-icon>
+                                                        </span>
+                                                    </p>
+                                                    
+                                                </li>
+                                            </ul> -->
+                                            <!-- <ul class="timeLineHistDataList">
+                                                <li class="d-flex" *ngFor="let call of leadtimeline_whatsapp">
+                                                    <span class="timeLineHistTime ">
+                                                        {{call.create_time | date : 'medium'}}
+                                                    </span>
+                                                    <p class="timeLineHistdataline"> Whatsapp Message :
+                                                        <span class="timeLineHistInfo">
+                                                            {{call.message}}
+                                                        </span>
+                                            
+                                                    <br>
+                                                        by {{call.agentname}}
+                                                    </p>
+                                                    
+                                                </li>
+                                            </ul> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-tab>
+
+                        <mat-tab label="Appointment">
+                            <ng-template mat-tab-label>
+                                Appointment
+                            </ng-template>
+                            <div class="card-body">
+                                <div class="History-inner position-relative" >
+                                    <!-- <div class="maindate">
+                                       Today
+                                    </div> -->
+                                    <ul class="timeLineHistDataList">
+                                        <li class="d-flex" *ngFor="let appoint of leadtimeline_appointment">
+                                            <span class="timeLineHistTime ">
+                                                {{appoint.StartTime | date : 'medium'}}
+                                            </span>
+                                            <p class="timeLineHistdataline"> Type :
+                                                <span class="timeLineHistInfo">
+                                                    {{appoint.meeting_type}}
+                                                </span>
+                                            </p> 
+                                            <p class="timeLineHistdataline" *ngIf="appoint.meeting_type == 'Video'"> Link :
+                                                <span class="timeLineHistInfo">
+                                                    <a href="{{appoint.meeting_link}}" target="_blank">{{appoint.meeting_link}}</a>
+                                                </span>
+                                            </p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </mat-tab>
+
+                        <mat-tab label="Email">
+                            <ng-template mat-tab-label>
+                                Email
+                            </ng-template>
+                            <div class="card-body">
+                                <div class="History-inner position-relative" >
+                                    <!-- <div class="maindate">
+                                       Today
+                                    </div> -->
+                                    <ul class="timeLineHistDataList">
+                                        <li class="d-flex" *ngFor="let email of leadtimeline_email">
+                                            <span class="timeLineHistTime ">
+                                                {{email.create_time | date : 'medium'}}
+                                            </span>
+                                            <p class="timeLineHistdataline"> Email Subject :
+                                                <span class="timeLineHistInfo">
+                                                    {{email.subject}}
+                                                </span>
+                                    
+                                            <br>
+                                                by {{email.agentname}} 
+                                            <br>
+                                            <button *ngIf="email.attachment_file" (click)="NoteForm1(email.attachment_file)">
+                                                <i class="fas fa-file-alt">&nbsp; Attachment File</i>
+                                              </button>&nbsp;
+                                            <!-- <i class="fas fa-file-alt"   (click)="openDialogLeadMailSend1(email.attachment_file)"> Attachment {{email.attachment_file}}</i> -->
+                                            
+                                            </p> 
+                                            <!-- <p *ngIf="email.attachment_file" class="d-flex"> Attachment : {{email.attachment_file}}
+                                            </p>                                            -->
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </mat-tab>
+                        
+                        <mat-tab label="Files"> 
+                            <ng-template mat-tab-label>
+                                Files
+                            </ng-template>
+                        </mat-tab>
+                        <mat-tab label="Quotation">
+                            <ng-template mat-tab-label>
+                                Quotation
+                            </ng-template>
+                            <div class="member-list">
+                                <!-- <div class="card-body"> -->
+                                   
+                                    <div class="table-view">
+                        
+                                        <!-- process bar -->
+                                        <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+                        
+                                        <div class="table-responsive">
+                                            <table mat-table [dataSource]="dataSource">
+                        
+                                                <!--- Note that these columns can be defined in any order.
+                                                    The actual rendered columns are set as a property on the row definition" -->
+                                            
+                                                <!-- position Column -->
+                                                <ng-container matColumnDef="position">
+                                                    <th mat-header-cell *matHeaderCellDef> Sr No .</th>
+                                                    <td mat-cell *matCellDef="let element;let i = index;">{{i+1+(paginator.pageIndex * paginator.pageSize)}}</td>
+                                                </ng-container>
+                        
+                                                <!-- name Column -->
+                        
+                                                <ng-container matColumnDef="name">
+                                                    <th mat-header-cell *matHeaderCellDef> name </th>
+                                                    <td mat-cell *matCellDef="let element;let i = index;"> {{element.quotation_name}} </td>
+                                                </ng-container>
+                        
+                        
+                                                <ng-container matColumnDef="itemcount">
+                                                    <th mat-header-cell *matHeaderCellDef> Items </th>
+                                                    <td mat-cell *matCellDef="let element;let i = index;"> {{element.itemcount}} </td>
+                                                </ng-container>
+                                            
+                                                <!-- number Column -->
+                                                <ng-container matColumnDef="quantity">
+                                                    <th mat-header-cell *matHeaderCellDef> Total Quantity </th>
+                                                    <td mat-cell *matCellDef="let element;let i = index;"> 
+                                                        <span class="tbl-post-text">{{element.total_quantity}}</span>
+                                                    </td>
+                                                </ng-container>
+                        
+                                                <!-- email Column -->
+                                                <ng-container matColumnDef="amount">
+                                                    <th mat-header-cell *matHeaderCellDef> Total Quotation Amount </th>
+                                                    <td mat-cell *matCellDef="let element;let i = index;"> 
+                                                        <span class="tbl-post-text">{{element.grand_total}}</span>
+                                                    </td>
+                                                </ng-container>
+                        
+                                                
+                                                <!-- action Column -->
+                                                <ng-container matColumnDef="action">
+                                                    <th mat-header-cell *matHeaderCellDef> Action </th>
+                                                    <td mat-cell *matCellDef="let element;let i = index">
+                                                        <button (click)="openDialogLeadMailSend(lead,element.quotation_id)" title="Mail" mat-icon-button color="primary" aria-label="Edit">
+                                                            <i class="fas fa-envelope"></i>
+                                                          </button>&nbsp;
+                                                        <button (click)="openDialogpdf(element.quotation_id)" title="PDF" mat-icon-button color="primary">
+                                                            <i class="far fa-file-pdf"></i>  
+                                                        </button>&nbsp;
+                                                        <button (click)="QuotationForm_edit(element.quotation_id,lead)" title="EDIT" mat-icon-button color="primary">
+                                                            <i class="fas fa-edit"></i>
+                                                        </button>&nbsp;
+                                                        <!-- <a class="pencil"><i class="fi-rr-pencil"></i></a> -->
+                                                    </td>
+                                                </ng-container>
+                                            
+                                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                            </table>
+                                        </div>
+                                        <!-- paginator -->
+                                        <mat-paginator #paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+                                    </div>
+                                <!-- </div> -->
+                            </div>
+                            <!-- <div class="tab-inner">
+                                <div class="card">
+                                    <div class="d-flex mt-3 info-card">
+                                        <div class="rcc-name" *ngFor="let row of quotation_db,let i = index">
+                                            Quotation ID: <b>{{quotation_db[i].name}}</b> 
+                                            Crated Date : <b>{{quotation_db[i].creation | date : "medium"}}</b>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

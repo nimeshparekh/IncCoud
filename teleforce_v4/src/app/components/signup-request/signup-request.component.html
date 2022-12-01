@@ -1,0 +1,140 @@
+ <!-- Begin Page Content -->
+ <div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Signup Request</h1>
+    <p class="mb-4"></p>
+    <br><br>
+    <form [formGroup]="searchform" (ngSubmit)="searchData()">
+        <div class="row">
+          <div class="col-12 col-md-4 col-lg-3 col-xl-3 col-sm-6 mt-2">
+            <mat-form-field>
+              <input matInput placeholder="Mobile" formControlName="mobile">
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-md-4 col-lg-3 col-xl-3 col-sm-6 mt-2">
+            <mat-form-field>
+              <input matInput placeholder="Service" formControlName="services">
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-md-4 col-lg-3 col-xl-3 col-sm-6 mt-2">
+            <mat-form-field>
+              <input matInput placeholder="name" formControlName="name">
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-md-4 col-lg-3 col-xl-3 col-sm-6 mt-2">
+            <mat-form-field>
+              <input matInput placeholder="username" formControlName="username">
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-md-3 col-lg-2 col-xl-2 col-sm-6">
+            <mat-form-field>
+              <input matInput placeholder="Start Date" [matDatepicker]="startpicker" formControlName="startdate">
+              <mat-datepicker-toggle matSuffix [for]="startpicker"></mat-datepicker-toggle>
+              <mat-datepicker #startpicker tpicker></mat-datepicker>
+            </mat-form-field>
+          </div>
+        
+        </div>
+        <!-- <button mat-raised-button type="submit" color="primary" class="Update-btn">Search</button>&nbsp; -->
+        <button mat-raised-button type="submit">Search</button>&nbsp;
+        <button title="refresh" (click)="resetform()" mat-mini-fab color="warn" aria-label="Example icon button with a plus one icon">
+          <span class="material-icons">refresh</span>
+        </button>
+       
+    
+      </form>
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+      
+      <div class="card-body">
+        <div class="table-responsive">
+          <table>
+            <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+            <mat-table class="lessons-table mat-elevation-z8" matSort [dataSource]="dataSource">
+              <ng-container matColumnDef="id">
+      
+                <mat-header-cell *matHeaderCellDef>Sr. No</mat-header-cell>
+      
+                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" data-label="id">
+                  {{i+1+(paginator.pageIndex * paginator.pageSize)}}</mat-cell>
+      
+              </ng-container>
+              <ng-container matColumnDef="name">
+      
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+      
+                <mat-cell class="description-cell" *matCellDef="let row">{{row.name}}
+                </mat-cell>
+      
+              </ng-container>
+      
+              
+                <ng-container matColumnDef="mobile">
+      
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Mobile</mat-header-cell>
+        
+                  <mat-cell class="description-cell" *matCellDef="let row">
+                    {{row.mobile}}
+                  </mat-cell>
+        
+                </ng-container>
+                <ng-container matColumnDef="email">
+      
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
+          
+                    <mat-cell class="description-cell" *matCellDef="let row">
+                      {{row.email}}
+                    </mat-cell>
+          
+                  </ng-container>
+                  <ng-container matColumnDef="username">
+      
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>UserName</mat-header-cell>
+          
+                    <mat-cell class="description-cell" *matCellDef="let row">
+                      {{row.username}}
+                    </mat-cell>
+          
+                  </ng-container>
+                  <ng-container matColumnDef="password">
+      
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Password</mat-header-cell>
+          
+                    <mat-cell class="description-cell" *matCellDef="let row">
+                      {{row.password}}
+                    </mat-cell>
+          
+                  </ng-container>
+                  <ng-container matColumnDef="services">
+      
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Services</mat-header-cell>
+          
+                    <mat-cell class="description-cell" *matCellDef="let row">
+                      {{row.services}}
+                    </mat-cell>
+          
+                  </ng-container>
+                  <ng-container matColumnDef="created_at">
+      
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Date</mat-header-cell>
+          
+                    <mat-cell class="description-cell" *matCellDef="let row">
+                      {{row.created_at |date: 'dd-MM-yyyy H:mm:s'}}
+                    </mat-cell>
+          
+                  </ng-container>
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      
+              <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+      
+            </mat-table>
+            <mat-paginator #paginator [length]="Length" [pageSize]="50" [pageSizeOptions]="[50,100,500]"></mat-paginator>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- /.container-fluid -->
+

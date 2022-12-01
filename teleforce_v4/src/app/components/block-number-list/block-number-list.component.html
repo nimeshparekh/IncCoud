@@ -1,0 +1,91 @@
+<div class="warap-height pt-4">
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+  
+      <!-- Page Heading -->
+      <h1 class="h3 mb-2 text-gray-800">Block Number</h1>
+  
+      
+  
+      <button mat-raised-button color="accent" (click)="Createdialog()" title="Add">Add Block Number</button>
+
+      <!-- DataTales Example -->
+      <div class="card shadow mb-4 mt-3">
+  
+        <ng-template [ngIf]="dataSource.loading$ | async">
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </ng-template>        <!-- <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar> -->
+  
+        <div class="card-body">
+  
+
+          <!--Table Data-->
+          <div class="table-responsive mt-2">
+  
+            <table mat-table matTableExporter #exporter="matTableExporter" [dataSource]="dataSource" matSort
+              (matSortChange)="sortData($event)" class="mat-elevation-z8">
+  
+           
+  
+              <!-- Position Column -->
+              <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef> Sr. No. </th>
+                <td mat-cell *matCellDef="let row;let i = index;" data-label="id">
+                  {{i+1+(contactpaginator.pageIndex * contactpaginator.pageSize)}}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Date</th>
+                <td mat-cell *matCellDef="let row">
+                  {{row.add_date | date:'dd-MM-yyyy'}}                </td>
+              </ng-container>
+  
+              <!-- DID Column -->
+              <ng-container matColumnDef="number">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Number</th>
+                <td mat-cell *matCellDef="let row">
+                  {{row.number}}
+                </td>
+              </ng-container>
+  
+             
+  
+              <!-- Action Column -->
+
+                <ng-container matColumnDef="action">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Action</th>
+  
+                  <!-- <mat-header-cell *matHeaderCellDef> Action </mat-header-cell> -->
+                  <td mat-cell *matCellDef="let row">
+  
+                  <!-- <mat-cell class="description-cell" *matCellDef="let row"> -->
+                      
+                      <button (click)="updatedialog(row.num_id)"  title="Edit" mat-icon-button color="primary" aria-label="Example icon button with a home icon">
+                          <mat-icon>edit</mat-icon>
+                      </button>
+  
+                      <button (click)="deleteData(row.num_id)"  title="Edit" mat-icon-button color="warn">
+                          <mat-icon>delete</mat-icon>
+                      </button>
+  
+                  </td>
+              </ng-container>
+
+  
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+  
+          </div>
+  
+          <mat-paginator #contactpaginator [length]="Length" [pageSize]="50" [pageSizeOptions]="[50,100,500]"
+            showFirstLastButtons="true">
+          </mat-paginator>
+  
+        </div>
+  
+      </div>
+  
+    </div>
+    <!-- /.container-fluid -->
+  </div>

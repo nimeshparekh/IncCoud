@@ -1,0 +1,11 @@
+.table
+{
+    width: 100%;
+    min-width: 700px;
+}
+.table-bordered td {
+    font-weight: 200 !important;
+    font-size: 12px;
+    padding: 4px 2px 4px 6px;
+    vertical-align: middle;
+}

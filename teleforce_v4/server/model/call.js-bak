@@ -1,0 +1,561 @@
+var db = require('../database/db');
+
+var Call = {
+    getcalllog: function (id, callback) {
+        return db.query('SELECT * FROM `tf_cdr` where accountid=? ORDER BY CallStartTime DESC', [id], callback);
+    },
+    getagentcalllog: function (id,type, callback) {
+        return db.query('SELECT show_no_id FROM tf_account_table where account_id=?', [id], function (err, results) {
+            if (err) {
+                console.log("[mysql error]", err);
+            }else{
+                row = results[0]
+                if(row.show_no_id==0){
+                    return db.query('SELECT * FROM `tf_cdr` where AgentID=? AND CallTypeID = ? ORDER BY CallStartTime DESC', [id,type], callback);
+                }else{
+                    return db.query('SELECT *,SUBSTRING_INDEX(uniqueid,".",1) as CallerNumber,SUBSTRING_INDEX(uniqueid,".",1) as CallerName FROM `tf_cdr` where AgentID=? AND CallTypeID = ? ORDER BY CallStartTime DESC', [id,type], callback);
+                }
+            }
+        })
+    },
+    getagentcurrentcall: function (id, callback) {
+        return db.query('SELECT show_no_id FROM tf_account_table where account_id=?', [id], function (err, results) {
+            if (err) {
+                console.log("[mysql error]", err);
+            }else{
+                row = results[0]
+                if(row.show_no_id==0){
+                    return db.query('SELECT * FROM `tf_cdr` WHERE AgentID=? AND (CdrStatus=2 || CdrStatus=1) ORDER BY CallStartTime DESC LIMIT 1', [id], callback);
+                }else{
+                    return db.query('SELECT *,SUBSTRING_INDEX(uniqueid,".",1) as CallerNumber,SUBSTRING_INDEX(uniqueid,".",1) as CallerName FROM `tf_cdr` WHERE AgentID=? AND (CdrStatus=2 || CdrStatus=1) ORDER BY CallStartTime DESC LIMIT 1', [id], callback);
+                }
+            }
+        })
+        
+    },
+    getagentrecentcall: function (id, callback) {
+        return db.query('SELECT show_no_id FROM tf_account_table where account_id=?', [id], function (err, results) {
+            if (err) {
+                console.log("[mysql error]", err);
+            }else{
+                row = results[0]
+                if(row.show_no_id==0){
+                    return db.query('SELECT * FROM `tf_cdr` WHERE AgentID=? order by id desc LIMIT 20', [id], callback);
+                }else{
+                    return db.query('SELECT *,SUBSTRING_INDEX(uniqueid,".",1) as CallerNumber,SUBSTRING_INDEX(uniqueid,".",1) as CallerName FROM `tf_cdr` WHERE AgentID=? order by id desc LIMIT 20', [id], callback);
+                }
+            }
+        })
+        
+    },
+    searchcalllog: function (data, callback) {
+        //console.log(data);
+        var where = 'accountid='+data.customer_id;
+        if(data.startdate!='1970-01-01'){
+            where +=" and DATE(CallStartTime)>='"+data.startdate+"'" ;
+        }
+        if(data.enddate!='1970-01-01' ){
+            where +=" and DATE(CallStartTime)<='"+data.enddate+"'" ;
+        }
+        if(data.status){
+            where +=" and CallStatus='"+data.status+"'" ;
+        }
+        if(data.did){
+            where +=" and DID='"+data.did+"'" ;
+        }
+        if(data.agentid){
+            where +=" and AgentID='"+data.agentid+"'" ;
+        }
+        if(data.callerno){
+            where +=" and CallerNumber like '%"+data.callerno+"%'" ;
+        }
+        if(data.agentno){
+            where +=" and AgentNumber like '%"+data.agentno+"%'" ;
+        }
+        if(data.calltype){
+            where +=" and CallType='"+data.calltype+"'" ;
+        }
+        if(data.lastdestination){
+            where +=" and LastDestination='"+data.lastdestination+"'" ;
+        }
+        if(data.extension){
+            where +=" and LastExtension='"+data.extension+"'" ;
+        }
+        if(data.service){
+            where +=" and serviceid='"+data.service+"'" ;
+        }
+        return db.query('SELECT * FROM `tf_cdr` where '+where+' ORDER BY '+data.sortcolumn+' '+data.sortdirection+' LIMIT '+data.position+','+data.pageSize+'' , [], callback);
+    },
+    searchcalllogtotal: function (data, callback) {
+        //console.log(data);
+        var where = 'accountid='+data.customer_id;
+        if(data.startdate!='1970-01-01'){
+            where +=" and DATE(CallStartTime)>='"+data.startdate+"'" ;
+        }
+        if(data.enddate!='1970-01-01' ){
+            where +=" and DATE(CallStartTime)<='"+data.enddate+"'" ;
+        }
+        if(data.status){
+            where +=" and CallStatus='"+data.status+"'" ;
+        }
+        if(data.did){
+            where +=" and DID='"+data.did+"'" ;
+        }
+        if(data.agentid){
+            where +=" and AgentID='"+data.agentid+"'" ;
+        }
+        if(data.callerno){
+            where +=" and CallerNumber like '%"+data.callerno+"%'" ;
+        }
+        if(data.agentno){
+            where +=" and AgentNumber like '%"+data.agentno+"%'" ;
+        }
+        if(data.calltype){
+            where +=" and CallType='"+data.calltype+"'" ;
+        }
+        if(data.lastdestination){
+            where +=" and LastDestination='"+data.lastdestination+"'" ;
+        }
+        if(data.extension){
+            where +=" and LastExtension='"+data.extension+"'" ;
+        }
+        if(data.service){
+            where +=" and serviceid='"+data.service+"'" ;
+        }
+        return db.query('SELECT count(id) as total FROM `tf_cdr` where '+where+'' , [], callback);
+    },
+    calllogexcel: function (data, callback) {
+        //console.log(data);
+        var where = 'accountid='+data.customer_id;
+        if(data.startdate!='1970-01-01'){
+            where +=" and DATE(CallStartTime)>='"+data.startdate+"'" ;
+        }
+        if(data.enddate!='1970-01-01' ){
+            where +=" and DATE(CallStartTime)<='"+data.enddate+"'" ;
+        }
+        if(data.status){
+            where +=" and CallStatus='"+data.status+"'" ;
+        }
+        if(data.did){
+            where +=" and DID='"+data.did+"'" ;
+        }
+        if(data.agentid){
+            where +=" and AgentID='"+data.agentid+"'" ;
+        }
+        if(data.callerno){
+            where +=" and CallerNumber like '%"+data.callerno+"%'" ;
+        }
+        if(data.agentno){
+            where +=" and AgentNumber like '%"+data.agentno+"%'" ;
+        }
+        if(data.calltype){
+            where +=" and CallType='"+data.calltype+"'" ;
+        }
+        if(data.lastdestination){
+            where +=" and LastDestination='"+data.lastdestination+"'" ;
+        }
+        if(data.service){
+            where +=" and serviceid='"+data.service+"'" ;
+        }
+        return db.query('SELECT *,DATE_FORMAT(CallStartTime,"%d-%m-%Y %H:%i:%s") as CallStartTime FROM `tf_cdr` where '+where+'' , [], callback);
+    },
+    getcallstatus: function (id, callback) {
+        return db.query('SELECT distinct CallStatus,CallStatus FROM `tf_cdr` where CallStatus!="" and accountid=?  ORDER BY CallStatus ASC', [id], callback);
+    },
+    getcalldid: function (id, callback) {
+        return db.query('SELECT distinct DID,DID as did FROM `tf_cdr` where accountid=?  ORDER BY CallStatus ASC', [id], callback);
+    },
+    getcallername: function (id, callback) {
+        return db.query('SELECT distinct CallerName,CallerName FROM `tf_cdr` where accountid=? ', [id], callback);
+    },
+    getcalltype: function (id, callback) {
+        return db.query('SELECT distinct CallType,CallType FROM `tf_cdr` where accountid=? ', [id], callback);
+    },
+    getlastdestination: function (id, callback) {
+        return db.query('SELECT distinct LastDestination,LastDestination FROM `tf_cdr` where accountid=? ', [id], callback);
+    },
+    getcallextension: function (id, callback) {
+        return db.query('SELECT distinct LastExtension,LastExtension FROM `tf_cdr` where accountid=? and LastExtension!=""', [id], callback);
+    },
+    getuserdetail: function (id, callback) {
+        return db.query('SELECT * from tf_account_table where account_id= ?', [id], callback);
+    },
+    checkactiveamanageraccount:function (id, callback) {
+        return db.query('SELECT * FROM `tf_account_table` WHERE `account_id` = ? and current_status=0 and expiry_date >=CURDATE()', [id], callback);
+    },
+    findoutgoingdid:function (id, callback) {
+        return db.query('SELECT did FROM `tf_did_numbers` WHERE account_id = ?  AND active = 1 AND Type=9', [id], callback);
+    },
+    updateagentcallfeedback: function (data, callback) {
+        return db.query('update tf_cdr set ? WHERE id = ?', [data, data.id], callback);
+    },
+    getagentcallfeedback:function (id, callback) {
+        return db.query('SELECT id,note,scheduledate,feedback FROM `tf_cdr` WHERE id = ? ', [id], callback);
+    },
+    searchlivecall: function (data, callback) {
+        //console.log(data);
+        var where = 'accountid='+data.userid;
+        if(data.startdate!='1970-01-01'){
+            where +=" and DATE(CallStartTime)>='"+data.startdate+"'" ;
+        }
+        if(data.enddate!='1970-01-01' ){
+            where +=" and DATE(CallStartTime)<='"+data.enddate+"'" ;
+        }
+        if(data.status){
+            where +=" and CallStatus='"+data.status+"'" ;
+        }
+        if(data.did){
+            where +=" and DID='"+data.did+"'" ;
+        }
+        if(data.agentid){
+            where +=" and AgentID='"+data.agentid+"'" ;
+        }
+        if(data.callerno){
+            where +=" and CallerNumber like '%"+data.callerno+"%'" ;
+        }
+        if(data.agentno){
+            where +=" and AgentNumber like '%"+data.agentno+"%'" ;
+        }
+        if(data.calltype){
+            where +=" and CallType='"+data.calltype+"'" ;
+        }
+        //console.log('SELECT * FROM `tf_cdr` where '+where+' ORDER BY CallStartTime DESC ' );
+        return db.query('SELECT * FROM `tf_cdr` where '+where+' and CdrStatus = 2 ORDER BY CallStartTime DESC ' , [], callback);
+    },
+    findcdrbyuid:function (id, callback) {
+        return db.query('SELECT * FROM tf_cdr where uniqueid=?', [id], callback);
+    },
+    getconferencecall: function (id, callback) {
+        return db.query('SELECT * from tf_conference where account_id= ?', [id], callback);
+    },
+    saveconferencecall: function (data, callback) {
+        return db.query('Insert INTO tf_conference SET ?', data, callback);
+    },
+    getconferencecalldetail: function (id, callback) {
+        return db.query('SELECT * from tf_conference where conf_id= ?', [id], callback);
+    },
+    updateconferencecall: function (data, callback) {
+        return db.query('update tf_conference set ? WHERE conf_id = ?', [data, data.conf_id], callback);
+    },   
+    deleteconferencecall: function (id, callback) {
+        return db.query('DELETE FROM tf_conference where conf_id=?', [id], function (err, results) {
+            if (err) {
+                console.log("[mysql error]", err);
+            } else {
+                return db.query('DELETE FROM tf_conference_member where conference_id=?', [id], callback);
+            }
+        })
+    },
+    totallivecall: function (id, callback) {
+        return db.query('SELECT count(id) as total FROM `tf_cdr` WHERE accountid=? AND CdrStatus=2', [id], callback);
+    },
+    totalivrcall: function (id, callback) {
+        return db.query('SELECT count(id) as total FROM `tf_cdr` WHERE accountid=? AND serviceid=3', [id], callback);
+    },
+    totalmisscall: function (id, callback) {
+        return db.query('SELECT count(id) as total FROM `tf_cdr` WHERE accountid=? AND serviceid=6', [id], callback);
+    },
+    totaldidnumber: function (id, callback) {
+        return db.query('SELECT count(id) as total FROM `tf_did_numbers` WHERE account_id=?', [id], callback);
+    },
+    totaltodaycall: function (data, callback) {
+        return db.query('SELECT count(id) as total FROM `tf_cdr` WHERE accountid=? AND DATE(CallStartTime)=?', [data.id,data.date], callback);
+    },
+    totaltodayincomingcall: function (data, callback) {
+        return db.query('SELECT count(id) as total FROM `tf_cdr` WHERE accountid=? AND DATE(CallStartTime)=? AND CallTypeID=2', [data.id,data.date], callback);
+    },
+    totaltodayoutgoingcall: function (data, callback) {
+        return db.query('SELECT count(id) as total FROM `tf_cdr` WHERE accountid=? AND DATE(CallStartTime)=? AND CallTypeID=0', [data.id,data.date], callback);
+    },
+    totaltodaymissedcall: function (data, callback) {
+        return db.query('SELECT count(id) as total FROM `tf_cdr` WHERE accountid=? AND DATE(CallStartTime)=? AND CallTypeID=2 AND CallTalkTime=0', [data.id,data.date], callback);
+    },
+    getagentlead: function (id, callback) {
+        return db.query('SELECT C.name,C.mobile,CN.numid,CN.cam_id FROM `tf_campaigns_numbers` CN INNER JOIN tf_contacts C ON CN.cont_id=C.cont_id WHERE CN.agent_id=? and CN.status=0 ORDER BY cam_id ASC LIMIT 100', [id], callback);
+    },
+    getagentleadbyid: function (id, callback) {
+        return db.query('SELECT C.name,C.mobile,CN.numid,CN.cam_id FROM `tf_campaigns_numbers` CN INNER JOIN tf_contacts C ON CN.cont_id=C.cont_id WHERE CN.numid=?', [id], callback);
+    },
+    updatecamnumber: function (data,id, callback) {
+        return db.query('update tf_campaigns_numbers set ? WHERE numid = ?', [data,id], callback);
+    },
+    checkclicktocalltag: function (id, callback) {
+        return db.query('SELECT * FROM `tf_clicktocall` WHERE tag_id = ?', [id], callback);
+    },
+    insertcdr:function (data, callback) {
+        return db.query('INSERT INTO tf_cdr SET ?', [data], callback);
+    },
+    getmanagerlead: function (id,feedback, callback) {        
+        return db.query('SELECT * FROM `tf_cdr` where accountid=? AND feedback = ? ORDER BY CallStartTime DESC', [id,feedback], callback);
+    
+    },
+    getmanagerleadfilter: function (data, callback) {   
+        var where ;
+       // console.log(data)
+        where = 'accountid='+data.userid;
+        if(data.agentid){
+            where +=" and AgentID='"+data.agentid+"'" ;
+            }
+        if(data.feedback){
+            where += " and feedback='"+data.feedback+"'";
+        }
+        if(data.callerno!=''){
+            where +=" and CallerNumber like'%"+data.callerno+"%'" ;
+        }
+        if(data.startdate!='1970-01-01' && data.startdate!=''){
+            var startdateObj = new Date(data.startdate);
+            var startdate = startdateObj.getFullYear() + '-' + ('0' + (startdateObj.getMonth() + 1)).slice(-2) + '-' + ('0' + startdateObj.getDate()).slice(-2);
+            data.startdate = startdate;
+            where +=" and DATE(CallStartTime)>='"+data.startdate+"'" ;
+        }
+        if(data.enddate!='1970-01-01' && data.enddate!=''){
+            var enddateObj = new Date(data.enddate);
+            var enddate = enddateObj.getFullYear() + '-' + ('0' + (enddateObj.getMonth() + 1)).slice(-2) + '-' + ('0' + enddateObj.getDate()).slice(-2);
+            data.enddate = enddate;        
+           where +=" and DATE(CallStartTime)<='"+data.enddate+"'" ;
+        }
+      // console.log('SELECT * FROM `tf_cdr` where '+where+' ORDER BY CallStartTime DESC')
+        return db.query('SELECT * FROM `tf_cdr` where feedback != " " and '+where+' ORDER BY CallStartTime DESC', [], callback);
+    },
+    searchcall: function (data, callback) {
+        //console.log(data);
+        var where = 'accountid='+data.customer_id;
+        if(data.startdate!='1970-01-01'){
+            where +=" and DATE(CallStartTime)>='"+data.startdate+"'" ;
+        }
+        if(data.enddate!='1970-01-01' ){
+            where +=" and DATE(CallStartTime)<='"+data.enddate+"'" ;
+        }
+        if(data.status){
+            where +=" and CallStatus='"+data.status+"'" ;
+        }
+        if(data.did){
+            where +=" and DID='"+data.did+"'" ;
+        }
+        if(data.agentid){
+            where +=" and AgentID='"+data.agentid+"'" ;
+        }
+        if(data.callerno){
+            where +=" and CallerNumber like '%"+data.callerno+"%'" ;
+        }
+        if(data.agentno){
+            where +=" and AgentNumber like '%"+data.agentno+"%'" ;
+        }
+        if(data.calltype){
+            where +=" and CallType='"+data.calltype+"'" ;
+        }
+        if(data.lastdestination){
+            where +=" and LastDestination='"+data.lastdestination+"'" ;
+        }
+        if(data.service){
+            where +=" and serviceid='"+data.service+"'" ;
+        }
+        return db.query('SELECT * FROM `tf_cdr` where '+where+' ORDER BY CallStartTime DESC' , [], callback);
+    },
+    getmultipleuserdetail: function (userid,members,type, callback) {
+        if(type==0){
+            var members = members.join(',')
+            return db.query('SELECT account_id,account_name,mobile FROM `tf_account_table` WHERE account_type=1 AND created_by = ? AND account_id IN ('+members+')' , [userid], callback);
+        }else if(type==2){
+            return db.query('SELECT contact_no as mobile FROM `tf_conference_member` where account_id = ? and conference_id = ?',[userid,members],callback);
+        }else{
+
+        }
+    },
+    getagentliveallcalllog: function (id, callback) {
+        return db.query('SELECT * FROM `tf_cdr` where CdrStatus = 2',callback);
+    },
+    getliveagentcalllog: function (data, callback) {
+        var where = 'AgentID='+data.agent;
+       
+        return db.query('SELECT * FROM `tf_cdr` where '+where+' AND CdrStatus = 2 ORDER BY CallStartTime DESC' , [], callback);
+    },
+    searchmisscalllog: function (data, callback) {
+        //console.log(data);
+        var where = 'serviceid=6 and accountid='+data.userid;
+        if(data.startdate!='1970-01-01'){
+            where +=" and DATE(CallStartTime)>='"+data.startdate+"'" ;
+        }
+        if(data.enddate!='1970-01-01' ){
+            where +=" and DATE(CallStartTime)<='"+data.enddate+"'" ;
+        }
+        if(data.did){
+            where +=" and DID='"+data.did+"'" ;
+        }
+        if(data.callerno){
+            where +=" and CallerNumber like '%"+data.callerno+"%'" ;
+        }
+        return db.query('SELECT * FROM `tf_cdr` where '+where+' ORDER BY CallStartTime DESC ' , [], callback);
+    },
+    todaycallstatus: function (userid, todaydate,callback) {
+        where =' accountid='+userid+' and DATE(CallStartTime)="'+todaydate+'"';
+        //console.log('SELECT CallStatus,count(id) as totalcnt FROM `tf_cdr` where '+where+' GROUP BY CallStatus');
+        return db.query('SELECT CallStatus,count(id) as totalcnt FROM `tf_cdr` where '+where+' GROUP BY CallStatus' , [], callback);
+    },
+    todaycalltype: function (userid, todaydate,callback) {
+        where =' accountid='+userid+' and DATE(CallStartTime)="'+todaydate+'"';
+        //console.log('SELECT CallStatus,count(id) as totalcnt FROM `tf_cdr` where '+where+' GROUP BY CallStatus');
+        return db.query('SELECT CallType,count(id) as totalcnt FROM `tf_cdr` where '+where+' GROUP BY CallType' , [], callback);
+    },
+    //insert bulk conference member data
+    insertbulkconfmember: function (data, callback) {
+        db.query("Insert INTO tf_conference_member SET ?", [data], function (err, results) {
+            if (err) {
+                console.log("[mysql error]", err);
+            } else {
+                callback(err, results);
+            }
+        });
+    },
+    searchmaster: function (data, callback) {    
+        
+        return db.query('SELECT * FROM `tf_master_data` LIMIT '+data.position+','+data.pageSize+'' , [], callback);
+        // return db.query('SELECT * FROM `tf_master_data` where city='+data.city+'  LIMIT '+data.position+','+data.pageSize+'' , [], callback);
+    },
+    searchmasterall: function (id, callback) {
+        return db.query('SELECT count(name) as name FROM `tf_master_data`',callback);
+    },
+    getconferencemembers: function (id, callback) {
+        return db.query('SELECT * FROM `tf_conference_member` where conference_id=?',[id],callback);
+    },
+    getagentdatalead: function (data, callback) {   
+        var where ;
+        //console.log(data)
+        where = 'AgentID='+data.userid;
+        if(data.feedback){
+            where += " and feedback='"+data.feedback+"'";
+        }else{
+            where += " and feedback !=''";
+        }
+        if(data.callerno!=''){
+            where +=" and CallerNumber like'%"+data.callerno+"%'" ;
+        }
+        if(data.startdate!='1970-01-01' && data.startdate!=''){
+            var startdateObj = new Date(data.startdate);
+            var startdate = startdateObj.getFullYear() + '-' + ('0' + (startdateObj.getMonth() + 1)).slice(-2) + '-' + ('0' + startdateObj.getDate()).slice(-2);
+            data.startdate = startdate;
+            where +=" and DATE(CallStartTime)>='"+data.startdate+"'" ;
+        }
+        if(data.enddate!='1970-01-01' && data.enddate!=''){
+            var enddateObj = new Date(data.enddate);
+            var enddate = enddateObj.getFullYear() + '-' + ('0' + (enddateObj.getMonth() + 1)).slice(-2) + '-' + ('0' + enddateObj.getDate()).slice(-2);
+            data.enddate = enddate;        
+           where +=" and DATE(CallStartTime)<='"+data.enddate+"'" ;
+        }
+        return db.query('SELECT * FROM `tf_cdr` where '+where+' ORDER BY CallStartTime DESC', [], callback);
+    },
+    getAgentleadFeedback:function (id, callback) {
+        return db.query('SELECT id,note,scheduledate,feedback FROM `tf_cdr` WHERE id = ? ', [id], callback);
+    },
+    updateAgentleadFeedback: function (data, callback) {
+        return db.query('update tf_cdr set ? WHERE id = ?', [data, data.id], callback);
+    },
+    searchreqdata : function(data,callback){
+        var where ;
+        where = 'AgentID='+data.userid;
+       
+       
+        if(data.callerno){
+            where +=" and CallerNumber like'%"+data.callerno+"%'" ;
+        }
+        if(data.startdate!='1970-01-01'){
+         where +=" and DATE(CallStartTime)>='"+data.startdate+"'" ;
+        }
+        if(data.enddate!='1970-01-01' ){
+           where +=" and DATE(CallStartTime)<='"+data.enddate+"'" ;
+        }
+      //  console.log('SELECT * FROM `tf_cdr` where '+where+'' );
+       return db.query('SELECT * FROM `tf_cdr` where '+where+'' , [], callback);
+   },
+
+   getAgentcallSchedule: function (data,callback) {   
+    var where ;
+    where = 'AgentID='+data.userid;
+   
+   
+    if(data.feedback){
+        where += " and feedback='"+data.feedback+"'";
+    }
+    if(data.callerno!=''){
+        where +=" and CallerNumber like'%"+data.callerno+"%'" ;
+    }
+    if(data.startdate!='1970-01-01' && data.startdate!=''){
+        var startdateObj = new Date(data.startdate);
+        var startdate = startdateObj.getFullYear() + '-' + ('0' + (startdateObj.getMonth() + 1)).slice(-2) + '-' + ('0' + startdateObj.getDate()).slice(-2);
+        data.startdate = startdate;
+        where +=" and DATE(scheduledate)>='"+data.startdate+"'" ;
+    }
+    if(data.enddate!='1970-01-01' && data.enddate!=''){
+        var enddateObj = new Date(data.enddate);
+        var enddate = enddateObj.getFullYear() + '-' + ('0' + (enddateObj.getMonth() + 1)).slice(-2) + '-' + ('0' + enddateObj.getDate()).slice(-2);
+        data.enddate = enddate;        
+       where +=" and DATE(scheduledate)<='"+data.enddate+"'" ;
+    } 
+   return db.query('SELECT * FROM `tf_cdr` where '+where+' ORDER BY scheduledate DESC', [], callback);
+   //return db.query('SELECT * FROM `tf_cdr` where AgentID=? AND feedback = ? ORDER BY CallStartTime DESC', [id,feedback], callback);
+
+},
+getCalldetailhistory:function(id,callback){
+    //console.log("SELECT * FROM `tf_cdr` WHERE id="+id);
+    // number = (number.length==10)?number:number.substring(2)
+    // return db.query("SELECT * FROM `tf_cdr` WHERE CallerNumber like '%"+number+"%'",[],callback);
+     return db.query("SELECT * FROM `tf_cdr` WHERE id="+id,function (err,results){
+        if(err){
+            console.log("[mysql error]", err);
+        }else{
+            account_id = results[0].accountid
+         number = results[0].CallerNumber
+            numbers= (number.length==10)?number:number.substring(2);
+            return db.query("SELECT * FROM `tf_cdr` WHERE CallerNumber like '%"+numbers+"%' and accountid="+account_id+" ORDER BY CallStartTime DESC",[],callback);
+
+        }
+    });
+},
+getCallloghistory:function(id,callback){
+    return db.query("SELECT * FROM `tf_cdr` WHERE id="+id,function (err,results){
+        if(err){
+            console.log("[mysql error]", err);
+        }else{
+            account_id = results[0].accountid
+         number = results[0].CallerNumber
+            numbers= (number.length==10)?number:number.substring(2);
+            return db.query("SELECT * FROM `tf_cdr` WHERE CallerNumber like '%"+numbers+"%' and accountid="+account_id+" ORDER BY CallStartTime DESC",[],callback);
+        }
+    });  
+    // number = (number.length==10)?number:number.substring(2)
+    // console.log(number);
+    // return db.query("SELECT * FROM `tf_cdr` WHERE CallerNumber like '%"+number+"%'",[],callback);
+},
+
+getNextcallSchedule:function(data,callback){
+   // console.log("SELECT * FROM `tf_cdr` WHERE feedback like '%"+data.feedback+"%' and AgentID="+data.userid+" and scheduledate>= DATE_SUB(now(),INTERVAL 1 HOUR)");
+   return db.query("SELECT * FROM `tf_cdr` WHERE feedback like '%"+data.feedback+"%' and AgentID="+data.userid+" and scheduledate>= DATE_SUB(now(),INTERVAL 1 HOUR) ",[],callback);
+
+},
+getagentcalllogdata: function (data, callback) {
+     return db.query('SELECT show_no_id FROM tf_account_table where account_id=?', [data.userid], function (err, results) {
+        if (err) {
+            console.log("[mysql error]", err);
+        }else{
+            row = results[0]
+            if(results.length>0){
+                if(row.show_no_id==0){
+                    return db.query('SELECT * FROM `tf_cdr` where AgentID='+data.userid+' AND CallTypeID = '+data.type+' ORDER BY CallStartTime DESC LIMIT '+data.position+','+data.pageSize+'' , [], callback);
+                }else{
+                    return db.query('SELECT *,SUBSTRING_INDEX(uniqueid,".",1) as CallerNumber,SUBSTRING_INDEX(uniqueid,".",1) as CallerName FROM `tf_cdr` where AgentID='+data.userid+' AND CallTypeID = '+data.type+' ORDER BY CallStartTime DESC LIMIT '+data.position+','+data.pageSize+'', [], callback);
+                }    
+            }else{
+                callback(err, results);
+            }
+        }
+    })
+},
+getagentleaddata: function (data, callback) {
+    return db.query('SELECT C.name,C.mobile,CN.numid,CN.cam_id FROM `tf_campaigns_numbers` CN INNER JOIN tf_contacts C ON CN.cont_id=C.cont_id WHERE CN.agent_id=? and CN.status=0 ORDER BY numid ASC LIMIT '+data.position+','+data.pageSize+'', [data.id], callback);
+},
+getLiveChannel: function (customerid,callback) {
+    return db.query('SELECT outgoing_channel - (SELECT COUNT(channel) as cnt FROM `tf_cdr` WHERE CdrStatus IN (1,2,3) AND accountid =? AND (CallTypeID=0 OR CallTypeID=1)) as rchannel FROM tf_account_table A  WHERE  A.account_id=? ORDER BY RAND() LIMIT 1',[customerid,customerid], callback);
+},
+}
+
+module.exports = Call;

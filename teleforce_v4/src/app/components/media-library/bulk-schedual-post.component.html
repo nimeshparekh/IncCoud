@@ -1,0 +1,52 @@
+<div mat-dialog-head class="dilog-head d-flex justify-content-between">
+    <h2 class="dialog-head-h">Bulk Scheduled Post</h2>
+    <div class="d-inline-block">
+        <a class="close" (click)="onNoClick()"><i class="fi-rr-cross-small"></i></a>
+    </div>
+</div>
+ <form [formGroup]="addForm">
+    <div mat-dialog-content>
+        <div   formArrayName="settingDetail" *ngFor="let cd of configarr.controls ;let i=index;">
+            <div   class="row" [formGroupName]="i">                
+                <div class="col-xl-2 col-md-2 col-sm-6 col-12 mt-2"> 
+                    <img width="80px" height="80px" src="{{mediapreview[i]}}">
+                        <input matInput placeholder="Field Name" formControlName="media" style="display:none">
+                                      
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-select matInput placeholder="Channel" formControlName="channelid">
+                            <mat-option [value]="channel.channel_id" *ngFor="let channel of all_channels">{{channel.channel_name}} ({{channel.access_media}})</mat-option>
+                        </mat-select>
+                    </mat-form-field>                    
+                </div>
+                <div class="col-xl-4 col-md-4 col-sm-6 col-12 mt-2">
+                    <textarea formControlName="description" cols="35" rows="4"></textarea>
+                </div>
+                <div class="col-xl-3 col-md-3 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <input matInput type='datetime-local' formControlName="scheduledate" [ngModelOptions]="{standalone: true}">
+                    </mat-form-field>                    
+                </div>
+            </div>
+        </div>        
+        <!--<div class="row mb-2">
+            <div class="col-sm-12 mt-2">
+                <mat-form-field appearance="outline">
+                    <mat-label>Choose a date</mat-label>
+                    <input matInput type='datetime-local' [(ngModel)]='data.scheduleTime' [ngModelOptions]="{standalone: true}">
+                </mat-form-field>
+            </div>
+            <div class="col-sm-12 mt-2">
+                <mat-form-field appearance="outline">
+                    <mat-label>Choose a date</mat-label>
+                    <input matInput type='datetime-local' [(ngModel)]='data.scheduleTime' [ngModelOptions]="{standalone: true}">
+                </mat-form-field>
+            </div>
+        </div>-->
+    </div>
+    <div class="btn-sec" mat-dialog-actions>
+         <button mat-raised-button  color="primary" class="Update-btn" (click)="bulkpost()">Post Now</button>      
+    </div>
+</form>
+

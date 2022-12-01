@@ -1,0 +1,67 @@
+.dilog-head
+{
+    border-bottom: 1px solid #ccc;
+}
+.dialer-card
+{
+    border: initial!important;
+    background: #ffffff!important;
+    border-radius: .75rem!important;
+    box-shadow: 0 1px 15px rgb(0 0 0/4%),0 1px 6px rgb(0 0 0/4%)!important;
+    border-bottom: 11px solid #ccc;
+    max-width: 460px;
+    margin: 18px auto;
+}
+.dialer-name-no
+{
+    display: block;
+    text-align: center;
+    margin: 48px auto;
+}
+.dialer-name-no label
+{
+    font-size: 20px;
+    font-weight: 600;
+    color: #6e848d;
+    margin: 0px;
+    font-family: 'Nunito', sans-serif;
+    letter-spacing: 1px;
+}
+.dialer-name-no p
+{
+    margin: 0px;
+    color: #8ba1aa;
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+.dialer-name-no span
+{
+    font-size: 12px;
+    color: #a1b2b9;
+}
+.dialer-name-no h6
+{
+    margin: 0px;
+    font-size: 10px;
+    color: #9daeb5;
+    margin-top: -6px;
+}
+.dial-action .running-call
+{
+    background: rgb(207, 22, 22);
+    border: none;
+    width: 40px;
+    height: 40px;
+    color: #fff;
+    border-radius: 50px;
+    line-height: 40px;
+}
+.dial-action .disconnect-call
+{
+    background: rgb(211, 207, 7);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50px;
+    line-height: 40px;
+}

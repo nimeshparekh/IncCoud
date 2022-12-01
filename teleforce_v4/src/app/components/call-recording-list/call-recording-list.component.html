@@ -1,0 +1,126 @@
+<div mat-dialog-head class="dilog-head d-flex justify-content-between">
+  <h3 class="primary">Recording</h3>
+  <div class="d-inline-block">
+      <a class="close" (click)="cancelDialog()"><i class="fi-rr-cross-small"></i></a>
+  </div>
+</div>
+
+<div mat-dialog-content>
+  <audio controls controlsList="nodownload" class="mt-2" *ngIf="role==1 && managerid!=3024">
+    <source src="api/call/audio/{{audioid}}" type="audio/wav">
+  </audio>
+  <audio controls  class="mt-2" *ngIf="role!=1 || managerid==3024">
+    <source src="api/call/audio/{{audioid}}" type="audio/wav">
+  </audio>
+  <!-- <a href="api/call/audiodownload/{{audioid}}" target="_blank" download><i class="fa fa-download"></i></a> -->
+  <form [formGroup]="addForm"  (ngSubmit)="submit($event)">
+    <div>
+        <h3>Rating Here</h3>
+        
+          <div class="row" formArrayName="reviews" *ngFor="let review of reviewform;let i = index;">
+            <div class="col-sm-12 mt-2">
+              <p>{{review.form_parameter}}</p>
+              <div class="rate" *ngIf="reviewratelength==0">
+                <input type="radio"  id="star10{{review.form_id}}" name="rate{{review.form_id}}" value="10" (click)="saverate(review.form_id,10)"  />
+                <label for="star10{{review.form_id}}" title="text">10 stars</label>            
+                <input type="radio"  id="star9{{review.form_id}}" name="rate{{review.form_id}}" value="9" (click)="saverate(review.form_id,9)"  />
+                <label for="star9{{review.form_id}}" title="text">9 stars</label>            
+                <input type="radio"  id="star8{{review.form_id}}" name="rate{{review.form_id}}" value="8" (click)="saverate(review.form_id,8)"  />
+                <label for="star8{{review.form_id}}" title="text">8 stars</label>            
+                <input type="radio"  id="star7{{review.form_id}}" name="rate{{review.form_id}}" value="7" (click)="saverate(review.form_id,7)"  />
+                <label for="star7{{review.form_id}}" title="text">7 stars</label>            
+                <input type="radio"  id="star6{{review.form_id}}" name="rate{{review.form_id}}" value="6" (click)="saverate(review.form_id,6)"  />
+                <label for="star6{{review.form_id}}" title="text">6 stars</label>            
+                <input type="radio"  id="star5{{review.form_id}}" name="rate{{review.form_id}}" value="5" (click)="saverate(review.form_id,5)"  />
+                <label for="star5{{review.form_id}}" title="text">5 stars</label>
+                <input type="radio" id="star4{{review.form_id}}" name="rate{{review.form_id}}" value="4" (click)="saverate(review.form_id,4)" />
+                <label for="star4{{review.form_id}}" title="text">4 stars</label>
+                <input type="radio" id="star3{{review.form_id}}" name="rate{{review.form_id}}" value="3"  (click)="saverate(review.form_id,3)"/>
+                <label for="star3{{review.form_id}}" title="text">3 stars</label>
+                <input type="radio" id="star2{{review.form_id}}" name="rate{{review.form_id}}" value="2" (click)="saverate(review.form_id,2)" />
+                <label for="star2{{review.form_id}}" title="text">2 stars</label>
+                <input type="radio" id="star1{{review.form_id}}" name="rate{{review.form_id}}" value="1" (click)="saverate(review.form_id,1)" />
+                <label for="star1{{review.form_id}}" title="text">1 star</label>
+              </div>
+              <div class="rate" *ngIf="reviewratelength>0&&reviewratelength>i">
+                <input type="radio"  id="star10{{review.form_id}}" name="rate{{review.form_id}}" value="10" (click)="saverate(review.form_id,10)" [checked]="reviewrate[i].review_rate==10"  />
+                <label for="star10{{review.form_id}}" title="text">10 stars</label>            
+                <input type="radio"  id="star9{{review.form_id}}" name="rate{{review.form_id}}" value="9" (click)="saverate(review.form_id,9)" [checked]="reviewrate[i].review_rate==9"  />
+                <label for="star9{{review.form_id}}" title="text">9 stars</label>            
+                <input type="radio"  id="star8{{review.form_id}}" name="rate{{review.form_id}}" value="8" (click)="saverate(review.form_id,8)" [checked]="reviewrate[i].review_rate==8"  />
+                <label for="star8{{review.form_id}}" title="text">8 stars</label>            
+                <input type="radio"  id="star7{{review.form_id}}" name="rate{{review.form_id}}" value="7" (click)="saverate(review.form_id,7)"  [checked]="reviewrate[i].review_rate==7" />
+                <label for="star7{{review.form_id}}" title="text">7 stars</label>            
+                <input type="radio"  id="star6{{review.form_id}}" name="rate{{review.form_id}}" value="6" (click)="saverate(review.form_id,6)"  [checked]="reviewrate[i].review_rate==6"  />
+                <label for="star6{{review.form_id}}" title="text">6 stars</label>            
+                
+                <input type="radio"  id="star5{{review.form_id}}" name="rate{{review.form_id}}" value="5" (click)="saverate(review.form_id,5)" [checked]="reviewrate[i].review_rate==5"   />
+                <label for="star5{{review.form_id}}" title="text">5 stars</label>
+                <input type="radio" id="star4{{review.form_id}}" name="rate{{review.form_id}}" value="4" (click)="saverate(review.form_id,4)" [checked]="reviewrate[i].review_rate==4" />
+                <label for="star4{{review.form_id}}" title="text">4 stars</label>
+                <input type="radio" id="star3{{review.form_id}}" name="rate{{review.form_id}}" value="3"  (click)="saverate(review.form_id,3)" [checked]="reviewrate[i].review_rate==3" />
+                <label for="star3{{review.form_id}}" title="text">3 stars</label>
+                <input type="radio" id="star2{{review.form_id}}" name="rate{{review.form_id}}" value="2" (click)="saverate(review.form_id,2)" [checked]="reviewrate[i].review_rate==2" />
+                <label for="star2{{review.form_id}}" title="text">2 stars</label>
+                <input type="radio" id="star1{{review.form_id}}" name="rate{{review.form_id}}" value="1" (click)="saverate(review.form_id,1)" [checked]="reviewrate[i].review_rate==1" />
+                <label for="star1{{review.form_id}}" title="text">1 star</label>
+              </div>
+              <div class="rate" *ngIf="reviewratelength>0&&reviewratelength<=i">
+                <input type="radio"  id="star10{{review.form_id}}" name="rate{{review.form_id}}" value="10" (click)="saverate(review.form_id,10)"  />
+                <label for="star10{{review.form_id}}" title="text">10 stars</label>            
+                <input type="radio"  id="star9{{review.form_id}}" name="rate{{review.form_id}}" value="9" (click)="saverate(review.form_id,9)"  />
+                <label for="star9{{review.form_id}}" title="text">9 stars</label>            
+                <input type="radio"  id="star8{{review.form_id}}" name="rate{{review.form_id}}" value="8" (click)="saverate(review.form_id,8)"  />
+                <label for="star8{{review.form_id}}" title="text">8 stars</label>            
+                <input type="radio"  id="star7{{review.form_id}}" name="rate{{review.form_id}}" value="7" (click)="saverate(review.form_id,7)"  />
+                <label for="star7{{review.form_id}}" title="text">7 stars</label>            
+                <input type="radio"  id="star6{{review.form_id}}" name="rate{{review.form_id}}" value="6" (click)="saverate(review.form_id,6)"  />
+                <label for="star6{{review.form_id}}" title="text">6 stars</label>             
+                <input type="radio"  id="star5{{review.form_id}}" name="rate{{review.form_id}}" value="5" (click)="saverate(review.form_id,5)"   />
+                <label for="star5{{review.form_id}}" title="text">5 stars</label>
+                <input type="radio" id="star4{{review.form_id}}" name="rate{{review.form_id}}" value="4" (click)="saverate(review.form_id,4)"  />
+                <label for="star4{{review.form_id}}" title="text">4 stars</label>
+                <input type="radio" id="star3{{review.form_id}}" name="rate{{review.form_id}}" value="3"  (click)="saverate(review.form_id,3)"  />
+                <label for="star3{{review.form_id}}" title="text">3 stars</label>
+                <input type="radio" id="star2{{review.form_id}}" name="rate{{review.form_id}}" value="2" (click)="saverate(review.form_id,2)"  />
+                <label for="star2{{review.form_id}}" title="text">2 stars</label>
+                <input type="radio" id="star1{{review.form_id}}" name="rate{{review.form_id}}" value="1" (click)="saverate(review.form_id,1)"  />
+                <label for="star1{{review.form_id}}" title="text">1 star</label>
+              </div>
+                
+            </div>
+          </div>
+          
+    </div>
+    <div>
+      <button mat-raised-button type="submit" color="primary" class="Update-btn">Save</button>
+      &nbsp;&nbsp;
+      <button mat-raised-button color="accent"  type="button" class="btn btn-default" (click)="cancelDialog()">Cancel</button>
+    </div>
+  </form>
+</div>
+<!--
+<div class="rate">
+  <input type="radio" id="star5" name="rate" value="5" />
+  <label for="star5" title="text">5 stars</label>
+  <input type="radio" id="star4" name="rate" value="4" />
+  <label for="star4" title="text">4 stars</label>
+  <input type="radio" id="star3" name="rate" value="3" />
+  <label for="star3" title="text">3 stars</label>
+  <input type="radio" id="star2" name="rate" value="2" />
+  <label for="star2" title="text">2 stars</label>
+  <input type="radio" id="star1" name="rate" value="1" />
+  <label for="star1" title="text">1 star</label>
+</div>
+<div class="rate">
+  <input type="radio" id="star51" name="rate1" value="5" />
+  <label for="star51" title="text">5 stars</label>
+  <input type="radio" id="star41" name="rate1" value="4" />
+  <label for="star41" title="text">4 stars</label>
+  <input type="radio" id="star31" name="rate1" value="3" />
+  <label for="star31" title="text">3 stars</label>
+  <input type="radio" id="star21" name="rate1" value="2" />
+  <label for="star21" title="text">2 stars</label>
+  <input type="radio" id="star11" name="rate1" value="1" />
+  <label for="star11" title="text">1 star</label>
+</div>-->

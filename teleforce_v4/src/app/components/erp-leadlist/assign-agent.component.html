@@ -1,0 +1,41 @@
+<div mat-dialog-head class="dilog-head d-flex justify-content-between">
+    <h3 class="primary">Assign Lead To Agent</h3>
+    <div class="d-inline-block">
+        <a class="close" (click)="onNoClick1()"><i class="fi-rr-cross-small"></i></a>
+    </div>
+</div>
+<div>
+    <form [formGroup]="addForm" (ngSubmit)="submit()">
+        <div mat-dialog-content>
+            <div class="row">
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Agent Group </mat-label>
+                        <mat-select placeholder="Agent Group" formControlName="agentgroupid" required
+                            (selectionChange)="getAssignedAgents($event.value)">
+                            <mat-option *ngFor="let group of agentgroup" [value]="group.GroupID">{{group.GroupName}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="addForm.controls.agentgroupid.hasError('required')">
+                            Please select agent group
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Agents </mat-label>
+                        <mat-select matInput multiple placeholder="Agents" formControlName="agentid">
+                            <mat-option  [value]="">All</mat-option>
+                            <mat-option *ngFor="let agent of agents" [value]="agent.AgentID">{{agent.agentname}}</mat-option>
+                        </mat-select>
+
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="btn-sec" mat-dialog-actions>
+            <button mat-raised-button type="submit" color="primary" class="Update-btn" [disabled]="isDisabled">Save</button>
+            <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+        </div>
+    </form>
+</div>

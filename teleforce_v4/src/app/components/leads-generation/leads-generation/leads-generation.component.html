@@ -1,0 +1,675 @@
+<div class="warap-height pt-4">
+    <div class="pt-2 container mb-2">
+        <!--multisteps-form-->
+        <div>
+            <!--progress bar-->
+            <div class="row">
+                <div class="col-12 col-lg-8 ml-auto mr-auto mb-4">
+                    <div class="multisteps-form__progress">
+                        <button class="multisteps-form__progress-btn js-active" type="button" title="Select Plan">Budget & Campaign</button>
+                        <button class="multisteps-form__progress-btn" type="button" title="Payment" [disabled]="next">Ad-set</button>
+                        <button class="multisteps-form__progress-btn" type="button" title="KYC" [disabled]="next">Audiance & Locations</button>
+                        <button class="multisteps-form__progress-btn" type="button" title="Select DID" [disabled]="next">Upload</button>
+                        <button class="multisteps-form__progress-btn" type="button" title="Select DID" [disabled]="next">Automation</button>
+                    </div>
+                </div>
+            </div>
+            <!--form panels-->
+            <div class="row mb-2">
+                <div class="col-12 col-lg-12 m-auto">
+                    <form class="multisteps-form__form"  [formGroup]="AdGroupForm">
+                        <!--single form panel-->
+                        <div class="multisteps-form__panel p-4 rounded bg-white js-active" data-animation="scaleIn">
+                            <h3 class="multisteps-form__title text-center">Enter Budget and select your campaign</h3>
+                            <div class="multisteps-form__content">
+                                <div class="container">
+                                    <div class="row mt-2">
+                                        <div class="col-12 col-sm-6 col-md-3">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Select Your Budget</mat-label>
+                                                <mat-select>
+                                                    <mat-option value='daily'>
+                                                      Daily Budget
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field> 
+                                        </div>
+                                        <div class="col-12 col-sm-6 col-md-3">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Enter Your Budget</mat-label>
+                                                <input type="number" matInput placeholder="Enter Amount" formControlName="dailybudget"  [readonly]="this.dailybudget_Editable" (change)="checkAdsBalance();">
+                                               
+                                               <!-- <mat-icon matSuffix>
+                                                    <i class="fas fa-rupee-sign"></i>
+                                                </mat-icon> -->
+                                            </mat-form-field>                                            
+                                        </div>
+                                        <span *ngIf="msg!=''" style="color:red">{{msg}}</span> 
+                                    </div>
+
+                                    <p class="field-head mt-2">Choose Your Campaign name</p>
+                                    <div class="row mt-2">
+                                        <div class="col-12 col-sm-6 col-md-3">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Enter Your Campaign name</mat-label>
+                                                <input matInput placeholder="Enter Campaign name" formControlName="campaign_name" [readonly]="this.campaign_name_Editable">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>                                    
+
+                                </div>
+                            </div>
+                            <div class="button-row d-flex mt-4">
+                                <button class="ml-auto js-btn-prev" type="button" title="Prev">Prev</button>
+                                &nbsp;
+                                <button class="js-btn-next" type="button" title="Next" [disabled]="next">Next</button>
+                            </div>
+                        </div>
+                        <!--single form panel-->
+                        <div class="multisteps-form__panel p-4 rounded bg-white" data-animation="scaleIn">
+                            <!-- <h3 class="multisteps-form__title text-center">Select Your Pages </h3> -->
+                            <div class="multisteps-form__content">
+                                <div class="container">
+                                    <p class="field-head mt-2">Choose Your Adset name</p>
+                                    <div class="row mt-2">
+                                        <div class="col-12 col-sm-6 col-md-3">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Enter Your Adset name</mat-label>
+                                                <input matInput placeholder="Enter adset name" formControlName="adset_name" [readonly]="this.adset_name_Editable">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <h3 class="multisteps-form__title mt-2">Instant form</h3>
+                            <div class="multisteps-form__content">
+                                <div class="container">
+                                    <p class="field-head">Choose a form to use in your ad.</p>
+                                    <div class="row">
+                                        <div div class="col-sm-6">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Enter name for the ad</mat-label>
+                                                <input matInput placeholder="Enter ad name" type="text" formControlName="adsName">
+                                            </mat-form-field>
+                                        </div> 
+                                        <div div class="col-sm-6">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Enter form name</mat-label>
+                                                <input matInput placeholder="Enter your form name" type="text" formControlName="form_name">
+                                            </mat-form-field>
+                                        </div> 
+                                        <div div class="col-sm-6">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Enter Ad Headline</mat-label>
+                                                <input matInput placeholder="Enter your Ad headline" type="text" formControlName="creative_message">
+                                            </mat-form-field>
+                                        </div>
+                                        <div div class="col-sm-6">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Select Your Call-To-Action prompt</mat-label>
+                                                <mat-select  formControlName="cta_prompt" [disabled]="this.age_min">
+                                                    <mat-option value="APPLY_NOW" selected>APPLY NOW</mat-option>
+                                                    <mat-option value="DOWNLOAD">DOWNLOAD</mat-option>
+                                                    <mat-option value="GET_QUOTE">GET QUOTE</mat-option>
+                                                    <mat-option value="LEARN_MORE">LEARN MORE</mat-option>
+                                                    <mat-option value="SIGN_UP">SIGN UP</mat-option>
+                                                    <mat-option value="SUBSCRIBE">SUBSCRIBE</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                            <div class="col-sm-12" *ngIf="true">
+                                            <p class="field-head mt-3" *ngIf="true">Questions</p>
+                                            <ul class="select-placement">
+                                                <li class="tablinks"  *ngIf="true">
+                                                    <section class="example-section">
+                                                        <!-- <mat-checkbox class="example-margin" value="feed" (click)="clickf($event.target)">Facebook News Feed</mat-checkbox> -->
+                                                        <mat-checkbox class="example-margin" [checked]="true" value="FULL_NAME" (change)="questionArr($event)"> Full Name </mat-checkbox>
+                                                    </section>
+                                                </li>
+                                                <li class="tablinks" *ngIf="true">
+                                                    <section class="example-section">
+                                                        <!-- <mat-checkbox class="example-margin" value="feed" (click)="clickf($event.target)">Facebook News Feed</mat-checkbox> -->
+                                                        <mat-checkbox class="example-margin" [checked]="true" value="EMAIL" (change)="questionArr($event)"> Email </mat-checkbox>
+                                                    </section>
+                                                </li>
+                                                <li class="tablinks"  *ngIf="true">
+                                                    <section class="example-section">
+                                                        <!-- <mat-checkbox class="example-margin" value="feed" (click)="clickf($event.target)">Facebook News Feed</mat-checkbox> -->
+                                                        <mat-checkbox class="example-margin" [checked]="false" value="PHONE" (change)="questionArr($event)"> Mobile Number </mat-checkbox>
+                                                    </section>
+                                                </li>
+                                                <li class="tablinks"  *ngIf="true">
+                                                    <section class="example-section">
+                                                        <!-- <mat-checkbox class="example-margin" value="feed" (click)="clickf($event.target)">Facebook News Feed</mat-checkbox> -->
+                                                        <mat-checkbox class="example-margin" [checked]="false" value="COMPANY_NAME" (change)="questionArr($event)"> Company Name </mat-checkbox>
+                                                    </section>
+                                                </li>
+                                                <li class="tablinks"  *ngIf="true">
+                                                    <section class="example-section">
+                                                        <!-- <mat-checkbox class="example-margin" value="feed" (click)="clickf($event.target)">Facebook News Feed</mat-checkbox> -->
+                                                        <mat-checkbox class="example-margin" [checked]="false" value="JOB_TITLE" (change)="questionArr($event)"> Job Title </mat-checkbox>
+                                                    </section>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                      
+                                        <div div class="col-sm-6 mt-2">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Enter privacy policy URL</mat-label>
+                                                <input matInput placeholder="Enter your privacy policy URL" type="url" formControlName="p_link">
+                                            </mat-form-field>
+                                        </div>
+                                        <div div class="col-sm-6 mt-2">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Enter website URL</mat-label>
+                                                <input matInput placeholder="Enter your Your website URL" type="url" formControlName="w_link">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="button-row d-flex mt-4">
+                                <button class="ml-auto js-btn-prev" type="button" title="Prev">Prev</button>
+                                &nbsp;
+                                <button class="js-btn-next" type="button" title="Next">Next</button>
+                            </div>
+                        </div>
+                        <!--single form panel-->
+                        <div class="multisteps-form__panel p-4 rounded bg-white" data-animation="scaleIn">
+                            <!-- <h3 class="multisteps-form__title text-center">Choose audience</h3> -->
+                            <!-- <div class="row radio-toolbar" onclick="handleClick(this);">
+                                <div class="col-lg-4" >
+                                    <div class="radio-div" >
+                                        <input type="radio" id="Brand" value="new" checked>
+                                        <label for="Brand"><i class="fa fa-plus" aria-hidden="true"></i>Create new audience</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="radio-div">
+                                        <input type="radio" id="Traffic" value="used">
+                                        <label for="Traffic"><i class="fa fa-retweet" aria-hidden="true"></i>Use saved audience</label>
+                                    </div>
+                                </div>
+                            </div>    -->
+
+
+                            <h3 class="multisteps-form__title text-center">Create Your Audience and Set Locations</h3>
+                            <div class="multisteps-form__content container">
+                                <div class="container">
+                                    <p class="field-head mt-2">Choose Audience</p>
+                                    <div class="row mt-2">
+                                        <div class="col-12 col-sm-6 col-md-3">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Select You Audience</mat-label>
+                                                <mat-select >
+                                                    <mat-option *ngFor="let lan of audience_data; let i = index" [value]="lan.A_id"  (click)="onaudienceSelection1(i)">
+                                                        {{lan.audience_name}}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field> 
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <!-- <div class="container">
+                                    <p class="field-head mt-2">Chosse Age and Gender</p>
+                                    <div class="row mt-2">
+                                        <div class="col-12 col-sm-4 col-md-3">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Select Your Min Age</mat-label>
+                                                <mat-select  formControlName="age_min" [disabled]="this.age_min">
+                                                    <mat-option value="18" selected> Minimum Age</mat-option>
+                                                    <mat-option value="20">20</mat-option>
+                                                    <mat-option value="21">21</mat-option>
+                                                    <mat-option value="22">22</mat-option>
+                                                    <mat-option value="23">23</mat-option>
+                                                    <mat-option value="24">24</mat-option>
+                                                    <mat-option value="25">25</mat-option>
+                                                    <mat-option value="26">26</mat-option>
+                                                    <mat-option value="27">27</mat-option>
+                                                    <mat-option value="28">28</mat-option>
+                                                    <mat-option value="29">29</mat-option>
+                                                    <mat-option value="30">30</mat-option>
+                                                    <mat-option value="31">31</mat-option>
+                                                    <mat-option value="32">32</mat-option>
+                                                    <mat-option value="33">33</mat-option>
+                                                    <mat-option value="34">34</mat-option>
+                                                    <mat-option value="35">35</mat-option>
+                                                    <mat-option value="36">36</mat-option>
+                                                    <mat-option value="37">37</mat-option>
+                                                    <mat-option value="38">38</mat-option>
+                                                    <mat-option value="39">39</mat-option>
+                                                    <mat-option value="40">40</mat-option>
+                                                    <mat-option value="41">41</mat-option>
+                                                    <mat-option value="42">42</mat-option>
+                                                    <mat-option value="43">43</mat-option>
+                                                    <mat-option value="44">44</mat-option>
+                                                    <mat-option value="45">45</mat-option>
+                                                    <mat-option value="46">46</mat-option>
+                                                    <mat-option value="47">47</mat-option>
+                                                    <mat-option value="48">48</mat-option>
+                                                    <mat-option value="49">49</mat-option>
+                                                    <mat-option value="50">50</mat-option>
+                                                    <mat-option value="51">51</mat-option>
+                                                    <mat-option value="52">52</mat-option>
+                                                    <mat-option value="53">53</mat-option>
+                                                    <mat-option value="54">54</mat-option>
+                                                    <mat-option value="55">55</mat-option>
+                                                    <mat-option value="56">56</mat-option>
+                                                    <mat-option value="57">57</mat-option>
+                                                    <mat-option value="58">58</mat-option>
+                                                    <mat-option value="59">59</mat-option>
+                                                    <mat-option value="60">60</mat-option>
+                                                    <mat-option value="61">61</mat-option>
+                                                    <mat-option value="62">62</mat-option>
+                                                    <mat-option value="63">63</mat-option>
+                                                    <mat-option value="64">64</mat-option>
+                                                    <mat-option value="65">65</mat-option>
+                                                </mat-select>
+                                            </mat-form-field> 
+                                        </div>
+                                        <div class="col-12 col-sm-4 col-md-3">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Select Your Max Age</mat-label>
+                                                <mat-select  formControlName="age_max" [disabled]="this.age_min">
+                                                    <mat-option value="21">21</mat-option>
+                                                    <mat-option value="22">22</mat-option>
+                                                    <mat-option value="23">23</mat-option>
+                                                    <mat-option value="24">24</mat-option>
+                                                    <mat-option value="25">25</mat-option>
+                                                    <mat-option value="26">26</mat-option>
+                                                    <mat-option value="27">27</mat-option>
+                                                    <mat-option value="28">28</mat-option>
+                                                    <mat-option value="29">29</mat-option>
+                                                    <mat-option value="30">30</mat-option>
+                                                    <mat-option value="31">31</mat-option>
+                                                    <mat-option value="32">32</mat-option>
+                                                    <mat-option value="33">33</mat-option>
+                                                    <mat-option value="34">34</mat-option>
+                                                    <mat-option value="35">35</mat-option>
+                                                    <mat-option value="36">36</mat-option>
+                                                    <mat-option value="37">37</mat-option>
+                                                    <mat-option value="38">38</mat-option>
+                                                    <mat-option value="39">39</mat-option>
+                                                    <mat-option value="40">40</mat-option>
+                                                    <mat-option value="41">41</mat-option>
+                                                    <mat-option value="42">42</mat-option>
+                                                    <mat-option value="43">43</mat-option>
+                                                    <mat-option value="44">44</mat-option>
+                                                    <mat-option value="45">45</mat-option>
+                                                    <mat-option value="46">46</mat-option>
+                                                    <mat-option value="47">47</mat-option>
+                                                    <mat-option value="48">48</mat-option>
+                                                    <mat-option value="49">49</mat-option>
+                                                    <mat-option value="50">50</mat-option>
+                                                    <mat-option value="51">51</mat-option>
+                                                    <mat-option value="52">52</mat-option>
+                                                    <mat-option value="53">53</mat-option>
+                                                    <mat-option value="54">54</mat-option>
+                                                    <mat-option value="55">55</mat-option>
+                                                    <mat-option value="56">56</mat-option>
+                                                    <mat-option value="57">57</mat-option>
+                                                    <mat-option value="58">58</mat-option>
+                                                    <mat-option value="59">59</mat-option>
+                                                    <mat-option value="60">60</mat-option>
+                                                    <mat-option value="61">61</mat-option>
+                                                    <mat-option value="62">62</mat-option>
+                                                    <mat-option value="63">63</mat-option>
+                                                    <mat-option value="64">64</mat-option>
+                                                    <mat-option value="65">65+</mat-option>
+                                                </mat-select>
+                                            </mat-form-field> 
+                                        </div>
+                                        <div class="col-12 col-sm-4 col-md-3">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Select Your Gender</mat-label>
+                                                <mat-select formControlName="gender" [disabled]="this.gender">
+                                                    <mat-option value="None">
+                                                        All
+                                                    </mat-option>
+                                                    <mat-option value="1">
+                                                        Male
+                                                    </mat-option>
+                                                    <mat-option value="2">
+                                                        Female
+                                                    </mat-option>
+                                                    <mat-option value="0">
+                                                        Both
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field> 
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <!-- <div class="container">
+                                    <p class="field-head mt-2">Choose Languages</p>
+                                    <div class="row mt-2">
+                                        <div class="col-12 col-sm-6 col-md-3">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Select You Languages</mat-label>
+                                                <mat-select formControlName="language_key" [disabled]="this.language_key">
+                                                    <mat-option *ngFor="let lan of languages_data; let i = index" [value]="languages_data[i].key">
+                                                        {{languages_data[i].name}}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field> 
+                                        </div>
+                                    </div>
+
+                                </div> -->
+
+                                <div class="container">
+                                    <!-- <h3 class="multisteps-form__title text-center">Tracking</h3> -->
+                                    <p class="field-head mt-2">Tracking</p>
+                                    <p class="field-head mt-1">Track event data sets that contain the conversions your ad might motivate. The dataset that contains the conversion selected for the ad account will be tracked by default.</p>
+                                    <div class="row mt-2">
+                                        <div class="col-12 col-sm-6 col-md-3">
+                                                <section class="example-section">
+                                                    <mat-checkbox (change)="disablecaatt($event)" class="example-margin">Website events</mat-checkbox>
+                                                </section>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2" *ngIf="enable_track">
+                                        <div class="col-12 col-sm-6 col-md-3">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Select Pixel</mat-label>
+                                                <mat-select>
+                                                    <mat-option *ngFor="let lan of track_pixel; let i = index" (click)="disablecaattt(track_pixel[i].id)" value="track_pixel[i].id">
+                                                        {{track_pixel[i].name}} ({{track_pixel[i].id}})
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field> 
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!-- <div class="container">
+                                    <p class="field-head mt-2">Set Locations</p>
+                                    <div class="row mt-2">
+                                        <div class="col-sm-12">
+                                            <app-osm-view 
+                                            [showDebugInfo]="true"
+                                            [showControlsZoom]="true"
+                                            [showControlsCurrentLocation]="true"
+                                            (addressChanged)="onAddressChange($event)"
+                                            >
+                                            </app-osm-view>
+
+                                        </div>
+                                    </div>
+                                </div>   -->
+                            </div>
+                            <div class="button-row d-flex mt-4">
+                                <button class="ml-auto js-btn-prev" type="button" title="Prev">Prev</button>
+                                &nbsp;
+                                <button class="js-btn-next" type="button" title="Next">Next</button>
+                            </div>
+                        </div>
+                        <!--single form panel-->
+                        <div class="multisteps-form__panel p-4 rounded bg-white" data-animation="scaleIn">
+                            
+                            <h3 class="multisteps-form__title text-center">Upload Your picture and see preivew</h3>
+                            <div class="multisteps-form__content container">
+                                <div class="container">
+                                    <p  class="field-head mt-2">Select Your Pages</p>
+                                    <div class="row">
+                                        <div class="col-sm-4" *ngFor="let lan of page_data; let i = index">
+                                            <div class="pagecheckbox">
+                                                <input type="checkbox" formControlName="page_id" name="rGroup" [value]="page_data[i].page_id" (change)="onCheckChange($event)" [id]="page_data[i].channel_id"/>
+                                                <label class="page-checkbox-alias d-flex" [for]="page_data[i].channel_id">
+                                                    <div class="table-thumnail position-relative">
+                                                        <img class="table-thum-channel-img" [src]="page_data[i].channel_thumbnail">
+                                                        <img class="tablesocial-img" src="assets/images/icon/3.png">
+                                                    </div>
+                                                    <div class="tablesocial-pagename ellipsis" title="{{page_data[i].channel_name}}({{page_data[i].page_id}})">{{page_data[i].channel_name}}({{page_data[i].page_id}})</div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="field-head mt-2">Upload Media</p>
+                                    <div class="media-upload">
+                                        <div class="local-upload-div">
+                                            <div class="upload">
+                                                <input class="local-upload-file" type="file" name="myfile" id="upload" [disabled]='video_to_show[0]' (change)='upload($event)' accept="video/*|image/*"/>
+                                                <label for="upload"  class="local-upload">
+                                                    <img src="assets/images/icon/uploadphoto.png"> Photo / Video
+                                                </label>
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="local-upload-div">
+                                            <button type="upload" class="local-upload" (click)="openmedia()" >
+                                                <img src="assets/images/icon/uploadassets.png"> Media Library
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <!-- <input id='input-file' type='file' /> -->
+                                    <input id='input-file' class="local-upload-file" type="file" name="myfile" (change)='upload($event)'/>
+                                    <p class="field-head mt-3">Select Your Pages</p>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="pagecheckbox">
+                                                <input type="checkbox" (change)="disablecaat($event)" [checked]="false" name="rGroup1" value="fb" id="fb"/>
+                                                <label class="page-checkbox-alias d-flex" for="fb">
+                                                    <div class="table-thumnail position-relative">
+                                                        <img class="table-thum-channel-img" src="assets/images/icon/3.png">
+                                                    </div>
+                                                    <div class="tablesocial-pagename">Facebook</div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="pagecheckbox">
+                                                <input type="checkbox" (change)="disablecaat($event)" [checked]="false" name="rGroup1" value="ins" id="insta"/>
+                                                <label class="page-checkbox-alias d-flex" for="insta">
+                                                    <div class="table-thumnail position-relative">
+                                                        <img class="table-thum-channel-img" src="assets/images/icon/2.png">
+                                                    </div>
+                                                    <div class="tablesocial-pagename">Instagram</div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="field-head mt-3" *ngIf="enable_pl">Placements</p>
+                                    <div class="row" *ngIf="enable_pl">
+                                        <div class="col-sm-6">
+                                            <ul class="select-placement">
+                                                <li class="tablinks" onmouseover="openImg(event, 'ff')" *ngIf="enable_fb">
+                                                    <section class="example-section">
+                                                        <!-- <mat-checkbox class="example-margin" value="feed" (click)="clickf($event.target)">Facebook News Feed</mat-checkbox> -->
+                                                        <mat-checkbox class="example-margin" [checked]="true" value="feed" (change)="setAll($event)"> Facebook News Feed </mat-checkbox>
+                                                    </section>
+                                                </li>
+                                                <li class="tablinks" onmouseover="openImg(event, 'fi')" *ngIf="enable_ins">
+                                                    <section class="example-section">
+                                                        <mat-checkbox class="example-margin" value="stream" (change)="setIn($event)" [checked]="true">Instagram Feeds</mat-checkbox>
+                                                    </section>
+                                                </li>
+                                                <li class="tablinks" onmouseover="openImg(event, 'fj')" *ngIf="enable_fb">
+                                                    <section class="example-section">
+                                                        <mat-checkbox class="example-margin" value="marketplace" (change)="setAll($event)" [checked]="true">Facebook Marketplace</mat-checkbox>
+                                                    </section>
+                                                </li>
+                                                <li class="tablinks" onmouseover="openImg(event, 'fk')" *ngIf="enable_fb">
+                                                    <section class="example-section">
+                                                        <mat-checkbox class="example-margin" value="video_feeds" (change)="setAll($event)" [checked]="true">Facebook video feeds</mat-checkbox>
+                                                    </section>
+                                                </li>
+                                                <li class="tablinks" onmouseover="openImg(event, 'fl')" *ngIf="enable_fb">
+                                                    <section class="example-section">
+                                                        <mat-checkbox class="example-margin" value="right_hand_column" (change)="setAll($event)" [checked]="true">Facebook right column</mat-checkbox>
+                                                    </section>
+                                                </li>
+                                                <li class="tablinks" onmouseover="openImg(event, 'i1')" *ngIf="enable_ins">
+                                                    <section class="example-section">
+                                                        <mat-checkbox class="example-margin" value="explore" (change)="setIn($event)" [checked]="true">Instagram Explore</mat-checkbox>
+                                                    </section>
+                                                </li>
+                                                <li class="tablinks" onmouseover="openImg(event, 'fs')" *ngIf="enable_fb">
+                                                    <section class="example-section">
+                                                        <mat-checkbox class="example-margin"  value="story" (change)="setAll($event)" [checked]="true">Facebook Stories</mat-checkbox>
+                                                    </section>
+                                                </li>
+                                                <li class="tablinks" onmouseover="openImg(event, 'is')" *ngIf="enable_ins">
+                                                    <section class="example-section">
+                                                        <mat-checkbox class="example-margin"  value="story" (change)="setIn($event)" [checked]="true">Instagram Stories</mat-checkbox>
+                                                    </section>
+                                                </li>
+                                                <li class="tablinks" onmouseover="openImg(event, 'fa')" *ngIf="enable_fb">
+                                                    <section class="example-section">
+                                                        <mat-checkbox class="example-margin" value="instream_video" (change)="setAll($event)" [checked]="true">Facebook in-stream videos</mat-checkbox>
+                                                    </section>
+                                                </li>
+                                                <li class="tablinks" onmouseover="openImg(event, 'ka')" *ngIf="enable_fb">
+                                                    <section class="example-section">
+                                                        <mat-checkbox class="example-margin" value="search" (change)="setAll($event)" [checked]="true">Facebook search results</mat-checkbox>
+                                                    </section>
+                                                </li>
+                                                <li class="tablinks" onmouseover="openImg(event, 'kb')" *ngIf="enable_fb">
+                                                    <section class="example-section">
+                                                        <mat-checkbox class="example-margin" value="instant_article" (change)="setAll($event)" [checked]="true">Facebook Instant Articles</mat-checkbox>
+                                                    </section>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="tabcontent" id="ff">
+                                                <img src="assets/images/placement/9Us3QXc4ZJy.jpg" alt="ff">
+                                            </div>
+                                            <div class="tabcontent" id="fi">
+                                                <img src="assets/images/placement/2.jpg" alt="fi">
+                                            </div>
+                                            <div class="tabcontent" id="fj">
+                                                <img src="assets/images/placement/3.jpg" alt="fj">
+                                            </div>
+                                            <div class="tabcontent" id="fk">
+                                                <img src="assets/images/placement/4.jpg" alt="fk">
+                                            </div>
+                                            <div class="tabcontent" id="fl">
+                                                <img src="assets/images/placement/5.jpg" alt="fl">
+                                            </div>
+                                            <div class="tabcontent" id="fs">
+                                                <img src="assets/images/placement/9.png" alt="fs">
+                                            </div>
+                                            <div class="tabcontent" id="is">
+                                                <img src="assets/images/placement/10.png" alt="is">
+                                            </div>
+                                            <div class="tabcontent" id="i1">
+                                                <img src="assets/images/placement/6.png" alt="i1">
+                                            </div>
+                                            <div class="tabcontent" id="fa">
+                                                <img src="assets/images/placement/12.png" alt="fa">
+                                            </div>
+                                            <div class="tabcontent" id="ka">
+                                                <img src="assets/images/placement/13.png" alt="ka">
+                                            </div>
+                                            <div class="tabcontent" id="kb">
+                                                <img src="assets/images/placement/15.jpg" alt="kb">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="button-row d-flex mt-4">
+                                <button class="ml-auto js-btn-prev" type="button" title="Prev">Prev</button>
+                                &nbsp;
+                                <button class="js-btn-next" type="button" title="Next">Next</button>
+                                &nbsp;
+                                <button class="submit" type="button" (click)="createAdSet()" *ngIf="adsetsubmit">Create Ad-set</button> 
+                            </div>
+                        </div>
+                        <!--single form panel-->
+                        <div class="multisteps-form__panel p-4 rounded bg-white" data-animation="scaleIn">
+                            
+                            <h3 class="multisteps-form__title text-center">Automation</h3>
+                            <div class="multisteps-form__content container">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <section class="example-section">
+                                                <mat-checkbox class="example-margin" (change)='voiceSelect($event)'>Voice</mat-checkbox>
+                                                <mat-checkbox class="example-margin ml-2" (change)='mailSelect($event)'>E-Mail</mat-checkbox>
+                                                <mat-checkbox class="example-margin ml-2" (change)='smsSelect($event)'>SMS!</mat-checkbox>
+                                            </section>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <mat-form-field appearance="outline" >
+                                                <mat-label>Select Segment</mat-label>
+                                                <!-- <mat-select [disabled]="!(voiceCampaignDisplay || mailCampaignDisplay || smsCampaignDisplay)" (selectionChange)="changeAutomationCampaign('segment',$event)"> -->
+                                                <mat-select (selectionChange)="changeAutomationCampaign('segment',$event)">
+                                                    <mat-option *ngFor="let segment of segments" [value]='segment.cont_id'>{{segment.name}}</mat-option>
+                                                </mat-select>
+                                                <span *ngIf="segmentError"
+                                                    class="error">Segment is Required
+                                             </span>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Select Agent Group</mat-label>
+                                                <mat-select (selectionChange)="changeAutomationCampaign('agentgroup',$event)">
+                                                    <mat-option  *ngFor="let agentgroupCampaign of agentgroupCampaigns"  [value]="agentgroupCampaign.GroupID">{{agentgroupCampaign.GroupName}}</mat-option>
+                                                </mat-select>
+                                                <span *ngIf="agentgroupError"
+                                                    class="error">Agent Group is Required
+                                                </span>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <mat-form-field appearance="outline" *ngIf="voiceCampaignDisplay">
+                                                <mat-label>Select Voice Campaign</mat-label>
+                                                <mat-select (selectionChange)="changeAutomationCampaign('voice',$event)">
+                                                  <mat-option  *ngFor="let voiceCampaign of voiceCampaigns" [value]="voiceCampaign.camid">{{voiceCampaign.cam_name}}</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <mat-form-field appearance="outline" *ngIf="mailCampaignDisplay">
+                                                <mat-label>Select E-mail Campaign</mat-label>
+                                                <mat-select (selectionChange)="changeAutomationCampaign('mail',$event)">
+                                                    <mat-option  *ngFor="let mailCampaign of mailCampaigns"  [value]="mailCampaign.cid">{{mailCampaign.cam_name}}</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <mat-form-field appearance="outline" *ngIf="smsCampaignDisplay">
+                                                <mat-label>Select SMS Campaign</mat-label>
+                                                <mat-select (selectionChange)="changeAutomationCampaign('sms',$event)">
+                                                    <mat-option  *ngFor="let smsCampaign of smsCampaigns"  [value]="smsCampaign.cid">{{smsCampaign.cam_name}}</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                        <!-- <div class="col-sm-6" *ngIf="agentCampaignDisplay">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Select Agent Group Campaign</mat-label>
+                                                <mat-select (selectionChange)="changeAutomationCampaign('agentgroup',$event)">
+                                                    <mat-option  *ngFor="let agentgroupCampaign of agentgroupCampaigns"  [value]="agentgroupCampaign.GroupID">{{agentgroupCampaign.GroupName}}</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="button-row d-flex mt-4">
+                                <button class="ml-auto js-btn-prev" type="button" title="Prev">Prev</button>
+                                &nbsp;
+                                <button class="submit" type="button" (click)="createAdSet()" *ngIf="adsetsubmit">Create Ad-set</button> 
+                                &nbsp;
+                                <button class="submit" (click)="createAdGroup()" *ngIf="submitValidation() && !adsetsubmit"  type="submit" title="submit">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- <div  style="position: absolute; left: 50%; top: 50%; -webkit-transform: translate(-50%, -50%); transform: translate(-50%, -50%);">
+    <sa-spinner-dotted  [size]="100" [thickness]="171" [speed]="123" color="#2678bd" [enabled]="spin"></sa-spinner-dotted>
+</div> -->
+<div  *ngIf="spin" class="loader-div">
+    <img  src="assets/img/1.gif" class="loader-img">
+</div>

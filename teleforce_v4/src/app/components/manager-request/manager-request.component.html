@@ -1,0 +1,160 @@
+<div class="warap-height pt-4">
+    <!-- Begin Page Content -->
+    <div class="container-fluid manager">
+
+        <!-- Page Heading -->
+        <h1 class="h3 mb-2 text-gray-800">Manager Request</h1>
+
+        <div class="row">
+            <div class="col-sm-2">
+                <mat-form-field appearance="outline">
+                    <mat-label>Filter</mat-label>
+                    <input matInput type="text" placeholder="Type here to filter"
+                        (keyup)="doFilter($event.target.value)">
+                </mat-form-field>
+            </div>
+            <div class="col-sm-2">
+                <button mat-raised-button class="mt-2" color="primary"
+                    (click)="exporter.exportTable('csv', {fileName:'managerlist', sheet: 'sheet_name'})">CSV</button>
+            </div>
+        </div>
+
+        <!-- DataTales Example -->
+        <div class="card mb-4">
+
+            <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+
+            <div class="card-body">
+
+                <!-- <button mat-raised-button color="accent" class="mt-2" title="Add">Add Manager</button> -->
+
+                <div class="table-responsive mt-2">
+
+                    <table mat-table [dataSource]="dataSource" matSort matTableExporter #exporter="matTableExporter">
+
+                        <!-- Position Column -->
+                        <ng-container matColumnDef="id">
+                            <th mat-header-cell *matHeaderCellDef> Sr. No. </th>
+                            <td mat-cell *matCellDef="let row;let i = index;" data-label="id">
+                                {{i+1+(paginator.pageIndex * paginator.pageSize)}}
+                            </td>
+                        </ng-container>
+
+                        <!-- name Column -->
+                        <ng-container matColumnDef="name">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                            <td mat-cell *matCellDef="let row">
+                                {{row.name}}
+                            </td>
+                        </ng-container>
+
+                        <!-- User name Column -->
+                        <ng-container matColumnDef="username">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> UserName </th>
+                            <td mat-cell *matCellDef="let row">
+                                {{row.username}}
+                            </td>
+                        </ng-container>
+                        <!-- email Column -->
+                        <ng-container matColumnDef="email">
+                            <th mat-header-cell *matHeaderCellDef> Email </th>
+                            <td mat-cell *matCellDef="let row">
+                                {{row.email}}
+                            </td>
+                        </ng-container>
+
+                        <!-- mobile Column -->
+                        <ng-container matColumnDef="mobile">
+                            <th mat-header-cell *matHeaderCellDef> Mobile </th>
+                            <td mat-cell *matCellDef="let row">
+                                {{row.mobile}}
+                            </td>
+                        </ng-container>
+
+                        <!-- Address Column -->
+                        <ng-container matColumnDef="address">
+                            <th mat-header-cell *matHeaderCellDef> Address </th>
+                            <td mat-cell *matCellDef="let row">
+                                {{row.address}}
+                            </td>
+                        </ng-container>
+
+                        <!-- state Column -->
+                        <ng-container matColumnDef="state">
+                            <th mat-header-cell *matHeaderCellDef> State </th>
+                            <td mat-cell *matCellDef="let row">
+                                {{row.state}}
+                            </td>
+                        </ng-container>
+                        <!-- totalusers Column -->
+                        <ng-container matColumnDef="totalusers">
+                            <th mat-header-cell *matHeaderCellDef> Total Users </th>
+                            <td mat-cell *matCellDef="let row">
+                                {{row.totalusers}}
+                            </td>
+                        </ng-container>
+                        <!-- amount Column -->
+                        <ng-container matColumnDef="amount">
+                            <th mat-header-cell *matHeaderCellDef> Amount </th>
+                            <td mat-cell *matCellDef="let row">
+                                {{row.amount}}
+                            </td>
+                        </ng-container>
+                        <!-- gst Column -->
+                        <ng-container matColumnDef="gst">
+                            <th mat-header-cell *matHeaderCellDef> GST </th>
+                            <td mat-cell *matCellDef="let row">
+                                {{row.gst}}
+                            </td>
+                        </ng-container>
+                        <!-- totalamount Column -->
+                        <ng-container matColumnDef="totalamount">
+                            <th mat-header-cell *matHeaderCellDef> Total Amount </th>
+                            <td mat-cell *matCellDef="let row">
+                                {{row.totalamount}}
+                            </td>
+                        </ng-container>
+
+                        <!-- Total SMS Column -->
+                        <ng-container matColumnDef="totalsms">
+                            <th mat-header-cell *matHeaderCellDef>Total SMS </th>
+                            <td mat-cell *matCellDef="let row">
+                                {{row.totalsms}}
+                            </td>
+                        </ng-container>
+
+                        <!-- Date Column -->
+                        <ng-container matColumnDef="created_date">
+                            <th mat-header-cell *matHeaderCellDef> Date </th>
+                            <td mat-cell *matCellDef="let row">
+                                {{row.created_date | date:'dd-MM-yyyy HH:mm:ss'}}
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="action">
+                            <th mat-header-cell *matHeaderCellDef> Action </th>
+                            <td mat-cell *matCellDef="let row">
+                                <button routerLink="/temp-user-details/{{row.userid}}" mat-icon-button color="accent"
+                                    title="View Detail" aria-label="Example icon button with a menu icon">
+                                    <mat-icon>view_list</mat-icon>
+                                </button>
+
+                                <button (click)="createmanager(row.userid)" mat-icon-button color="accent"
+                                    title="Create Manager" aria-label="Example icon button with a menu icon">
+                                    <mat-icon>add</mat-icon>
+                                </button>
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                </div>
+                <mat-paginator #paginator [length]="Length" [pageSize]="50" [pageSizeOptions]="[50,100,500]">
+                </mat-paginator>
+            </div>
+        </div>
+
+    </div>
+    <!-- /.container-fluid -->
+</div>

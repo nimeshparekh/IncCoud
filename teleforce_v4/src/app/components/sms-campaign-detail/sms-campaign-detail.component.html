@@ -1,0 +1,123 @@
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">
+        <a routerLink="/sms-campaign" mat-mini-fab color="warn" title="Back">
+            <mat-icon>keyboard_return</mat-icon>
+        </a>
+        SMS Campaign
+        <b>{{campaignname | titlecase}}</b> Details
+    </h1>
+    <p class="mb-4"></p>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+
+        <div class="card-body">
+
+            <!-- <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar> -->
+            <mat-tab-group>
+                <mat-tab label="SMS Campaign Detail">
+                    <div class="table-responsive">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <br>
+                                <mat-label><b>SMS Campaign Date : </b> </mat-label>
+                                {{campaigndetail.create_date | date:'dd-MM-yyyy'}}
+                                <br>
+                            </div>
+                            <div class="col-md-6">
+                                <br>
+                                <mat-label><b>SMS Campaign Name : </b> </mat-label>
+                                {{campaigndetail.sms_camname}}
+                                <br>
+                            </div>
+                            <div class="col-md-6">
+                                <br>
+                                <mat-label><b>SMS Campaign Server : </b> </mat-label>
+                                {{campaigndetail.server_name}}
+                                <br>
+                            </div>
+                            <div class="col-md-6">
+                                <br>
+                                <mat-label><b>SMS Campaign Template : </b> </mat-label>
+                                {{campaigndetail.sms_title}}
+                                <br>
+                            </div>
+                            <div class="col-md-6">
+                                <br>
+                                <mat-label><b>Segment : </b> </mat-label>
+                                <ul>
+                                    <li *ngFor="let segment of segments">
+                                        {{segment.name}}
+                                    </li>
+                                </ul>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </mat-tab>
+                <mat-tab label="SMS Log">
+                    <div class="table-responsive">
+                        <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+                        <mat-table class="lessons-table mat-elevation-z8" [dataSource]="dataSource">
+                            <ng-container matColumnDef="id">
+                                <mat-header-cell *matHeaderCellDef>Sr. No</mat-header-cell>
+                                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" data-label="id">
+                                    {{i+1+(paginator.pageIndex * paginator.pageSize)}}</mat-cell>
+                            </ng-container>
+                            <ng-container matColumnDef="segment">
+                                <mat-header-cell *matHeaderCellDef> Segment </mat-header-cell>
+                                <mat-cell class="description-cell" *matCellDef="let row">{{row.segment_name}}
+                                </mat-cell>
+                            </ng-container>
+                            <ng-container matColumnDef="name">
+                                <mat-header-cell *matHeaderCellDef>Contact Name</mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.contact_name}}
+                                </mat-cell>
+                            </ng-container>
+                            <ng-container matColumnDef="email">
+                                <mat-header-cell *matHeaderCellDef>Contact Email</mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.contact_email}}
+                                </mat-cell>
+                            </ng-container>
+                            <ng-container matColumnDef="mobile">
+                                <mat-header-cell *matHeaderCellDef>Contact Mobile</mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.contact_mobile}}
+                                </mat-cell>
+                            </ng-container>
+                            <ng-container matColumnDef="action">
+
+                                <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">                                   
+                                    <button mat-mini-fab color="warn">
+                                        <span (click)="deleteData(row.sms_numid)" title="Delete">
+                                            <mat-icon>delete</mat-icon>
+                                        </span>
+                                    </button>
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+                            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+                        </mat-table>
+                        <mat-paginator #paginator [length]="Length" [pageSize]="50" [pageSizeOptions]="[50,100,500]">
+                        </mat-paginator>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+    </div>
+</div>
+<!-- /.container-fluid -->

@@ -1,0 +1,374 @@
+<div>
+  <div class="add-title">
+    <h2 class="primary" *ngIf="addmode">New Channel</h2>
+    <h2 class="primary" *ngIf="editmode">Edit Channel</h2>
+  </div>
+  <div mat-dialog-content>
+    <form [formGroup]="addCusForm" (change)="formChanged()" (ngSubmit)="channelsubmit()" >
+      <mat-grid-list cols="2" rowHeight="70px" class="p-t-30" *ngIf="!editmode">
+        <mat-grid-tile >
+          <mat-form-field>
+            <mat-select placeholder="Asterisk Server" formControlName="server_id" (ngModelChange)="getServerDetail($event)">
+              <mat-option *ngFor="let server of serverdata" [value]="server.server_id">{{server.server_name}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="addCusForm.controls.server_id.hasError('required')">
+              Please select server name
+            </mat-error>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile >
+          <div class="text-inside">
+            <mat-radio-group formControlName="registrationopt">
+              <div style="color:grey;">Registration</div>
+              <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="1"
+                (change)="showOpt($event.value)">Yes
+              </mat-radio-button>
+              <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="0"
+                (change)="showOpt($event.value)">No
+              </mat-radio-button>
+            </mat-radio-group>
+            
+          </div>
+        </mat-grid-tile>
+      </mat-grid-list>
+      <mat-tab-group>
+        <mat-tab label="Endpoints">
+          <mat-grid-list cols="2" rowHeight="70px" class="p-t-30">
+            <mat-grid-tile *ngIf="!editmode">
+              <mat-form-field>
+                <input matInput placeholder="Id" formControlName="id">
+                <mat-error *ngIf="invalidId()">
+                  Id already exists. pelase try again
+                </mat-error>
+              </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-form-field>
+                <input matInput placeholder="Transport" value="" formControlName="e_transport">
+                <mat-error *ngIf="addCusForm.controls.e_transport.hasError('required')">
+                  Please enter Transport
+                </mat-error>
+              </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <mat-form-field>
+                <input matInput placeholder="Aors" value="{{addCusForm.value.id}}" formControlName="e_aors" required>
+                <mat-error *ngIf="addCusForm.controls.e_aors.hasError('required')">
+                  Please enter Aors
+                </mat-error>
+              </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <mat-form-field>
+                <input matInput placeholder="Outbound Auth" value="{{addCusForm.value.id}}"
+                  formControlName="e_outbound_auth" required>
+                <mat-error *ngIf="addCusForm.controls.e_outbound_auth.hasError('required')">
+                  Please enter Outbound Auth
+                </mat-error>
+              </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <mat-form-field>
+                <input matInput placeholder="From Domain" value="" formControlName="e_from_domain">
+                <mat-error *ngIf="addCusForm.controls.e_from_domain.hasError('required')">
+                  Please enter From Domain
+                </mat-error>
+              </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <mat-form-field>
+                <input matInput placeholder="Context" value="" formControlName="e_context" required>
+                <mat-error *ngIf="addCusForm.controls.e_context.hasError('required')">
+                  Please enter Context
+                </mat-error>
+              </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <mat-form-field>
+                <input matInput placeholder="Disallow" value="" formControlName="e_disallow" required>
+                <mat-error *ngIf="addCusForm.controls.e_disallow.hasError('required')">
+                  Please enter Disallow
+                </mat-error>
+              </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <mat-form-field>
+                <input matInput placeholder="Allow" value="" formControlName="e_allow" required>
+                <mat-error *ngIf="addCusForm.controls.e_allow.hasError('required')">
+                  Please enter Allow
+                </mat-error>
+              </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <mat-radio-group class="gender" formControlName="e_direct_media" required>
+                <div style="color:grey;">Direct Media</div>
+                <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" value="yes">Yes
+                </mat-radio-button>
+                <mat-radio-button color="primary" style="padding:4px 0px 0px 24px;" value="no">No
+                </mat-radio-button>
+              </mat-radio-group>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <mat-radio-group class="gender" formControlName="e_rtp_symmetric">
+                <div style="color:grey;">Rtp Symmetric</div>
+                <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" value="yes">Yes
+                </mat-radio-button>
+                <mat-radio-button color="primary" style="padding:4px 0px 0px 24px;" value="no">No
+                </mat-radio-button>
+              </mat-radio-group>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <mat-radio-group class="gender" formControlName="e_force_rport">
+                <div style="color:grey;">Force Report</div>
+                <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" value="yes">Yes
+                </mat-radio-button>
+                <mat-radio-button color="primary" style="padding:4px 0px 0px 24px;" value="no">No
+                </mat-radio-button>
+              </mat-radio-group>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <mat-radio-group class="gender" formControlName="e_rewrite_contact">
+                <div style="color:grey;">Rewrite Contact</div>
+                <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" value="yes">Yes
+                </mat-radio-button>
+                <mat-radio-button color="primary" style="padding:4px 0px 0px 24px;" value="no">No
+                </mat-radio-button>
+              </mat-radio-group>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <mat-radio-group class="gender" formControlName="e_preferred_codec_only">
+                <div style="color:grey;">Preferred Codec Only</div>
+                <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" value="yes">Yes
+                </mat-radio-button>
+                <mat-radio-button color="primary" style="padding:4px 0px 0px 24px;" value="no">No
+                </mat-radio-button>
+              </mat-radio-group>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <mat-radio-group class="gender" formControlName="e_webrtc" (click)="checkWebrtc();">
+                <div style="color:grey;">Webrtc</div>
+                <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" value="yes">Yes
+                </mat-radio-button>
+                <mat-radio-button color="primary" style="padding:4px 0px 0px 24px;" value="no">No
+                </mat-radio-button>
+              </mat-radio-group>
+            </mat-grid-tile>
+
+            <mat-grid-tile *ngIf="iswebrtc">
+              <mat-form-field>
+                <input matInput placeholder="Dtls Ca File" value="" formControlName="e_dtls_ca_file" required>
+
+              </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile *ngIf="iswebrtc">
+              <mat-form-field>
+                <input matInput placeholder="Dtls Cert file" value="" formControlName="e_dtls_cert_file">
+
+              </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile >
+              <mat-form-field>
+                <input matInput placeholder="Outbound Proxy" formControlName="e_outbound_proxy">
+              </mat-form-field>
+            </mat-grid-tile>
+          </mat-grid-list>
+        </mat-tab>
+
+        <mat-tab label="AORS">
+          <mat-grid-list cols="2" rowHeight="70px" class="p-t-30">
+            <mat-grid-tile>
+              <mat-form-field>
+                <input matInput placeholder="Max Contacts" value="" formControlName="max_contacts" required>
+                <mat-error *ngIf="addCusForm.controls.max_contacts.hasError('required')">
+                  Please enter Max Contacts
+                </mat-error>
+              </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <mat-form-field>
+                <input matInput placeholder="Contact" value="" formControlName="contact" required>
+                <mat-error *ngIf="addCusForm.controls.contact.hasError('required')">
+                  Please enter Contact
+                </mat-error>
+              </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <mat-form-field>
+                <input matInput placeholder="Qualify frequency" value="" formControlName="qualify_frequency" required>
+                <mat-error *ngIf="addCusForm.controls.qualify_frequency.hasError('required')">
+                  Please enter Qualify frequency
+                </mat-error>
+              </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <mat-form-field>
+                <input matInput placeholder="Remove existing" value="" formControlName="remove_existing">
+                <!-- <mat-error *ngIf="addCusForm.controls.remove_existing.hasError('required')">
+                                  Please enter Remove existing
+                              </mat-error> -->
+              </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile >
+              <mat-form-field>
+                <input matInput placeholder="Outbound Proxy" formControlName="a_outbound_proxy">
+              </mat-form-field>
+            </mat-grid-tile>
+          </mat-grid-list>
+        </mat-tab>
+
+        <mat-tab label="Auths">
+          <mat-grid-list cols="2" rowHeight="70px" class="p-t-30">
+            <mat-grid-tile>
+              <mat-form-field>
+                <input matInput placeholder="Auth type" value="" formControlName="auth_type">
+
+              </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile *ngIf="!editmode">
+              <mat-form-field>
+                <input matInput placeholder="Username" formControlName="username">
+
+                <mat-error *ngIf="invalidUserName()">
+                  Username already exists. pelase try again
+                </mat-error>
+                <mat-error *ngIf="addCusForm.controls.username.hasError('maxlength')">
+                  Maximum 12 character allowed
+                </mat-error>
+              </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile *ngIf="!editmode">
+              <mat-form-field>
+                <input matInput placeholder="Password" formControlName="password">
+
+                <mat-error *ngIf="addCusForm.controls.password.hasError('minlength')">
+                  Minimum 5 character required
+                </mat-error>
+              </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <mat-form-field>
+                <input matInput placeholder="Realm" value="" formControlName="realm">
+                <!-- <mat-error *ngIf="addCusForm.controls.realm.hasError('required')">
+                                  Please enter Realm
+                              </mat-error> -->
+              </mat-form-field>
+            </mat-grid-tile>
+           
+          </mat-grid-list>
+        </mat-tab>
+
+        <mat-tab label="Registration" *ngIf="registrationopt">
+          <mat-grid-list cols="2" rowHeight="70px" class="p-t-30">
+            <mat-grid-tile>
+              <mat-form-field>
+                <input matInput placeholder="Transport" value="" formControlName="transport">
+              </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <mat-form-field>
+                <input matInput placeholder="Outbound auth" value="{{addCusForm.value.id}}"
+                  formControlName="outbound_auth">
+
+              </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <mat-form-field>
+                <input matInput placeholder="Server uri" value="" formControlName="server_uri">
+              </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <mat-form-field>
+                <input matInput placeholder="Client uri" value="" formControlName="client_uri">
+              </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <mat-form-field>
+                <input matInput placeholder="Retry interval" value="" formControlName="retry_interval">
+              </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-form-field>
+                <input matInput placeholder="Expiration" value="" formControlName="expiration">
+              </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-form-field>
+                <input matInput placeholder="Line" value="" formControlName="line">
+              </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <mat-form-field>
+                <input matInput placeholder="Contact user" value="" formControlName="contact_user">
+              </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <mat-form-field>
+                <input matInput placeholder="Endpoint" value="{{addCusForm.value.id}}" formControlName="endpoint">
+              </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile >
+              <mat-form-field>
+                <input matInput placeholder="Outbound Proxy" formControlName="r_outbound_proxy">
+              </mat-form-field>
+            </mat-grid-tile>
+          </mat-grid-list>
+        </mat-tab>
+
+
+        <mat-tab label="Endpoint Ips">
+          <mat-grid-list cols="2" rowHeight="70px" class="p-t-30">
+            <mat-grid-tile>
+              <mat-form-field>
+                <input matInput placeholder="Endpoint" value="{{addCusForm.value.id}}" formControlName="ip_endpoint"
+                  required>
+                <mat-error *ngIf="addCusForm.controls.ip_endpoint.hasError('required')">
+                  Please enter Endpoint
+                </mat-error>
+              </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-form-field>
+                <input matInput placeholder="Match" value="" formControlName="ip_match" required>
+                <mat-error *ngIf="addCusForm.controls.ip_match.hasError('required')">
+                  Please enter Match
+                </mat-error>
+              </mat-form-field>
+
+            </mat-grid-tile>
+          </mat-grid-list>
+        </mat-tab>
+      </mat-tab-group>
+
+      <div class="btn-sec">
+        <button mat-raised-button type="submit" color="primary" class="Update-btn">Save</button>&nbsp;&nbsp;
+        <button mat-raised-button type="button" class="Discard-btn" (click)="openDialog()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,52 @@
+.sign
+{
+    width: 94%;
+    margin: 79px auto;
+    padding-left: 8px;
+    vertical-align: middle;
+}
+.sign-head img
+{
+    width: 200px;   
+}
+.sign-bg
+{
+    background-color: #1b0339
+}
+.bg
+{
+   background: url(../../../assets/img/bg1.png);
+   background-repeat: no-repeat; 
+   background-size: cover;
+   height: 100vh;
+}
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fffffff2 !important;
+    background-clip: border-box;
+    border: 1px solid #e3e6f0;
+    border-radius: .35rem;
+}
+.passshow
+{
+    position: absolute;
+    right: 14px;
+    top: 15px;
+    z-index: 9999;
+    font-size: 18px;
+    cursor: pointer;
+    color: #80a7ae;
+}
+
+
+.mat-stepper-horizontal {
+    margin-top: 8px;
+  }
+  
+.mat-form-field {
+margin-top: 16px;
+}

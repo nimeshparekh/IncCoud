@@ -1,0 +1,216 @@
+.card-ana
+{
+    border: initial!important;
+    background: #fff!important;
+    box-shadow: 0 1px 15px rgb(0 0 0/4%),0 1px 6px rgb(0 0 0/4%)!important;
+}
+.card-ana-head
+{
+    padding: 10px;
+    border-bottom: 1px solid rgb(227, 231, 243);
+}
+.card-ana-head p
+{
+    margin: 0px;
+    font-size: 16px;
+    font-weight: 800;
+    margin-bottom: 0px;
+}
+.card-ana-body
+{
+    padding: 10px;
+}
+.card-filter
+{
+    padding: 6px;
+    border-bottom: 1px solid rgb(227, 231, 243);
+}
+.text-gray-300 
+{
+    color: #dddfeb!important;
+    font-size: 42px;
+}
+.fs-22
+{
+    font-size: 22px;
+}
+.fs-20
+{
+    font-size: 20px;
+}
+.text-white-50 
+{
+    color: rgb(255 255 255 / 71%)!important;
+}
+.card:focus
+{
+    outline: none;
+}
+.contact-icon
+{
+    font-size: 192px;
+    color: #4066d547;
+    text-align: center;
+    display: flow-root;
+    margin-top: 22px;
+}
+.des-card
+{
+    min-height: 360px;
+}
+.contact-no
+{
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    display: flow-root;
+    margin-top: 10px;
+}
+.padding-16
+{
+    padding: 16px !important;
+}
+mat-form-field {
+    width: 100%;
+  }
+
+
+  .width-100
+  {
+      width: 100%;
+  }
+  mat-cell, mat-header-cell, mat-footer-cell 
+{
+    /* flex: none; */
+    display: table-caption;
+    align-items: center;
+    overflow: hidden;
+    word-wrap: break-word;
+    min-height: inherit;
+    /* width: 12%; */
+    padding: 5px 4px 5px 4px;
+}
+table 
+{
+    width: 100%;
+}
+.material-icons
+{
+    cursor: pointer;
+}
+@media (max-width: 1190px)
+{
+    table 
+    {
+        width: 1000px;
+    }
+}
+
+/******************role 2 css*********************/
+
+.mycard
+{
+  border: initial!important;
+  background: #fff!important;
+  border-radius: .75rem!important;
+  box-shadow: 0 1px 15px rgb(0 0 0/4%),0 1px 6px rgb(0 0 0/4%)!important;
+}
+.mycard-body{
+  padding: 1.75rem!important;
+}
+
+.mycard-body {
+  flex: 1 1 auto;
+  min-height: 1px;
+  padding: 1.25rem;
+}
+.mycard-body .name-count p
+{
+  margin: 0px;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+.mycard-body .name-count label
+{
+    font-size: 30px;
+    margin-top: 4px;
+    color: #1ea4dd;
+    font-family: 'Nunito';
+    font-weight: 600;
+}
+.mycard-icon
+{
+  font-size: 30px !important;
+}
+
+[class^="flaticon-"]:before, [class*=" flaticon-"]:before, [class^="flaticon-"]:after, [class*=" flaticon-"]:after {
+  font-family: Flaticon;
+  font-size: 36px;
+  font-style: normal;
+  margin-left: 20px;
+}
+
+.mycard-info
+{
+    font-size: 10px;
+    line-height: 14px;
+    min-height: 30px;
+}
+
+
+.bgclr-87e0ab
+{
+    background: #87e0ab !important;
+}
+.clr-87e0ab
+{
+    color: #87e0ab !important;
+}
+.clr-e0b087
+{
+    color: #e0b087 !important;
+}
+.clr-e090da
+{
+    color: #e090da !important;
+}
+.clr-8a98b7
+{
+    color: #8a98b7 !important;
+}
+.clr-3a9a80
+{
+    color: #3a9a80 !important;
+}
+.clr-fdb65e
+{
+    color: #fdb65e !important;
+}
+.clr-bb94a8
+{
+    color: #bb94a8 !important;
+}
+.clr-c75de2
+{
+    color: #c75de2 !important;
+}
+.clr-ff7b7b
+{
+    color: #ff7b7b !important;
+}
+
+
+.mycard1
+{
+  border: initial!important;
+  background: #fff!important;
+  box-shadow: 0 1px 15px rgb(0 0 0/4%),0 1px 6px rgb(0 0 0/4%)!important;
+}
+.mycard-body1
+{
+
+}
+.mycard-head1
+{
+
+}

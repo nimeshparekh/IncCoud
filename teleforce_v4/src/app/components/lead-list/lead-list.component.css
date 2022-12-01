@@ -1,0 +1,39 @@
+mat-form-field 
+{
+    width: 100%;
+}
+.width-100
+{
+    width: 100%;
+}
+table 
+{
+    width: 100%;
+    min-width: 1000px;
+}
+.material-icons
+{
+    cursor: pointer;
+}
+.call
+{
+    text-decoration: none;
+    color: #fff;
+    margin-top: -10px;
+    height: 26px;
+    width: 26px;
+    text-align: center;
+    line-height: 38px;
+    font-size: 6px !important;
+    margin-top: 0px;
+    background: #43a80f;
+    border-radius: 50px;
+    display: inline-block;
+    cursor: pointer;
+    margin-left: 10px;
+}
+.call span
+{
+    font-size: 17px;
+    text-align: center;
+}

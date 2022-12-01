@@ -1,0 +1,75 @@
+ <!-- Begin Page Content -->
+ <div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">
+      <button routerLink="/settings" mat-icon-button title="Back" color="accent"
+        aria-label="Example icon button with a menu icon">
+        <mat-icon>keyboard_backspace</mat-icon>
+      </button>
+      Schedule Report
+    </h1>
+
+    <button mat-raised-button color="accent" (click)="Createdialog()" title="Add">Add Schedule</button>
+    <br><br>
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+      
+      <div class="card-body">
+        <div class="table-responsive">
+          <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+          <mat-table class="lessons-table mat-elevation-z8" [dataSource]="dataSource">
+            <ng-container matColumnDef="id">
+    
+              <mat-header-cell *matHeaderCellDef>Sr. No</mat-header-cell>
+    
+              <mat-cell class="description-cell" *matCellDef="let row;let i = index;" data-label="id">
+                {{i+1+(paginator.pageIndex * paginator.pageSize)}}</mat-cell>
+    
+            </ng-container>
+            <ng-container matColumnDef="report_name">
+    
+              <mat-header-cell *matHeaderCellDef> Report Name 
+                </mat-header-cell>
+    
+              <mat-cell class="description-cell" *matCellDef="let row">{{row.report_name}}
+              </mat-cell>
+    
+            </ng-container>
+    
+            <ng-container matColumnDef="email">
+    
+              <mat-header-cell *matHeaderCellDef>email
+                 </mat-header-cell>
+    
+              <mat-cell class="description-cell" *matCellDef="let row">
+                {{row.email}}
+              </mat-cell>
+    
+            </ng-container>
+
+            <ng-container matColumnDef="frequency">
+    
+              <mat-header-cell *matHeaderCellDef>Frequency</mat-header-cell>
+    
+              <mat-cell class="description-cell" *matCellDef="let row">
+                {{row.frequency}}
+              </mat-cell>
+    
+            </ng-container>
+          
+    
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    
+            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    
+          </mat-table>
+          <mat-paginator #paginator [length]="Length" [pageSize]="50" [pageSizeOptions]="[50,100,500]"></mat-paginator>
+        
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- /.container-fluid -->
+

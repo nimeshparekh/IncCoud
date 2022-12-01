@@ -1,0 +1,42 @@
+
+
+ .material-icons
+ {
+     cursor: pointer;
+ }
+
+ table 
+ {
+     width: 100%;
+     min-width: 500px;
+ }
+ .start-campaign
+ {
+    background: darkseagreen;
+    color: #fff;
+ }
+ .button {
+    background-color: #4c66af; /* Green */
+    border: none;
+    color: white;
+    padding: 10px 22px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 10px;
+  }
+  
+  .button1 {
+    background-color: #dbdfeb; /* Green */
+    border: none;
+    color: black;
+    padding: 10px 22px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 10px;
+  }

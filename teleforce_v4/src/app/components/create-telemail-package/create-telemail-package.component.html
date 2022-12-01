@@ -1,0 +1,147 @@
+<div>
+    <div class="add-title">
+        <h2 class="primary" *ngIf="addmode">Add Package</h2>
+        <h2 class="primary" *ngIf="editmode">Edit Package</h2>
+        <h2 class="primary" *ngIf="deletemode">Delete Package</h2>
+    </div>
+    <div *ngIf="addmode || editmode">
+        <form [formGroup]="addForm" (ngSubmit)="submit()">
+            <mat-grid-list [cols]="2" rowHeight="100px">
+                <mat-grid-tile>
+                    <div class="text-inside">                        
+                        <mat-checkbox id="hostingservice" class=" mt-2" color="primary"
+                            formControlName="hostingservice" value="1" (change)="checkhostingservice($event)">
+                            Hosting Service
+                        </mat-checkbox>&nbsp;
+                        <mat-checkbox id="bulkemail"  color="primary"
+                            formControlName="bulkemail" (change)="checkbulk($event)">Bulk Email
+                        </mat-checkbox>&nbsp;                        
+                    </div>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <div class="text-inside">
+                        <mat-form-field>
+                            <input matInput placeholder="Package Name" formControlName="name" >
+                        </mat-form-field>
+                    </div>
+                </mat-grid-tile>
+
+            </mat-grid-list>
+            <mat-grid-list [cols]="2" rowHeight="100px" *ngIf="hostingmode">
+                <h3>Hosting Email Service</h3><br>
+                
+                <mat-grid-tile>
+                    <div class="text-inside">
+                        <mat-form-field>
+                            <input type="number" matInput placeholder="Email Rate" formControlName="rate" >                            
+                        </mat-form-field>
+                    </div>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                    <div class="text-inside">
+                        <mat-form-field>
+                            <input type="number" matInput placeholder="Max User No" formControlName="mailno" >                            
+                        </mat-form-field>
+                    </div>
+                </mat-grid-tile>
+
+
+                <mat-grid-tile>
+                    <div class="text-inside">
+                        <mat-form-field>
+                            <input type="number" matInput placeholder="Email Value" formControlName="value" >
+                           
+                        </mat-form-field>
+                    </div>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                    <div class="text-inside">
+                        <mat-form-field>
+                            <input type="number" matInput placeholder="Email GB" formControlName="gb" >
+                            
+                        </mat-form-field>
+                    </div>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                    <div class="text-inside">
+                        <mat-radio-group formControlName="validity">
+                            <div style="color:grey;">Validity</div>
+                            <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="0">Monthly
+                            </mat-radio-button>
+                            <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="2">Quarterly
+                            </mat-radio-button><br>
+                            <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="3">Half Yearly
+                            </mat-radio-button>
+                            <mat-radio-button color="primary" style="padding:4px 0px 0px 24px;" [value]="1">Yearly
+                            </mat-radio-button>
+                        </mat-radio-group>
+                        <mat-error *ngIf="addForm.controls.validity.hasError('required')">
+                            Please select package validity
+                        </mat-error>
+                    </div>
+                </mat-grid-tile>
+
+
+            </mat-grid-list>
+            <mat-grid-list [cols]="2" rowHeight="100px" *ngIf="bulkmode">
+                <h3>Bulk Email</h3>
+                <br>
+                
+
+                <mat-grid-tile>
+                    <div class="text-inside">
+                        <mat-form-field>
+                            <input type="number" matInput placeholder="Email Rate" formControlName="bulk_prate" 
+                                (change)="countPackageValue()">
+                            
+                        </mat-form-field>
+                    </div>
+                </mat-grid-tile>
+
+
+                <mat-grid-tile>
+                    <div class="text-inside">
+                        <mat-form-field>
+                            <input type="number" matInput placeholder="Email No." formControlName="bulk_emailno"
+                                (change)="countPackageValue()">
+
+                        </mat-form-field>
+                    </div>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <div class="text-inside">
+                        <mat-form-field>
+                            <input type="number" matInput placeholder="Email Value" formControlName="bulk_pvalue" readonly>
+
+                        </mat-form-field>
+                    </div>
+                </mat-grid-tile>
+
+
+
+            </mat-grid-list><br>
+
+            <div class="btn-sec">
+                <button mat-raised-button type="submit" color="primary" class="Update-btn">Save</button>
+                &nbsp;
+                <button mat-raised-button type="button" class="Discard-btn" (click)="openDialog()">Cancel</button>
+            </div>
+
+        </form>
+    </div>
+
+    <div *ngIf="deletemode">
+        <h4>
+            Are you sure to delete this ?
+        </h4>
+        <div class="btn-sec">
+            <button mat-raised-button type="button" color="primary" class="Update-btn"
+                (click)="deleteData(adminid)">Delete</button>
+            &nbsp;
+            <button mat-raised-button type="button" class="Discard-btn" (click)="openDialog()">Cancel</button>
+        </div>
+    </div>
+</div>

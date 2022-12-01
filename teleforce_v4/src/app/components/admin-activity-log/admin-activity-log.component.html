@@ -1,0 +1,157 @@
+<div class="warap-height pt-4">
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <h1 class="h3 mb-2 text-gray-800"> Activity Log</h1>
+        <p class="mb-2"></p>
+        <form [formGroup]="searchform">  
+            <div class="row">
+                <div class="col-sm-3">
+                    <mat-form-field appearance="outline">
+                      <mat-label>Manager</mat-label>
+                      <mat-select formControlName="account_id">
+                        <mat-option value="">All</mat-option>
+                        <mat-option *ngFor="let agent of manager_data" value="{{agent.account_id}}">
+                          {{agent.account_name | titlecase}}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                <div class="col-sm-3">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Choose a date</mat-label>
+                        <input matInput placeholder="From Date" [matDatepicker]="startpicker" formControlName="startdate" required>
+                        <mat-datepicker-toggle matSuffix [for]="startpicker"></mat-datepicker-toggle>
+                        <mat-datepicker #startpicker tpicker></mat-datepicker>
+                        <mat-error *ngIf="searchform.controls.startdate.hasError('required')">
+                            Please select From Date
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-3">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Choose a date</mat-label>
+                        <input matInput placeholder="To Date" [matDatepicker]="endpicker" formControlName="enddate" required>
+                        <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
+                        <mat-datepicker #endpicker tpicker></mat-datepicker>
+                        <mat-error *ngIf="searchform.controls.enddate.hasError('required')">
+                            Please select To Date
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+               
+
+                <div class="col-sm-3">
+                    <button mat-raised-button class="mt-2" type="submit" (click)="searchData()" [disabled]="isDisabled">Search</button>&nbsp;
+
+                </div>
+            </div>      
+        </form>
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4 mt-3">
+
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table >
+                        <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+                        <div fxLayout fxLayoutAlign="center center" class="mt-2">
+                            <button mat-raised-button color="primary"
+                                (click)="exporter.exportTable('csv', {fileName:'Admin-Activity-log', sheet: 'sheet_name'})">CSV</button>
+                        </div><br>
+                        <mat-table class="lessons-table mat-elevation-z8" matTableExporter #exporter="matTableExporter" [dataSource]="dataSource">
+                            
+                            <ng-container matColumnDef="id">
+        
+                                <mat-header-cell *matHeaderCellDef >Sr. No</mat-header-cell>
+                    
+                                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" data-label="id">
+                                {{i+1+(paginator.pageIndex * paginator.pageSize)}}</mat-cell>
+                    
+                            </ng-container>
+                                   
+                            <ng-container matColumnDef="account_id">
+
+                                <mat-header-cell *matHeaderCellDef > Account Id </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.account_id}}
+                                </mat-cell>
+
+                            </ng-container> 
+                            <ng-container matColumnDef="account_name">
+
+                                <mat-header-cell *matHeaderCellDef > Account Name </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.account_name}}
+                                </mat-cell>
+
+                            </ng-container>  
+                            
+                            <ng-container matColumnDef="date">
+
+                                <mat-header-cell *matHeaderCellDef > Date </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.action_date | date:'dd-MM-yyyy'}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                           
+
+                            <ng-container matColumnDef="ip">
+
+                                <mat-header-cell *matHeaderCellDef > IP </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.ip}}
+                                </mat-cell>
+
+                            </ng-container>
+                            <ng-container matColumnDef="action">
+
+                                <mat-header-cell *matHeaderCellDef > Action </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.action}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="old_req">
+
+                                <mat-header-cell *matHeaderCellDef > Old Request </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.old_req | slice:0:100}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="new_req">
+
+                                <mat-header-cell *matHeaderCellDef > New Request </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.new_req | slice:0:100}}
+                                </mat-cell>
+
+                            </ng-container>
+                            
+                            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+                            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+                        </mat-table>
+                        <mat-paginator #paginator [length]="Length" [pageSize]="50" [pageSizeOptions]="[50,100,500]">
+                        </mat-paginator>
+                    </table> 
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /.container-fluid -->
+</div>

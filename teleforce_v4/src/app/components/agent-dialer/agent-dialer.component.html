@@ -1,0 +1,565 @@
+<div class="warap-height pt-4">
+       <!-- Begin Page Content -->
+        <div class="agent-dialer container-fluid">
+
+            <!-- Page Heading -->
+            <!-- <h1 class="h3 mb-2 text-gray-800">Dialer</h1> -->
+            
+                <!-- <button  mat-raised-button color="primary" (click)="opendialerdilog()" >Get Current Call</button> 
+                <button  mat-raised-button color="primary" (click)="getAgentCurrentCall(agentid)" >Get Current Call</button> -->
+                
+          
+            <!-- Basic analytics -->
+            
+            <div class="agent-dialer-top-filter d-inline-block">
+                <div class="mt-2 float-left">
+                    <button *ngIf="isSoftphone && isagent" mat-raised-button color="accent" (click)="opensoftphone()" >Open Softphone</button>
+                </div>
+                <div class="mt-2 float-left ml-2">
+                    <button *ngIf="breakmode&&isagent"  mat-raised-button type="button" color="warn" routerLink="/break-time" >Break On</button>
+                </div>
+                <div class="float-left" *ngIf="isagent && isHoldcall">
+                    <form class="d-flex example-form" [formGroup]="holdform">
+                        <div>
+                            <mat-form-field appearance="outline">
+                                <mat-label>Hold Calling Reason</mat-label>
+                                <mat-select formControlName="holdreason"  (selectionChange)="selectedReason($event.value)">
+                                    <mat-option *ngFor="let reason of reasonArr" [value]="reason.reason_id">
+                                        {{reason.reason_name}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="mt-2 ml-3">
+                            <mat-slide-toggle color="warn" (change)="onToggle($event)"  formControlName="holdcall" [disabled]="selected_reason" *ngIf="isHoldcall">Hold Calling</mat-slide-toggle>
+                        </div>
+                    </form> 
+                </div>
+                <div class="mt-2 float-left ml-2" *ngIf="isagent">
+                    <form class="example-form" [formGroup]="voipform" *ngIf="isvoipsupport && settings['show_voip_button']=='1' && isVoip" >
+                        <mat-slide-toggle (change)="onToggleVoip($event)"  formControlName="voip">VPN</mat-slide-toggle>
+                    </form>
+                </div>
+                <div class="mt-2 float-left ml-2" *ngIf="isagent">
+                    <form class="example-form" [formGroup]="autoform" *ngIf="isvoipsupport && isvoipenable && settings['show_call_auto_answer_button']=='1' && isAutocall" >
+                        <mat-slide-toggle (change)="onToggleAuto($event)"  formControlName="autoans">Auto Answer</mat-slide-toggle>
+                    </form>
+                </div>
+                <div class="mt-2 float-left ml-2" *ngIf="isagent">
+                    <button (click)="refreshdata()" class="bgclr-87e0ab" mat-flat-button color="primary"  [disabled]="isDisabled1">
+                        <mat-icon>cached</mat-icon>
+                    </button>
+                </div>
+                <div class="mt-2 float-left ml-2" *ngIf="isagent && isvoipsupport && isvoipenable">
+                    <button (click)="microphone()" class="bgclr-87e0ab" mat-flat-button color="primary">
+                        Test Microphone
+                    </button>
+                </div>
+            </div>
+            <div  *ngIf="issupervisor">
+                <app-supvisior-dashboard></app-supvisior-dashboard>
+
+            </div>
+
+            <div class="call-analytics" *ngIf="monitoragent==0&&isagent" >
+                <div class="row">
+                    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12 mt-3">
+                        <div class="mycard">
+                            <div class="mycard-body">
+                                <div class="d-flex flex-row">
+                                    <div class="flex-fill">
+                                        <div class="name-count">
+                                            <p>
+                                                Missed Call
+                                            </p>
+                                            <label>{{callanalytics['missedcall']}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="flex-row-reverse mt-4 ng-star-inserted">
+                                        <b><a routerLink="/agent-call-history"><i class="mycard-icon flaticon-missed-call text-large text-primary"></i></a></b>
+                                    </div>
+                                </div>
+                                <div class="flex-row-reverse mt-3">
+                                    <div class="d-flex dashboard-text">
+                                        <i class="fi-rr-info my-auto mr-1"></i><p class="mb-0 ellipsis" style="width: 95%;" title="Number of missed call">Number of missed call</p>
+                                    </div>
+                                </div>  
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12 mt-3">
+                        <div class="mycard">
+                            <div class="mycard-body">
+                                <div class="d-flex flex-row">
+                                    <div class="flex-fill">
+                                        <div class="name-count">
+                                            <p>
+                                                Received Call
+                                            </p>
+                                            <label>{{callanalytics['receivecall']}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="flex-row-reverse mt-4 ng-star-inserted">
+                                        <a routerLink="/agent-call-history"><i class="mycard-icon flaticon-incoming-call text-large text-primary"></i></a>
+                                    </div>
+                                </div>
+                                <div class="flex-row-reverse mt-3">
+                                    <div class="d-flex dashboard-text">
+                                        <i class="fi-rr-info  my-auto mr-1"></i><p class="mb-0 ellipsis" style="width:95%" title="Number of received call">Number of received call</p>
+                                    </div>
+                                </div>  
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12 mt-3">
+                        <div class="mycard">
+                            <div class="mycard-body">
+                                <div class="d-flex flex-row">
+                                    <div class="flex-fill">
+                                        <div class="name-count">
+                                            <p>
+                                                Dial Call
+                                            </p>
+                                            <label>{{callanalytics['dialcall']}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="flex-row-reverse mt-4 ng-star-inserted">
+                                        <a routerLink="/agent-call-history"><i class="mycard-icon flaticon-outgoing-call text-large text-primary"></i></a>
+                                    </div>
+                                </div>
+                                <div class="flex-row-reverse mt-3">
+                                    <div class="d-flex dashboard-text">
+                                        <i class="fi-rr-info my-auto mr-1"></i><p class="mb-0 ellipsis" style="width: 95%;" title="Number of dial call">Number of dial call</p>
+                                    </div>
+                                </div>  
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12 mt-3">
+                        <div class="mycard">
+                            <div class="mycard-body">
+                                <div class="d-flex flex-row">
+                                    <div class="flex-fill">
+                                        <div class="name-count">
+                                            <p>
+                                                Queue Call
+                                            </p>
+                                            <label (click)="callqueuemodal()">{{queuecall}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="flex-row-reverse mt-4 ng-star-inserted">
+                                        <a (click)="callqueuemodal()"><b><i class="mycard-icon flaticon-phone-call text-large text-primary"></i></b></a>
+                                    </div>
+                                </div>
+                                <div class="flex-row-reverse mt-3">
+                                    <div class="d-flex dashboard-text">
+                                        <i class="fi-rr-info my-auto mr-1"></i><p class="mb-0 ellipsis" style="width: 95%;" title="Number of Queue call">Number of Queue call</p>
+                                    </div>
+                                </div>  
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- DataTales Example -->
+            <div class="card shadow mt-3 mb-4" *ngIf="monitoragent==0&&isagent" >
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-4 col-sm-12 col-md-12 mt-1">
+                            <div class="contact-box">
+                                <mat-tab-group>
+                                    <mat-tab> 
+                                        <ng-template mat-tab-label>
+                                            <div class="contact-Search-box">
+                                                <i class="fas fa-tasks search-icon"></i>
+                                                <div class="search"><b class="ml-5 mr-3">Products/Services</b></div>
+                                            </div>
+                                        </ng-template>
+                                        <div class="contact-list">
+                                            <div class="contact-list-box" *ngFor="let product of products">
+                                                <div class="product-thumnail-img">  
+                                                    <!-- <i class="product-thumnail-icon fas fa-thumbtack text-large text-primary"></i> -->
+                                                    <img src="{{product.product_thumbnail}}" height="50" width="50">
+                                                </div>
+                                                <div class="contact-details text-truncate" style="width: 45%;">
+                                                    <label title="{{product.product_name}}" class="ellipsis" style="width: 90%;">{{product.product_name}}</label>
+                                                    <p><span class="ellipsis" style="width: 90%;">{{product.product_desc}}</span></p>
+                                                </div>
+                                                
+                                                <div class="contactProductBtn" title="share Via SMS" (click)="agentsmsshare(product.productid)">
+                                                    <a><i class="fas fa-sms"></i></a>
+                                                </div>
+                                                <div class="contactProductBtn" title="share Via Whatsapp" (click)="agentwhatsappshare(product.productid)" *ngIf="whatsupaccess">
+                                                    <a><i class="fab fa-whatsapp"></i></a>
+                                                </div>
+                                                <div class="contactProductBtn" title="share Via Email" (click)="agentemailshare(product.productid)">
+                                                    <a><i class="far fa-envelope"></i></a>
+                                                </div>
+                                                <div class="contactProductBtn" title="Preview of Product" (click)="productPreview(product.productid)">
+                                                    <a><i class="fas fa-eye"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </mat-tab>
+                                </mat-tab-group>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-12 col-md-12 plr-0 mt-1">
+                            <!----New Dialer HTML---->
+                            <div class="screen" *ngIf="dialpad" style="max-width: 328px;
+                            margin: 0 auto;">  
+                                <div class="dial-pad">
+                                    <div class="row1">
+                                        <div class="col-md-12">
+                                            <form [formGroup]="dialerform">
+                                                <input type="tel"  id="telNumber" class="tel" value="" formControlName="number" #dialernumber/>
+                                            </form>
+                                            <div class="num-pad">
+                                                <div class="span4">
+                                                    <div class="num">
+                                                        <div class="txt">
+                                                            1
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="span4">
+                                                    <div class="num">
+                                                        <div class="txt">
+                                                            2 <span class="small">
+                                                                <p> ABC</p>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="span4">
+                                                    <div class="num">
+                                                        <div class="txt">
+                                                            3 <span class="small">
+                                                                <p>
+                                                                    DEF</p>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="span4">
+                                                    <div class="num">
+                                                        <div class="txt">
+                                                            4 <span class="small">
+                                                                <p>
+                                                                    GHI</p>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="span4">
+                                                    <div class="num">
+                                                        <div class="txt">
+                                                            5 <span class="small">
+                                                                <p>
+                                                                    JKL</p>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="span4">
+                                                    <div class="num">
+                                                        <div class="txt">
+                                                            6 <span class="small">
+                                                                <p>
+                                                                    MNO</p>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="span4">
+                                                    <div class="num">
+                                                        <div class="txt">
+                                                            7 <span class="small">
+                                                                <p>
+                                                                    PQRS</p>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="span4">
+                                                    <div class="num">
+                                                        <div class="txt">
+                                                            8 <span class="small">
+                                                                <p>
+                                                                    TUV</p>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="span4">
+                                                    <div class="num">
+                                                        <div class="txt">
+                                                            9 <span class="small">
+                                                                <p>
+                                                                    WXYZ</p>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="span4">
+                                                    <div class="num">
+                                                        <div class="txt">
+                                                            *
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="span4">
+                                                    <div class="num">
+                                                        <div class="txt">
+                                                            0 <span class="small">
+                                                                <p>
+                                                                    +</p>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="span4">
+                                                    <div class="num">
+                                                        <div class="txt">
+                                                            #
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="clearfix">
+                                            </div>
+                                            <div>
+                                                <a class="btn callbtn btn-block flatbtn" (click)="clicktocall()">
+                                                    <span><a><i class="fas fa-phone-alt"></i></a></span>
+                                                </a>
+                                            </div>
+                                                
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="screen" *ngIf="isvoipenable" style="max-width: 328px;
+                            margin: 0 auto;">  
+                                <div class="dial-pad">
+                                    <audio #voipaudio></audio>
+                                    <div class="row1" *ngIf="!iscurrentcall" >
+                                        <div class="col-md-12">
+                                            <form [formGroup]="dialerform">
+                                                <input type="tel"  id="telNumber" class="tel" value="" formControlName="number" #dialernumber/>
+                                            </form>
+                                            <div class="num-pad">
+                                            <div class="span4">
+                                                <div class="num">
+                                                    <div class="txt">
+                                                        1
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="span4">
+                                                <div class="num">
+                                                    <div class="txt">
+                                                        2 <span class="small">
+                                                            <p> ABC</p>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="span4">
+                                                <div class="num">
+                                                    <div class="txt">
+                                                        3 <span class="small">
+                                                            <p>
+                                                                DEF</p>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="span4">
+                                                <div class="num">
+                                                    <div class="txt">
+                                                        4 <span class="small">
+                                                            <p>
+                                                                GHI</p>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="span4">
+                                                <div class="num">
+                                                    <div class="txt">
+                                                        5 <span class="small">
+                                                            <p>
+                                                                JKL</p>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            <div class="span4">
+                                                <div class="num">
+                                                    <div class="txt">
+                                                    </div>
+                                                        6 <span class="small">
+                                                            <p>
+                                                                MNO</p>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="span4">
+                                                <div class="num">
+                                                    <div class="txt">
+                                                        7 <span class="small">
+                                                            <p>
+                                                                PQRS</p>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="span4">
+                                                <div class="num">
+                                                    <div class="txt">
+                                                        8 <span class="small">
+                                                            <p>
+                                                                TUV</p>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="span4">
+                                                <div class="num">
+                                                    <div class="txt">
+                                                        9 <span class="small">
+                                                            <p>
+                                                                WXYZ</p>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="span4">
+                                                <div class="num">
+                                                    <div class="txt">
+                                                        *
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="span4">
+                                                <div class="num">
+                                                    <div class="txt">
+                                                        0 <span class="small">
+                                                            <p>
+                                                                +</p>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="span4">
+                                                <div class="num">
+                                                    <div class="txt">
+                                                        #
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            </div>
+                                            <div class="clearfix">
+                                            </div>
+                                            <div>
+                                                <a class="btn callbtn btn-block flatbtn" (click)="clicktocallvoip()">
+                                                    <span><a><i class="fas fa-phone-alt"></i></a></span>
+                                                </a>
+                                            </div>
+                                                
+                                        </div>
+                                    </div>
+                                    <div class="row1" *ngIf="iscurrentcall" >
+                                        <div>
+                                            <a class="btn callhangbtn btn-block flatbtn" (click)="hangup()">
+                                                <span><a><i class="fas fa-phone-alt"></i></a></span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+                        </div>
+                        <div class="col-lg-4 col-sm-12 col-md-12 mt-1">
+                            <div class="contact-box">
+                                <mat-tab-group>
+                                    <mat-tab> 
+                                        <ng-template mat-tab-label>
+                                            <div class="contact-Search-box">
+                                                <i class="fas fa-book search-icon"></i>
+                                                <div class="search"><b>Call History</b></div>
+                                            </div>
+                                        </ng-template>
+                                        <div class="contact-list">
+                                            <div class="contact-list-box" *ngFor="let call of recentcall">
+                                                <div class="call-history-img" *ngIf="call.CallTalkTime>0">
+                                                    <div *ngIf="call.CallTypeID==1 || call.CallTypeID==0">
+                                                        <!-- <img src="../assets/img/call-send.png"> -->
+                                                        <i class="history-icon flaticon-outgoing-call text-large text-primary"></i>
+                                                    </div>
+                                                    <div *ngIf="call.CallTypeID==2">
+                                                        <!-- <img src="../assets/img/auto-call.png"> -->
+                                                        <i class="history-icon flaticon-incoming-call text-large text-primary"></i>
+                                                    </div>  
+                                                </div>
+                                                <div class="call-history-img" *ngIf="call.CallTalkTime==0 && call.CallTypeID==2">
+                                                    <!-- <img src="../assets/img/miss-call.png"> -->
+                                                    <b><i class="history-icon flaticon-missed-call text-large text-primary"></i></b>
+                                                </div>
+                                                <div class="call-history-img" *ngIf="call.CallTalkTime==0 && call.CallTypeID!=2">
+                                                    <!-- <img src="../assets/img/miss-call.png"> -->
+                                                    <i class="history-icon flaticon-outgoing-call text-large text-primary"></i>
+                                                </div>
+                                                <div class="contact-details text-truncate">
+                                                    <!-- <p><span>{{call.CallerName}}</span></p>
+                                                
+                                                    <label>{{call.CallerNumber}}</label> -->
+                                                    <label title="{{call.CallerNumber}}">
+                                                        <span *ngIf="call.CallerName!=''" >{{call.CallerName}}</span>
+                                                        <span *ngIf="call.CallerName==''" >{{call.CallerNumber}}</span>
+                                                    </label>
+                                                    <p><span>{{call.CallStartTime | date: "dd-MM-yyyy H:mm:s":timezone }}</span> |
+                                                        <span>{{call.CallTalkTime}} Sec</span></p>
+                                                </div>
+                                                <div class="contactCallBtn historycontactCallBtn" (click)="callFromHistory(call.AgentID,call.CallerNumber)">
+                                                    <a><i class="fas fa-phone-alt"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </mat-tab>
+                                    <mat-tab> 
+                                        <ng-template mat-tab-label>
+                                            <div class="contact-Search-box">
+                                                <i class="fas fa-user search-icon"></i>
+                                                <!-- <input type="text" placeholder="Search Contact" class="search"> -->
+                                                <div class="search"><b>Assign Lead</b></div>
+                                            </div>
+                                        </ng-template>
+                                        <div class="contact-list">
+                                            <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+                                            <div class="No-data" *ngIf="agentlead.length==0">
+                                                <img src="assets/img/no-data.gif">
+                                                <h4>Ooops...!</h4>
+                                                <p>No Data Assign</p>
+                                            </div>
+                                            <div class="contact-list-box" *ngFor="let lead of agentlead">
+                                                <div class="profile-img">
+                                                    <i class="fas fa-user-tie"></i>
+                                                </div>
+                                                <div class="contact-details">
+                                                    <p>{{lead.name}}</p>
+                                                    <label>{{shownumber(lead.mobile,lead.numid)}}</label>
+                                                </div>
+                                                <div class="contactCallBtn" (click)="calltolead(lead.numid)">
+                                                    <a><i class="fas fa-phone-alt"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </mat-tab>
+                                </mat-tab-group>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.container-fluid -->
+</div>

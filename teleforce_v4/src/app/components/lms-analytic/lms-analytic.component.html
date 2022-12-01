@@ -1,0 +1,183 @@
+<div class="warap-height pt-4">    
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <h1 class="h3 mb-2 text-gray-800 d-flex">
+            <button routerLink="/lms" mat-icon-button title="Back" color="accent" aria-label="Example icon button with a menu icon">
+                <mat-icon>keyboard_backspace</mat-icon>
+                Lead Analytics
+            </button>
+          
+        </h1>
+<div class="row charts">
+    <!-- <div class="col-sm-6 col-12 mt-3">
+        <div class="card-ana">
+            <div class="card-ana-head">
+                <div>
+                    <p class="">Call Traffic Report</p>
+                </div>
+            </div>
+           
+            <div class="card-ana-body" >
+                <div style="display: block">
+                    <canvas baseChart [chartType]="chartTypetraffic" [datasets]="chartDatasetstraffic" [labels]="chartLabelstraffic"
+                        [colors]="chartColorstraffic" [options]="chartOptionstraffic" [legend]="true"
+                        (chartHover)="chartHoveredtraffic($event)" (chartClick)="chartClickedtraffic($event)">
+                    </canvas>
+                </div>
+            </div>
+        </div>
+    </div>-->
+    <!-- <div class="col-sm-6 col-12 mt-3">
+        <div class="card-ana">
+            <div class="card-ana-head">
+                <div>
+                    <p class=""> STAGE WISE OPPORTUNITY AMOUNT</p>
+                </div>
+            </div>
+          
+            <div class="card-ana-body" >
+                <div style="display: block">
+                    <canvas baseChart [chartType]="chartTypehourly" [datasets]="chartDatasetshourly" [labels]="chartLabelshourly"
+                        [colors]="chartColorshourly" [options]="chartOptionshourly" [legend]="true"
+                        (chartHover)="chartHoveredhourly($event)" (chartClick)="chartClickedhourly($event)">
+                    </canvas>
+                </div>
+            </div>
+        </div>
+    </div>  -->
+    <div class="col-sm-6 col-12 mt-3" >
+        <div class="card-ana">
+            <div class="card-ana-head d-flex">
+                <div class="flex-fill">
+                    <p class="">Stage Leads Converts The Most</p>
+                </div>
+            </div>
+         
+            <div class="card-ana-body" >
+                <div style="display: block">
+                    <canvas baseChart [chartType]="chartTypeFunnel" [datasets]="chartDatasetsFunnel" [labels]="chartLabelsFunnel"
+                        [colors]="chartColorsFunnel" [options]="chartOptionsFunnel" [legend]="true"
+                        (chartHover)="chartHoveredFunnel($event)" (chartClick)="chartClickedFunnel($event)">
+                    </canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-12 mt-3" >
+        <div class="card-ana">
+            <div class="card-ana-head d-flex">
+                <div class="flex-fill ">
+                    <p class="">Stage Wise Drop Off</p>
+                </div>
+            </div>
+            
+
+            <div class="card-ana-body">
+                <div style="display: block">
+                    <canvas baseChart [chartType]="chartTypeSource" [datasets]="chartDatasetsSource" [labels]="chartLabelsSource"
+                        [colors]="chartColorsSource" [options]="chartOptionsSource" [legend]="true"
+                        (chartHover)="chartHoveredSource($event)" (chartClick)="chartClickedSource($event)">
+                    </canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-12 mt-3">
+        <div class="card-ana">
+            <div class="card-ana-head">
+                <div>
+                    <p class="">ADS Cost </p>
+                </div>
+            </div>
+            <div class="card-ana-head">
+                
+                    <form [formGroup]="livestatusForm">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Ads</mat-label>
+                            <mat-select formControlName="adsname" (ngModelChange)="filterlivestatus($event)">
+                                <!-- <mat-option value="0">All</mat-option> -->
+                                <mat-option *ngFor="let agent of adslist" [value]="agent.AD_ID">
+                                    {{agent.AD_NAME}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </form>
+                
+            </div>
+            <div class="card-ana-body" >
+                <div style="display: block">
+                    <canvas baseChart [chartType]="chartTypetraffic" [datasets]="chartDatasetstraffic" [labels]="chartLabelstraffic"
+                        [colors]="chartColorstraffic" [options]="chartOptionstraffic" [legend]="true"
+                        (chartHover)="chartHoveredtraffic($event)" (chartClick)="chartClickedtraffic($event)">
+                    </canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-12 mt-3" >
+        <div class="card-ana">
+            <div class="card-ana-head ">
+                <div class="flex-fill">
+                    <p class="">STAGE WISE OPPORTUNITY AMOUNT</p>
+                </div>
+            </div>
+         
+            <div class="card-ana-body" >
+                <div style="display: block">
+                    <canvas baseChart [chartType]="chartTypeFunnel2" [datasets]="chartDatasetsFunnel2" [labels]="chartLabelsFunnel2"
+                        [colors]="chartColorsFunnel2" [options]="chartOptionsFunnel2" [legend]="true"
+                        (chartHover)="chartHoveredFunnel2($event)" (chartClick)="chartClickedFunnel2($event)">
+                    </canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-12 mt-3">
+        <div class="card-ana">
+            <div class="card-ana-head">
+                <div>
+                    <p class="">Agent ROI </p>
+                </div>
+            </div>
+            <div class="card-ana-head">
+                
+                    <form [formGroup]="adsstatusForm">
+                        <div class="row">
+                        <div class="col-12 col-md-6 col-lg-6 col-xl-6 col-sm-6 mt-2">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Agent</mat-label>
+                                <mat-select formControlName="agentname" (ngModelChange)="filterads($event)">
+                                    <!-- <mat-option value="0">All</mat-option> -->
+                                    <mat-option *ngFor="let agent of agentlist" [value]="agent.account_id">
+                                        {{agent.account_name}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <!-- <div class="col-12 col-md-6 col-lg-6 col-xl-6 col-sm-6 mt-2">
+
+                        <mat-form-field appearance="outline">
+                            <mat-label>ADS Name</mat-label>
+                            <mat-select formControlName="agent_adsname" (ngModelChange)="filteradslist($event)">
+                                <mat-option *ngFor="let agent of agentadslist" [value]="agent.ads_id">
+                                    {{agent.ad_name}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        </div> -->
+                        </div>
+                    </form>
+                
+            </div>
+            <div class="card-ana-body" >
+                <div style="display: block">
+                    <canvas baseChart [chartType]="chartTypeads" [datasets]="chartDatasetsads" [labels]="chartLabelsads"
+                        [colors]="chartColorsads" [options]="chartOptionsads" [legend]="true"
+                        (chartHover)="chartHoveredads($event)" (chartClick)="chartClickedads($event)">
+                    </canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>

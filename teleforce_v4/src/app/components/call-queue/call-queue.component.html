@@ -1,0 +1,53 @@
+<div mat-dialog-head class="dilog-head d-flex justify-content-between">
+    <h3 class="primary">Queue List</h3>
+    <div class="d-inline-block">
+        <a class="close" (click)="closeDialog()"><i class="fi-rr-cross-small"></i></a>
+    </div>
+</div>
+<div mat-dialog-content class="call-queue">
+    <div class="table-responsive mt-3">
+        <table  class="table table-bordered" width="100%">
+            <tr>
+                <th>Sr No.</th>
+                <th>Caller Name</th>
+                <th>Caller Number</th>
+                <th>In Time</th>
+                <th>Wait Duration</th>
+                <th>Event</th>
+                <th>Trasfer Agent</th>
+                <th>Action</th>
+            </tr>
+            <tr *ngFor="let queue of queuelist;let i=index;">
+                <td>{{i+1}}</td>
+                <td>{{queue.CallerName}}</td>
+                <td>{{queue.CallerNumber}}</td>
+                <td>{{queue.start_time| date:"dd-MM-yyyy hh:mm:ss"}}</td>
+                <td>
+                    {{getqueueduration(queue.start_time)}}
+                </td>
+                <td style="width: 100px;">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Select Event</mat-label>
+                        <mat-select  (selectionChange)="setqueueevent($event.value,queue.cdrid)">
+                          <mat-option value="1">Hangup</mat-option>
+                          <mat-option value="2">Transfer</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </td>
+                <td>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Select Agent</mat-label>
+                        <mat-select (selectionChange)="setqueueagent($event.value,queue.cdrid)">
+                          <mat-option value="">None</mat-option>
+                          <mat-option [value]="agent.account_id" *ngFor="let agent of allagentlist;let i=index;">{{agent.account_name}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </td>
+                <td>
+                    <a><i (click)="callactionsubmit(queue.cdrid)" class="mycard-icon fi-rr-arrow-right"></i></a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+   

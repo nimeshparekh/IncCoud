@@ -1,0 +1,196 @@
+<div mat-dialog-head class="add-title">
+    <h2 class="primary"> Re-Generate Campaign </h2>
+</div>
+<div mat-dialog-content>
+    <form [formGroup]="addConForm" (ngSubmit)="campaignsubmit()">
+        <div class="row">
+            <div class="col-xl-6 col-md-6 col-sm-12 col-12 mt-2">
+              <mat-radio-group (change)="selectgeneratetype($event)" formControlName="generatetype">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <mat-radio-button class="mb-2" color="primary" style="padding:4px 4px 0px 0px;" [value]="0">Existing Campaign
+                    </mat-radio-button>
+                  </div>
+                  <div class="col-sm-6">
+                    <mat-radio-button class="mb-2" color="primary" style="padding:4px 0px 0px 24px;" [value]="1">New 
+                        Campaign
+                    </mat-radio-button>
+                  </div>
+                </div>
+                <mat-error *ngIf="addConForm.controls.generatetype.hasError('required')">
+                  Please select option
+                </mat-error>
+              </mat-radio-group>
+            </div>
+        </div>
+        <div *ngIf="generatetype==0" >
+            <mat-grid-list cols="1" rowHeight="85px" (window:resize)="onResize($event)">
+                <mat-grid-tile>
+                    <mat-form-field class="example-full-width">
+                    <mat-label>Select Campaign</mat-label>
+                    <mat-select formControlName="campaignname">
+                        <mat-option *ngFor="let cam of campaignlist" [value]="cam.camid">{{cam.cam_name}} ({{cam.cam_method==1?'OBD':''}}{{cam.cam_method==0?'Live Agent':''}}{{cam.cam_method==null?'Lead assign to Agent':''}})</mat-option>
+                    </mat-select>
+                    </mat-form-field>
+                </mat-grid-tile>
+            </mat-grid-list>
+        </div>
+        <div *ngIf="generatetype==1" >
+            <mat-grid-list cols="2" rowHeight="85px" (window:resize)="onResize($event)">
+                <mat-grid-tile>
+                <mat-form-field class="example-full-width">
+                    <mat-label>Campaign Name</mat-label>
+                    <input matInput formControlName="campaignname" placeholder="Campaign Name" value="">
+                    <mat-error *ngIf="addConForm.controls.campaignname.hasError('required')">
+                    Please enter name
+                    </mat-error>
+                </mat-form-field>
+                </mat-grid-tile>
+            </mat-grid-list>
+            <div class="row">
+                <div class="col-xl-6 col-md-6 col-sm-12 col-12 mt-2">
+                <mat-radio-group (change)="showcampaigntype($event)" formControlName="campaigntype">
+                    <div style="color:grey;">Campaign type</div>
+                    <div class="row">
+                    <div class="col-sm-6">
+                        <mat-radio-button class="mb-2" color="primary" style="padding:4px 4px 0px 0px;" [value]="1">Lead assign to
+                        Agent
+                        </mat-radio-button>
+                    </div>
+                    <div class="col-sm-6" *ngIf="progressivedialer">
+                        <mat-radio-button class="mb-2" color="primary" style="padding:4px 0px 0px 24px;" [value]="0">Outbound
+                        Calling
+                        </mat-radio-button>
+                    </div>
+                    </div>
+                    <mat-error *ngIf="addConForm.controls.campaigntype.hasError('required')">
+                    Please select type
+                    </mat-error>
+                </mat-radio-group>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-12 col-12 mt-2">
+                <!--<mat-radio-group (change)="showivr($event)" *ngIf="show" formControlName="campaignmethod">
+                    <div style="color:grey;">Campaign Method</div>
+                    <div class="row">
+                    <div class="col-sm-6" >
+                        <mat-radio-button color="primary" *ngIf="progressivedialer" style="padding:4px 4px 0px 0px;" [value]="0">Live Agent
+                        </mat-radio-button>
+                    </div>-->
+                    <!--<div class="col-sm-6" >
+                        <mat-radio-button *ngIf="isobd" color="primary"  style="padding:4px 0px 0px 24px;" [value]="1"> OBD
+                        </mat-radio-button>
+                    </div>-->
+                    <!--</div>
+                </mat-radio-group>-->
+                </div>
+            </div>  
+            <mat-grid-list cols="2" [cols]="breakpoint" rowHeight="85px" (window:resize)="onResize($event)">
+            <mat-grid-tile *ngIf="ivvr">
+                <mat-form-field class="example-full-width">
+                <mat-label>IVR List</mat-label>
+                <mat-select (selectionChange)="change5($event.value)" formControlName="ivr">
+                    <mat-option *ngFor="let topping of ivr" [value]="topping.BuilderID">{{topping.IvrName}}</mat-option>
+                </mat-select>
+                </mat-form-field>
+            </mat-grid-tile>     
+            <mat-grid-tile *ngIf="dialershow">
+                <mat-form-field class="example-full-width mt-5">
+                <mat-label>Dialer Type</mat-label>
+                <mat-select  formControlName="dialertype" (selectionChange)="getassignagents($event.value)">
+                    <mat-option value="0">Progressive</mat-option>
+                    <mat-option value="1" >Predictive</mat-option>
+                </mat-select>
+                </mat-form-field>
+            </mat-grid-tile>   
+            <mat-grid-tile *ngIf="agentshow">
+                <mat-form-field class="example-full-width mt-5">
+                <mat-label>Agent Group</mat-label>
+                <mat-select (selectionChange)="change($event.value)" formControlName="agentgroup">
+                    <mat-option *ngFor="let topping of agent" [value]="topping.GroupID">
+                    {{topping.GroupName}}({{topping.GroupDescription}})</mat-option>
+                </mat-select>
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile *ngIf="agentshow">
+                <mat-form-field class="example-full-width mt-5">
+                <mat-label>Agent list</mat-label>
+                <mat-select (selectionChange)="change2($event.value)" multiple formControlName="agents">
+                    <mat-option *ngFor="let topping of category" [value]="topping.account_id">{{topping.account_name}}
+                    </mat-option>
+                </mat-select>
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile *ngIf="show">
+                <mat-form-field class="example-full-width">
+                <mat-label>Assign DID</mat-label>
+                <mat-select (selectionChange)="change4($event.value)" multiple formControlName="did">
+                    <mat-option *ngFor="let topping of did" [value]="topping.did">{{topping.did_number}}</mat-option>
+                </mat-select>
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile *ngIf="callratiomode">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Call Ratio (1:)</mat-label>
+                  <mat-select formControlName="callratio">
+                    <mat-option value="1">1</mat-option>
+                    <mat-option value="2">2</mat-option>
+                    <mat-option value="3">3</mat-option>
+                    <mat-option value="4">4</mat-option>
+                    <mat-option value="5">5</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </mat-grid-tile>
+            <mat-grid-tile *ngIf="ivvr">
+                <mat-form-field class="example-full-width">
+                <mat-label>Total Agent to Receive Call  </mat-label>
+                <input matInput type="number" formControlName="totalagent" placeholder="Total Agent" value="" min="0" [max]="userlimit">
+                <mat-error *ngIf="addConForm.controls.campaignname.hasError('required')">
+                    Please enter valid number
+                </mat-error>
+                </mat-form-field>
+            </mat-grid-tile>
+            </mat-grid-list>
+            <mat-grid-list cols="3"  rowHeight="85px" (window:resize)="onResize($event)">
+            <mat-grid-tile>
+                <mat-form-field class="example-full-width">
+                <mat-label>Retry Unanswered Call?</mat-label>
+                <mat-select formControlName="retryunansweredcall">
+                    <mat-option value="no">No</mat-option>
+                    <mat-option value="yes">Yes</mat-option>
+                </mat-select>
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-form-field class="example-full-width">
+                <mat-label>Time Interval</mat-label>
+                <mat-select formControlName="retrytime">
+                    <mat-option value="1">1 Hour</mat-option>
+                    <mat-option value="1">2 Hour</mat-option>
+                    <mat-option value="1">3 Hour</mat-option>
+                    <mat-option value="1">4 Hour</mat-option>
+                    <mat-option value="1">5 Hour</mat-option>
+                    <mat-option value="1">6 Hour</mat-option>
+                    <mat-option value="1">7 Hour</mat-option>
+                    <mat-option value="1">8 Hour</mat-option>
+                </mat-select>
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <mat-form-field class="example-full-width">
+                <mat-label>Max Try</mat-label>
+                <input matInput formControlName="maxretry" placeholder="Max Try" value="" maxlength="3">
+                </mat-form-field>
+            </mat-grid-tile>
+            </mat-grid-list>
+        </div>
+        <div class="btn-sec">
+          <button mat-raised-button type="submit" color="primary" class="Update-btn">Save</button>&nbsp;
+          <button mat-raised-button type="button" class="Discard-btn" (click)="cancelDialog()">Cancel</button>
+        </div>
+    </form>
+    <br>
+</div>
+<!-- <div class="btn-sec">
+    <br>
+    <button mat-raised-button color="accent"  type="button" class="btn btn-default" (click)="cancelDialog()">Cancel</button>
+</div> -->

@@ -1,0 +1,255 @@
+<div mat-dialog-head class="dilog-head d-flex justify-content-between">
+    <h3 class="primary" *ngIf="addmode">Add Agent</h3>
+    <h3 class="primary" *ngIf="editmode">Edit Agent</h3>
+    <h3 class="primary" *ngIf="deletemode">Delete Agent</h3>
+    <h3 class="primary" *ngIf="passwordmode">Change Password</h3>
+    <div class="d-inline-block">
+        <a class="close" (click)="openDialog()"><i class="fi-rr-cross-small"></i></a>
+    </div>
+</div>
+<div *ngIf="addmode || editmode">
+    <form [formGroup]="addForm" (ngSubmit)="submit()">
+        <div mat-dialog-content>
+            <div class="row">
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>User Role</mat-label>
+                        <mat-select formControlName="user_role" required (selectionChange)="get_only_supervisior($event.value)">
+                            <mat-option value="">None</mat-option>
+                            <mat-option value="1">Agent</mat-option>
+                            <mat-option value="2">Supervisor</mat-option>
+                            <mat-option value="3">Digital User</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="addForm.controls.user_role.hasError('required')">
+                            Please select role
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2" >
+                    <mat-form-field appearance="outline">
+                        <mat-label>Username</mat-label>
+                        <div *ngIf="addmode" >
+                            <!--*ngIf="addmode"-->
+                            <input matInput placeholder="Username" formControlName="name" (keyup)="copy_user_name($event)" required>
+                        </div>
+                        <div *ngIf="editmode">
+                            <input matInput placeholder="Username" formControlName="name" required readonly>
+                        </div>
+                        <mat-error *ngIf="addForm.controls.name.hasError('required')">
+                            Please enter username
+                        </mat-error>
+                        <mat-error *ngIf="addForm.controls.name.hasError('pattern')">
+                            Username can be in lowercase and number only
+                        </mat-error>
+                        <mat-error *ngIf="addForm.controls.name.hasError('maxlength')">
+                            Maximum 12 character allowed
+                        </mat-error>
+                        <mat-error
+                            *ngIf="invalidUserName() && !addForm.controls.name.hasError('required') && !addForm.controls.name.hasError('pattern') && !addForm.controls.name.hasError('maxlength')">
+                            Username already exists. please try other
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2" *ngIf="addmode">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Password</mat-label>
+                        <input matInput placeholder="Password" formControlName="password" required>
+                        <button mat-icon-button matSuffix (click)="randomString()">
+                            <mat-icon>autorenew</mat-icon>
+                        </button>
+                        <mat-error *ngIf="addForm.controls.password.hasError('required')">
+                            Please enter password
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Email</mat-label>
+                        <input matInput placeholder="Email" formControlName="email" required>
+                        <mat-error *ngIf="addForm.controls.email.hasError('required')">
+                            Please enter email
+                        </mat-error>
+                        <mat-error *ngIf="addForm.controls.email.hasError('email')">
+                            Please enter valid email id
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Mobile</mat-label>
+                        <input matInput placeholder="Mobile" formControlName="mobile" (keyup)="checkmobilelength()">
+                        <mat-error *ngIf="addForm.controls.mobile.hasError('required')">
+                            Please enter mobile
+                        </mat-error>
+
+                        <mat-error *ngIf="invalidMobile()">
+                            Mobile No. already exists. please try other
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Full name</mat-label>
+                        <input matInput placeholder="Full name" formControlName="authorised_person_name"
+                            required>
+                        <mat-error *ngIf="addForm.controls.authorised_person_name.hasError('required')">
+                            Please enter  full name
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-radio-group formControlName="supervisor_only" *ngIf="only_supervisior">
+                        <div style="color:grey;">Supervisor Only</div>
+                        <mat-radio-button color="primary" style="padding:4px 0px 0px 0px;" [value]="0">No
+                        </mat-radio-button>
+                        <mat-radio-button color="primary" style="padding:4px 0px 0px 24px;" [value]="1">Yes
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-radio-group formControlName="showtype">
+                        <div style="color:grey;">Show mobile or ID ?</div>
+                        <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="0">Mobile
+                        </mat-radio-button>
+                        <mat-radio-button color="primary" style="padding:4px 0px 0px 24px;" [value]="1">ID
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                    <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2" *ngIf="is_deleted == 'yes'">
+                        <mat-radio-group formControlName="deleted">
+                            <div style="color:grey;">Is Delete</div>
+                            <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" value="no"
+                            (change)="checkusers($event.value)" >No
+                            </mat-radio-button>
+                            <mat-radio-button color="primary" style="padding:4px 0px 0px 24px;" value="yes"
+                            (change)="checkusers($event.value)"  >Yes
+                            </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                    <div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-2" style="color:red">
+                        {{msg1}}
+                    </div>
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-radio-group formControlName="status">
+                        <div style="color:grey;">Status</div>
+                        <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="0"
+                            (change)="checkuserlimit($event.value)">Active
+                        </mat-radio-button>
+                        <mat-radio-button color="primary" style="padding:4px 0px 0px 24px;" [value]="1"
+                            (change)="checkuserlimit($event.value)">Inactive
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <div class="col-xl-12 col-md-12 col-sm-12 col-12 mt-2" style="color:red">
+                    {{msg}}
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-radio-group formControlName="voip_status">
+                        <div style="color:grey;">VPN Support</div>
+                        <mat-radio-button color="primary" style="padding:4px 0px 0px 0px;" [value]="1">No
+                        </mat-radio-button>
+                        <mat-radio-button color="primary" style="padding:4px 0px 0px 24px;" [value]="0">Yes
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Start Time</mat-label>
+                        <input matInput placeholder="Start Time" type="time" formControlName="starttime" required>
+                        <mat-error *ngIf="addForm.controls.starttime.hasError('required')">
+                            Please enter start time
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>End Time</mat-label>
+                        <input matInput placeholder="End Time" type="time" formControlName="endtime" required>
+                        <mat-error *ngIf="addForm.controls.endtime.hasError('required')">
+                            Please enter end time
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Assign DID</mat-label>
+                        <mat-select formControlName="did_alloted">
+                            <mat-option value="">None</mat-option>
+                            <mat-option *ngFor="let d of didArr" [value]="d.did">{{d.did_number}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Assign Email Server</mat-label>
+                        <mat-select formControlName="emailserver_alloted">
+                            <mat-option value="">None</mat-option>
+                            <mat-option *ngFor="let server of emailserver" [value]="server.server_id">
+                                {{server.server_name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-radio-group formControlName="whatsup_access">
+                        <div style="color:grey;">Whatsapp Access</div>
+                        <mat-radio-button color="primary" style="padding:4px 0px 0px 0px;" [value]="1">No
+                        </mat-radio-button>
+                        <mat-radio-button color="primary" style="padding:4px 0px 0px 24px;" [value]="0">Yes
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <!-- <div class="col-xl-6 col-md-6 col-sm-6 col-12 mt-2">
+                    <mat-radio-group formControlName="monitor_agent">
+                        <div style="color:grey;">Monitor Agent</div>
+                        <mat-radio-button color="primary" style="padding:4px 0px 0px 0px;" [value]="0">No
+                        </mat-radio-button>
+                        <mat-radio-button color="primary" style="padding:4px 0px 0px 24px;" [value]="1">Yes
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </div> -->
+            </div>
+        </div>
+        <div class="btn-sec" mat-dialog-actions>
+            <button mat-raised-button type="submit" color="primary" class="Update-btn"
+                [disabled]="isDisabled">Save</button>
+            <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+
+        </div>
+    </form>
+</div>
+<div *ngIf="passwordmode">
+    <form [formGroup]="passwordForm">
+        <div mat-dialog-content>
+            <div class="row mt-3 mb-2">
+                <div class="col-sm-12 col-12">
+                    <mat-form-field appearance="outline">
+                        <mat-label>New Password</mat-label>
+                        <input matInput placeholder="New Password" formControlName="newpassword" required>
+                        <button mat-icon-button matSuffix (click)="randomString()">
+                            <mat-icon>autorenew</mat-icon>
+                        </button>
+                        <mat-error *ngIf="passwordForm.controls.newpassword.hasError('required')">
+                            Please enter new password
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="btn-sec" mat-dialog-actions>
+            <button mat-raised-button type="button" color="primary" class="Update-btn"
+                (click)="changepassword()">Change</button>
+        </div>
+    </form>
+</div>
+<div *ngIf="deletemode">
+    <h4 mat-dialog-content>
+        Are you sure to delete this ?
+    </h4>
+    <div class="btn-sec" mat-dialog-actions>
+        <button mat-raised-button type="button" color="primary" class="Update-btn"
+            (click)="deleteData(agentid)">Delete</button>
+        <button mat-raised-button type="button" class="Discard-btn" (click)="openDialog()">Cancel</button>
+    </div>
+</div>

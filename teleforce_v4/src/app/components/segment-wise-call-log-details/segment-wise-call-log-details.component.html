@@ -1,0 +1,202 @@
+<div class="warap-height pt-4">
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+
+        <!-- Page Heading -->
+        <h1 class="h3 mb-2 text-gray-800">Segment Wise Call Log Report</h1>
+        <p class="mb-2"></p>
+        <form [formGroup]="searchform">  
+            <div class="row">
+                <div class="col-sm-3">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Choose a date</mat-label>
+                        <input matInput placeholder="From Date" [matDatepicker]="startpicker" formControlName="startdate" required>
+                        <mat-datepicker-toggle matSuffix [for]="startpicker"></mat-datepicker-toggle>
+                        <mat-datepicker #startpicker tpicker></mat-datepicker>
+                        <mat-error *ngIf="searchform.controls.startdate.hasError('required')">
+                            Please select From Date
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-3">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Choose a date</mat-label>
+                        <input matInput placeholder="To Date" [matDatepicker]="endpicker" formControlName="enddate" required>
+                        <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
+                        <mat-datepicker #endpicker tpicker></mat-datepicker>
+                        <mat-error *ngIf="searchform.controls.enddate.hasError('required')">
+                            Please select To Date
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-sm-3">
+                    
+                        <mat-form-field appearance="outline">
+                          <mat-label>Segment</mat-label>
+                          <mat-select formControlName="category">
+                            <mat-option value="">All</mat-option>
+                            <mat-option *ngFor="let type of category" value="{{type.cont_id}}">{{type.name}}</mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                  </div>
+
+                <div class="col-sm-3">
+                    <button mat-raised-button class="mt-2" type="submit" (click)="searchData()" [disabled]="isDisabled">Search</button>&nbsp;
+                    <button *ngIf="msg!=''" mat-raised-button class="mt-2" type="submit" (click)="requestData()">Request Report</button>
+
+                </div>
+            </div>      
+        </form>
+        <p *ngIf="msg!=''" style="color:red">{{msg}}</p>
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4 mt-3">
+
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table width="100%">
+                        <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+                        <div fxLayout fxLayoutAlign="center center" class="mt-2">
+                            <button mat-raised-button color="primary"
+                                (click)="exporter.exportTable('csv', {fileName:'segement-wise-call-Report', sheet: 'sheet_name'})">CSV</button>
+                        </div><br>
+                        <mat-table class="lessons-table mat-elevation-z8" matTableExporter #exporter="matTableExporter" [dataSource]="dataSource">
+                            
+                            <ng-container matColumnDef="id">
+        
+                                <mat-header-cell *matHeaderCellDef >Sr. No</mat-header-cell>
+                    
+                                <mat-cell class="description-cell" *matCellDef="let row;let i = index;" data-label="id">
+                                {{i+1+(paginator.pageIndex * paginator.pageSize)}}</mat-cell>
+                    
+                            </ng-container>
+                            
+                            <ng-container matColumnDef="DID">
+
+                                <mat-header-cell *matHeaderCellDef > DID </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.DID}}
+                                </mat-cell>
+
+                            </ng-container>  
+                            <ng-container matColumnDef="AgentName">
+
+                                <mat-header-cell *matHeaderCellDef > AgentName </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.AgentName}}
+                                </mat-cell>
+
+                            </ng-container> 
+                            <ng-container matColumnDef="CallStartTime">
+
+                                <mat-header-cell *matHeaderCellDef > CallStartTime </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.CallStartTime  | date: 'dd-MM-yyyy H:mm:s':timezone}}
+                                </mat-cell>
+
+                            </ng-container> 
+                            <ng-container matColumnDef="CallerName">
+
+                                <mat-header-cell *matHeaderCellDef > CallerName </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.CallerName}}
+                                </mat-cell>
+
+                            </ng-container> 
+                            <ng-container matColumnDef="CallerNumber">
+
+                                <mat-header-cell *matHeaderCellDef > CallerNumber </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.CallerNumber}}
+                                </mat-cell>
+
+                            </ng-container> 
+                            <ng-container matColumnDef="CallTalkTime">
+
+                                <mat-header-cell *matHeaderCellDef > CallTalkTime </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{secondsToHms(row.CallTalkTime)}}
+                                </mat-cell>
+
+                            </ng-container> 
+                            <ng-container matColumnDef="AgentTalkTime">
+
+                                <mat-header-cell *matHeaderCellDef > AgentTalkTime </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{secondsToHms(row.AgentTalkTime)}}
+                                </mat-cell>
+
+                            </ng-container> 
+                            
+                            <ng-container matColumnDef="CallStatus">
+
+                                <mat-header-cell *matHeaderCellDef > CallStatus </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.CallStatus }}
+                                </mat-cell>
+
+                            </ng-container>
+                            <ng-container matColumnDef="AgentStatus">
+
+                                <mat-header-cell *matHeaderCellDef > AgentStatus </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.AgentStatus }}
+                                </mat-cell>
+
+                            </ng-container>
+                            <ng-container matColumnDef="CallType">
+
+                                <mat-header-cell *matHeaderCellDef > CallType </mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.CallType  | titlecase}}
+                                </mat-cell>
+
+                            </ng-container>
+                            <ng-container matColumnDef="segment_name">
+
+                                <mat-header-cell *matHeaderCellDef > Segment Name</mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.segment_name   | titlecase}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                            <ng-container matColumnDef="DisconnectedBy">
+
+                                <mat-header-cell *matHeaderCellDef > DisconnectedBy</mat-header-cell>
+
+                                <mat-cell class="description-cell" *matCellDef="let row">
+                                    {{row.DisconnectedBy   | titlecase}}
+                                </mat-cell>
+
+                            </ng-container>
+
+                           
+
+                            
+                            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+                            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+                        </mat-table>
+                        <mat-paginator #paginator [length]="Length" [pageSize]="50" [pageSizeOptions]="[50,100,500]">
+                        </mat-paginator>
+                    </table> 
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /.container-fluid -->
+</div>

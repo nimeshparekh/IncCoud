@@ -1,0 +1,736 @@
+<div class="page-maindiv warap-height post-management">
+    <div id="overlay"></div>
+    <div class="row m-0">
+        <div class="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-4 p-0">
+            <div class="post-mng-sidenav">
+                <ul class="post-mng-sidenav-list">
+                    <li class="active" routerLink="/post-management">
+                        <i class="fa fa-paper-plane-o" aria-hidden="true"></i> <span>Published Post</span>
+                    </li>
+                    <li routerLink="/scheduled-post">
+                        <i class="fa fa-clock-o" aria-hidden="true"></i> <span>Scheduled Post</span>
+                    </li>
+                    <!-- <li routerLink="/draft-post" >
+                        <i class="fa fa-floppy-o" aria-hidden="true"></i> <span>Draft Post</span>
+                    </li> -->
+                    <li routerLink="/createpost">
+                        <i class="fa fa-plus" aria-hidden="true"></i> <span>Create Post</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-xl-10 col-lg-10 col-md-9 col-sm-8 col-8 p-0">
+            <div class="">
+                <mat-tab-group (selectedTabChange)="posttabClick($event)" animationDuration="1000ms">
+                    <mat-tab label="{{channel.channel_id}}-{{channel.access_media}}" *ngFor="let channel of all_channels" > 
+                        <ng-template mat-tab-label>
+                            <div class="table-thumnail">
+                                <img class="table-thum-channel-img" [src]="checkimagepath(media_path+channel.channel_thumbnail)">
+                                <img class="tablesocial-img" src="assets/images/icon/{{channel.access_media}}.png">
+                            </div>
+                        </ng-template>
+                        <div class="card-body">
+                            <div class="my">
+                                <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+                                <div class="table-responsive">
+                                    <table mat-table [dataSource]="dataSource">
+
+                                        <!--- Note that these columns can be defined in any order.
+                                            The actual rendered columns are set as a property on the row definition" -->
+                                    
+                                        <!-- published-on Column -->
+                                        <ng-container matColumnDef="publishedOn">
+                                            <th mat-header-cell *matHeaderCellDef> Published On </th>
+                                            <td mat-cell *matCellDef="let element"> 
+                                                <span>{{(element.created_time) | date:'medium'}}</span>
+                                            </td>
+                                        </ng-container>
+                                    
+                                        <!-- post-content Column -->
+                                        <ng-container matColumnDef="postContent">
+                                            <th mat-header-cell *matHeaderCellDef> Post Content </th>
+                                            <td mat-cell *matCellDef="let element"> 
+                                                
+                                                    <span class="tbl-post-img ml-1" *ngIf="element.full_picture" >
+                                                        <img [src]="element.full_picture" >
+                                                        <!-- <span>+1</span> -->
+                                                        <video  width="100%" height="auto" *ngIf="element.attachments && element.attachments.data[0].type=='video_inline'">
+                                                            <source [src]="element.attachments.data[0].media.source"  type='video/mp4'>
+                                                                Your browser does not support the video tag.
+                                                        </video>
+                                                    </span> 
+                                                    <div *ngIf="element && (!element.message) && (!element.full_picture) && element.attachments" >
+                                                        <span class="tbl-post-img ml-1">
+                                                            <img [src]="element.attachments.data[0].media.image.src" *ngIf="element.attachments.data[0].type!='video_inline'">
+                                                            <!-- <span>+1</span> -->
+                                                            <!-- <video  width="100%" height="auto" controls *ngIf="data.last_page[0].attachments.data[0].type=='video_inline'">
+                                                                <source [src]="data.last_page[0].attachments.data[0].media.source"  type='video/mp4'>
+                                                                    Your browser does not support the video tag.
+                                                            </video> -->
+                                                        </span>
+                                                        <span class="tbl-post-text">{{element.attachments.data[0].title}}..</span>
+                                                    </div> 
+                                                    <span class="tbl-post-text" *ngIf="element.message" >{{element.message.substring(0,50)}}..</span>
+                                                
+                                            </td>
+                                        </ng-container>
+                                    
+                                        <!-- interaction Column -->
+                                        <ng-container matColumnDef="interaction">
+                                            <th mat-header-cell *matHeaderCellDef> Interaction </th>
+                                            <td mat-cell *matCellDef="let element"> 
+                                                
+                                                    <span *ngIf="element.likes">{{element.likes}}</span>
+                                                    <span *ngIf="!element.likes">0</span>    
+                                                
+                                               
+                                            </td>
+                                        </ng-container>
+                                    
+                                        <!-- published-by Column -->
+                                        <ng-container matColumnDef="publishedBy">
+                                            <th mat-header-cell *matHeaderCellDef> Published By </th>
+                                            <td mat-cell *matCellDef="let element">
+                                                <span *ngIf="!element.application" >
+                                                    <img class="datatablesocial-img" src="assets/images/icon/{{tabchannelmedia}}.png">
+                                                </span>
+                                                <span *ngIf="element.application" > Via {{removeTags(element.application)}}</span>    
+                                            
+                                               
+                                            </td>
+                                        </ng-container>
+
+                                        <!-- action Column -->
+                                        <ng-container matColumnDef="action">
+                                            <th mat-header-cell *matHeaderCellDef> Action </th>
+                                            <td mat-cell *matCellDef="let element"> 
+                                                <div class="d-flex">
+                                                    <div>
+                                                        <span class="action" (click)="openRightComponent(element,tabchannelmedia,channel)"><i class="fi-rr-stats"></i></span>
+                                                    </div>
+                                                    <div>
+                                                        <span class="action" (click)="openLinktoPost(element,tabchannelmedia)"><i class="fi-rr-link"></i></span>
+                                                    </div>
+                                                    <div class="action" *ngIf="tabchannelmedia=='twitter'">
+                                                        <span *ngIf="removeTags(element.application)=='TeleDigital'" title="Delete" color="warn">
+                                                            <!-- <mat-icon (click)="delete_twitter(element,channel.channel_id)">delete</mat-icon> -->
+                                                            <i (click)="delete_twitter(element,channel.channel_id)" class="fi-rr-trash"></i>
+                                                        </span>
+                                                    </div>
+                                                    <div class="action" *ngIf="tabchannelmedia=='facebook'">
+                                                        <span *ngIf="element.application=='Garuda Advertising Pvt. Ltd.'" title="Delete" color="warn">
+                                                            <!-- <mat-icon (click)="delete_fb(element,channel.channel_id)">delete</mat-icon> -->
+                                                            <i (click)="delete_fb(element,channel.channel_id)" class="fi-rr-trash"></i>
+                                                        </span>
+                                                    </div>  
+                                                </div>
+                                            </td>
+                                        </ng-container>
+                                    
+                                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                    </table>
+                                </div>
+                                <mat-paginator #contactpaginator [length]="contactLength" [pageSize]="10" [pageSizeOptions]="[10,20,50,100,500]" showFirstLastButtons="true">
+                                </mat-paginator>
+                            </div>
+                        </div>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>      
+        </div>
+    </div>
+    
+
+</div>
+
+
+
+<!--Side Navigations-->
+<div id="right-sidenav-postmng" class="right-sidenav">
+    <div class="right-sidenave-head">
+        <h5 class="right-sidenav-head-h float-left mt-1">
+            Post Detail
+        </h5>
+        <div class="right-sidenav-closebtn" (click)="RightSidenavPostmngClose()">
+            <i class="fi-rr-cross-circle"></i>
+        </div>
+    </div>
+    <div class="right-sidenave-body">
+        <mat-tab-group>
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    Post
+                </ng-template> 
+                <div class="sidenave-post-preview">
+                    <div class="d-flex">
+                        <div class="table-thumnail">
+                            <!-- <img class="table-thum-channel-img"  [src]="previewdata.pfp_thumbnail"> -->
+                            <img class="table-thum-channel-img"  src="assets/img/social-channel.png">
+                            <img class="tablesocial-img" *ngIf = "previewdata.access_media=='linkedin'" src="assets/images/icon/1.png">
+                            <img class="tablesocial-img" *ngIf = "previewdata.access_media=='instagram'" src="assets/images/icon/2.png">
+                            <img class="tablesocial-img" *ngIf = "previewdata.access_media=='facebook'" src="assets/images/icon/3.png">
+                            <img class="tablesocial-img" *ngIf = "previewdata.access_media=='twitter'" src="assets/images/icon/4.png">
+                            <img class="tablesocial-img" *ngIf = "previewdata.access_media=='youtube'" src="assets/images/icon/youtube.png">
+                        </div>
+                        <div class="table-channel-name">
+                            {{previewdata.name}}
+                            <p class="post-time">
+                                {{previewdata.create_time | date: 'medium'}}
+                            </p>
+                        </div>
+                    </div> 
+                    <div class="post-content">
+                        <p>{{previewdata.message}}</p>
+                        <!-- "previewdata.image == !''"  -->
+                        <img class="post-img" *ngIf="previewdata.image && !(previewdata.video)" [src]="previewdata.image">
+                        <video  width="100%" height="auto" controls *ngIf="previewdata.video">
+                            <source [src]="previewdata.video"  type='video/mp4'>
+                                Your browser does not support the video tag.
+                        </video>
+                    </div> 
+                    <div class="like-section d-flex">
+                        <div class="d-flex">
+                            <!-- <p class="icon"><i class="fi-rr-heart"></i></p> <p>{{previewdata.likes}} Likes</p> -->
+                            <p class="icon">
+                                <input type="checkbox" id="checkbox" (change)='clickedLike(previewdata.element.id,previewdata.access_media)'/>
+                                <!--like button code-->
+                                <label for="checkbox">
+                                    <svg id="heart-svg" viewBox="467 392 58 57" xmlns="http://www.w3.org/2000/svg">
+                                        <g id="Group" fill="none" fill-rule="evenodd" transform="translate(467 392)">
+                                        <path d="M29.144 20.773c-.063-.13-4.227-8.67-11.44-2.59C7.63 28.795 28.94 43.256 29.143 43.394c.204-.138 21.513-14.6 11.44-25.213-7.214-6.08-11.377 2.46-11.44 2.59z" id="heart" fill="#AAB8C2"/>
+                                        <circle id="main-circ" fill="#E2264D" opacity="0" cx="29.5" cy="29.5" r="1.5"/>
+                                
+                                        <g id="grp7" opacity="0" transform="translate(7 6)">
+                                            <circle id="oval1" fill="#9CD8C3" cx="2" cy="6" r="2"/>
+                                            <circle id="oval2" fill="#8CE8C3" cx="5" cy="2" r="2"/>
+                                        </g>
+                                
+                                        <g id="grp6" opacity="0" transform="translate(0 28)">
+                                            <circle id="oval1" fill="#CC8EF5" cx="2" cy="7" r="2"/>
+                                            <circle id="oval2" fill="#91D2FA" cx="3" cy="2" r="2"/>
+                                        </g>
+                                
+                                        <g id="grp3" opacity="0" transform="translate(52 28)">
+                                            <circle id="oval2" fill="#9CD8C3" cx="2" cy="7" r="2"/>
+                                            <circle id="oval1" fill="#8CE8C3" cx="4" cy="2" r="2"/>
+                                        </g>
+                                
+                                        <g id="grp2" opacity="0" transform="translate(44 6)">
+                                            <circle id="oval2" fill="#CC8EF5" cx="5" cy="6" r="2"/>
+                                            <circle id="oval1" fill="#CC8EF5" cx="2" cy="2" r="2"/>
+                                        </g>
+                                
+                                        <g id="grp5" opacity="0" transform="translate(14 50)">
+                                            <circle id="oval1" fill="#91D2FA" cx="6" cy="5" r="2"/>
+                                            <circle id="oval2" fill="#91D2FA" cx="2" cy="2" r="2"/>
+                                        </g>
+                                
+                                        <g id="grp4" opacity="0" transform="translate(35 50)">
+                                            <circle id="oval1" fill="#F48EA7" cx="6" cy="5" r="2"/>
+                                            <circle id="oval2" fill="#F48EA7" cx="2" cy="2" r="2"/>
+                                        </g>
+                                
+                                        <g id="grp1" opacity="0" transform="translate(24)">
+                                            <circle id="oval1" fill="#9FC7FA" cx="2.5" cy="3" r="2"/>
+                                            <circle id="oval2" fill="#9FC7FA" cx="7.5" cy="2" r="2"/>
+                                        </g>
+                                        </g>
+                                    </svg>
+                                </label>
+                            </p> 
+                            <p>{{previewdata.likes}} Likes</p>
+                        </div>
+                        <div class="d-flex ml-2">
+                            <p class="icon" style="margin-top: -2px;">
+                                <i class="fa fa-comment" style="color: #aab8c2;
+                                width: 25px;
+                                font-size: 16px;
+                                margin-left: 14px;" aria-hidden="true"></i>
+                            </p> 
+                            <p>{{previewdata.c_count}} Comments</p>
+                        </div>
+                        <!--<button  *ngIf = "previewdata.access_media=='facebook' && post_insight[page_index][1].likes.summary.has_liked" (click)="fb_unlike(previewdata.object_id,previewdata.channel_id)">Unlike</button>
+                        <button  *ngIf = "previewdata.access_media=='linkedIn'" (click)="li_like(previewdata.object_id,previewdata.channel_id)">Like</button>
+                        <button  *ngIf = "previewdata.access_media=='twitter' && !(twit_insight[page_index].last_page.favorited)" (click)="like_tweet(previewdata.channel_id,previewdata.object_id)">Like</button>
+                        <button  *ngIf = "previewdata.access_media=='twitter' && twit_insight[page_index].last_page.favorited" (click)="unlike_tweet(previewdata.channel_id,previewdata.object_id)">Unlike</button> -->
+                    </div>
+                    <!--FACEBOOK-->
+                    <div *ngIf="previewdata.access_media=='facebook'">
+                        <div class="comment-section" *ngFor='let comment of previewdata.comments,let outer_index = index'>
+                            <div class="display-comments">
+                                <div class="table-thumnail d-flex">
+                                    <img class="table-thum-channel-img" [src]="comment.from.picture.data.url">
+                                    <p class="cmt-username">
+                                        {{comment.from.name}}
+                                    </p>
+                                </div>
+                                <div class="public-cmt">
+                                    <p class="public-cmt-p">{{comment.message}} </p>
+                                    <p class="public-cmt-p-action">
+                                        <span>{{comment.created_time | date: 'medium'}}</span> · <span style="color: #1fb7e8;" *ngIf='comment.like_count'>{{comment.like_count}} </span> <span style="color: #1fb7e8;" *ngIf='comment.can_like && !(comment.user_likes)' (click)="fb_publish_like(comment.id)">Like</span><span style="color: #1fb7e8;" *ngIf='comment.user_likes' (click)="fb_unlike(comment.id)">Unlike</span> · <span style="color: #1fb7e8;" *ngIf='comment.can_comment' (click)='replyToggle(comment.id)'>Reply</span> 
+                                        <!-- · <span *ngIf='comment.can_remove'><i>Delete</i></span> -->
+                                    </p>
+                                    <div [id]="'replyID_'+comment.id" style="display:none;">
+                                        <div class="d-flex">
+                                            <!-- <div class="table-thumnail">
+                                                <img class="table-thum-channel-img" [src]="previewdata.pfp_thumbnail">
+                                            </div> -->
+                                            <div class="comment-input">
+                                                <textarea placeholder="Comment here" class="comment-input-box" name=""  rows="2" [id]="'txtid_'+comment.id"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="cmnt-btn">
+                                            <input type="checkbox" [id]="'mention_'+comment.id"> Mention
+                                            <button mat-flat-button (click)='replyHide(comment.id)'>Cancel</button>
+                                            <button mat-flat-button color="primary" (click)='postComment_FB(comment.id,comment.from)'>Post</button>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="comment.comments">
+                                        <div class="comment-reply-card" *ngFor='let reply of comment.comments.data,let inner_index = index'>
+                                            <div class="d-flex">
+                                                <img class="table-thum-channel-img" [src]="reply.from.picture.data.url">
+                                                <p class="cmt-username">
+                                                    {{reply.from.name}}
+                                                </p>
+                                            </div>
+                                            <div class="public-cmt">
+                                                <p class="public-cmt-p">{{reply.message}} </p>
+                                                <p class="public-cmt-p-action">
+                                                    <span>{{reply.created_time | date: 'medium'}}</span> · <span style="color: #1fb7e8;" *ngIf='reply.like_count'>{{reply.like_count}} </span> <span style="color: #1fb7e8;" *ngIf='reply.can_like && !(reply.user_likes)' (click)="fb_publish_like(reply.id) ">Like</span> <span style="color: #1fb7e8;" *ngIf='reply.user_likes' (click)="fb_unlike(reply.id)">Unlike</span>· <span style="color: #1fb7e8;" *ngIf='comment.can_comment' (click)='replyToggle(reply.id)'>Reply</span>
+                                                     <!-- · <span *ngIf='reply.can_remove'><i>Delete</i></span> -->
+                                                </p>
+                                            </div>
+                                            <div [id]="'replyID_'+reply.id" style="display:none;">
+                                                <div class="d-flex">
+                                                    <!-- <div class="table-thumnail">
+                                                        <img class="table-thum-channel-img" [src]="previewdata.pfp_thumbnail">
+                                                    </div> -->
+                                                    <div class="comment-input">
+                                                        <textarea placeholder="Comment here" class="comment-input-box" name=""  rows="2" [id]="'txtid_'+reply.id"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="cmnt-btn">
+                                                    <input type="checkbox" [id]="'mention_'+reply.id"> Mention
+                                                    <button mat-flat-button (click)='replyHide(reply.id)'>Cancel</button>
+                                                    <button mat-flat-button color="primary" (click)="postComment_FB(reply.id,reply.from)">Post</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex">
+                            <!-- <div class="table-thumnail">
+                                <img class="table-thum-channel-img mt-1" [src]="previewdata.pfp_thumbnail">
+                            </div> -->
+                            <div class="comment-input">
+                                <textarea placeholder="Comment here" class="comment-input-box" name=""  rows="2" [id]="'txtid_'+previewdata.element.id"></textarea>
+                            </div>
+                        </div>
+                        <div class="cmnt-btn">
+                            <input type="checkbox" [id]="'mention_'+previewdata.element.id" (change)="fb_mention_toggle('mention_list_'+previewdata.element.id)"> Mention
+                            <!-- <select [id]="'mention_list_'+previewdata.element.id" style="display:none;" (change)='selectMentionee($event.target.value)'>
+                                <option selected disabled>Select User/Page to mention</option>
+                                <option *ngFor='let commentor of fb_mention_list,let i = index' [value]='i'>{{commentor}}</option> 
+                            </select> -->
+                            <mat-form-field [id]="'mention_list_'+previewdata.element.id" style="display: none;">
+                                <mat-label>Select User/Page to mention</mat-label>
+                                <mat-select [formControl]='mentionees' multiple>
+                                  <mat-option *ngFor="let commentor of fb_mention_list,let i = index" [value]="i">{{commentor}}</mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                            <button mat-flat-button>Cancel</button>
+                            <button mat-flat-button color="primary" (click)="postComment_FB(previewdata.element.id,mentionees['value'])">Post</button>
+                        </div> 
+                    </div>
+                     <!--LINKEDIN-->
+                    <div *ngIf="previewdata.access_media=='linkedin'">
+                        <div class="comment-section" *ngFor='let comment of previewdata.comments,let outer_index = index'>
+                            <div class="display-comments">
+                                <div class="table-thumnail d-flex">
+                                    <img class="table-thum-channel-img" *ngIf="comment['actor~'].profilePicture" [src]="comment['actor~'].profilePicture['displayImage~'].elements[2].identifiers[0].identifier">
+                                    <img class="table-thum-channel-img" *ngIf="comment['actor~'].logoV2" [src]="comment['actor~'].logoV2['original~'].elements[1].identifiers[0].identifier">
+                                    <p class="cmt-username" *ngIf='comment["actor~"].localizedName'>
+                                        {{comment["actor~"].localizedName}}
+                                    </p>
+                                    <p class="cmt-username" *ngIf='comment["actor~"].localizedFirstName && comment["actor~"].localizedLastName'>
+                                        {{comment["actor~"].localizedFirstName +' '+ comment["actor~"].localizedLastName}}
+                                    </p>
+                                </div>
+                                <div class="public-cmt">
+                                    <p class="public-cmt-p">{{comment.message.text}}</p>
+                                    <p class="public-cmt-p-action">
+                                        <span>{{comment.created.time | date:'medium'}}</span> · <span style="color: #1fb7e8;" *ngIf="comment.likesSummary">{{comment.likesSummary.aggregatedTotalLikes}}</span> <span style="color: #1fb7e8;" (click)="li_like(comment['$URN'],previewdata.channel.channel_id,previewdata.channel)"> Like</span> · <span style="color: #1fb7e8;" (click)="replyToggle(comment['$URN'])">Reply</span>
+                                    </p>
+                                     <!-- <div *ngIf="comment.comments">
+                                        <div class="comment-reply-card" *ngFor='let reply of comment.comments.data,let inner_index = index'>
+                                            <div class="d-flex">
+                                                <img class="table-thum-channel-img" [src]="reply.from.picture.data.url">
+                                                <p class="cmt-username">
+                                                    {{reply.from.name}}
+                                                </p>
+                                            </div>
+                                            <div class="public-cmt">
+                                                <p class="public-cmt-p">{{reply.message}} </p>
+                                                <p class="public-cmt-p-action">
+                                                    <span>{{reply.created_time}}</span> · <span style="color: #1fb7e8;" *ngIf='reply.like_count'>{{reply.like_count}} </span> <span style="color: #1fb7e8;" *ngIf='reply.can_like'>Like</span> · <span style="color: #1fb7e8;" *ngIf='comment.can_comment'>Reply</span> · <span *ngIf='reply.can_remove'><i>Delete</i></span>
+                                                </p>
+                                            </div>
+                                            <div>
+                                                <div class="d-flex">
+                                                    <div class="table-thumnail">
+                                                        <img class="table-thum-channel-img" [src]="previewdata.pfp_thumbnail">
+                                                    </div>
+                                                    <div class="comment-input">
+                                                        <textarea placeholder="Comment here" class="comment-input-box" name="" id="" rows="2" [(ngModel)]='comment_message'></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="cmnt-btn">
+                                                    <button mat-flat-button>Cancel</button>
+                                                    <button mat-flat-button color="primary" (click)='postComment(reply.id,previewdata.channel_id)'>Post</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>  -->
+                                    <div [id]="'replyID_'+comment['$URN']" style="display: none;">
+                                        <div class="d-flex">
+                                            <!-- <div class="table-thumnail">
+                                                <img class="table-thum-channel-img" [src]="previewdata.pfp_thumbnail">
+                                            </div> -->
+                                            <div class="comment-input">
+                                                <textarea placeholder="Comment here" class="comment-input-box" [id]="'txtid_'+comment['$URN']" rows="2"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="cmnt-btn">
+                                            <button mat-flat-button (click)="replyHide(comment['$URN'])">Cancel</button>
+                                            <button mat-flat-button color="primary" (click)="postComment_LI(comment['$URN'],previewdata.channel.channel_id)">Post</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex">
+                            <!-- <div class="table-thumnail">
+                                <img class="table-thum-channel-img mt-1" [src]="previewdata.pfp_thumbnail">
+                            </div> -->
+                            <div class="comment-input">
+                                <textarea placeholder="Comment here" class="comment-input-box" name="" id="" rows="2" [id]="'txtid_'+previewdata.element.activity"></textarea>
+                            </div>
+                        </div>
+                        <div class="cmnt-btn">
+                            <button mat-flat-button>Cancel</button>
+                            <button mat-flat-button color="primary" (click)='postComment_LI(previewdata.element.activity,previewdata.channel.channel_id)'>Post</button>
+                            <!-- (click)='postComment_LI(previewdata.object_id,previewdata.channel_id)' -->
+                        </div>
+                    </div>
+                    <!--INSTAGRAM-->
+                    <div *ngIf="previewdata.access_media=='instagram'">
+                        <div class="comment-section" *ngFor='let comment of previewdata.comments,let outer_index = index'>
+                            <div class="display-comments">
+                                <div class="table-thumnail d-flex">
+                                    <img class="table-thum-channel-img"  [src]="">
+                                    <p class="cmt-username">
+                                        {{comment.username}}
+                                    </p>
+                                </div>
+                                <div class="public-cmt">
+                                    <p class="public-cmt-p">{{comment.text}} </p>
+                                    <p class="public-cmt-p-action">
+                                        <span>{{comment.timestamp | date:'medium'}}</span> · <span style="color: #1fb7e8;" *ngIf='comment.like_count'>{{comment.like_count}} </span> <span style="color: #1fb7e8;">Like</span> · <span style="color: #1fb7e8;" (click)='replyToggle(comment.id)'>Reply</span>
+                                    </p>
+                                    <div [id]="'replyID_'+comment.id" style="display:none;">
+                                        <div class="d-flex">
+                                            <!-- <div class="table-thumnail">
+                                                <img class="table-thum-channel-img" [src]="previewdata.pfp_thumbnail">
+                                            </div> -->
+                                            <div class="comment-input">
+                                                <textarea placeholder="Comment here" class="comment-input-box" name="" rows="2"  [id]="'txtid_'+comment.id"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="cmnt-btn">
+                                            <button mat-flat-button (click)='replyHide(comment.id)'>Cancel</button>
+                                            <button mat-flat-button color="primary" (click)="instagram_post_comment_reply(previewdata.channel.channel_id,previewdata.element.id,comment.id)" >Post</button>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="comment.replies">
+                                        <div class="comment-reply-card" *ngFor='let reply of comment.replies.data,let inner_index = index'>
+                                            <div class="d-flex">
+                                                <img class="table-thum-channel-img" [src]="">
+                                                <p class="cmt-username">
+                                                    {{reply.username}}
+                                                </p>
+                                            </div>
+                                            <div class="public-cmt">
+                                                <p class="public-cmt-p">{{reply.text}} </p>
+                                                <p class="public-cmt-p-action">
+                                                    <span>{{reply.timestamp | date:'medium'}}</span> · <span style="color: #1fb7e8;" *ngIf='reply.like_count'>{{reply.like_count}} </span> <span style="color: #1fb7e8;">Like</span> · <span style="color: #1fb7e8;" (click)='replyToggle(reply.id)'>Reply</span>
+                                                </p>
+                                            </div>
+                                            <div [id]="'replyID_'+reply.id" style="display:none;">
+                                                <div class="d-flex">
+                                                    <!-- <div class="table-thumnail">
+                                                        <img class="table-thum-channel-img" [src]="previewdata.pfp_thumbnail">
+                                                    </div> -->
+                                                    <div class="comment-input">
+                                                        <textarea placeholder="Comment here" class="comment-input-box" name="" rows="2"  [id]="'txtid_'+reply.id"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="cmnt-btn">
+                                                    <button mat-flat-button (click)='replyHide(reply.id)'>Cancel</button>
+                                                    <button mat-flat-button color="primary" (click)='instagram_post_comment_reply(previewdata.channel.channel_id,previewdata.element.id,reply.id)'>Post</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex">
+                            <!-- <div class="table-thumnail">
+                                <img class="table-thum-channel-img mt-1" [src]="previewdata.pfp_thumbnail">
+                            </div> -->
+                            <div class="comment-input">
+                                <textarea placeholder="Comment here" class="comment-input-box" name=""  rows="2" [id]="'txtid_'+previewdata.element.id"></textarea>
+                            </div>
+                        </div>
+                        <div class="cmnt-btn">
+                            <button mat-flat-button>Cancel</button>
+                            <button mat-flat-button color="primary" (click)='instagram_post_comment(previewdata.channel.channel_id, previewdata.element.id)'>Post</button>
+                        </div> 
+                    </div> 
+                    <!-- TWITTER -->
+                    <div *ngIf="previewdata.access_media=='twitter'">
+                        <!-- <div class="comment-section" *ngFor='let comment of ins_comments,let outer_index = index'>
+                            <div class="display-comments">
+                                <div class="table-thumnail d-flex">
+                                    <img class="table-thum-channel-img"  [src]="">
+                                    <p class="cmt-username">
+                                        {{comment.username}}
+                                    </p>
+                                </div>
+                                <div class="public-cmt">
+                                    <p class="public-cmt-p">{{comment.text}} </p>
+                                    <p class="public-cmt-p-action">
+                                        <span>{{comment.timestamp | date:'medium'}}</span> · <span style="color: #1fb7e8;" *ngIf='comment.like_count'>{{comment.like_count}} </span> <span style="color: #1fb7e8;">Like</span> · <span style="color: #1fb7e8;" *ngIf='comment.can_comment'>Reply</span> · <span *ngIf='comment.can_remove'><i>Delete</i></span>
+                                    </p>
+                                    <div *ngIf="comment.replies">
+                                        <div class="comment-reply-card" *ngFor='let reply of comment.replies.data,let inner_index = index'>
+                                            <div class="d-flex">
+                                                <img class="table-thum-channel-img" [src]="">
+                                                <p class="cmt-username">
+                                                    {{reply.username}}
+                                                </p>
+                                            </div>
+                                            <div class="public-cmt">
+                                                <p class="public-cmt-p">{{reply.text}} </p>
+                                                <p class="public-cmt-p-action">
+                                                    <span>{{reply.timestamp | date:'medium'}}</span> · <span style="color: #1fb7e8;" *ngIf='reply.like_count'>{{reply.like_count}} </span> <span style="color: #1fb7e8;">Like</span> · <span style="color: #1fb7e8;" *ngIf='comment.can_comment'>Reply</span> · <span *ngIf='reply.can_remove'><i>Delete</i></span>
+                                                </p>
+                                            </div>
+                                            <div>
+                                                <div class="d-flex">
+                                                    <div class="table-thumnail">
+                                                        <img class="table-thum-channel-img" [src]="previewdata.pfp_thumbnail">
+                                                    </div>
+                                                    <div class="comment-input">
+                                                        <textarea placeholder="Comment here" class="comment-input-box" name="" id="" rows="2" [(ngModel)]='comment_message'></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="cmnt-btn">
+                                                    <button mat-flat-button>Cancel</button>
+                                                    <button mat-flat-button color="primary" (click)='instagram_post_comment_reply(previewdata.channel_id,previewdata.object_id,reply.id)'>Post</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="d-flex">
+                                            <div class="table-thumnail">
+                                                <img class="table-thum-channel-img" [src]="previewdata.pfp_thumbnail">
+                                            </div>
+                                            <div class="comment-input">
+                                                <textarea placeholder="Comment here" class="comment-input-box" name="" id="" rows="2" [(ngModel)]='comment_message'></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="cmnt-btn">
+                                            <button mat-flat-button>Cancel</button>
+                                            <button mat-flat-button color="primary" (click)="instagram_post_comment_reply(previewdata.channel_id,previewdata.object_id,comment.id)">Post</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                        <div class="d-flex">
+                            <!-- <div class="table-thumnail">
+                                <img class="table-thum-channel-img mt-1" [src]="previewdata.pfp_thumbnail">
+                            </div> -->
+                            <div class="comment-input">
+                                <textarea placeholder="Comment here" class="comment-input-box" name="" id="" rows="2"  [id]="'txtid_'+previewdata.element.id_str"></textarea>
+                            </div>
+                        </div>
+                        <div class="cmnt-btn">
+                            <button mat-flat-button>Cancel</button>
+                            <button mat-flat-button color="primary" (click)='twitter_reply(previewdata.channel.channel_id, previewdata.element.id_str)'>Post</button>
+                        </div> 
+                    </div>
+                </div>
+            </mat-tab>
+            <mat-tab> 
+                <ng-template mat-tab-label>
+                   Post Insight
+                </ng-template> 
+                <div class="p-2">
+                    <div *ngIf="previewdata.access_media=='facebook'">
+                        <div class="row m-0 p-0">
+                            <div class="col-sm-6 col-12">
+                                <div class="insight-box">
+                                    <div class="float-left">
+                                        Reactions: 
+                                    </div>
+                                    <div class="float-right">
+                                        {{fb_reacts}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-12">
+                                <div class="insight-box">
+                                    <div class="float-left">
+                                        Engangement:
+                                    </div>
+                                    <div class="float-right">
+                                        {{fb_insight[0]['data'][2]['values'][0]['value']}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-12">
+                                <div class="insight-box">
+                                    <div class="float-left">
+                                        Reach:
+                                    </div>
+                                    <div class="float-right">
+                                        {{fb_insight[0]['data'][1]['values'][0]['value']}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-12">
+                                <div class="insight-box">
+                                    <div class="float-left">
+                                        Click Count:
+                                    </div>
+                                    <div class="float-right">
+                                        {{fb_insight[0]['data'][3]['values'][0]['value']}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-12">
+                                <div class="insight-box">
+                                    <div class="float-left">
+                                        Share:
+                                    </div>
+                                    <div class="float-right">
+                                        {{previewdata.element['shares']? previewdata.element['shares']['count'] : 0}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="previewdata.access_media=='linkedin'">
+                        <div class="row m-0 p-0">
+                            <div class="col-sm-6 col-12">
+                                <div class="insight-box">
+                                    <div class="float-left">
+                                        Click Count:
+                                    </div>
+                                    <div class="float-right">
+                                        {{linkedIn_post_insights['clickCount']}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-12">
+                                <div class="insight-box">
+                                    <div class="float-left">
+                                        Engangement:
+                                    </div>
+                                    <div class="float-right">
+                                        {{linkedIn_post_insights['engagement']}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-12">
+                                <div class="insight-box">
+                                    <div class="float-left">
+                                        Impressions:
+                                    </div>
+                                    <div class="float-right">
+                                        {{linkedIn_post_insights['impressionCount']}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-12">
+                                <div class="insight-box">
+                                    <div class="float-left">
+                                        Share:
+                                    </div>
+                                    <div class="float-right">
+                                        {{linkedIn_post_insights['shareCount']}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="previewdata.access_media=='instagram'">
+                        <div class="row m-0 p-0">
+                            <div class="col-sm-6 col-12">
+                                <div class="insight-box">
+                                    <div class="float-left">
+                                        Reach
+                                    </div>
+                                    <div class="float-right">
+                                        {{ins_post_insights[0]['values'][0]['value']}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-12">
+                                <div class="insight-box">
+                                    <div class="float-left">
+                                        Engangement:
+                                    </div>
+                                    <div class="float-right">
+                                        {{ins_post_insights[1]['values'][0]['value']}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-12">
+                                <div class="insight-box">
+                                    <div class="float-left">
+                                        Impressions:
+                                    </div>
+                                    <div class="float-right">
+                                        {{ins_post_insights[2]['values'][0]['value']}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-12">
+                                <div class="insight-box">
+                                    <div class="float-left">
+                                        Saved:
+                                    </div>
+                                    <div class="float-right">
+                                        {{ins_post_insights[3]['values'][0]['value']}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>
+
+
+<!-- <div  *ngIf="spin2" class="loader-div">
+    <img  src="assets/img/1.gif" class="loader-img">
+</div> -->

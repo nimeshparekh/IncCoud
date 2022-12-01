@@ -1,0 +1,50 @@
+
+
+
+table 
+{
+    width: 100%;
+    min-width: 500px;
+}
+
+.mat-form-field
+{
+    width: 100%;
+}
+
+@media (max-width: 535px)
+{
+    .mob-6
+    {
+        width: 50%;
+    }
+}
+.width-100
+{
+    width: 100%;
+}
+
+.Download-temp
+{
+    background-color: darkseagreen !important;
+}
+.Download-temp a
+{
+    text-decoration: none;
+    color: #fff;
+}
+.upload-progress
+{
+    opacity: 100;
+    margin-left: 10px;
+    border: 1px solid #ccc;
+    padding: 0px 6px 0 6px;
+    border-radius: 3px;
+}
+.upload-progress-btn
+{
+    font-size: 12px !important;
+    width: 32px;
+    height: 32px;
+    line-height: 30px;
+}

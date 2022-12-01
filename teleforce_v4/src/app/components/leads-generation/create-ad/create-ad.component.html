@@ -1,0 +1,715 @@
+<div class="warap-height pt-4">
+    <div class="pt-2 container mb-2">
+        <!--multisteps-form-->
+        <div>
+            <!--progress bar-->
+            <div class="row">
+                <div class="col-12 col-lg-8 ml-auto mr-auto mb-4">
+                    <div class="multisteps-form__progress">
+                        <button class="multisteps-form__progress-btn js-active" type="button" title="Select Plan">Budget & Campaign</button>
+                        <button class="multisteps-form__progress-btn" type="button" title="Payment">Ad-set</button>
+                        <button class="multisteps-form__progress-btn" type="button" title="KYC">Audiance & Locations</button>
+                        <button class="multisteps-form__progress-btn" type="button" title="Select DID">Upload</button>
+                    </div>
+                </div>
+            </div>
+            <!--form panels-->
+            <div class="row mb-2">
+                <div class="col-12 col-lg-12 m-auto">
+                    <form class="multisteps-form__form"  [formGroup]="AdGroupForm">
+                        <!--single form panel-->
+                        <div class="multisteps-form__panel p-4 rounded bg-white js-active" data-animation="scaleIn">
+                            <h3 class="multisteps-form__title text-center">Enter Budget and select your campaign</h3>
+                            <div class="multisteps-form__content">
+                                <div class="container">
+                                    <div class="row mt-2">
+                                        <div class="col-12 col-sm-6 col-md-3">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Select Your Budget</mat-label>
+                                                <mat-select>
+                                                    <mat-option value='daily'>
+                                                      Daily Budget
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field> 
+                                        </div>
+                                        <div class="col-12 col-sm-6 col-md-3">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Enter Your Budget</mat-label>
+                                                <input matInput placeholder="Enter Amount" formControlName="dailybudget"  [readonly]="this.dailybudget_Editable">
+                                                <mat-icon matSuffix>attach_money</mat-icon>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <p class="field-head mt-2">Choose Your Campaign name</p>
+                                    <div class="row mt-2">
+                                        <div class="col-12 col-sm-6 col-md-3">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Enter Your Campaign name</mat-label>
+                                                <input matInput placeholder="Enter Campaign name" formControlName="campaign_name" [readonly]="this.campaign_name_Editable">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <p class="field-head mt-2">Choose Your Campaign</p>
+                                    <div class="row radio-toolbar" (change)="disableCat($event.target.value)">
+                                        <div class="col-lg-4" >
+                                            <div class="cat">
+                                                Awareness
+                                            </div>
+                                            <div class="radio-div">
+                                                <!-- <input type="radio" formControlName="objective" id="Brand" value="BRAND_AWARENESS" disabled="this.objective_Editable" checked> -->
+                                                    <input type="radio" formControlName="objective" id="Brand" value="BRAND_AWARENESS" checked>
+                                                <label for="Brand"><i class="fa fa-volume-off" aria-hidden="true"></i> Brand Awareness</label>
+                                            </div>
+                                            <div class="radio-div mt-1" >
+                                                <input type="radio" formControlName="objective" id="Reach" value="REACH" checked>
+                                                <label for="Reach"><i class="fa fa-futbol-o" aria-hidden="true"></i> Reach</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="cat">
+                                                Consideration
+                                            </div>
+                                            <div class="radio-div">
+                                                <input type="radio" id="Traffic" formControlName="objective" value="LINK_CLICKS">
+                                                <label for="Traffic"><i class="fa fa-hand-pointer-o" aria-hidden="true"></i> Traffic</label>
+                                            </div>
+                                            <div class="radio-div mt-1">
+                                                <input type="radio" id="radioFruit" formControlName="objective" value="POST_ENGAGEMENT" >
+                                                <label for="radioFruit"><i class="fa fa-comments-o" aria-hidden="true"></i> Engagement</label>
+                                            </div>
+                                            <!-- <div class="radio-div mt-1" formControlName="objective">
+                                                <input type="radio" id="Installs" name="radioFruit" value="Installs">
+                                                <label for="Installs"><i class="fa fa-th-large" aria-hidden="true"></i> App Installs</label>
+                                            </div> -->
+                                            <div class="radio-div mt-1">
+                                                <input type="radio" id="Video"formControlName="objective" value="VIDEO_VIEWS">
+                                                <label for="Video"><i class="fa fa-video-camera" aria-hidden="true"></i> Video View</label>
+                                            </div>
+                                            <div class="radio-div mt-1">
+                                                <input type="radio" id="Lead" formControlName="objective" value="LEAD_GENERATION">
+                                                <label for="Lead"><i class="fa fa-filter" aria-hidden="true"></i> Lead Generation</label>
+                                            </div>
+                                            <div class="radio-div mt-1">
+                                                <input type="radio" id="Messages" formControlName="objective" value="MESSAGES">
+                                                <label for="Messages"><i class="fa fa-envelope-o" aria-hidden="true"></i> Messages</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="cat">
+                                                Conversion
+                                            </div>
+                                            <div class="radio-div">
+                                                <input type="radio" id="Conversions" formControlName="objective" value="CONVERSIONS">
+                                                <label for="Conversions"><i class="fa fa-globe" aria-hidden="true"></i> Conversions</label>
+                                            </div>
+                                            <!-- <div class="radio-div mt-1" formControlName="objective">
+                                                <input type="radio" id="Catalogue" name="radioFruit" value="Catalogue">
+                                                <label for="Catalogue"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Catalogue Sales</label>
+                                            </div>
+                                            <div class="radio-div mt-1" formControlName="objective">
+                                                <input type="radio" id="StoreTraffic" name="radioFruit" value="StoreTraffic">
+                                                <label for="StoreTraffic"><i class="fa fa-address-card" aria-hidden="true"></i> Store Traffic</label>
+                                            </div> -->
+                                        </div>
+                                    </div>
+                                    
+
+                                </div>
+                            </div>
+                            <div class="button-row d-flex mt-4">
+                                <button class="ml-auto js-btn-prev" type="button" title="Prev">Prev</button>
+                                &nbsp;
+                                <button class="js-btn-next" type="button" title="Next">Next</button>
+                            </div>
+                        </div>
+                        <!--single form panel-->
+                        <div class="multisteps-form__panel p-4 rounded bg-white" data-animation="scaleIn">
+                            <!-- <h3 class="multisteps-form__title text-center">Select Your Pages </h3> -->
+                            <div class="multisteps-form__content">
+                                <div class="container">
+                                    <p class="field-head mt-2">Choose Your Adset name</p>
+                                    <div class="row mt-2">
+                                        <div class="col-12 col-sm-6 col-md-3">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Enter Your Adset name</mat-label>
+                                                <input matInput placeholder="Enter adset name" formControlName="adset_name" [readonly]="this.adset_name_Editable">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <h3 class="multisteps-form__title text-center" *ngIf="enable_cat">Create offer</h3>
+                            <div class="multisteps-form__content" *ngIf="enable_cat">
+                                <div class="container">
+                                    <p class="field-head">Drive more conversions by creating an offer that people can save and receive reminders about.</p>
+                                    <div class="row">
+                                        <div div class="col-sm-4">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Enter Offer Title</mat-label>
+                                                <input matInput placeholder="Enter Title Name" type="text" formControlName="offer_text">
+                                            </mat-form-field>
+                                        </div>
+                                        <div div class="col-sm-4">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Enter Total offers available</mat-label>
+                                                <input matInput placeholder="Total offers available" type="number" formControlName="offer_value">
+                                            </mat-form-field>
+                                        </div>
+                                        <div div class="col-sm-4">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Enter offers details</mat-label>
+                                                <input matInput placeholder="Enter your offer details" type="text" formControlName="detail">
+                                            </mat-form-field>
+                                        </div>
+                                        <div div class="col-sm-4">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Enter offers URL</mat-label>
+                                                <input matInput placeholder="Enter your offer URL" type="url" formControlName="offer_url">
+                                            </mat-form-field>
+                                        </div>
+                                        <div div class="col-sm-4">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Enter offers end-date</mat-label>
+                                                <input matInput placeholder="Enter your offer end-date" type="date" formControlName="tim">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h3 class="multisteps-form__title text-center" *ngIf="enable_c">Instant form</h3>
+                            <div class="multisteps-form__content" *ngIf="enable_c">
+                                <div class="container">
+                                    <p class="field-head">Choose a form to use in your ad.</p>
+                                    <div class="row">
+                                        <div div class="col-sm-4">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Enter form name</mat-label>
+                                                <input matInput placeholder="Enter your form name" type="text" formControlName="form_name">
+                                            </mat-form-field>
+                                        </div>
+                                        <div div class="col-sm-4">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Enter privacy policy URL</mat-label>
+                                                <input matInput placeholder="Enter your privacy policy URL" type="url" formControlName="p_link">
+                                            </mat-form-field>
+                                        </div>
+                                        <div div class="col-sm-4">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Enter website URL</mat-label>
+                                                <input matInput placeholder="Enter your Your website URL" type="url" formControlName="w_link">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h3 class="multisteps-form__title text-center" *ngIf="enable_m">Messenger Templates</h3>
+                            <div class="multisteps-form__content" *ngIf="enable_m">
+                                <div class="container">
+                                    <p class="field-head">Choose a messenger form to use in your ad.</p>
+                                    <div class="row">
+                                        <div div class="col-sm-4">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Enter text for button</mat-label>
+                                                <input matInput placeholder="Enter the text for your button" type="text" formControlName="form_button">
+                                            </mat-form-field>
+                                        </div>
+                                        <div div class="col-sm-4">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Enter website URL</mat-label>
+                                                <input matInput placeholder="https://your-website.com/your-page" type="url" formControlName="form_website">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <h3 class="multisteps-form__title text-center" *ngIf="enable_n">Custom Events</h3>
+                            <div class="multisteps-form__content" *ngIf="enable_n">
+                                <div class="container">
+                                    <p class="field-head">Select Custom Events</p>
+                                    <div class="row">
+                                        <div div class="col-sm-4">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Select Your Custom Events</mat-label>
+                                                <mat-select  formControlName="custom_event_type">
+                                                    <mat-option value='ADD_PAYMENT_INFO'>
+                                                     Add payment info
+                                                    </mat-option>
+                                                    <mat-option value='ADD_TO_CART'>
+                                                     Add to cart
+                                                    </mat-option>
+                                                    <mat-option value='ADD_TO_WISHLIST'>
+                                                     Add to wishlist
+                                                    </mat-option>
+                                                    <mat-option value='COMPLETE_REGISTRATION'>
+                                                     Complete registration
+                                                    </mat-option>
+                                                    <mat-option value='CONTENT_VIEW'>
+                                                     Content view
+                                                    </mat-option>
+                                                    <mat-option value='INITIATED_CHECKOUT'>
+                                                     Initiated checkout
+                                                    </mat-option>
+                                                    <mat-option value='LEAD'>
+                                                     Lead
+                                                    </mat-option>
+                                                    <mat-option value='PURCHASE'>
+                                                     Purchase
+                                                    </mat-option>
+                                                    <mat-option value='SEARCH'>
+                                                     Search
+                                                    </mat-option>
+                                                    <mat-option value='CONTACT'>
+                                                     Contact
+                                                    </mat-option>
+                                                    <mat-option value='CUSTOMIZE_PRODUCT'>
+                                                     Customize product
+                                                    </mat-option>
+                                                    <mat-option value='DONATE'>
+                                                     Donate
+                                                    </mat-option>
+                                                    <mat-option value='FIND_LOCATION'>
+                                                     Find location
+                                                    </mat-option>
+                                                    <mat-option value='SCHEDULE'>
+                                                     Schedule
+                                                    </mat-option>
+                                                    <mat-option value='START_TRIAL'>
+                                                     Start Trial
+                                                    </mat-option>
+                                                    <mat-option value='SUBMIT_APPLICATION'>
+                                                     Submit application
+                                                    </mat-option>
+                                                    <mat-option value='SUBSCRIBE'>
+                                                     Subscribe
+                                                    </mat-option>
+                                                    <mat-option value='LISTING_INTERACTION'>
+                                                     Listing interaction
+                                                    </mat-option>
+                                                    <mat-option value='FACEBOOK_SELECTED'>
+                                                     Facebook selected
+                                                    </mat-option>
+                                                    <mat-option value='OTHER'>
+                                                     Other
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="button-row d-flex mt-4">
+                                <button class="ml-auto js-btn-prev" type="button" title="Prev">Prev</button>
+                                &nbsp;
+                                <button class="js-btn-next" type="button" title="Next">Next</button>
+                            </div>
+                        </div>
+                        <!--single form panel-->
+                        <div class="multisteps-form__panel p-4 rounded bg-white" data-animation="scaleIn">
+                            <!-- <h3 class="multisteps-form__title text-center">Choose audience</h3> -->
+                            <!-- <div class="row radio-toolbar" onclick="handleClick(this);">
+                                <div class="col-lg-4" >
+                                    <div class="radio-div" >
+                                        <input type="radio" id="Brand" value="new" checked>
+                                        <label for="Brand"><i class="fa fa-plus" aria-hidden="true"></i>Create new audience</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="radio-div">
+                                        <input type="radio" id="Traffic" value="used">
+                                        <label for="Traffic"><i class="fa fa-retweet" aria-hidden="true"></i>Use saved audience</label>
+                                    </div>
+                                </div>
+                            </div>    -->
+
+
+                            <h3 class="multisteps-form__title text-center">Create Your Audience and Set Locations</h3>
+                            <div class="multisteps-form__content container">
+                                <div class="container">
+                                    <p class="field-head mt-2">Chosse Age and Gender</p>
+                                    <div class="row mt-2">
+                                        <div class="col-12 col-sm-4 col-md-3">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Select Your Min Age</mat-label>
+                                                <mat-select  formControlName="age_min" [disabled]="this.age_min">
+                                                    <mat-option value="18" selected> Minimum Age</mat-option>
+                                                    <mat-option value="13">13</mat-option>
+                                                    <mat-option value="14">14</mat-option>
+                                                    <mat-option value="15">15</mat-option>
+                                                    <mat-option value="16">16</mat-option>
+                                                    <mat-option value="17">17</mat-option>
+                                                    <mat-option value="18">18</mat-option>
+                                                    <mat-option value="19">19</mat-option>
+                                                    <mat-option value="20">20</mat-option>
+                                                    <mat-option value="21">21</mat-option>
+                                                    <mat-option value="22">22</mat-option>
+                                                    <mat-option value="23">23</mat-option>
+                                                    <mat-option value="24">24</mat-option>
+                                                    <mat-option value="25">25</mat-option>
+                                                    <mat-option value="26">26</mat-option>
+                                                    <mat-option value="27">27</mat-option>
+                                                    <mat-option value="28">28</mat-option>
+                                                    <mat-option value="29">29</mat-option>
+                                                    <mat-option value="30">30</mat-option>
+                                                    <mat-option value="31">31</mat-option>
+                                                    <mat-option value="32">32</mat-option>
+                                                    <mat-option value="33">33</mat-option>
+                                                    <mat-option value="34">34</mat-option>
+                                                    <mat-option value="35">35</mat-option>
+                                                    <mat-option value="36">36</mat-option>
+                                                    <mat-option value="37">37</mat-option>
+                                                    <mat-option value="38">38</mat-option>
+                                                    <mat-option value="39">39</mat-option>
+                                                    <mat-option value="40">40</mat-option>
+                                                    <mat-option value="41">41</mat-option>
+                                                    <mat-option value="42">42</mat-option>
+                                                    <mat-option value="43">43</mat-option>
+                                                    <mat-option value="44">44</mat-option>
+                                                    <mat-option value="45">45</mat-option>
+                                                    <mat-option value="46">46</mat-option>
+                                                    <mat-option value="47">47</mat-option>
+                                                    <mat-option value="48">48</mat-option>
+                                                    <mat-option value="49">49</mat-option>
+                                                    <mat-option value="50">50</mat-option>
+                                                    <mat-option value="51">51</mat-option>
+                                                    <mat-option value="52">52</mat-option>
+                                                    <mat-option value="53">53</mat-option>
+                                                    <mat-option value="54">54</mat-option>
+                                                    <mat-option value="55">55</mat-option>
+                                                    <mat-option value="56">56</mat-option>
+                                                    <mat-option value="57">57</mat-option>
+                                                    <mat-option value="58">58</mat-option>
+                                                    <mat-option value="59">59</mat-option>
+                                                    <mat-option value="60">60</mat-option>
+                                                    <mat-option value="61">61</mat-option>
+                                                    <mat-option value="62">62</mat-option>
+                                                    <mat-option value="63">63</mat-option>
+                                                    <mat-option value="64">64</mat-option>
+                                                    <mat-option value="65">65</mat-option>
+                                                </mat-select>
+                                            </mat-form-field> 
+                                        </div>
+                                        <div class="col-12 col-sm-4 col-md-3">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Select Your Max Age</mat-label>
+                                                <mat-select  formControlName="age_max" [disabled]="this.age_min">
+                                                    <mat-option value="65" selected>Maximum Age</mat-option>
+                                                    <mat-option value="13">13</mat-option>
+                                                    <mat-option value="14">14</mat-option>
+                                                    <mat-option value="15">15</mat-option>
+                                                    <mat-option value="16">16</mat-option>
+                                                    <mat-option value="17">17</mat-option>
+                                                    <mat-option value="18">18</mat-option>
+                                                    <mat-option value="19">19</mat-option>
+                                                    <mat-option value="20">20</mat-option>
+                                                    <mat-option value="21">21</mat-option>
+                                                    <mat-option value="22">22</mat-option>
+                                                    <mat-option value="23">23</mat-option>
+                                                    <mat-option value="24">24</mat-option>
+                                                    <mat-option value="25">25</mat-option>
+                                                    <mat-option value="26">26</mat-option>
+                                                    <mat-option value="27">27</mat-option>
+                                                    <mat-option value="28">28</mat-option>
+                                                    <mat-option value="29">29</mat-option>
+                                                    <mat-option value="30">30</mat-option>
+                                                    <mat-option value="31">31</mat-option>
+                                                    <mat-option value="32">32</mat-option>
+                                                    <mat-option value="33">33</mat-option>
+                                                    <mat-option value="34">34</mat-option>
+                                                    <mat-option value="35">35</mat-option>
+                                                    <mat-option value="36">36</mat-option>
+                                                    <mat-option value="37">37</mat-option>
+                                                    <mat-option value="38">38</mat-option>
+                                                    <mat-option value="39">39</mat-option>
+                                                    <mat-option value="40">40</mat-option>
+                                                    <mat-option value="41">41</mat-option>
+                                                    <mat-option value="42">42</mat-option>
+                                                    <mat-option value="43">43</mat-option>
+                                                    <mat-option value="44">44</mat-option>
+                                                    <mat-option value="45">45</mat-option>
+                                                    <mat-option value="46">46</mat-option>
+                                                    <mat-option value="47">47</mat-option>
+                                                    <mat-option value="48">48</mat-option>
+                                                    <mat-option value="49">49</mat-option>
+                                                    <mat-option value="50">50</mat-option>
+                                                    <mat-option value="51">51</mat-option>
+                                                    <mat-option value="52">52</mat-option>
+                                                    <mat-option value="53">53</mat-option>
+                                                    <mat-option value="54">54</mat-option>
+                                                    <mat-option value="55">55</mat-option>
+                                                    <mat-option value="56">56</mat-option>
+                                                    <mat-option value="57">57</mat-option>
+                                                    <mat-option value="58">58</mat-option>
+                                                    <mat-option value="59">59</mat-option>
+                                                    <mat-option value="60">60</mat-option>
+                                                    <mat-option value="61">61</mat-option>
+                                                    <mat-option value="62">62</mat-option>
+                                                    <mat-option value="63">63</mat-option>
+                                                    <mat-option value="64">64</mat-option>
+                                                    <mat-option value="65">65+</mat-option>
+                                                </mat-select>
+                                            </mat-form-field> 
+                                        </div>
+                                        <div class="col-12 col-sm-4 col-md-3">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Select Your Gender</mat-label>
+                                                <mat-select formControlName="gender" [disabled]="this.gender">
+                                                    <mat-option value="None">
+                                                        All
+                                                    </mat-option>
+                                                    <mat-option value="1">
+                                                        Male
+                                                    </mat-option>
+                                                    <mat-option value="2">
+                                                        Female
+                                                    </mat-option>
+                                                    <mat-option value="0">
+                                                        Both
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field> 
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="container">
+                                    <p class="field-head mt-2">Choose Languages</p>
+                                    <div class="row mt-2">
+                                        <div class="col-12 col-sm-6 col-md-3">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Select You Languages</mat-label>
+                                                <mat-select formControlName="language_key" [disabled]="this.language_key">
+                                                    <mat-option *ngFor="let lan of languages_data; let i = index" [value]="languages_data[i].key">
+                                                        {{languages_data[i].name}}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field> 
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="container">
+                                    <!-- <h3 class="multisteps-form__title text-center">Tracking</h3> -->
+                                    <p class="field-head mt-2">Tracking</p>
+                                    <p class="field-head mt-1">Track event data sets that contain the conversions your ad might motivate. The dataset that contains the conversion selected for the ad account will be tracked by default.</p>
+                                    <div class="row mt-2">
+                                        <div class="col-12 col-sm-6 col-md-3">
+                                                <section class="example-section">
+                                                    <mat-checkbox (change)="disablecaatt($event)" class="example-margin">Website events</mat-checkbox>
+                                                </section>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-2" *ngIf="enable_track">
+                                        <div class="col-12 col-sm-6 col-md-3">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Select Pixel</mat-label>
+                                                <mat-select>
+                                                    <mat-option *ngFor="let lan of track_pixel; let i = index" (click)="disablecaattt(track_pixel[i].id)" value="track_pixel[i].id">
+                                                        {{track_pixel[i].name}} ({{track_pixel[i].id}})
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field> 
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="container">
+                                    <p class="field-head mt-2">Set Locations</p>
+                                    <div class="row mt-2">
+                                        <div class="col-sm-12">
+                                            <app-osm-view 
+                                            [showDebugInfo]="true"
+                                            [showControlsZoom]="true"
+                                            [showControlsCurrentLocation]="true"
+                                            (addressChanged)="onAddressChange($event)"
+                                            >
+                                            </app-osm-view>
+
+                                        </div>
+                                    </div>
+                                </div>  
+                            </div>
+                            <div class="button-row d-flex mt-4">
+                                <button class="ml-auto js-btn-prev" type="button" title="Prev">Prev</button>
+                                &nbsp;
+                                <button class="js-btn-next" type="button" title="Next">Next</button>
+                            </div>
+                        </div>
+                        <!--single form panel-->
+                        <div class="multisteps-form__panel p-4 rounded bg-white" data-animation="scaleIn">
+                            
+                            <h3 class="multisteps-form__title text-center">Upload Your picture and see perivew</h3>
+                            <div class="multisteps-form__content container">
+                                <div class="container">
+                                    <p  class="field-head mt-2">Select Your Pages</p>
+                                    <div class="row">
+                                        <div class="col-sm-4" *ngFor="let lan of page_data; let i = index">
+                                            <div class="pagecheckbox">
+                                                <input type="checkbox" formControlName="page_id" name="rGroup" [value]="page_data[i].id" (change)="onCheckChange($event)" [id]="page_data[i].id"/>
+                                                <label class="page-checkbox-alias d-flex" [for]="page_data[i].id">
+                                                    <div class="table-thumnail position-relative">
+                                                        <img class="table-thum-channel-img" src="assets/images/icon/profile.png">
+                                                        <img class="tablesocial-img" src="assets/images/icon/3.png">
+                                                    </div>
+                                                    <div class="tablesocial-pagename">{{page_data[i].name}}({{page_data[i].id}})</div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="field-head mt-2">Choose Age and Gender</p>
+                                    <div class="file-upload">
+                                        <label for='input-file' class="d-flex">
+                                            <span class="material-icons">
+                                                cloud_upload
+                                            </span>
+                                            <p>Select a file</p>
+                                        </label>
+                                        <!-- <input id='input-file' type='file' /> -->
+                                        <input id='input-file' class="local-upload-file" type="file" name="myfile" (change)='upload($event)'/>
+
+                                    </div>
+                                    <p class="field-head mt-3">Select Your Pages</p>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <div class="pagecheckbox">
+                                                <input type="checkbox" (change)="disablecaat($event)" [checked]="false" name="rGroup1" value="fb" id="fb"/>
+                                                <label class="page-checkbox-alias d-flex" for="fb">
+                                                    <div class="table-thumnail position-relative">
+                                                        <img class="table-thum-channel-img" src="assets/images/icon/3.png">
+                                                    </div>
+                                                    <div class="tablesocial-pagename">Facebook</div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="pagecheckbox">
+                                                <input type="checkbox" (change)="disablecaat($event)" [checked]="false" name="rGroup1" value="ins" id="insta"/>
+                                                <label class="page-checkbox-alias d-flex" for="insta">
+                                                    <div class="table-thumnail position-relative">
+                                                        <img class="table-thum-channel-img" src="assets/images/icon/2.png">
+                                                    </div>
+                                                    <div class="tablesocial-pagename">Instagram</div>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="field-head mt-3" *ngIf="enable_pl">Placements</p>
+                                    <div class="row" *ngIf="enable_pl">
+                                        <div class="col-sm-6">
+                                            <ul class="select-placement">
+                                                <li class="tablinks" onmouseover="openImg(event, 'ff')" *ngIf="enable_fb">
+                                                    <section class="example-section">
+                                                        <!-- <mat-checkbox class="example-margin" value="feed" (click)="clickf($event.target)">Facebook News Feed</mat-checkbox> -->
+                                                        <mat-checkbox class="example-margin" [checked]="true" value="feed" (change)="setAll($event)"> Facebook News Feed </mat-checkbox>
+                                                    </section>
+                                                </li>
+                                                <li class="tablinks" onmouseover="openImg(event, 'fi')" *ngIf="enable_ins">
+                                                    <section class="example-section">
+                                                        <mat-checkbox class="example-margin" value="stream" (change)="setIn($event)" [checked]="true">Instagram Feeds</mat-checkbox>
+                                                    </section>
+                                                </li>
+                                                <li class="tablinks" onmouseover="openImg(event, 'fj')" *ngIf="enable_fb">
+                                                    <section class="example-section">
+                                                        <mat-checkbox class="example-margin" value="marketplace" (change)="setAll($event)" [checked]="true">Facebook Marketplace</mat-checkbox>
+                                                    </section>
+                                                </li>
+                                                <li class="tablinks" onmouseover="openImg(event, 'fk')" *ngIf="enable_fb">
+                                                    <section class="example-section">
+                                                        <mat-checkbox class="example-margin" value="video_feeds" (change)="setAll($event)" [checked]="true">Facebook video feeds</mat-checkbox>
+                                                    </section>
+                                                </li>
+                                                <li class="tablinks" onmouseover="openImg(event, 'fl')" *ngIf="enable_fb">
+                                                    <section class="example-section">
+                                                        <mat-checkbox class="example-margin" value="right_hand_column" (change)="setAll($event)" [checked]="true">Facebook right column</mat-checkbox>
+                                                    </section>
+                                                </li>
+                                                <li class="tablinks" onmouseover="openImg(event, 'i1')" *ngIf="enable_ins">
+                                                    <section class="example-section">
+                                                        <mat-checkbox class="example-margin" value="explore" (change)="setIn($event)" [checked]="true">Instagram Explore</mat-checkbox>
+                                                    </section>
+                                                </li>
+                                                <li class="tablinks" onmouseover="openImg(event, 'fs')" *ngIf="enable_fb">
+                                                    <section class="example-section">
+                                                        <mat-checkbox class="example-margin"  value="story" (change)="setAll($event)" [checked]="true">Facebook Stories</mat-checkbox>
+                                                    </section>
+                                                </li>
+                                                <li class="tablinks" onmouseover="openImg(event, 'is')" *ngIf="enable_ins">
+                                                    <section class="example-section">
+                                                        <mat-checkbox class="example-margin"  value="story" (change)="setIn($event)" [checked]="true">Instagram Stories</mat-checkbox>
+                                                    </section>
+                                                </li>
+                                                <li class="tablinks" onmouseover="openImg(event, 'fa')" *ngIf="enable_fb">
+                                                    <section class="example-section">
+                                                        <mat-checkbox class="example-margin" value="instream_video" (change)="setAll($event)" [checked]="true">Facebook in-stream videos</mat-checkbox>
+                                                    </section>
+                                                </li>
+                                                <li class="tablinks" onmouseover="openImg(event, 'ka')" *ngIf="enable_fb">
+                                                    <section class="example-section">
+                                                        <mat-checkbox class="example-margin" value="search" (change)="setAll($event)" [checked]="true">Facebook search results</mat-checkbox>
+                                                    </section>
+                                                </li>
+                                                <li class="tablinks" onmouseover="openImg(event, 'kb')" *ngIf="enable_fb">
+                                                    <section class="example-section">
+                                                        <mat-checkbox class="example-margin" value="instant_article" (change)="setAll($event)" [checked]="true">Facebook Instant Articles</mat-checkbox>
+                                                    </section>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="tabcontent" id="ff">
+                                                <img src="assets/images/placement/9Us3QXc4ZJy.jpg" alt="ff">
+                                            </div>
+                                            <div class="tabcontent" id="fi">
+                                                <img src="assets/images/placement/2.jpg" alt="fi">
+                                            </div>
+                                            <div class="tabcontent" id="fj">
+                                                <img src="assets/images/placement/3.jpg" alt="fj">
+                                            </div>
+                                            <div class="tabcontent" id="fk">
+                                                <img src="assets/images/placement/4.jpg" alt="fk">
+                                            </div>
+                                            <div class="tabcontent" id="fl">
+                                                <img src="assets/images/placement/5.jpg" alt="fl">
+                                            </div>
+                                            <div class="tabcontent" id="fs">
+                                                <img src="assets/images/placement/9.png" alt="fs">
+                                            </div>
+                                            <div class="tabcontent" id="is">
+                                                <img src="assets/images/placement/10.png" alt="is">
+                                            </div>
+                                            <div class="tabcontent" id="i1">
+                                                <img src="assets/images/placement/6.png" alt="i1">
+                                            </div>
+                                            <div class="tabcontent" id="fa">
+                                                <img src="assets/images/placement/12.png" alt="fa">
+                                            </div>
+                                            <div class="tabcontent" id="ka">
+                                                <img src="assets/images/placement/13.png" alt="ka">
+                                            </div>
+                                            <div class="tabcontent" id="kb">
+                                                <img src="assets/images/placement/15.jpg" alt="kb">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="button-row d-flex mt-4">
+                                <button class="ml-auto js-btn-prev" type="button" title="Prev">Prev</button>
+                                &nbsp;
+                                <button class="submit" type="button" (click)="createAdSet()" *ngIf="adsetsubmit">Create Ad-set</button> 
+                                &nbsp;
+                                <button class="submit" (click)="createAdGroup()" *ngIf="!adsetsubmit" type="submit" title="submit">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

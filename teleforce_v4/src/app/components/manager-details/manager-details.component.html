@@ -1,0 +1,496 @@
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">
+        <a routerLink="/managers" mat-mini-fab color="warn" title="Back">
+            <mat-icon>keyboard_return</mat-icon>
+        </a>
+        Manager <b>{{managername | titlecase}}</b> Details
+    </h1>
+    <p class="mb-4"></p>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <mat-tab-group>
+                    <mat-tab label="KYC Document"><br>
+                        <form [formGroup]="kycform">
+                            <div class="row" *ngIf="kycstatus!=''">
+
+                                <div class="col-md-6">
+                                    KYC Document Status : &nbsp;{{kycstatus=='0'?'Upload':''}}
+                                    <span *ngIf="kycstatus!=''&& kycstatus=='1'"
+                                        style="color:green">{{kycstatus=='1'?'Approve':''}}</span>
+
+                                    <span *ngIf="kycstatus!=''&& kycstatus=='2'"
+                                        style="color:red">{{kycstatus=='2'?'Reject':''}}</span>
+
+
+                                </div>
+                                <div class="col-md-6" *ngIf="kycstatus!=''">
+                                    Uploaded Date : {{uploaded_date | date: 'dd-MM-yyyy H:mm:s' }}
+                                </div>
+                            </div><br>
+                            <div class="row">
+                                <div class="col-md-6" *ngIf="kycstatus!=''&& kycstatus!='0'">
+                                    Note : {{note}}
+                                </div>
+                                <div class="col-md-6" *ngIf="kycstatus!=''&& kycstatus!='0'">
+                                    Approved Date : {{approve_date | date: 'dd-MM-yyyy H:mm:s'}}
+                                </div>
+                            </div>
+
+                            <br>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    Registration Certificate<br><br>
+                                    <input type="file" name="registration_certi" formControlName="registration_certi"
+                                        id="registration_certi" accept="image/*,application/pdf" />
+                                    <br>
+                                    <mat-error *ngIf="requiredRegistration()">
+                                        Please select Registration Certificate
+                                    </mat-error>
+                                    <br>
+                                    <div *ngIf="!registrationpdf">
+                                        <img width="100px" height="100px" src="api/kyc/{{registration_certiimg}}"
+                                            *ngIf="registration_certiimg!=''">
+                                        <img width="100px" height="100px" src="assets/img/no-image.jpg"
+                                            *ngIf="registration_certiimg==''">
+                                    </div>
+                                    <div *ngIf="registrationpdf">
+                                        <a href="api/kyc/{{registration_certiimg}}" target="_blank">
+                                            <img width="100px" height="100px" src="assets/img/pdf_icon.png">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    GST Certificate<br><br>
+                                    <input type="file" name="gst_certificate" formControlName="gst_certificate"
+                                        id="gst_certificate" (change)="readFile($event)"
+                                        accept="image/*,application/pdf" />
+                                    <br>
+                                    <mat-error *ngIf="requiredGST()">
+                                        Please select GST Certificate
+                                    </mat-error>
+                                    <br>
+                                    <div *ngIf="!gstpdf">
+                                        <img width="100px" height="100px" src="api/kyc/{{gst_certificateimg}}"
+                                            *ngIf="gst_certificateimg!=''">
+                                        <img width="100px" height="100px" src="assets/img/no-image.jpg"
+                                            *ngIf="gst_certificateimg==''">
+                                    </div>
+                                    <div *ngIf="gstpdf">
+                                        <a href="api/kyc/{{gst_certificateimg}}" target="_blank">
+                                            <img width="100px" height="100px" src="assets/img/pdf_icon.png">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    Agreement<br><br>
+                                    <input type="file" name="agreement" formControlName="agreement" id="agreement"
+                                        (change)="readFile($event)" accept="image/*,application/pdf" />
+                                    <br><br>
+
+                                    <div *ngIf="!agreementpdf">
+                                        <img width="100px" height="100px" src="api/kyc/{{agreementimg}}"
+                                            *ngIf="agreementimg!=''">
+                                        <img width="100px" height="100px" src="assets/img/no-image.jpg"
+                                            *ngIf="agreementimg==''">
+                                    </div>
+                                    <div *ngIf="agreementpdf">
+                                        <a href="api/kyc/{{agreementimg}}" target="_blank">
+                                            <img width="100px" height="100px" src="assets/img/pdf_icon.png">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    Company PAN Card<br><br>
+                                    <input type="file" name="pan_card" formControlName="pan_card" id="pan_card"
+                                        (change)="readFile($event)" accept="image/*,application/pdf" />
+                                    <br>
+                                    <mat-error *ngIf="requiredPanCard()">
+                                        Please select Company PAN Card
+                                    </mat-error><br>
+                                    <div *ngIf="!pancardpdf">
+                                        <img width="100px" height="100px" src="api/kyc/{{pan_cardimg}}"
+                                            *ngIf="pan_cardimg!=''">
+                                        <img width="100px" height="100px" src="assets/img/no-image.jpg"
+                                            *ngIf="pan_cardimg==''">
+                                    </div>
+                                    <div *ngIf="pancardpdf">
+                                        <a href="api/kyc/{{pan_cardimg}}" target="_blank">
+                                            <img width="100px" height="100px" src="assets/img/pdf_icon.png">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div><br>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    Authorized Person Proof<br><br>
+                                    <input type="file" name="authorized_person_proof"
+                                        formControlName="authorized_person_proof" id="authorized_person_proof"
+                                        (change)="readFile($event)" accept="image/*,application/pdf" />
+                                    <br>
+                                    <mat-error *ngIf="requiredPersonProof()">
+                                        Please select Authorized Person Proof
+                                    </mat-error><br>
+
+                                    <div *ngIf="!personproofpdf">
+                                        <img width="100px" height="100px" src="api/kyc/{{authorized_person_proofimg}}"
+                                            *ngIf="authorized_person_proofimg!=''">
+                                        <img width="100px" height="100px" src="assets/img/no-image.jpg"
+                                            *ngIf="authorized_person_proofimg==''">
+                                    </div>
+                                    <div *ngIf="personproofpdf">
+                                        <a href="api/kyc/{{authorized_person_proofimg}}" target="_blank">
+                                            <img width="100px" height="100px" src="assets/img/pdf_icon.png">
+                                        </a>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <br>
+                                    <button mat-raised-button type="button" color="primary" (click)="kycsubmit()"
+                                        class="Update-btn ">Submit</button>
+                                    <br><br>
+                                </div>
+                            </div>
+                        </form>
+                    </mat-tab>
+                    <mat-tab label="DID List">
+                        <div class="table-responsive">
+                            <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+
+                            <mat-table class="lessons-table mat-elevation-z8" [dataSource]="dataSource">
+                                <ng-container matColumnDef="id">
+
+                                    <mat-header-cell *matHeaderCellDef>Sr. No</mat-header-cell>
+
+                                    <mat-cell class="description-cell" *matCellDef="let row;let i = index;"
+                                        data-label="id">
+                                        {{i+1+(paginator.pageIndex * paginator.pageSize)}}</mat-cell>
+
+                                </ng-container>
+                                <ng-container matColumnDef="did">
+
+                                    <mat-header-cell *matHeaderCellDef> DID </mat-header-cell>
+
+                                    <mat-cell class="description-cell" *matCellDef="let row">{{row.did}}
+                                    </mat-cell>
+
+                                </ng-container>
+
+                                <ng-container matColumnDef="status">
+
+                                    <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+
+                                    <mat-cell class="description-cell" *matCellDef="let row">
+                                        {{row.active == '1' ? 'Active': 'Inactive'}}
+                                    </mat-cell>
+
+                                </ng-container>
+
+
+                                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+                                <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+                            </mat-table>
+                            <mat-paginator #paginator [length]="Length" [pageSize]="50"
+                                [pageSizeOptions]="[50,100,500]"></mat-paginator>
+
+                        </div>
+                    </mat-tab>
+                    <mat-tab label="Module Access">
+                        <mat-tab-group>
+                            <mat-tab label="Tele Voice">
+                                <form [formGroup]="addForm"><br>
+                                    <!--<section >
+                                        <mat-checkbox checked  >IVR</mat-checkbox><br>
+                                        <mat-checkbox [checked]=""  value="1">Miss Call</mat-checkbox><br>
+                                        <mat-checkbox [checked]="2"  value="2">Conference</mat-checkbox><br>
+                                        <mat-checkbox [checked]="3"  value="3">Dialer</mat-checkbox><br>
+                                        <mat-checkbox [checked]="4"  value="4">Click to Call</mat-checkbox><br>
+                                        <mat-checkbox [checked]="5"  value="5">Campaigns</mat-checkbox><br>
+                                    </section>-->
+                                    <mat-checkbox color="primary" formControlName="ivr">
+                                        IVR Builder</mat-checkbox><br>
+                                    <mat-checkbox color="primary" formControlName="misscall">
+                                        Miss Call</mat-checkbox><br>
+                                    <mat-checkbox color="primary" formControlName="conference">
+                                        Conference Call
+                                    </mat-checkbox><br>
+                                    <mat-checkbox color="primary" formControlName="dialer">
+                                        Dialer
+                                    </mat-checkbox><br>
+                                    <mat-checkbox color="primary" formControlName="clicktocall">Click to Call
+                                    </mat-checkbox><br>
+                                    <mat-checkbox color="primary" formControlName="campaigns">
+                                        Campaigns</mat-checkbox><br>
+                                    <mat-checkbox color="primary" formControlName="progressivedialer">
+                                        Progressive Dialer/Predictive Dialer</mat-checkbox><br>
+                                    <mat-checkbox color="primary" formControlName="bulksms">
+                                        Bulk SMS</mat-checkbox><br>
+                                    <mat-checkbox color="primary" formControlName="dialpad">
+                                        Dial Pad</mat-checkbox><br>
+                                    <mat-checkbox color="primary" formControlName="obd">
+                                        OBD</mat-checkbox><br>
+                                    <mat-checkbox color="primary" formControlName="zoho">
+                                        ZOHO</mat-checkbox><br>
+                                    <mat-checkbox color="primary" formControlName="lms">
+                                        LMS</mat-checkbox><br>
+                                    <mat-checkbox color="primary" formControlName="voicemail">
+                                        Voice Mail</mat-checkbox><br>
+                                    <mat-checkbox color="primary" formControlName="sms">
+                                        SMS</mat-checkbox><br>
+                                    <mat-checkbox color="primary" formControlName="email">
+                                        EMail</mat-checkbox><br>
+                                    <mat-checkbox color="primary" formControlName="chat">
+                                        Chat</mat-checkbox><br>
+                                    <mat-checkbox color="primary" formControlName="digital">
+                                        Digital</mat-checkbox><br>
+                                    <mat-checkbox color="primary" formControlName="media_libaray">
+                                        Media Library </mat-checkbox><br>
+                                    <mat-checkbox color="primary" formControlName="custom_api">
+                                        Custom API</mat-checkbox><br>
+                                    <mat-checkbox color="primary" formControlName="did_routing">
+                                        DID Routing</mat-checkbox><br>
+
+                                    <div class="btn-sec">
+                                        <button mat-raised-button type="submit" color="primary" class="Update-btn"
+                                            (click)="submit()">Save</button>
+
+                                    </div>
+                                </form>
+                            </mat-tab>
+                            <mat-tab label="Tele Digital">
+                                <form [formGroup]="daccessForm" (ngSubmit)="digitalsubmit()"><br>
+                                    <mat-checkbox color="primary" formControlName="post">
+                                        Post</mat-checkbox><br>
+                                    <mat-checkbox color="primary" formControlName="members">
+                                        Members</mat-checkbox><br>
+                                    <mat-checkbox color="primary" formControlName="monitor">
+                                        Monitor
+                                    </mat-checkbox><br>
+                                    <mat-checkbox color="primary" formControlName="groups">
+                                        Groups
+                                    </mat-checkbox><br>
+                                    <mat-checkbox color="primary" formControlName="store">Store
+                                    </mat-checkbox><br>
+                                    <mat-checkbox color="primary" formControlName="medialibrary">Media Library
+                                    </mat-checkbox><br>
+                                    <mat-checkbox color="primary" formControlName="leads">
+                                        Leads</mat-checkbox><br>
+                                    <mat-checkbox color="primary" formControlName="audience">
+                                        Audience</mat-checkbox><br>
+                                    <mat-checkbox color="primary" formControlName="hashtag">
+                                        Hashtag</mat-checkbox><br>
+                                    <div class="btn-sec">
+                                        <button mat-raised-button type="submit" color="primary"
+                                            class="Update-btn">Save</button>
+                                    </div>
+                                </form>
+                            </mat-tab>
+                            <mat-tab label="Generate API Key">
+                                <br>
+                                <button mat-raised-button color="primary" (click)="getAuthKey()">Generate API
+                                    Key</button>
+                            </mat-tab>
+
+                        </mat-tab-group>
+
+                    </mat-tab>
+                    <mat-tab label="Generate Invoice">
+                        <div class="table-responsive">
+
+                            <mat-table class="lessons-table mat-elevation-z8" [dataSource]="billdataSource">
+                                <ng-container matColumnDef="id">
+
+                                    <mat-header-cell *matHeaderCellDef>Sr. No</mat-header-cell>
+
+                                    <mat-cell class="description-cell" *matCellDef="let row;let i = index;"
+                                        data-label="id">
+                                        {{i+1+(billpaginator.pageIndex * billpaginator.pageSize)}}</mat-cell>
+
+                                </ng-container>
+                                <ng-container matColumnDef="billdate">
+                                    <mat-header-cell *matHeaderCellDef> Bill Date </mat-header-cell>
+                                    <mat-cell class="description-cell" *matCellDef="let row">{{row.Bill_Date}}
+                                    </mat-cell>
+                                </ng-container>
+                                <ng-container matColumnDef="package">
+                                    <mat-header-cell *matHeaderCellDef> Package Name </mat-header-cell>
+                                    <mat-cell class="description-cell" *matCellDef="let row">
+                                        {{row.package_name!=null?row.package_name:'-'}}
+                                    </mat-cell>
+                                </ng-container>
+                                <ng-container matColumnDef="telesms">
+                                    <mat-header-cell *matHeaderCellDef> Tele SMS Package </mat-header-cell>
+                                    <mat-cell class="description-cell" *matCellDef="let row">
+                                        {{row.smspackage!=null?row.smspackage:'-'}}
+                                    </mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="telemail">
+                                    <mat-header-cell *matHeaderCellDef> Tele Mail Package </mat-header-cell>
+                                    <mat-cell class="description-cell" *matCellDef="let row">
+                                        {{row.mailpackage!=null?row.mailpackage:'-'}}
+                                    </mat-cell>
+                                </ng-container>
+                                <ng-container matColumnDef="telemeet">
+                                    <mat-header-cell *matHeaderCellDef> Tele Meet Package </mat-header-cell>
+                                    <mat-cell class="description-cell" *matCellDef="let row">
+                                        {{row.meetpackage!=null?row.meetpackage:'-'}}
+                                    </mat-cell>
+                                </ng-container>
+                                <ng-container matColumnDef="teledigital">
+                                    <mat-header-cell *matHeaderCellDef> Tele Digital Package </mat-header-cell>
+                                    <mat-cell class="description-cell" *matCellDef="let row">
+                                        {{row.digitalpackage!=null?row.digitalpackage:'-'}}
+                                    </mat-cell>
+                                </ng-container>
+                                <ng-container matColumnDef="billamount">
+                                    <mat-header-cell *matHeaderCellDef>Bill Amount </mat-header-cell>
+                                    <mat-cell class="description-cell" *matCellDef="let row">
+                                        {{row.Final_amount}}
+                                    </mat-cell>
+                                </ng-container>
+
+
+
+                                <ng-container matColumnDef="invoice">
+                                    <mat-header-cell *matHeaderCellDef> Generate Invoice </mat-header-cell>
+                                    <mat-cell class="description-cell" *matCellDef="let row">
+                                        <a href="/api/manager/generateinvoice/{{row.Bill_ID}}" mat-icon-button
+                                            color="info" aria-label="Example icon button with a heart icon"
+                                            title="Renew Plan">
+                                            <mat-icon>vertical_align_bottom</mat-icon>
+                                        </a>
+                                    </mat-cell>
+                                </ng-container>
+
+
+                                <mat-header-row *matHeaderRowDef="billdisplayedColumns"></mat-header-row>
+
+                                <mat-row *matRowDef="let row; columns: billdisplayedColumns"></mat-row>
+
+                            </mat-table>
+                            <mat-paginator #billpaginator [length]="billLength" [pageSize]="50"
+                                [pageSizeOptions]="[50,100,500]"></mat-paginator>
+
+                        </div>
+                    </mat-tab>
+                    <mat-tab label="Subscription List">
+                        <div class="table-responsive">
+                            <mat-progress-bar mode="indeterminate" *ngIf="isLoading2"></mat-progress-bar>
+                            <mat-table class="lessons-table mat-elevation-z8" [dataSource]="subscriptiondataSource">
+                                <ng-container matColumnDef="id">
+
+                                    <mat-header-cell *matHeaderCellDef>Sr. No</mat-header-cell>
+
+                                    <mat-cell class="description-cell" *matCellDef="let row;let i = index;"
+                                        data-label="id">
+                                        {{i+1+(subscriptionpaginator.pageIndex * subscriptionpaginator.pageSize)}}
+                                    </mat-cell>
+
+                                </ng-container>
+                                <ng-container matColumnDef="subdate">
+                                    <mat-header-cell *matHeaderCellDef> Subscription Date </mat-header-cell>
+                                    <mat-cell class="description-cell" *matCellDef="let row">{{row.create_date | date}}
+                                    </mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="name">
+                                    <mat-header-cell *matHeaderCellDef> Plan Name </mat-header-cell>
+                                    <mat-cell class="description-cell" *matCellDef="let row">{{row.name}}
+                                    </mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="end_date">
+                                    <mat-header-cell *matHeaderCellDef> Subscription End Date </mat-header-cell>
+                                    <mat-cell class="description-cell" *matCellDef="let row">{{row.end_date | date}}
+                                    </mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="startdate">
+                                    <mat-header-cell *matHeaderCellDef> Subscription Start Date </mat-header-cell>
+                                    <mat-cell class="description-cell" *matCellDef="let row">{{row.start_date | date}}
+                                    </mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="amount">
+                                    <mat-header-cell *matHeaderCellDef> Package Amount</mat-header-cell>
+                                    <mat-cell class="description-cell" *matCellDef="let row">{{row.amount}}
+                                    </mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="status">
+                                    <mat-header-cell *matHeaderCellDef>status</mat-header-cell>
+                                    <mat-cell class="description-cell" *matCellDef="let row;let i = index">
+                                        <!-- {{row.status == '0' ? 'Active': 'Inactive'}} -->
+
+                                        <span class="material-icons" title="Active" *ngIf="row.status == '0'">
+                                            done
+                                        </span>
+                                        <span class="material-icons" title="Inactive" *ngIf="row.status == '1'">
+                                            close
+                                        </span>
+                                        <span class="material-icons" title="Cancel" *ngIf="row.status == '2'">
+                                            delete_forever
+                                        </span>
+                                    </mat-cell>
+                                </ng-container>
+
+
+                                <ng-container matColumnDef="action">
+                                    <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
+                                    <mat-cell class="description-cell" *matCellDef="let row">
+                                        <span class="material-icons" (click)="changestatus(row,0)" title="Active"
+                                            *ngIf="row.status == '1'">
+                                            done
+                                        </span>
+                                        <span class="material-icons" (click)="changestatus(row,1)" title="Inactive"
+                                            *ngIf="row.status == '0'">
+                                            close
+                                        </span>
+                                        <span class="material-icons" (click)="changestatus(row,2)" title="Cancel"
+                                            *ngIf="row.status == '0' || row.status == '1'">
+                                            delete_forever
+                                        </span>
+                                    </mat-cell>
+                                </ng-container>
+
+                                <mat-header-row *matHeaderRowDef="subdisplayedColumns"></mat-header-row>
+
+                                <mat-row *matRowDef="let row; columns: subdisplayedColumns"></mat-row>
+
+                            </mat-table>
+                            <mat-paginator #subscriptionpaginator [length]="subLength" [pageSize]="5"
+                                [pageSizeOptions]="[5,10,50]"></mat-paginator>
+
+                        </div>
+                    </mat-tab>
+                    <!-- <mat-tab label="Digital Module Access">
+                        <mat-tab-group>
+                            <mat-tab label="Send SMS">
+                            </mat-tab>
+                            <mat-tab label="Send Email">
+                            </mat-tab>
+                        </mat-tab-group>
+                    </mat-tab>-->
+
+                </mat-tab-group>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- /.container-fluid -->

@@ -1,0 +1,169 @@
+<div style="height: 100vh; width: 100%;">
+    <div class="appointment-main">
+        <mat-horizontal-stepper [linear]="isLinear" #stepper>
+            <mat-step>
+                <ng-template matStepLabel>Select Your Time Slot</ng-template>
+                <form>
+                    <div class="form-field-div">
+                        <div class="row m-0">
+                            <div class="col-sm-4">
+                                <div class="pagecheckbox" (click)="getTime(4);">
+                                    <input type="radio" name="shareoption" id="15min" />
+                                    <label class="page-checkbox-alias" for="15min">
+                                        <div class="page-checkbox-alias-data">
+                                            <h4>15 Minute Meeting</h4>
+                                            <p>15 mins, One-on-One</p>
+                                            <!-- <a>View Booking Page</a> -->
+                                        </div>
+                                        <!-- <div class="page-checkbox-alias-footer">
+                                            <div class="d-flex justify-content-between">
+                                                <i class="far fa-copy mr-2 mt-1"></i> Copy Link
+                                                <div class="d-inline-block">
+                                                    <button class="share" mat-stroked-button color="warn">Share</button>
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-4" (click)="getTime(2);">
+                                <div class="pagecheckbox">
+                                    <input type="radio" name="shareoption" id="30min"/>
+                                    <label class="page-checkbox-alias" for="30min">
+                                        <div class="page-checkbox-alias-data">
+                                            <h4>30 Minute Meeting</h4>
+                                            <p>30 mins, One-on-One</p>
+                                            <!-- <a>View Booking Page</a> -->
+                                        </div>
+                                        <!-- <div class="page-checkbox-alias-footer">
+                                            <div class="d-flex justify-content-between">
+                                                <i class="far fa-copy mr-2 mt-1"></i> Copy Link
+                                                <div class="d-inline-block">
+                                                    <button class="share" mat-stroked-button color="warn">Share</button>
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="pagecheckbox" (click)="getTime(1);">
+                                    <input type="radio" name="shareoption" id="60min" />
+                                    <label class="page-checkbox-alias" for="60min">
+                                        <div class="page-checkbox-alias-data">
+                                            <h4>60 Minute Meeting</h4>
+                                            <p>60 mins, One-on-One</p>
+                                            <!-- <a>View Booking Page</a> -->
+                                        </div>
+                                        <!-- <div class="page-checkbox-alias-footer">
+                                            <div class="d-flex justify-content-between">
+                                                <i class="far fa-copy mr-2 mt-1"></i> Copy Link
+                                                <div class="d-inline-block">
+                                                    <button class="share" mat-stroked-button color="warn">Share</button>
+                                                </div>
+                                            </div>
+
+                                        </div> -->
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <button mat-stroked-button color="primary" matStepperNext>Next</button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step label="Calender">
+                <form>
+                    <div class="form-field-div" id = "1">
+                        <ejs-schedule #scheduleObj (popupOpen)='onPopupOpen($event)' [eventSettings]="eventSettings"
+                            [timeScale]="timeScale" timezone="Asia/Calcutta" (actionComplete)='onActionComplete($event)'
+                            [selectedDate]="selectedDate" [startHour]="startHour" [endHour]="endHour">
+                            <ng-template #editorTemplate>
+                                <table class="custom-event-editor" width="100%" cellpadding="5">
+                                    <tbody>
+                                        <tr>
+                                            <td class="e-textlabel">Customer Name</td>
+                                            <td colspan="4">
+                                                <input id="Subject" class="e-field e-input" type="text" value=""
+                                                    name="Subject" style="width: 100%" />
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="e-textlabel">Email</td>
+                                            <td colspan="4">
+                                                <input id="Location" class="e-field e-input" type="text" value=""
+                                                    name="Location" style="width: 100%" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="e-textlabel">Mobile</td>
+                                            <td colspan="4">
+                                                <input id="OwnerId" class="e-field e-input" type="text" value=""
+                                                    name="OwnerId" style="width: 100%" />
+                                                <!-- <input type="text" id="EventType" name="EventType" class="e-field" style="width: 100%" /> -->
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="e-textlabel">From</td>
+                                            <td colspan="4">
+                                                <input id="StartTime" class="e-field" type="text" name="StartTime" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="e-textlabel">To</td>
+                                            <td colspan="4">
+                                                <input id="EndTime" class="e-field" type="text" name="EndTime" />
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="e-textlabel"> Type</td>
+                                            <td colspan="4">
+                                                <input id="EventType" class="e-field e-input" type="text" value=""
+                                                    name="EventType" style="width: 100%" />
+                                                <!-- <input type="text" id="EventType" name="EventType" class="e-field" style="width: 100%" /> -->
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="e-textlabel">Notes</td>
+                                            <td colspan="4">
+                                                <textarea id="Description" class="e-field e-input" name="Description"
+                                                    rows="3" cols="50"
+                                                    style="width: 100%; height: 60px !important; resize: vertical"></textarea>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </ng-template>
+                        </ejs-schedule>
+                    </div>
+                    <div mt-2>
+                        <button mat-stroked-button color="accent" matStepperPrevious>Back</button>
+                        <button id="nextbtn" mat-stroked-button color="primary" class="ml-1" (click) = "getScheduleList()" matStepperNext>Next</button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step>
+                <ng-template matStepLabel>Done</ng-template>
+                    <div class="Confirmed">
+                        <h3>Confirmed</h3>
+                        <p><b>You are Confirmed with {{agent}}</b></p>
+                    </div>
+                    <div class="d-flex mt-1">
+                        <label class="mr-1"><div class="yellow"></div></label> <p>{{time}} Minute Meeting</p>
+                    </div>
+                    <div  class="d-flex mt-1">
+                        <label class="c-icon mr-1"><i class="far fa-calendar-alt"></i></label> <p>{{startdate | date:'shortTime'}} - {{enddate | date:'shortTime'}} , {{startdate | date:'fullDate'}}</p>
+                    </div>
+                    <div  class="d-flex mt-1">
+                        <label class="c-icon mr-1"><i class="fas fa-globe-americas"></i></label> <p>A Calendar invitation has been sent to your email address.</p>
+                    </div>
+                
+            </mat-step>
+        </mat-horizontal-stepper>
+    </div>
+</div>

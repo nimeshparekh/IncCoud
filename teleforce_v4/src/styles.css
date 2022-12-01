@@ -1,0 +1,340 @@
+/* You can add global styles to this file, and also import other style files */
+/* @import "~bootstrap/dist/css/bootstrap.css"; */
+@import "../src/assets/css/sb-admin-2.min.css";
+@import "../src/assets/css/uicons-regular-rounded.css";
+@import "../src/assets/font/flaticon.css";
+@import "../src/assets/font/material-icon.css";
+/* @import url("https://fonts.googleapis.com/icon?family=Material+Icons"); */
+/* @import '~bootstrap/dist/css/bootstrap.min.css'; */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.mat-flat-button.mat-primary, .mat-raised-button.mat-primary, .mat-fab.mat-primary, .mat-mini-fab.mat-primary {
+    background-color: #145388;
+}
+.text-primary {
+    color: #145388!important;
+}
+.mat-progress-bar-fill::after {
+    background-color: #145388;
+}
+.mat-progress-bar-buffer {
+    background-color: #dcedee;
+}
+.mat-flat-button.mat-accent, .mat-raised-button.mat-accent, .mat-fab.mat-accent, .mat-mini-fab.mat-accent {
+    background-color: #707070;
+}
+button:focus
+{
+    outline: none;
+}
+.mat-radio-button.mat-primary .mat-radio-inner-circle, .mat-radio-button.mat-primary .mat-radio-ripple .mat-ripple-element:not(.mat-radio-persistent-ripple), .mat-radio-button.mat-primary.mat-radio-checked .mat-radio-persistent-ripple, .mat-radio-button.mat-primary:active .mat-radio-persistent-ripple {
+    background-color: #145388;
+}
+.mat-radio-button.mat-primary.mat-radio-checked .mat-radio-outer-circle {
+    border-color: #145388;
+}
+.mat-input-element {
+    caret-color: #145388;
+}
+.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick 
+{
+    color: #145388;
+}
+.mat-form-field.mat-focused .mat-form-field-label
+{
+    color: #145388;
+}
+.mat-calendar-body-selected {
+    background-color: #145388;
+    color: #fff;
+}
+/* width */
+::-webkit-scrollbar 
+{
+    width: 6px;
+    height: 6px;
+}
+  
+/* Track */
+::-webkit-scrollbar-track 
+{
+    background: #f1f1f1; 
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb 
+{
+    background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover 
+{
+    background: #555; 
+}
+.topbar .dropdown-list .dropdown-header {
+    background-color: #145388;
+    border: 1px solid #145388;
+    padding-top: .75rem;
+    padding-bottom: .75rem;
+    color: #fff;
+}
+.bg-primary {
+    background-color: #145388!important;
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+
+.w-75{
+    max-width: 75px;
+}
+
+.w-100{
+    max-width: 100px;
+}
+.th-center{
+    text-align: center;
+}
+.th-left{
+    text-align: left;
+}
+.th-right{
+    text-align: right;
+}
+
+.mat-button.mat-primary, .mat-icon-button.mat-primary, .mat-stroked-button.mat-primary {
+    color: #145388;
+}
+.mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+    background-color: #145388;
+}
+.w-100
+{
+    width: 100%;
+}
+.mat-form-field {
+    display: inline !important;
+    position: relative;
+    text-align: left;
+}
+.mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
+    color: #145388;
+}
+.agent-dialer .mat-tab-label {
+    height: 48px;
+    padding: 0 2px;
+    cursor: pointer;
+    box-sizing: border-box;
+    opacity: 1;
+    min-width: 160px;
+    background: #fff;
+    text-align: center;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px 8px 0 0;
+    white-space: nowrap;
+    position: relative;
+    border-right: 1px solid #e3e4e7;
+}
+.No-data
+{
+    text-align: center;
+    position: absolute; 
+    left: 50%; 
+    top: 50%; 
+    -webkit-transform: translate(-50%, -50%); 
+    transform: translate(-50%, -50%);
+}
+.No-data img
+{
+    width: 140px;
+    border-radius: 18px;
+    box-shadow: 0 1px 6px rgb(0 0 0/4%),0 1px 6px rgb(0 0 0/4%)!important;
+}
+.No-data h4
+{
+    margin: 0px;
+    font-size: 30px;
+    font-weight: 600;
+    margin-top: 18px;
+    color: #d4d8e6;
+    font-family: 'Roboto';
+}
+.No-data p
+{
+    margin: 0px;
+    margin-top: 13px;
+    font-size: 14px;
+    color: #8e9598;
+}
+
+.mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+    background-color: #145388;
+}
+.mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+    background-color: rgb(64 162 255 / 54%);
+}
+.mat-slide-toggle.mat-checked .mat-ripple-element {
+    background-color: #145388;
+}
+mat-cell:first-of-type, mat-header-cell:first-of-type, mat-footer-cell:first-of-type {
+    padding-left: 0px;
+}
+mat-cell, mat-header-cell, mat-footer-cell {
+    align-items: center;
+    overflow: hidden;
+    word-wrap: break-word;
+    /* min-height: inherit; */
+    padding: 2px 4px 2px 4px;
+    font-size: 12px !important;
+    height: auto;
+}
+mat-row, mat-footer-row 
+{
+    min-height: auto;
+}
+mat-header-row 
+{
+    min-height: 36px;
+    font-weight: bold;
+}
+.angular-editor 
+{
+    position: relative;
+    padding: 0 13px 0 13px;
+    border-radius: 7px;
+}
+.angular-editor .angular-editor-wrapper .angular-editor-textarea 
+{
+    min-height: 5rem;
+    padding: .5rem .8rem 1rem;
+    border: 1px solid #ddd;
+    background-color: transparent;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: relative;
+    border-radius: 5px;
+}
+.angular-editor-toolbar 
+{
+    font: 100 .8rem/15px Roboto,Arial,sans-serif;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    padding: .2rem;
+    border: 1px solid #ddd;
+}
+.mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 1em 0 1em 0;
+    font-size: 12px;
+}
+.mat-form-field.mat-focused.mat-primary .mat-select-arrow {
+    color: #145388;
+}
+.table-bordered th 
+{
+    font-weight: 500 !important;
+    font-size: 12px;
+}
+.table-bordered td
+{
+    font-weight: 200 !important;
+    font-size: 12px;
+}
+footer.sticky-footer 
+{
+    padding: 1rem 0 !important;
+    flex-shrink: 0;
+}
+.warap-height
+{
+    height: calc(100vh - 115px);
+    overflow-y: scroll;
+}
+.call-queue .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 1em 0 1em 0;
+    font-size: 12px;
+    width: 90px !important;
+}
+.call-queue .mat-form-field-appearance-outline .mat-form-field-wrapper {
+    margin: 0;
+    padding-bottom: 0px;
+}
+th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
+    font-size: 12px;
+}
+.mat-button.mat-accent, .mat-icon-button.mat-accent, .mat-stroked-button.mat-accent {
+    color: #707070;
+}
+.mat-checkbox-indeterminate.mat-primary .mat-checkbox-background, .mat-checkbox-checked.mat-primary .mat-checkbox-background {
+    background-color: #145388;
+}
+.mat-checkbox-checked:not(.mat-checkbox-disabled).mat-primary .mat-ripple-element, .mat-checkbox:active:not(.mat-checkbox-disabled).mat-primary .mat-ripple-element {
+    background: #145388;
+}
+.mat-radio-button.mat-accent .mat-radio-inner-circle, .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element:not(.mat-radio-persistent-ripple), .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-persistent-ripple, .mat-radio-button.mat-accent:active .mat-radio-persistent-ripple {
+    background-color: #145388;
+}
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+    border-color: #145388;
+}
+.dilog-head
+{
+    border-bottom: 1px solid #ccc;
+}
+.close
+{
+    position: relative;
+    cursor: pointer;
+}
+.mat-form-field-appearance-outline .mat-form-field-wrapper {
+    margin: 0 0;
+    padding: 0px;
+    padding-bottom: 14px;
+}
+.lead-detail .mat-form-field-wrapper
+{
+    padding-bottom: 10px;
+}
+.agent-dialer-top-filter .mat-form-field-label-wrapper {
+    top: -13px;
+    padding-top: -6.15625em;
+}
+.agent-dialer-top-filter .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 8px 0 8px 0;
+    font-size: 12px;
+}
+/*******callpopup**********/
+.runningcall-contact-details .mat-form-field-wrapper {
+    padding-bottom: 4px;
+    padding-top: 2px;
+}
+.calender .mat-tab-label
+{
+    padding: 0px 6px !important;
+    min-width: auto !important;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.ellipsis
+{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+
+.charts .mat-form-field-appearance-outline .mat-form-field-wrapper {
+    margin: 0 0;
+    padding-bottom: 0px;
+}
+.charts .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 1em 0 1em 0;
+    font-size: 10px;
+}

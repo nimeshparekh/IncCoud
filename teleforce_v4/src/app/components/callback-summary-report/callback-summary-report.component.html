@@ -1,0 +1,109 @@
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Callback Summary Report For Schedule Date</h1>
+    <p class="mb-2"></p>
+
+    <form [formGroup]="searchform">
+        <div class="row">
+            <div class="col-sm-3">
+                <mat-form-field appearance="outline">
+                    <mat-label>Choose a date</mat-label>
+                    <input matInput placeholder="From Date" [matDatepicker]="startpicker" formControlName="startdate" required>
+                    <mat-datepicker-toggle matSuffix [for]="startpicker"></mat-datepicker-toggle>
+                    <mat-datepicker #startpicker tpicker></mat-datepicker>
+                    <mat-error *ngIf="searchform.controls.startdate.hasError('required')">
+                        Please select From Date
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-3">   
+                <mat-form-field appearance="outline">
+                    <mat-label>Choose a date</mat-label>
+                    <input matInput placeholder="To Date" [matDatepicker]="endpicker" formControlName="enddate" required>
+                    <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
+                    <mat-datepicker #endpicker tpicker></mat-datepicker>
+                    <mat-error *ngIf="searchform.controls.enddate.hasError('required')">
+                        Please select To Date
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-sm-3">
+                <button mat-raised-button class="mt-2" type="submit" (click)="searchData()">Search</button>
+            </div>
+        </div>    
+    </form>
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4 mt-3">
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table width="100%">
+                    <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+
+                    <mat-table class="lessons-table mat-elevation-z8"  [dataSource]="dataSource">
+
+                        <ng-container matColumnDef="id">
+
+                            <mat-header-cell *matHeaderCellDef>Sr. No</mat-header-cell>
+
+                            <mat-cell class="description-cell" *matCellDef="let row;let i = index;" data-label="id">
+                                {{i+1+(paginator.pageIndex * paginator.pageSize)}}</mat-cell>
+
+                        </ng-container>
+
+                        <!--<ng-container matColumnDef="calldate">
+
+                            <mat-header-cell *matHeaderCellDef > Call Date </mat-header-cell>
+
+                            <mat-cell class="description-cell" *matCellDef="let row">
+                               {{row.CallStartTime | date:'dd-MM-yyyy HH:mm:ss'}}
+                            </mat-cell>
+
+                        </ng-container>
+
+                        <ng-container matColumnDef="scheduledate">
+
+                            <mat-header-cell *matHeaderCellDef > Schedule Date </mat-header-cell>
+
+                            <mat-cell class="description-cell" *matCellDef="let row">
+                               {{row.scheduledate | date:'dd-MM-yyyy'}}
+                            </mat-cell>
+
+                        </ng-container>
+
+                        <ng-container matColumnDef="finalizedate">
+
+                            <mat-header-cell *matHeaderCellDef > Finalized Date </mat-header-cell>
+
+                            <mat-cell class="description-cell" *matCellDef="let row">
+                               
+                            </mat-cell>
+
+                        </ng-container>-->
+
+                        <ng-container matColumnDef="calls">
+
+                            <mat-header-cell *matHeaderCellDef > Count Calls </mat-header-cell>
+
+                            <mat-cell class="description-cell" *matCellDef="let row">
+                                {{row.totalcalls}}
+                            </mat-cell>
+
+                        </ng-container>
+                        
+                        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+                        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+                    </mat-table>
+                    <mat-paginator #paginator [length]="Length" [pageSize]="50" [pageSizeOptions]="[50,100,500]">
+                    </mat-paginator>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- /.container-fluid -->

@@ -1,0 +1,81 @@
+<div class="warap-height pt-4">
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+        <!-- Page Heading -->
+        <h1 class="h3 mb-2 text-gray-800">
+            <button routerLink="/settings" mat-icon-button title="Back" color="accent"
+                aria-label="Example icon button with a menu icon">
+                <mat-icon>keyboard_backspace</mat-icon>
+            </button>
+            Chat Settings
+        </h1>
+        <p class="mb-4"></p>
+        <!-- DataTales Example -->
+        <div class="card shadow mb-4">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <b>Whatsapp Incoming Webhook :  </b>
+                    </div>
+                    <div class="col-sm-6">
+                        {{whasappincomingwebhook}}
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <b>Facebook Page Chat Plugin Code :  </b>
+                    </div>
+                    <div class="col-sm-3">
+                        <mat-form-field appearance="outline" class="example-full-width">
+                            <mat-select (selectionChange)="selectfbpage($event)">
+                                <mat-option *ngFor="let fbchannel of fbchannels" [value]="fbchannel.page_id" >
+                                    {{fbchannel.channel_name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row" *ngIf="pageid!=''" >
+                    <div class="col-sm-12">
+                        <pre>
+                            <code>
+                                <!-- Messenger Chat Plugin Code -->
+                                &lt;div id="fb-root"&gt; &lt;/div&gt;
+
+                                <!-- Your Chat Plugin code -->
+                                &lt;div&gt; id="fb-customer-chat" class="fb-customerchat"&gt;
+                                &lt;/div&gt;
+
+                                &lt;script&gt;
+                                var chatbox = document.getElementById('fb-customer-chat');
+                                chatbox.setAttribute("page_id", "{{pageid}}");
+                                chatbox.setAttribute("attribution", "biz_inbox");
+                                &lt;/script&gt;
+
+                                <!-- Your SDK code -->
+                                &lt;script&gt;
+                                    <span class="pln">window</span><span class="pun">.</span><span class="pln">fbAsyncInit </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{{'{'}}</span>
+                                    <span class="pln">  FB</span><span class="pun">.</span><span class="pln">init</span><span class="pun">({{'{'}}</span>
+                                    <span class="pln">    xfbml            </span><span class="pun">:</span> <span class="pln"> </span><span class="kwd">true</span><span class="pun">,</span>
+                                    <span class="pln">    version          </span><span class="pun">:</span><span class="pln"> </span><span class="str">v11.0</span><span class="pln"></span>
+                                    <span class="pun">  });</span><span class="pln"></span>
+                                    <span class="pun">};</span><span class="pln"></span>
+                                    <span class="pun">(</span><span class="kwd">function</span><span class="pun">(</span><span class="pln">d</span><span class="pun">,</span><span class="pln"> s</span><span class="pun">,</span><span class="pln"> id</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{{'{'}}</span><span class="pln"></span>
+                                    <span class="kwd">var</span><span class="pln"> js</span><span class="pun">,</span><span class="pln"> fjs </span><span class="pun">=</span><span class="pln"> d</span><span class="pun">.</span><span class="pln">getElementsByTagName</span><span class="pun">(</span><span class="pln">s</span><span class="pun">)[</span><span class="lit">0</span><span class="pun">];</span><span class="pln"></span>
+                                    <span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">d</span><span class="pun">.</span><span class="pln">getElementById</span><span class="pun">(</span><span class="pln">id</span><span class="pun">))</span><span class="pln"> </span><span class="kwd">return</span><span class="pun">;</span>
+                                    <span class="pln">js </span><span class="pun">=</span><span class="pln"> d</span><span class="pun">.</span><span class="pln">createElement</span><span class="pun">(</span><span class="pln">s</span><span class="pun">);</span><span class="pln"> js</span><span class="pun">.</span><span class="pln">id </span><span class="pun">=</span><span class="pln"> id</span><span class="pun">;</span>
+                                    <span class="pln">js</span><span class="pun">.</span><span class="pln">src </span><span class="pun">=</span><span class="pln"> </span><span class="str">'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js'</span><span class="pun">;</span>
+                                    <span class="pln">fjs</span><span class="pun">.</span><span class="pln">parentNode</span><span class="pun">.</span><span class="pln">insertBefore</span><span class="pun">(</span><span class="pln">js</span><span class="pun">,</span><span class="pln"> fjs</span><span class="pun">);</span><span class="pln"></span>
+                                    <span class="pun">}(</span><span class="pln">document</span><span class="pun">,</span><span class="pln"> </span><span class="str">'script'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'facebook-jssdk'</span><span class="pun">));</span><span class="pln"></span>
+                                &lt;/script&gt;
+                            </code>
+                          </pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /.container-fluid -->
+</div>

@@ -1,0 +1,89 @@
+<div mat-dialog-head class="dilog-head d-flex justify-content-between">
+    <h3 class="primary">Kyc Document View</h3>
+    <div class="d-inline-block">
+        <a class="close" mat-dialog-close ><i class="fi-rr-cross-small"></i></a>
+    </div>
+</div>
+<div mat-dialog-content>
+    <div class="card mb-2 mt-3">
+      
+        <div class="card-body">
+            
+            <div class="row">
+                <div class="col-md-4">
+                    Registration Certificate<br><br>
+                    <div *ngIf="!registrationpdf">
+                        <img width="100px" height="100px" src="api/kyc/{{registration_certiimg}}"
+                            *ngIf="registration_certiimg!=''">
+                        <img width="100px" height="100px" src="assets/img/no-image.jpg"
+                            *ngIf="registration_certiimg==''">
+                    </div>
+                    <div *ngIf="registrationpdf">
+                        <a href="api/kyc/{{registration_certiimg}}" target="_blank">
+                            <img width="100px" height="100px" src="assets/img/pdf_icon.png">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    GST Certificate<br><br>
+                    <div *ngIf="!gstpdf">
+                        <img width="100px" height="100px" src="api/kyc/{{gst_certificateimg}}"
+                            *ngIf="gst_certificateimg!=''">
+                        <img width="100px" height="100px" src="assets/img/no-image.jpg"
+                            *ngIf="gst_certificateimg==''">
+                    </div>
+                    <div *ngIf="gstpdf">
+                        <a href="api/kyc/{{gst_certificateimg}}" target="_blank">
+                            <img width="100px" height="100px" src="assets/img/pdf_icon.png">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    Agreement<br><br>
+                    <div *ngIf="!agreementpdf">
+                        <img width="100px" height="100px" src="api/kyc/{{agreementimg}}"
+                            *ngIf="agreementimg!=''">
+                        <img width="100px" height="100px" src="assets/img/no-image.jpg"
+                            *ngIf="agreementimg==''">
+                    </div>
+                    <div *ngIf="agreementpdf">
+                        <a href="api/kyc/{{agreementimg}}" target="_blank">
+                            <img width="100px" height="100px" src="assets/img/pdf_icon.png">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-4 mt-4">
+                    Company PAN Card<br><br>
+                    <div *ngIf="!pancardpdf">
+                        <img width="100px" height="100px" src="api/kyc/{{pan_cardimg}}"
+                            *ngIf="pan_cardimg!=''">
+                        <img width="100px" height="100px" src="assets/img/no-image.jpg"
+                            *ngIf="pan_cardimg==''">
+                    </div>
+                    <div *ngIf="pancardpdf">
+                        <a href="api/kyc/{{pan_cardimg}}" target="_blank">
+                            <img width="100px" height="100px" src="assets/img/pdf_icon.png">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-8 mt-4">
+                    Authorized Person Proof<br><br>
+                    <div *ngIf="!personproofpdf">
+                        <img width="100px" height="100px" src="api/kyc/{{authorized_person_proofimg}}"
+                            *ngIf="authorized_person_proofimg!=''">
+                        <img width="100px" height="100px" src="assets/img/no-image.jpg"
+                            *ngIf="authorized_person_proofimg==''">
+                    </div>
+                    <div *ngIf="personproofpdf">
+                        <a href="api/kyc/{{authorized_person_proofimg}}" target="_blank">
+                            <img width="100px" height="100px" src="assets/img/pdf_icon.png">
+                        </a>
+                    </div>
+                </div>
+            </div>
+    
+        </div>
+    
+    </div>
+</div>
+

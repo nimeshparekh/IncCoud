@@ -1,0 +1,150 @@
+<div mat-dialog-head class="dilog-head d-flex justify-content-between">
+    <h3 class="primary">{{name_form}}</h3>
+    <div class="d-inline-block">
+        <a class="close" (click)="onNoClick2()"><i class="fi-rr-cross-small"></i></a>
+    </div>
+</div>
+<form [formGroup]="addForm" (ngSubmit)="submit_data()">
+    <div mat-dialog-content>
+        <div class="form-card mt-2 mb-2">
+            <p>Items</p>
+
+            <div class="table-responsive">
+                <table class="table table-bordered" >
+                    <thead>
+                        <tr>
+                            <th >Item Code</th>
+                            <th>Quantity</th>
+                            <th>Discount</th>
+                            <th>Rate</th>
+                            <th>GST(%)</th>
+                            <th>GST Amount</th>
+                            <th>Total Amount</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody formArrayName="items">
+                        <tr *ngFor="let cd of addForm.controls.items['controls'] ;let i=index;" formGroupName={{i}}>
+                            <td >
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Select Item</mat-label>
+                                    <mat-select formControlName="product_id" (ngModelChange)="myFunction(i,$event)">
+                                        <mat-option *ngFor="let row of item; let j = index" [value]="row.productid">
+                                            {{row.product_name}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </td>
+                            <td >
+                                <mat-form-field appearance="outline">
+                                    <input matInput formControlName="quantity"
+                                        (change)="myFunction2(i,$event.target.value)">
+                                </mat-form-field>
+                            </td>
+                            <td >
+                                <mat-form-field appearance="outline">
+                                    <input matInput formControlName="discount"
+                                        (change)="myFunction32(i,$event.target.value)" [id]="'dis'+i">
+                                </mat-form-field>
+                            </td>
+                            <td >
+                                <mat-form-field appearance="outline">
+                                    <input matInput formControlName="rate" (change)="myFunction3(i,$event.target.value)"
+                                        [id]="'rate_'+i">
+                                </mat-form-field>
+                            </td>
+                            <td>
+                                <mat-form-field appearance="outline">
+                                    <input matInput formControlName="gst" disabled>
+                                </mat-form-field>
+                            </td>
+                            <td >
+                                <mat-form-field appearance="outline">
+                                    <input matInput formControlName="gstamount" disabled>
+                                </mat-form-field>
+                            </td>
+                            <td >
+                                <mat-form-field appearance="outline">
+                                    <input matInput formControlName="amount" disabled>
+                                </mat-form-field>
+                            </td>
+                            <td>
+                                <button mat-icon-button (click)="deleteRow(i)" color="warn">
+                                    <mat-icon>close</mat-icon>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="8">
+                                <input type="button" class="addrow" value="Add Row" (click)="addItem()" />
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 mt-2">
+
+                    <mat-radio-group formControlName="validity">
+                        <div style="color:grey;">Validity</div>
+                        <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="0">Monthly
+                        </mat-radio-button>
+                        <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="1">Quarterly
+                        </mat-radio-button>
+                        <mat-radio-button color="primary" style="padding:4px 4px 0px 0px;" [value]="2">Half Yearly
+                        </mat-radio-button>
+                        <mat-radio-button color="primary" style="padding:4px 0px 0px 24px;" [value]="3">Yearly
+                        </mat-radio-button>
+                    </mat-radio-group>
+                    <mat-error *ngIf="addForm.controls.validity.hasError('required')">
+                        Please select package validity
+                    </mat-error>
+                </div>
+                <div class="col-sm-6 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Total Quantity</mat-label>
+                        <input matInput placeholder="Total Quantity" formControlName="totalquantity"
+                            [id]="'totalquantity'" disabled>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-6 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Total Discount</mat-label>
+                        <input matInput placeholder="Total Discount" formControlName="totaldiscount"
+                            disabled>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-6 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Total (INR)</mat-label>
+                        <input matInput placeholder="Total (INR)" formControlName="total" [id]="'total'" disabled>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-sm-6 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Total GST Amount (INR)</mat-label>
+                        <input matInput placeholder="Total GST Amount (INR)" formControlName="totalgstamount" [id]="'total'" disabled>
+                    </mat-form-field>
+                </div>
+                <div class="col-sm-6 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Grand Total (INR)</mat-label>
+                        <input matInput placeholder="" [id]="'grandtotal'" disabled formControlName="grandtotal">
+                    </mat-form-field>
+                </div>
+                <!--<div class="col-sm-6 mt-2">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Total Net Weight</mat-label>
+                        <input matInput placeholder="Total Net Weight" value="0" disabled>
+                    </mat-form-field>
+                </div>-->
+            </div>
+        </div>
+        
+
+    </div>
+    <div mat-dialog-actions>
+        <button mat-raised-button type="submit" color="primary" class="Update-btn">Save</button>
+    </div>
+</form>

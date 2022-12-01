@@ -1,0 +1,94 @@
+<div mat-dialog-head class="dilog-head d-flex justify-content-between align-items-center">
+    <div class="d-flex">
+        <h2><b><span><i class="far fa-envelope"></i></span> Virtual Meeting</b></h2>
+        <!-- <mat-slide-toggle class="ml-2 mt-2" (change)="ChangeView()" >Hide Details</mat-slide-toggle> -->
+    </div>
+
+    <div class="d-inline-block">
+        <button mat-stroked-button color="primary" (click)="add_Notes()" class="mr-2 notified">Add Notes</button>
+        <a class="close" (click)="onNoClick()"><i class="fi-rr-cross-small"></i></a>
+    </div>
+</div>
+<div mat-dialog-content>
+    <div class="row mt-2">
+        <div class="col-xl-5 col-12">
+            <div class="card-body">
+                <div style="height: auto; width: 100%;">
+                    <!-- <mat-tab-group>
+                        <mat-tab>
+                            <ng-template mat-tab-label>
+                                Basic Detail
+                            </ng-template> -->
+                    <h3>Basic Details</h3>
+                    <div class="pt-3">
+                        <div class="details">
+                            <div>
+                                <div class="info-card-box ellipsis">
+                                    <label><b>Name : </b> </label>
+                                    {{patientdetail?.lead_name}}
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="info-card-box ellipsis">
+                                    <label><b>Email : </b> </label>
+                                    {{patientdetail?.email_id}}
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="info-card-box ellipsis">
+                                    <label><b>Mobile : </b> </label>
+                                    {{patientdetail?.mobile_no}}
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="info-card-box ellipsis">
+                                    <label><b>Owner : </b> </label>
+                                    {{patientdetail?.owner}}
+                                </div>
+                            </div>
+                            <div>
+                                <div class="info-card-box ellipsis">
+                                    <label><b>Address : </b> </label>
+                                    {{patientdetail?.address_line1}}
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="info-card-box ellipsis">
+                                    <label><b>City : </b> </label>
+                                    {{patientdetail?.city}}
+                                </div>
+                            </div>
+                            <div>
+                                <div class="info-card-box ellipsis">
+                                    <label><b>Source : </b> </label>
+                                    {{patientdetail?.source}}
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="info-card-box ellipsis">
+                                    <label><b>State : </b> </label>
+                                    {{patientdetail?.state}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- </mat-tab>
+                    </mat-tab-group> -->
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <iframe #iframe width="100%" allowusermedia allow="camera;microphone" style="    height: 396px;
+            border: none;
+            position: sticky;
+            top: 10px;"></iframe>
+        </div>
+    </div>
+</div>
+
+<!-- <iframe #iframe height="600" width="100%" allowusermedia allow="camera;microphone"></iframe> -->

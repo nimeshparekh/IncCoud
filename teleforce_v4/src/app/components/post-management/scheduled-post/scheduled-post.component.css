@@ -1,0 +1,128 @@
+.post-mng-sidenav
+{
+    background: #fff;
+    height: calc(100vh - 62px);
+    border-right: 1px solid #efefef;
+}
+.post-mng-sidenav-list
+{
+    padding: 0px;
+    margin: 0px;
+}
+.post-mng-sidenav-list li
+{
+    padding: 6px 10px 6px 10px;
+    margin: 0px;
+    list-style-type: none;
+    border-bottom: 1px solid #efefef;
+    cursor: pointer;
+}
+.post-mng-sidenav-list li i
+{
+    font-weight: bold;
+    color: #145388;
+    font-size: 13px;
+}
+.post-mng-sidenav-list li span
+{
+    margin-left: 10px;
+    font-size: 13px;
+    font-weight: bold;
+    font-family: 'Raleway-Regular';
+    color: #0b3a62;
+}
+.table-thumnail
+{
+    position: relative;
+    float: left;
+    margin-left: -5px;
+}
+.table-thum-channel-img
+{
+    width: 36px;
+    height: 36px;
+    text-align: center;
+    border-radius: 50px;
+    line-height: 36px;
+    border:1px solid #ccc;
+}
+.table-channel-name
+{
+    margin-left: 8px;
+    line-height: 36px;
+    font-size: 14px;
+    font-weight: 500;
+}
+.tablesocial-img-div
+{
+    position: absolute;
+    left: 36px;
+}
+.tablesocial-img
+{
+    position: absolute;
+    width: 20px;
+    bottom: -4px;
+    right: -4px;
+}
+table 
+{
+    width: 100%;
+    min-width: 1000px;
+}
+.my
+{
+    border: 1px solid #e8e8e8 !important;
+    overflow: hidden !important;
+    border-radius: .75rem!important;
+    box-shadow: 0 1px 15px rgb(0 0 0/4%),0 1px 6px rgb(0 0 0/4%)!important;
+}
+.post-time
+{
+    font-size: 10px;
+}
+.tbl-post-type
+{
+
+}
+.tbl-post-img
+{
+    position: relative;
+    width: 65px;
+    height: 65px;
+    overflow: hidden;
+    display: inline-table;
+    text-align: center;
+    background: #ccc;
+    margin: 4px 4px 4px 4px;
+    border-radius: 9px;
+}
+.tbl-post-img img
+{
+    width: 100%;
+    vertical-align: middle;
+}
+.tbl-post-img span
+{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    line-height: 65px;
+    height: 100%;
+    background: #0000005e;
+    color: #fff;
+}
+.tbl-post-text
+{
+
+}
+.action
+{
+    cursor: pointer;
+}
+.active
+{
+    background: #f1f7ff;
+}
