@@ -22,7 +22,7 @@ ssha = require("ssha");
 var dateFormat = require("dateformat");
 var async = require("async");
 const helper = require('../helper/common');
-const { date } = require('faker/lib/locales/az');
+// const { date } = require('faker/lib/locales/az');
 var verifier = require('email-verify');
 var nodemailer = require('nodemailer');
 

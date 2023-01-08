@@ -4,7 +4,7 @@ var moment = require('moment')
 var helper = require('../helper/common')
 var Promise = require('bluebird');
 var dateFormat = require('dateformat');
-const { date } = require('faker/lib/locales/az');
+// const { date } = require('faker/lib/locales/az');
 
 var Report = {
     searchcallsummary: function (data, callback) {

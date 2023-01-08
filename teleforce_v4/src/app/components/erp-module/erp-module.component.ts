@@ -13,7 +13,7 @@ import { UserService } from '../../user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ShareWhatsappComponent } from '../share-whatsapp/share-whatsapp.component';
 import { ScheduleMeetingComponent } from '../schedule-meeting/schedule-meeting.component';
-import * as faker from 'faker';
+// import * as faker from 'faker';
 import { LeadEmailSendComponent,LeadSmsSendComponent} from '../lead-details/lead-details.component'
 import {ToastrService} from "ngx-toastr";
 

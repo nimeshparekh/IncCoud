@@ -18,7 +18,7 @@ import { CallTransferComponent } from '../call-transfer/call-transfer.component'
 import { ContactInformationComponent } from '../contact-information/contact-information.component';
 import { FeedbackFormFillComponent } from '../feedback-form-fill/feedback-form-fill.component';
 import { AdminService } from "../../admin.service";
-import { UA, Socket, WebSocketInterface } from 'jssip';
+import { UA, WebSocketInterface } from 'jssip';
 import { ScheduleMeetingComponent } from '../schedule-meeting/schedule-meeting.component';
 import { IdleTimeoutManager } from "idle-timer-manager";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
