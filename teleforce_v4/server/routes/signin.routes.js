@@ -26,7 +26,7 @@ router.get('/', function (req, res) {
     res.status(200).send({ 'your ip:': ip });
 });
 router.post('/', async function (req, res) {
-    
+    console.log('login started..')
     const username = req.body.username;
     const password = req.body.password;
     

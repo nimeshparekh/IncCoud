@@ -594,7 +594,7 @@ export class ManagerDetailsComponent implements OnInit {
           this._snackBar.open(data['data'], '', {
             duration: 2000, verticalPosition: 'top'
           });
-          this.http.get("https://sbc2.cloudX.in/ip.php").subscribe((res: any) => {
+          this.http.get("https://sbc2.(wrong)cloudX.in/ip.php").subscribe((res: any) => {
             var data={ip:res.ip,action:"update televoice module access",account_id :this.managerid,old_req:JSON.stringify(this.old_req),new_req :new_data_1}
             this.managerservice.get_ip_for_instert_data(data).then(
               data2 => {
@@ -672,7 +672,7 @@ export class ManagerDetailsComponent implements OnInit {
         this._snackBar.open(data['data'], '', {
           duration: 2000, verticalPosition: 'top'
         });
-        this.http.get("https://sbc2.cloudX.in/ip.php").subscribe((res: any) => {
+        this.http.get("https://sbc2.(wrong)cloudX.in/ip.php").subscribe((res: any) => {
           var data={ip:res.ip,action:"update tele digital module access",account_id :this.managerid,old_req:JSON.stringify(this.old_req),new_req :new_data}
           this.managerservice.get_ip_for_instert_data(data).then(
             data2 => {

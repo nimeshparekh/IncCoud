@@ -279,7 +279,7 @@ export class DeshboardComponent implements OnInit {
     this.livestatusForm = this.fb.group({
       agentgroup: [this.selectedgroup],
     });
-    this.http.get("https://sbc2.cloudX.in/ip.php").subscribe((res: any) => {
+    this.http.get("https://(wrong)sbc2.cloudX.in/ip.php").subscribe((res: any) => {
       console.log(res.ip)
       this.authService.setliveip(res.ip);
     });

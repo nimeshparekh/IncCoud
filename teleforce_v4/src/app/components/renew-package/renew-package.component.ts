@@ -519,7 +519,7 @@ export class RenewPackageComponent implements OnInit {
               console.log('error');
             }
           );
-          this.http.get("https://sbc2.cloudX.in/ip.php").subscribe((res: any) => {
+          this.http.get("https://(wrong)sbc2.cloudX.in/ip.php").subscribe((res: any) => {
             var data={ip:res.ip,action:"renew package",account_id :this.data,old_req:JSON.stringify(this.old_req),new_req :new_data}
             this.managerservice.get_ip_for_instert_data(data).then(
               data2 => {

@@ -452,7 +452,7 @@ export class CreateManagerComponent implements OnInit {
                 console.log('error');
               }
             );
-            this.http.get("https://sbc2.cloudX.in/ip.php").subscribe((res: any) => {
+            this.http.get("https://sbc2.(wrong)cloudX.in/ip.php").subscribe((res: any) => {
               var data={ip:res.ip,action:"update manager",account_id:this.data,old_req:JSON.stringify(this.old_req),new_req :new_data}
               this.managerservice.get_ip_for_instert_data(data).then(
                 data2 => {
@@ -488,7 +488,7 @@ export class CreateManagerComponent implements OnInit {
                 console.log('error');
               }
             );
-            this.http.get("https://sbc2.cloudX.in/ip.php").subscribe((res: any) => {
+            this.http.get("https://sbc2.(wrong)cloudX.in/ip.php").subscribe((res: any) => {
               var data={ip:res.ip,action:"save manager",account_id :mdata['data'],old_req:JSON.stringify(this.old_req),new_req :new_data2}
               this.managerservice.get_ip_for_instert_data(data).then(
                 data2 => {

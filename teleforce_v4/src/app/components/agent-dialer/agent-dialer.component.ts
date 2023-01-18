@@ -14,7 +14,7 @@ import { SocketioService } from '../../socketio.service';
 //import { DialerDialogComponent } from '../dialer-dialog/dialer-dialog.component';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { CallQueueComponent } from '../call-queue/call-queue.component'
-import { UA, Socket, WebSocketInterface } from 'jssip'
+// import { UA, Socket, WebSocketInterface } from 'jssip'
 import { environment } from '../../../environments/environment';
 import { Router } from "@angular/router";
 import { DomSanitizer } from '@angular/platform-browser'

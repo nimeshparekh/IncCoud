@@ -28,6 +28,9 @@ var ErpRoutes = require('./routes/ERP')
 var DailerRoutes = require('./routes/dialer.routes')
 var EmailRoutes = require('./routes/email.routes')
 var ObdCampaignRoutes = require('./routes/obd_campaign.routes')
+var morgan = require('morgan')
+
+app.use(morgan('combined'))
 
 app.use(cors());
 //app.disable('etag');

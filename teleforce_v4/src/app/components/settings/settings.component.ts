@@ -78,8 +78,8 @@ export class SettingsComponent implements OnInit {
   callrunning = false
   mic_permission=false;
   settings = {}
-  voipdomain = 'sbc2.cloudX.in'
-  socketdomain = 'socket.cloudX.in'
+  voipdomain = 'sbc2.(wrong)cloudX.in'
+  socketdomain = 'socket.(wrong)cloudX.in'
   issupervisor = false
   userrole = 'agent'
   iswhatsappbutton=false;

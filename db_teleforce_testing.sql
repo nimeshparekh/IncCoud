@@ -1448,7 +1448,7 @@ CREATE TABLE `tf_account_table` (
   `assign_to` int(11) DEFAULT NULL,
   `last_updated` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `billing_type` int(1) DEFAULT '0' COMMENT '0-prepaid, 1-postpaid',
-  `socket_url` varchar(255) DEFAULT 'agent.teleforce.in',
+  `socket_url` varchar(255) DEFAULT 'agent.(wrong)teleforce.in',
   `renew_account_manager` int(11) DEFAULT NULL,
   `obd_server_id` int(11) DEFAULT NULL,
   `obd_channel` int(11) DEFAULT NULL,
@@ -1525,7 +1525,7 @@ CREATE TABLE `tf_account_table_04_07_2022` (
   `assign_to` int(11) DEFAULT NULL,
   `last_updated` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `billing_type` int(1) DEFAULT '0' COMMENT '0-prepaid, 1-postpaid',
-  `socket_url` varchar(255) DEFAULT 'agent.teleforce.in'
+  `socket_url` varchar(255) DEFAULT 'agent.(wrong)teleforce.in'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -1598,7 +1598,7 @@ CREATE TABLE `tf_account_table_13-07-2022` (
   `assign_to` int(11) DEFAULT NULL,
   `last_updated` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `billing_type` int(1) DEFAULT '0' COMMENT '0-prepaid, 1-postpaid',
-  `socket_url` varchar(255) DEFAULT 'agent.teleforce.in'
+  `socket_url` varchar(255) DEFAULT 'agent.(wrong)teleforce.in'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -1671,7 +1671,7 @@ CREATE TABLE `tf_account_table_14_07_2022` (
   `assign_to` int(11) DEFAULT NULL,
   `last_updated` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `billing_type` int(1) DEFAULT '0' COMMENT '0-prepaid, 1-postpaid',
-  `socket_url` varchar(255) DEFAULT 'agent.teleforce.in'
+  `socket_url` varchar(255) DEFAULT 'agent.(wrong)teleforce.in'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -2955,72 +2955,6 @@ CREATE TABLE `tf_email_server` (
   `attachment_size` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `tf_erp_customer`
---
-
-CREATE TABLE `tf_erp_customer` (
-  `c_id` int(11) NOT NULL,
-  `User_id` int(11) DEFAULT NULL,
-  `agent_id` int(11) DEFAULT NULL,
-  `lead_name` varchar(255) DEFAULT NULL,
-  `creation` varchar(255) DEFAULT NULL,
-  `credit_limits` varchar(255) DEFAULT NULL,
-  `accounts` varchar(255) DEFAULT NULL,
-  `companies` varchar(255) DEFAULT NULL,
-  `customer_group` varchar(255) DEFAULT NULL,
-  `customer_name` varchar(255) DEFAULT NULL,
-  `customer_type` varchar(255) DEFAULT NULL,
-  `default_commission_rate` int(11) DEFAULT NULL,
-  `disabled` int(11) DEFAULT NULL,
-  `dn_required` int(11) DEFAULT NULL,
-  `docstatus` int(11) DEFAULT NULL,
-  `doctype` varchar(100) DEFAULT NULL,
-  `export_type` varchar(255) DEFAULT NULL,
-  `gst_category` varchar(255) DEFAULT NULL,
-  `idx` int(11) DEFAULT NULL,
-  `is_frozen` int(11) DEFAULT NULL,
-  `is_internal_customer` int(11) DEFAULT NULL,
-  `language` varchar(100) DEFAULT NULL,
-  `modified` varchar(255) DEFAULT NULL,
-  `modified_by` varchar(255) DEFAULT NULL,
-  `name` varchar(100) DEFAULT NULL,
-  `naming_series` varchar(100) DEFAULT NULL,
-  `owner` varchar(255) DEFAULT NULL,
-  `sales_team` varchar(255) DEFAULT NULL,
-  `so_required` int(11) DEFAULT NULL,
-  `territory` varchar(255) DEFAULT NULL,
-  `parent` varchar(100) DEFAULT NULL,
-  `parentfield` varchar(100) DEFAULT NULL,
-  `parenttype` varchar(100) DEFAULT NULL,
-  `salutation` varchar(100) DEFAULT NULL,
-  `gender` varchar(100) DEFAULT NULL,
-  `default_bank_account` varchar(255) DEFAULT NULL,
-  `image` varchar(255) DEFAULT NULL,
-  `account_manager` varchar(255) DEFAULT NULL,
-  `tax_id` varchar(255) DEFAULT NULL,
-  `tax_category` varchar(100) DEFAULT NULL,
-  `represents_company` varchar(255) DEFAULT NULL,
-  `default_currency` int(255) DEFAULT NULL,
-  `default_price_list` varchar(255) DEFAULT NULL,
-  `website` varchar(255) DEFAULT NULL,
-  `customer_primary_contact` int(255) DEFAULT NULL,
-  `mobile_no` varchar(255) DEFAULT NULL,
-  `email_id` varchar(255) DEFAULT NULL,
-  `customer_primary_address` varchar(255) DEFAULT NULL,
-  `primary_address` varchar(255) DEFAULT NULL,
-  `payment_terms` varchar(255) DEFAULT NULL,
-  `customer_details` varchar(255) DEFAULT NULL,
-  `market_segment` varchar(255) DEFAULT NULL,
-  `industry` varchar(255) DEFAULT NULL,
-  `loyalty_program` varchar(255) DEFAULT NULL,
-  `loyalty_program_tier` varchar(255) DEFAULT NULL,
-  `default_sales_partner` varchar(255) DEFAULT NULL,
-  `customer_pos_id` varchar(255) DEFAULT NULL,
-  `is_sync` enum('no','yes') DEFAULT 'no'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -3315,79 +3249,6 @@ CREATE TABLE `tf_last_extension` (
   `ext_id` int(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `tf_leads`
---
-
-CREATE TABLE `tf_leads` (
-  `l_id` int(11) NOT NULL,
-  `User_id` int(11) DEFAULT NULL,
-  `agent_id` int(11) DEFAULT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `owner` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
-  `lead_owner` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
-  `lead_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `creation` datetime DEFAULT CURRENT_TIMESTAMP,
-  `modified` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  `modified_by` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
-  `description` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
-  `expected_closing` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
-  `priority` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
-  `company_name` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
-  `status` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
-  `salutation` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
-  `email_id` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
-  `designation` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
-  `gender` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
-  `source` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
-  `campaign_name` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
-  `contact_by` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
-  `contact_date` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
-  `ends_on` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
-  `address_type` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
-  `state` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
-  `address` text COLLATE utf8_unicode_ci,
-  `address_title` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
-  `country` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
-  `address_line1` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
-  `pincode` int(11) DEFAULT NULL,
-  `address_line2` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
-  `city` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
-  `county` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
-  `phone` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
-  `mobile_no` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
-  `fax` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
-  `type` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
-  `company` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
-  `market_segment` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
-  `notes` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
-  `website` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
-  `industry` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `request_type` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `product` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `is_sync` enum('no','yes') CHARACTER SET latin1 DEFAULT 'no',
-  `customer` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
-  `image` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
-  `doctype` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
-  `title` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
-  `currency` varchar(200) CHARACTER SET latin1 DEFAULT NULL,
-  `probability` varchar(200) CHARACTER SET latin1 DEFAULT NULL,
-  `opportunity_amount` varchar(200) CHARACTER SET latin1 DEFAULT NULL,
-  `sales_order_id` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
-  `sales_order_name` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
-  `ads_id` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
-  `ads_name` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
-  `ads_keyword` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
-  `ad_leadid` int(11) DEFAULT NULL,
-  `is_done` int(2) DEFAULT '0',
-  `is_deleted` enum('no','yes') CHARACTER SET latin1 DEFAULT NULL,
-  `zohoid` varchar(30) CHARACTER SET latin1 DEFAULT NULL,
-  `whatsapp_number` varchar(15) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `tag_id` int(11) DEFAULT NULL,
-  `completed_date` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -6717,6 +6578,74 @@ ALTER TABLE `tf_email_links`
 ALTER TABLE `tf_email_server`
   ADD PRIMARY KEY (`server_id`);
 
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tf_erp_customer`
+--
+
+CREATE TABLE `tf_erp_customer` (
+  `c_id` int(11) NOT NULL,
+  `User_id` int(11) DEFAULT NULL,
+  `agent_id` int(11) DEFAULT NULL,
+  `lead_name` varchar(255) DEFAULT NULL,
+  `creation` varchar(255) DEFAULT NULL,
+  `credit_limits` varchar(255) DEFAULT NULL,
+  `accounts` varchar(255) DEFAULT NULL,
+  `companies` varchar(255) DEFAULT NULL,
+  `customer_group` varchar(255) DEFAULT NULL,
+  `customer_name` varchar(255) DEFAULT NULL,
+  `customer_type` varchar(255) DEFAULT NULL,
+  `default_commission_rate` int(11) DEFAULT NULL,
+  `disabled` int(11) DEFAULT NULL,
+  `dn_required` int(11) DEFAULT NULL,
+  `docstatus` int(11) DEFAULT NULL,
+  `doctype` varchar(100) DEFAULT NULL,
+  `export_type` varchar(255) DEFAULT NULL,
+  `gst_category` varchar(255) DEFAULT NULL,
+  `idx` int(11) DEFAULT NULL,
+  `is_frozen` int(11) DEFAULT NULL,
+  `is_internal_customer` int(11) DEFAULT NULL,
+  `language` varchar(100) DEFAULT NULL,
+  `modified` varchar(255) DEFAULT NULL,
+  `modified_by` varchar(255) DEFAULT NULL,
+  `name` varchar(100) DEFAULT NULL,
+  `naming_series` varchar(100) DEFAULT NULL,
+  `owner` varchar(255) DEFAULT NULL,
+  `sales_team` varchar(255) DEFAULT NULL,
+  `so_required` int(11) DEFAULT NULL,
+  `territory` varchar(255) DEFAULT NULL,
+  `parent` varchar(100) DEFAULT NULL,
+  `parentfield` varchar(100) DEFAULT NULL,
+  `parenttype` varchar(100) DEFAULT NULL,
+  `salutation` varchar(100) DEFAULT NULL,
+  `gender` varchar(100) DEFAULT NULL,
+  `default_bank_account` varchar(255) DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `account_manager` varchar(255) DEFAULT NULL,
+  `tax_id` varchar(255) DEFAULT NULL,
+  `tax_category` varchar(100) DEFAULT NULL,
+  `represents_company` varchar(255) DEFAULT NULL,
+  `default_currency` int(255) DEFAULT NULL,
+  `default_price_list` varchar(255) DEFAULT NULL,
+  `website` varchar(255) DEFAULT NULL,
+  `customer_primary_contact` int(255) DEFAULT NULL,
+  `mobile_no` varchar(255) DEFAULT NULL,
+  `email_id` varchar(255) DEFAULT NULL,
+  `customer_primary_address` varchar(255) DEFAULT NULL,
+  `primary_address` varchar(255) DEFAULT NULL,
+  `payment_terms` varchar(255) DEFAULT NULL,
+  `customer_details` varchar(255) DEFAULT NULL,
+  `market_segment` varchar(255) DEFAULT NULL,
+  `industry` varchar(255) DEFAULT NULL,
+  `loyalty_program` varchar(255) DEFAULT NULL,
+  `loyalty_program_tier` varchar(255) DEFAULT NULL,
+  `default_sales_partner` varchar(255) DEFAULT NULL,
+  `customer_pos_id` varchar(255) DEFAULT NULL,
+  `is_sync` enum('no','yes') DEFAULT 'no'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 --
 -- Indexes for table `tf_erp_customer`
 --
@@ -6831,32 +6760,6 @@ ALTER TABLE `tf_landing_page`
 --
 ALTER TABLE `tf_last_extension`
   ADD PRIMARY KEY (`ext_id`);
-
---
--- Indexes for table `tf_leads`
---
-ALTER TABLE `tf_leads`
-  ADD PRIMARY KEY (`l_id`),
-  ADD KEY `User_id` (`User_id`),
-  ADD KEY `agent_id` (`agent_id`),
-  ADD KEY `lead_owner` (`lead_owner`),
-  ADD KEY `status` (`status`),
-  ADD KEY `is_sync` (`is_sync`),
-  ADD KEY `name` (`name`),
-  ADD KEY `mobile_no` (`mobile_no`),
-  ADD KEY `lead_name` (`lead_name`),
-  ADD KEY `creation` (`creation`),
-  ADD KEY `email_id` (`email_id`),
-  ADD KEY `source` (`source`),
-  ADD KEY `city` (`city`),
-  ADD KEY `ads_id` (`ads_id`),
-  ADD KEY `is_done` (`is_done`),
-  ADD KEY `modified` (`modified`),
-  ADD KEY `doctype` (`doctype`),
-  ADD KEY `opportunity_amount` (`opportunity_amount`),
-  ADD KEY `ad_leadid` (`ad_leadid`),
-  ADD KEY `is_deleted` (`is_deleted`);
-
 --
 -- Indexes for table `tf_leads_email`
 --
@@ -8413,6 +8316,108 @@ ALTER TABLE `tf_kyc`
 --
 ALTER TABLE `tf_landing_page`
   MODIFY `landing_pageid` int(11) NOT NULL AUTO_INCREMENT;
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tf_leads`
+--
+
+CREATE TABLE `tf_leads` (
+  `l_id` int(11) NOT NULL,
+  `User_id` int(11) DEFAULT NULL,
+  `agent_id` int(11) DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `owner` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `lead_owner` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `lead_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `creation` datetime DEFAULT CURRENT_TIMESTAMP,
+  `modified` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `modified_by` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `description` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `expected_closing` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `priority` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
+  `company_name` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `status` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
+  `salutation` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
+  `email_id` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
+  `designation` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `gender` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
+  `source` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
+  `campaign_name` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
+  `contact_by` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
+  `contact_date` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
+  `ends_on` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
+  `address_type` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
+  `state` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
+  `address` text COLLATE utf8_unicode_ci,
+  `address_title` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `country` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
+  `address_line1` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `pincode` int(11) DEFAULT NULL,
+  `address_line2` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `city` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
+  `county` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
+  `phone` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
+  `mobile_no` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
+  `fax` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
+  `type` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
+  `company` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `market_segment` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `notes` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `website` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `industry` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `request_type` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `product` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `is_sync` enum('no','yes') CHARACTER SET latin1 DEFAULT 'no',
+  `customer` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
+  `image` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
+  `doctype` varchar(100) CHARACTER SET latin1 DEFAULT NULL,
+  `title` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `currency` varchar(200) CHARACTER SET latin1 DEFAULT NULL,
+  `probability` varchar(200) CHARACTER SET latin1 DEFAULT NULL,
+  `opportunity_amount` varchar(200) CHARACTER SET latin1 DEFAULT NULL,
+  `sales_order_id` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `sales_order_name` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `ads_id` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `ads_name` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `ads_keyword` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
+  `ad_leadid` int(11) DEFAULT NULL,
+  `is_done` int(2) DEFAULT '0',
+  `is_deleted` enum('no','yes') CHARACTER SET latin1 DEFAULT NULL,
+  `zohoid` varchar(30) CHARACTER SET latin1 DEFAULT NULL,
+  `whatsapp_number` varchar(15) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `tag_id` int(11) DEFAULT NULL,
+  `completed_date` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+--
+-- Indexes for table `tf_leads`
+--
+ALTER TABLE `tf_leads`
+  ADD PRIMARY KEY (`l_id`),
+  ADD KEY `User_id` (`User_id`),
+  ADD KEY `agent_id` (`agent_id`),
+  ADD KEY `lead_owner` (`lead_owner`),
+  ADD KEY `status` (`status`),
+  ADD KEY `is_sync` (`is_sync`),
+  ADD KEY `name` (`name`),
+  ADD KEY `mobile_no` (`mobile_no`),
+  ADD KEY `lead_name` (`lead_name`),
+  ADD KEY `creation` (`creation`),
+  ADD KEY `email_id` (`email_id`),
+  ADD KEY `source` (`source`),
+  ADD KEY `city` (`city`),
+  ADD KEY `ads_id` (`ads_id`),
+  ADD KEY `is_done` (`is_done`),
+  ADD KEY `modified` (`modified`),
+  ADD KEY `doctype` (`doctype`),
+  ADD KEY `opportunity_amount` (`opportunity_amount`),
+  ADD KEY `ad_leadid` (`ad_leadid`),
+  ADD KEY `is_deleted` (`is_deleted`);
+
 
 --
 -- AUTO_INCREMENT for table `tf_leads`

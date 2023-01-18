@@ -18,7 +18,7 @@ import { CallTransferComponent } from '../call-transfer/call-transfer.component'
 import { ContactInformationComponent } from '../contact-information/contact-information.component';
 import { FeedbackFormFillComponent } from '../feedback-form-fill/feedback-form-fill.component';
 import { AdminService } from "../../admin.service";
-import { UA, Socket, WebSocketInterface } from 'jssip';
+// import { UA, Socket, WebSocketInterface } from 'jssip';
 import { ScheduleMeetingComponent } from '../schedule-meeting/schedule-meeting.component';
 import { IdleTimeoutManager } from "idle-timer-manager";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
@@ -125,8 +125,8 @@ export class BaseComponent implements OnInit {
   callrunning = false
   mic_permission=false;
   settings = {}
-  voipdomain = 'sbc2.cloudX.in'
-  socketdomain = 'socket.cloudX.in'
+  voipdomain = 'sbc2.(wrong)cloudX.in'
+  socketdomain = 'socket.(wrong)cloudX.in'
   issupervisor = false
   userrole = 'agent'
   iswhatsappbutton=false;
@@ -735,90 +735,90 @@ export class BaseComponent implements OnInit {
                   //console.log("Permission changed to " + this.state);
                 } 
             })
-            var socket = new WebSocketInterface('wss://'+this.voipdomain+':8089/ws');//wss://gaesip.cloudX.in:8089/ws
+            // var socket = new WebSocketInterface('wss://'+this.voipdomain+':8089/ws');//wss://gaesip.cloudX.in:8089/ws
             var configuration = {
-              sockets: [socket],
+              // sockets: [socket],
               uri: 'sip:' + data['data']['account_name'] + '@'+this.voipdomain,
               password: 'garudavoip@dv'
             };
-            this.tfPhone = new UA(configuration);
+            // this.tfPhone = new UA(configuration);
 
-            this.tfPhone.on('connecting', function (e) {
-              /* Your code here */
-              console.log('connecting')
-              that.callpopup = true
-            });
+            // this.tfPhone.on('connecting', function (e) {
+            //   /* Your code here */
+            //   console.log('connecting')
+            //   that.callpopup = true
+            // });
 
-            this.tfPhone.on('connected', function (e) {
-              /* Your code here */
-              //console.log('connected')
-              that.callpopup = true
-            });
+            // this.tfPhone.on('connected', function (e) {
+            //   /* Your code here */
+            //   //console.log('connected')
+            //   that.callpopup = true
+            // });
 
-            this.tfPhone.on('disconnected', function (e) {
-              /* Your code here */
-              //console.log('disconnected')
-              that.callpopup = true
-            });
-            this.tfPhone.on('registered', function (e) {
-              that.webrtcstatus = 'Registered'
-              that.callpopup = true
-            });
-            this.tfPhone.on('unregistered', function (e) { /* Your code here */ });
-            this.tfPhone.on('registrationFailed', function (e) {
-              that.webrtcstatus = 'Registration Failed'
-              that.callpopup = true
-            });
+            // this.tfPhone.on('disconnected', function (e) {
+            //   /* Your code here */
+            //   //console.log('disconnected')
+            //   that.callpopup = true
+            // });
+            // this.tfPhone.on('registered', function (e) {
+            //   that.webrtcstatus = 'Registered'
+            //   that.callpopup = true
+            // });
+            // this.tfPhone.on('unregistered', function (e) { /* Your code here */ });
+            // this.tfPhone.on('registrationFailed', function (e) {
+            //   that.webrtcstatus = 'Registration Failed'
+            //   that.callpopup = true
+            // });
 
             var calloptions = {
               'mediaConstraints': { 'audio': true }
             };
-            this.tfPhone.on('newRTCSession', function (e) {
-              /* Your code here */
-              this.session = e.session; // outgoing call session here
-              that.setsession(e.session)
-              let number = this.session._request.ruri['_user']
-              console.log(e.session)
-              var textboxText = number.replace(/^0+/, '')
-              //that.get_mobile_erp(textboxText)
-              //console.log(this.session)
-              if (this.session.direction == "outgoing") {
-                this.callinfotext = 'Ringing...'
-                this.session.on("progress", function () {
-                  //the call has ended
-                  //console.log('call progress==')
-                  that.callpopup = true
-                });
-                this.session.on("confirmed", function (e) {
-                  //console.log('call confirmed')
-                  that.callpopup = true
-                });
-                this.session.on("ended", function () {
-                  //the call has ended
-                  //console.log('call ended')
-                  that.callControl = true
-                  that.iscurrentcall = false
-                  that.callpopup = true
-                  that.session = undefined
-                  that.acwagentcallhold(true)
-                });
-                this.session.on("failed", function () {
-                  //console.log('call failed')
-                  // unable to establish the call
-                  that.callControl = true
-                  that.iscurrentcall = false
-                  that.callpopup = true
-                  that.session = undefined
-                });
-                this.session.connection.addEventListener('addstream', (e) => {
-                  //console.log("Debug: addstream............");
-                  var audioObj = new Audio();
-                  audioObj.srcObject = e.stream
-                  audioObj.play();
-                });
-              }
-            });
-            this.tfPhone.start();
+            // this.tfPhone.on('newRTCSession', function (e) {
+            //   /* Your code here */
+            //   this.session = e.session; // outgoing call session here
+            //   that.setsession(e.session)
+            //   let number = this.session._request.ruri['_user']
+            //   console.log(e.session)
+            //   var textboxText = number.replace(/^0+/, '')
+            //   //that.get_mobile_erp(textboxText)
+            //   //console.log(this.session)
+            //   if (this.session.direction == "outgoing") {
+            //     this.callinfotext = 'Ringing...'
+            //     this.session.on("progress", function () {
+            //       //the call has ended
+            //       //console.log('call progress==')
+            //       that.callpopup = true
+            //     });
+            //     this.session.on("confirmed", function (e) {
+            //       //console.log('call confirmed')
+            //       that.callpopup = true
+            //     });
+            //     this.session.on("ended", function () {
+            //       //the call has ended
+            //       //console.log('call ended')
+            //       that.callControl = true
+            //       that.iscurrentcall = false
+            //       that.callpopup = true
+            //       that.session = undefined
+            //       that.acwagentcallhold(true)
+            //     });
+            //     this.session.on("failed", function () {
+            //       //console.log('call failed')
+            //       // unable to establish the call
+            //       that.callControl = true
+            //       that.iscurrentcall = false
+            //       that.callpopup = true
+            //       that.session = undefined
+            //     });
+            //     this.session.connection.addEventListener('addstream', (e) => {
+            //       //console.log("Debug: addstream............");
+            //       var audioObj = new Audio();
+            //       audioObj.srcObject = e.stream
+            //       audioObj.play();
+            //     });
+            //   }
+            // });
+            // this.tfPhone.start();
           }
         }
         if (data['data']['whatsup_access'] == 0) {
@@ -1311,7 +1311,7 @@ export class BaseComponent implements OnInit {
 
   checkwhitelistip(managerid) {
     if (managerid == 1556) {
-      this.http.get("https://sbc2.cloudX.in/ip.php").subscribe((res: any) => {
+      this.http.get("https://sbc2.(wrong)cloudX.in/ip.php").subscribe((res: any) => {
         //console.log(res.ip)
         if (res.ip == '103.144.119.141' || res.ip == '103.99.15.90') {
         } else {

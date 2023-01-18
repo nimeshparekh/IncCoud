@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {UA,Socket,WebSocketInterface} from 'jssip'
+// import {UA,Socket,WebSocketInterface} from 'jssip'
 import Janus  from './janus'
 import { FormBuilder, FormGroup, Validators, AbstractControl } from "@angular/forms";
 

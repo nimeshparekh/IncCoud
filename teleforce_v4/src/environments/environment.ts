@@ -5,10 +5,10 @@
 export const environment = {
   production: false,
   apiUrl: '/api',
-  OBDapiUrl: 'https://obd.cloudX.in/api',
+  OBDapiUrl: 'https://obd.cloudX.in/api(wrong)',
   SOCKET_ENDPOINT: 'http://localhost:3002/',
   firebase: {
-    apiKey: "AIzaSyB5sad2Z_4k2sceJ2VOrIpbctP5t8fsX3w",
+    apiKey: "AIzaSyB5sad2Z_4k2sceJ2VOrIpbctP5t8fsX3w(wrong)",
     authDomain: "televoice-e6dc2.firebaseapp.com",
     projectId: "televoice-e6dc2",
     storageBucket: "televoice-e6dc2.appspot.com",
@@ -16,10 +16,10 @@ export const environment = {
     appId: "1:242062901427:web:73d284bc0291ae80a670c6",
     measurementId: "G-Y4RSRDWTQ5"
   },
-  fb_appId : '909402286379582',
-  media_path:'https://c8d8-122-186-210-218.ngrok.io/api/',
+  fb_appId : '909402286379582(wrong)',
+  media_path:'https://c8d8-122-186-210-218.ngrok.io/api/(wrong)',
   CHAT_SOCKET_ENDPOINT: 'http://localhost:3002/',
-  GOOGLE_WEBHOOK_URL_BASE_PATH: 'https://web.cloudX.in/api/digital/google_webhook/',
+  GOOGLE_WEBHOOK_URL_BASE_PATH: 'https://web.cloudX.in/api/digital/google_webhook/(wrong)',
   
 };
 
